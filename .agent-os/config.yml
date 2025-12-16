@@ -1,0 +1,29 @@
+# Project Configuration
+
+# Profile to use
+profile: forge
+
+# Agent tools configuration
+claude_code_commands: true
+use_claude_code_subagents: true
+standards_as_claude_code_skills: true
+
+# Agent-OS directories
+planning_dir: ./planning
+agents_dir: ./agents
+
+# Core Instructions Reference
+# These are the Agent-OS workflow templates:
+#
+# Core Workflows:
+#   .agent-os/instructions/core/analyze-product.md  - Analyze existing codebase
+#   .agent-os/instructions/core/plan-product.md     - Create product docs
+#   .agent-os/instructions/core/create-spec.md      - Create feature specs
+#   .agent-os/instructions/core/create-tasks.md     - Create task checklists
+#   .agent-os/instructions/core/execute-task.md     - Execute single task
+#   .agent-os/instructions/core/execute-tasks.md    - Execute multiple tasks
+#   .agent-os/instructions/core/post-execution-tasks.md - Post-execution
+#
+# Meta (always executed):
+#   .agent-os/instructions/meta/pre-flight.md   - Pre-execution rules
+#   .agent-os/instructions/meta/post-flight.md  - Post-execution verification
