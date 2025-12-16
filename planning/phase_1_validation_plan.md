@@ -4,7 +4,7 @@
 
 ## 1. Project Setup
 Instead of just empty folders, we will create a working playground.
-- [ ] Initialize `meta_gen` (The Tool) as a generic Dart console app.
+- [ ] Initialize `forge` (The Tool) as a generic Dart console app.
 - [ ] Initialize `meta_demo` (The App) as a standard Flutter app.
 
 ## 2. Meta Definitions (The Input)
@@ -35,10 +35,11 @@ We will build `lib/main.dart` in the `meta_demo` app:
 *   **Content:** A single `<AppButton label="Meta Button" />`.
 
 ## 5. Success Criteria
-*   You run `dart run ../meta_gen`.
+*   You run `dart run ../forge`.
 *   You run `flutter run`.
 *   Clicking "Neo" instantly transforms the button to Yellow/Boxy **without hot reload** (because the logic is already generated).
 *   **Crucial:** The `lib/main.dart` has NO `if (style == neo)` logic. It just uses `AppTheme`.
 
 ## Next Step
-Shall I start by creating the folder structure for `meta_gen` and `meta_demo`?
+Shall I start by creating the folder structure for `forge` and `meta_demo`?
+

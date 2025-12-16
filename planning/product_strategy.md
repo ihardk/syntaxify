@@ -8,7 +8,7 @@
 
 **"Own your UI system, not just your UI."**
 
-Meta-UI enables Flutter developers to build design systems that generate production-ready code, providing the leverage of frameworks with the control of handwritten code.
+Forge enables Flutter developers to build design systems that generate production-ready code, providing the leverage of frameworks with the control of handwritten code.
 
 ---
 
@@ -160,3 +160,4 @@ Meta-UI enables Flutter developers to build design systems that generate product
 ---
 
 *Document Version: 2.0*
+

@@ -1,4 +1,4 @@
-# Meta-UI Architecture Plan
+# Forge Architecture Plan
 
 > Master architecture document with links to detailed specifications.
 
@@ -129,7 +129,7 @@ class AppButton extends StatelessWidget {
 
 ### Compile-Time (Static)
 ```bash
-meta_gen --mode=static --theme=neo
+forge --mode=static --theme=neo
 ```
 - Tokens inlined as `const`
 - Maximum performance
@@ -137,7 +137,7 @@ meta_gen --mode=static --theme=neo
 
 ### Runtime (Dynamic)
 ```bash
-meta_gen --mode=dynamic --themes=material,cupertino,neo
+forge --mode=dynamic --themes=material,cupertino,neo
 ```
 - Theme switching at runtime
 - Uses `InheritedWidget`
@@ -281,7 +281,7 @@ class RatingSpec {
 ```
 
 ```bash
-meta_gen --scan=lib/meta,lib/user_components
+forge --scan=lib/meta,lib/user_components
 ```
 
 ---
@@ -337,3 +337,4 @@ meta_gen --scan=lib/meta,lib/user_components
 
 *Document Version: 3.0 (Slimmed)*
 *Last Updated: 2025-12-16*
+

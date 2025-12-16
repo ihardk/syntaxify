@@ -1,6 +1,6 @@
 # Performance Benchmarks
 
-> Concrete performance targets for Meta-UI generator and runtime.
+> Concrete performance targets for Forge generator and runtime.
 
 ---
 
@@ -34,7 +34,7 @@
 | Theme lookup | < 0.05ms | < 0.1ms |
 
 ### 2.2 Frame Budget Impact
-- **Target:** 0% frame drops attributable to Meta-UI
+- **Target:** 0% frame drops attributable to Forge
 - **Measurement:** 60fps maintained on mid-range device
 
 ### 2.3 Memory Overhead
@@ -48,8 +48,8 @@
 
 ## 3. Comparison Baseline
 
-### Meta-UI vs Raw Flutter
-| Metric | Raw Flutter | Meta-UI | Overhead |
+### Forge vs Raw Flutter
+| Metric | Raw Flutter | Forge | Overhead |
 |--------|-------------|---------|----------|
 | Button build | 0.3ms | 0.35ms | +17% |
 | Card build | 1.2ms | 1.4ms | +17% |
@@ -57,12 +57,12 @@
 
 **Target: < 20% overhead vs raw Flutter**
 
-### Meta-UI vs Other Solutions
+### Forge vs Other Solutions
 | Solution | Build Time | Runtime Overhead |
 |----------|-----------|------------------|
 | Hardcoded widgets | 0s | 0% |
-| **Meta-UI (Static)** | 2s | < 5% |
-| **Meta-UI (Dynamic)** | 2s | < 20% |
+| **Forge (Static)** | 2s | < 5% |
+| **Forge (Dynamic)** | 2s | < 20% |
 | JSON-driven UI | 0s | 50-100% |
 
 ---
@@ -114,7 +114,7 @@ testWidgets('ListView with 100 meta-buttons', (tester) async {
 
 ### 5.1 Static Mode (Maximum Performance)
 ```bash
-meta_gen build --mode=static --theme=material
+forge build --mode=static --theme=material
 ```
 - Tokens inlined as `const`
 - No runtime lookup
@@ -122,7 +122,7 @@ meta_gen build --mode=static --theme=material
 
 ### 5.2 Dynamic Mode (Flexibility)
 ```bash
-meta_gen build --mode=dynamic
+forge build --mode=dynamic
 ```
 - Tokens resolved via `InheritedWidget`
 - Supports runtime theme switching
@@ -181,3 +181,4 @@ void main() {
 ---
 
 *Document Version: 1.0*
+

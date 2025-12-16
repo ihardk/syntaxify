@@ -1,6 +1,6 @@
 # Slot & Composition API
 
-> How Meta-UI handles component slots beyond simple `child`.
+> How Forge handles component slots beyond simple `child`.
 
 ---
 
@@ -220,3 +220,4 @@ ERROR: slot_validation
 ---
 
 *Document Version: 1.0*
+

@@ -43,16 +43,16 @@ Validated that the architecture works manually. Ready for automation.
 - [ ] Implement basic file parser
 - [ ] Implement template engine
 - [ ] Generate single component from meta definition
-- [ ] CLI: `meta_gen build`
+- [ ] CLI: `forge build`
 
 ### Deliverables
-- [ ] `meta_gen` CLI that runs
+- [ ] `forge` CLI that runs
 - [ ] Generates `AppButton` from `button.meta.dart`
 - [ ] Output matches manual implementation quality
 
 ### Success Criteria
 ```bash
-$ meta_gen build --component=button
+$ forge build --component=button
 ✓ Generated lib/generated/app_button.dart
 ```
 
@@ -83,7 +83,7 @@ $ meta_gen build --component=button
 **Dependencies:** Phase 2
 
 ### Tasks
-- [ ] Theme configuration file (`meta_gen.yaml`)
+- [ ] Theme configuration file (`forge.yaml`)
 - [ ] Token resolution per theme
 - [ ] Runtime theme switching (`--mode=dynamic`)
 - [ ] Static theme compilation (`--mode=static`)
@@ -96,7 +96,7 @@ $ meta_gen build --component=button
 
 ### Success Criteria
 ```bash
-$ meta_gen build --mode=dynamic --themes=material,cupertino,neo
+$ forge build --mode=dynamic --themes=material,cupertino,neo
 ✓ Generated 3 theme variants
 ```
 
@@ -165,10 +165,10 @@ $ meta_gen build --mode=dynamic --themes=material,cupertino,neo
 **Dependencies:** Phase 6
 
 ### Tasks
-- [ ] `meta_gen init` - project scaffolding
-- [ ] `meta_gen add <component>` - add new component
-- [ ] `meta_gen migrate` - schema upgrades
-- [ ] `meta_gen doctor` - health check
+- [ ] `forge init` - project scaffolding
+- [ ] `forge add <component>` - add new component
+- [ ] `forge migrate` - schema upgrades
+- [ ] `forge doctor` - health check
 - [ ] pub.dev publishing
 
 ### Deliverables
@@ -223,3 +223,4 @@ graph LR
 ---
 
 *Document Version: 2.0*
+

@@ -1,4 +1,4 @@
-# Meta-UI Planning Documentation
+# Forge Planning Documentation
 
 > Single source of truth for all planning documents.
 
@@ -83,3 +83,4 @@ These documents were superseded and removed:
 ---
 
 *Last Updated: 2024-12-16*
+

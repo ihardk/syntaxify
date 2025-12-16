@@ -1,6 +1,6 @@
-# Meta-UI Testing Strategy
+# Forge Testing Strategy
 
-> Comprehensive testing approach for the Meta-UI framework covering generator, generated code, and runtime behavior.
+> Comprehensive testing approach for the Forge framework covering generator, generated code, and runtime behavior.
 
 ---
 
@@ -621,3 +621,4 @@ Matcher meetsAccessibilityGuidelines() => _MeetsAccessibility();
 
 *Document Version: 1.0*
 *Last Updated: 2025-12-16*
+

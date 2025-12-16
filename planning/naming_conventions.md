@@ -1,6 +1,6 @@
 # Naming Conventions
 
-> Consistent naming standards for Meta-UI framework.
+> Consistent naming standards for Forge framework.
 
 ---
 
@@ -112,12 +112,12 @@
 
 | Command | Action |
 |---------|--------|
-| `meta_gen build` | Generate all code |
-| `meta_gen watch` | Watch mode |
-| `meta_gen clean` | Remove generated files |
-| `meta_gen list` | List components |
-| `meta_gen inspect {name}` | Show component details |
-| `meta_gen migrate` | Run migrations |
+| `forge build` | Generate all code |
+| `forge watch` | Watch mode |
+| `forge clean` | Remove generated files |
+| `forge list` | List components |
+| `forge inspect {name}` | Show component details |
+| `forge migrate` | Run migrations |
 
 ---
 
@@ -168,3 +168,4 @@ isLoading
 ---
 
 *Document Version: 1.0*
+

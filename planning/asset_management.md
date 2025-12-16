@@ -1,6 +1,6 @@
 # Asset Management
 
-> How Meta-UI handles icons, images, and fonts per theme.
+> How Forge handles icons, images, and fonts per theme.
 
 ---
 
@@ -224,7 +224,7 @@ Widget _buildIcon(String name) {
 
 ### 8.1 Generator Checks
 ```bash
-$ meta_gen build
+$ forge build
 
 Validating assets...
 ✓ assets/material/logo.png exists
@@ -275,7 +275,7 @@ Widget _buildImage(String key) {
 ## 10. pubspec.yaml Generation
 
 ```bash
-$ meta_gen assets
+$ forge assets
 
 Adding assets to pubspec.yaml...
 
@@ -297,3 +297,4 @@ flutter:
 ---
 
 *Document Version: 1.0*
+

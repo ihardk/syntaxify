@@ -1,6 +1,6 @@
 # Documentation Strategy
 
-> How Meta-UI is documented for end users.
+> How Forge is documented for end users.
 
 ---
 
@@ -24,14 +24,14 @@
 
 ### 2.1 Quick Start (README.md)
 ```markdown
-# Meta-UI
+# Forge
 
 Build Flutter UIs that automatically adapt to any design system.
 
 ## Installation
 ```yaml
 dev_dependencies:
-  meta_gen: ^1.0.0
+  forge: ^1.0.0
 ```
 
 ## Usage
@@ -51,7 +51,7 @@ MetaTheme(
 
 ## Generate
 ```bash
-dart run meta_gen build
+dart run forge build
 ```
 ```
 
@@ -157,7 +157,7 @@ button:
 
 ## 2. Add to Generator
 ```bash
-meta_gen build --themes=material,custom
+forge build --themes=material,custom
 ```
 
 ## 3. Use in App
@@ -185,7 +185,7 @@ MetaTheme(
 assert(
   label.isNotEmpty,
   'AppButton: label cannot be empty. '
-  'See: https://meta-ui.dev/docs/button#label',
+  'See: https://Forge.dev/docs/button#label',
 );
 ```
 
@@ -220,7 +220,7 @@ Every error code links to documentation:
 ```
 ERROR: META-001
 Message: Missing required token 'bgColor'
-Help: https://meta-ui.dev/errors/META-001
+Help: https://Forge.dev/errors/META-001
 ```
 
 ---
@@ -253,3 +253,4 @@ Help: https://meta-ui.dev/errors/META-001
 ---
 
 *Document Version: 1.0*
+

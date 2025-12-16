@@ -1,6 +1,6 @@
 # Error Handling Strategy
 
-> How Meta-UI handles failures at generation time and runtime.
+> How Forge handles failures at generation time and runtime.
 
 ---
 
@@ -10,7 +10,7 @@
 **When:** Meta definition is invalid (missing required token, wrong type).
 
 ```bash
-$ meta_gen build
+$ forge build
 
 ERROR: validation_error
   File: meta/button.meta.dart:15
@@ -155,7 +155,7 @@ class ButtonTokens {
 ### 4.1 Console Output (Debug)
 ```
 ══════════════════════════════════════════════════════════════
-META-UI ERROR: AppButton
+Forge ERROR: AppButton
 ──────────────────────────────────────────────────────────────
 Component: AppButton
 Error: NoSuchMethodError: 'bgColor'
@@ -168,7 +168,7 @@ Stack:
 ### 4.2 Analytics Integration
 ```dart
 MetaConfig.errorReporter = (component, error, stack) {
-  Crashlytics.recordError(error, stack, reason: 'Meta-UI: $component');
+  Crashlytics.recordError(error, stack, reason: 'Forge: $component');
 };
 ```
 
@@ -187,3 +187,4 @@ MetaConfig.errorReporter = (component, error, stack) {
 ---
 
 *Document Version: 1.0*
+
