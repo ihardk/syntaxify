@@ -10,7 +10,7 @@ class CleanCommand extends Command<int> {
       'output',
       abbr: 'o',
       help: 'Output directory to clean',
-      defaultsTo: 'lib/generated',
+      defaultsTo: 'lib/forge',
     );
   }
 
@@ -24,7 +24,7 @@ class CleanCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final outputDir = argResults?['output'] as String? ?? 'lib/generated';
+    final outputDir = argResults?['output'] as String? ?? 'lib/forge';
     final progress = logger.progress('Cleaning generated files');
 
     try {
