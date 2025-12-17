@@ -1,4 +1,7 @@
 /// Neo-Brutalism Style (Modern/Bold)
+part of '../design_system.dart';
+
+/// Neo-brutalism style (modern/bold)
 ///
 /// Implements neo-brutalism design language with:
 /// - No border radius (sharp corners)
@@ -6,14 +9,6 @@
 /// - Hard drop shadows (4px offset)
 /// - Vibrant colors (gold, coral)
 /// - Uppercase text with heavy font weight
-
-import 'package:flutter/material.dart';
-
-import '../button_tokens.dart';
-import '../button_variant.dart';
-import '../design_style.dart';
-
-/// Neo-brutalism style (modern/bold)
 class NeoStyle extends DesignStyle {
   const NeoStyle();
 

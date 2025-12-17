@@ -1,18 +1,12 @@
 /// Cupertino Style (Apple iOS/macOS)
+part of '../design_system.dart';
+
+/// Cupertino style (Apple iOS/macOS)
 ///
 /// Implements Apple's Human Interface Guidelines with:
 /// - Pill-shaped buttons (100dp radius)
 /// - iOS blue accent color (#007AFF)
 /// - Native Cupertino widgets (CupertinoButton)
-
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-
-import '../button_tokens.dart';
-import '../button_variant.dart';
-import '../design_style.dart';
-
-/// Cupertino style (Apple iOS/macOS)
 class CupertinoStyle extends DesignStyle {
   const CupertinoStyle();
 

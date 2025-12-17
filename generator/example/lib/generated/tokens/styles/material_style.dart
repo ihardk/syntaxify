@@ -1,17 +1,12 @@
 /// Material Design Style (Google)
+part of '../design_system.dart';
+
+/// Material Design style (Google)
 ///
 /// Implements Google's Material Design language with:
 /// - Rounded corners (8dp radius)
 /// - Filled and outlined button variants
 /// - Native Material widgets (ElevatedButton, FilledButton, OutlinedButton)
-
-import 'package:flutter/material.dart';
-
-import '../button_tokens.dart';
-import '../button_variant.dart';
-import '../design_style.dart';
-
-/// Material Design style (Google)
 class MaterialStyle extends DesignStyle {
   const MaterialStyle();
 

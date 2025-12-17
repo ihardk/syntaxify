@@ -1,12 +1,21 @@
 /// Forge Design System - Core
 ///
 /// Base classes and types for the Forge design system.
-/// This file exports all design system components.
-library;
+/// Uses `part` files so sealed class can be extended.
+library design_system;
 
-export 'app_theme.dart';
-export 'design_style.dart';
-export 'button_variant.dart';
-export 'styles/material_style.dart';
-export 'styles/cupertino_style.dart';
-export 'styles/neo_style.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
+import 'button_tokens.dart';
+
+// Re-export for convenience
+export 'button_tokens.dart';
+
+// Part files - same library as sealed class
+part 'app_theme.dart';
+part 'design_style.dart';
+part 'button_variant.dart';
+part 'styles/material_style.dart';
+part 'styles/cupertino_style.dart';
+part 'styles/neo_style.dart';

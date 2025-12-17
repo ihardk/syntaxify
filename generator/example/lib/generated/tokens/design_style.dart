@@ -1,12 +1,5 @@
 /// DesignStyle Sealed Class
-///
-/// Base sealed class that all design styles extend.
-/// Each style must implement token getters and render methods.
-
-import 'package:flutter/material.dart';
-
-import 'button_tokens.dart';
-import 'button_variant.dart';
+part of 'design_system.dart';
 
 /// Base sealed class for all design styles.
 ///
@@ -16,9 +9,9 @@ import 'button_variant.dart';
 ///
 /// To add a new style:
 /// 1. Create a new file in `styles/` folder
-/// 2. Extend `DesignStyle`
-/// 3. Implement all abstract methods
-/// 4. Export from `design_system.dart`
+/// 2. Add `part of 'design_system.dart';` at top
+/// 3. Extend `DesignStyle`
+/// 4. Add the part file to `design_system.dart`
 sealed class DesignStyle {
   const DesignStyle();
 

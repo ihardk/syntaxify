@@ -1,10 +1,5 @@
 /// AppTheme InheritedWidget
-///
-/// Provides the current DesignStyle to the widget tree.
-
-import 'package:flutter/material.dart';
-
-import 'design_style.dart';
+part of 'design_system.dart';
 
 /// Forge theme provider using sealed DesignStyle pattern.
 ///

@@ -1,6 +1,5 @@
 /// Button Variant Enum
-///
-/// Defines the available variants for the Button component.
+part of 'design_system.dart';
 
 /// Button component variants
 enum ButtonVariant {
