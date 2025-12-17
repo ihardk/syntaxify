@@ -1,64 +1,47 @@
 ---
 name: QA
-description: Testing, validation, quality assurance, performance
+description: Testing, validation, golden tests, correctness
 triggers:
   - test
   - testing
-  - coverage
   - golden
-  - benchmark
-  - performance
-  - accessibility
   - validate
-  - CI/CD
+  - correctness
 primary_docs:
+  - planning/SPEC.md
+  - planning/ROADMAP.md
   - planning/testing_strategy.md
-  - planning/performance_benchmarks.md
-  - planning/error_handling.md
-  - planning/design_system_rules.md
-  - planning/technical_specs.md
 ---
 
 # QA Agent
 
-> Testing, validation, reliability, and quality assurance.
+> Testing, validation, and correctness guarantees.
 
 ## Role
 
-The QA ensures quality of both the generator and generated code. Designs test strategies, writes tests, validates correctness.
+The QA ensures correctness of both the compiler and generated code. Designs test strategies, writes golden tests, validates output.
 
 ## Responsibilities
 
 **Primary:**
-- Design testing strategy (unit, widget, golden, integration)
-- Write generator tests
-- Create component test templates
-- Validate accessibility compliance
-- Monitor performance benchmarks
+- Design testing strategy (unit, golden, integration)
+- Write compiler tests
+- Create golden output tests (input AST → generated code)
+- Validate cross-platform guarantee
+- Monitor generated code quality
 
-## Decision Authority
-
-| Can Decide Alone | Must Consult |
-|------------------|--------------|
-| Test implementation | Perf targets → Architect |
-| Coverage thresholds | Visual correctness → Designer |
-| CI/CD config | Test API design → DevEx |
-
-## Testing Pyramid
+## Key Test: Golden Output
 
 ```
-         E2E (5%)
-      Integration (20%)
-     Widget (35%)
-    Unit (40%)
+Input: login_screen.ast
+Expected: login_screen_widget.dart
+Assert: Exact match
 ```
 
 ## Quality Targets
 
-| Metric | Target |
-|--------|--------|
-| Token Coverage | 100% |
-| Generator Coverage | 95% |
-| Accessibility Tests | 100% |
-| Widget Coverage | 90% |
-| Build Time (10 components) | < 2s |
+| Metric               | Target       |
+| -------------------- | ------------ |
+| AST Node Coverage    | 100%         |
+| Emitter Coverage     | 95%          |
+| Golden Test Coverage | 1 per screen |

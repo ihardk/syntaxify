@@ -2,41 +2,69 @@
 description: Complete list of available Agent-OS and Forge workflows
 ---
 
-# All Available Workflows
+# Forge Workflow Commands
 
-## Agent-OS Core Workflows
+## 🚀 Main Orchestration
 
-| Command | Description | Instruction File |
-|---------|-------------|------------------|
-| `/analyze-product` | Analyze codebase & install Agent-OS | `analyze-product.md` |
-| `/plan-product` | Create product docs (mission, roadmap) | `plan-product.md` |
-| `/create-spec` | Create feature specification | `create-spec.md` |
-| `/create-tasks` | Create tasks from spec | `create-tasks.md` |
-| `/execute-task` | Execute single task | `execute-task.md` |
-| `/execute-phase` | Execute all tasks in current phase | (Forge workflow) |
-| `/post-execution` | Cleanup and documentation | `post-execution-tasks.md` |
+| Command      | Description                | Agents                |
+| ------------ | -------------------------- | --------------------- |
+| `/dev-cycle` | **Full development cycle** | All agents (5 phases) |
+| `/quick-fix` | Small fixes only           | Engineer → QA         |
 
-## Forge-Specific Workflows
+---
 
-| Command | Description |
-|---------|-------------|
+## 🎭 Agent Activation
+
+| Command      | Description                    |
+| ------------ | ------------------------------ |
 | `/use-agent` | Activate a specific agent role |
-| `/build` | Build/generate components |
-| `/test` | Run tests and validate |
-| `/start-phase` | Start a roadmap phase |
-| `/review-docs` | Review architecture docs |
 
-## Meta Instructions (Auto-Applied)
+---
 
-| File | When Used |
-|------|-----------|
-| `pre-flight.md` | Before any workflow |
-| `post-flight.md` | After any workflow |
+## ⚡ Quick Actions
 
-## How to Use
+| Command        | Description               |
+| -------------- | ------------------------- |
+| `/build`       | Build/generate components |
+| `/test`        | Run tests                 |
+| `/review-docs` | Review planning docs      |
 
-1. **Type the command** (e.g., `/create-spec`)
-2. **Follow the step-by-step process**
-3. **Review outputs** when prompted
+---
 
-## Total Workflows: 12
+## 📋 Spec Management
+
+| Command         | Description                  |
+| --------------- | ---------------------------- |
+| `/create-spec`  | Create feature specification |
+| `/create-tasks` | Break spec into tasks        |
+| `/execute-task` | Execute single task          |
+
+---
+
+## 🛠️ Setup (Rarely Used)
+
+| Command            | Description               |
+| ------------------ | ------------------------- |
+| `/analyze-product` | Initial codebase analysis |
+| `/plan-product`    | Create product docs       |
+
+---
+
+## Planning Docs Reference
+
+All workflows reference these core docs:
+
+| Doc                              | Purpose                  |
+| -------------------------------- | ------------------------ |
+| `planning/AST.md`                | UI AST specification     |
+| `planning/SPEC.md`               | Core Forge rules         |
+| `planning/ROADMAP.md`            | 5-stage development plan |
+| `planning/technical_specs.md`    | CLI and output specs     |
+| `planning/testing_strategy.md`   | Testing approach         |
+| `planning/naming_conventions.md` | Naming standards         |
+
+---
+
+## Workflow Details
+
+See `INSTRUCTIONS.md` for detailed command documentation.

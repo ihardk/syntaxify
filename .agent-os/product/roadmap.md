@@ -1,33 +1,22 @@
 # Product Roadmap
 
-## Phase 0: Foundation (Completed)
+## 5-Stage Development Plan
 
-**Goal:** Establish the core generator architecture and CLI.
-**Success Criteria:** Can generate a fully functional Button component from a meta-definition.
+| Stage | Focus                                           | Status |
+| ----- | ----------------------------------------------- | ------ |
+| 1     | Prove Feasibility                               | ✅ DONE |
+| 2     | Lock Correctness & Narrative                    | ⬅️ NOW  |
+| 3     | Prove Power (Layout + Screen)                   | ⬜      |
+| 4     | Make It Legible (Golden tests, ARCHITECTURE.md) | ⬜      |
+| 5     | Career Leverage or Monetization                 | ⬜      |
 
-### Features
-- [x] Initial CLI (`init`, `build`)
-- [x] Meta-Definition Schema
-- [x] Button Component (Material, Cupertino, Neo)
-- [x] Smart Build Prompts
-- [x] Local `dart run` workflow support
+## Stage 2 Checklist
 
-## Phase 1: Component Expansion
+- [ ] Fix callback → action identifier in specs
+- [ ] Update README (no "Meta-Framework", no "Renderer")
+- [ ] Add golden output test
+- [ ] Write ARCHITECTURE.md
 
-**Goal:** Expand available components to cover basic form inputs.
-**Success Criteria:** Functional Text Field and Card components.
+## Rule
 
-### Features
-- [ ] Input Component (TextField) `[L]`
-- [ ] Card/Container Component `[M]`
-- [ ] Meta-definition for validation rules `[M]`
-
-## Phase 2: Layout & Navigation
-
-**Goal:** Support screen-level generation.
-**Success Criteria:** Generate a Scaffold with AppBar and body content.
-
-### Features
-- [ ] Scaffold/Screen Component `[L]`
-- [ ] AppBar Component `[S]`
-- [ ] List/Grid View Generation `[XL]`
+> Do NOT add features until Stage 2 is complete.

@@ -1,49 +1,51 @@
-# Error Handling Strategy
+# Error Handling
 
-> How Forge handles failures at generation time and runtime.
+> How Forge handles failures at compile-time.
 
 ---
 
-## 1. Generator-Time Errors
+## 1. Compile-Time Errors
 
-### 1.1 Validation Errors
-**When:** Meta definition is invalid (missing required token, wrong type).
+### Validation Errors
+**When:** AST definition is invalid.
 
 ```bash
 $ forge build
 
-ERROR: validation_error
-  File: meta/button.meta.dart:15
-  Message: ButtonTokens missing required field 'bgColor'
+ERROR: AST-001
+  File: screens/login.dart:15
+  Message: ButtonNode missing required field 'label'
   
-  Suggestion: Add 'bgColor: Colors.blue' to your token definition
+  Suggestion: Add 'label: "Submit"' to your ButtonNode
 ```
 
 **Behavior:**
 - ❌ Generation halts
 - ❌ No partial output written
 - ✅ Existing generated code preserved
-- ✅ Detailed error with file:line:column
+- ✅ Detailed error with file:line
 
-### 1.2 Template Errors
-**When:** Renderer template has syntax error.
+---
 
-```bash
-ERROR: template_error
-  Template: templates/button.dart.tpl
-  Message: Unexpected token at line 45
-```
+## 2. Error Categories
 
-**Behavior:**
-- ❌ Generation halts
-- ✅ Stack trace to exact template line
+| Code    | Category                                    |
+| ------- | ------------------------------------------- |
+| AST-001 | Missing required field                      |
+| AST-002 | Unknown node type                           |
+| AST-003 | Invalid action reference                    |
+| AST-004 | Forbidden runtime type (e.g., VoidCallback) |
+| AST-005 | Platform-specific construct                 |
 
-### 1.3 Conflict Errors
+---
+
+## 3. Conflict Errors
+
 **When:** Generated file would overwrite user-modified code.
 
 ```bash
 WARNING: conflict_detected
-  File: lib/components/app_button.dart
+  File: lib/generated/login_screen.dart
   Message: File has local modifications. Use --force to overwrite.
 ```
 
@@ -54,137 +56,16 @@ WARNING: conflict_detected
 
 ---
 
-## 2. Runtime Errors
+## 4. Error Message Format
 
-### 2.1 Error Boundary Widget
-Every generated component is wrapped in an error boundary.
-
-```dart
-// GENERATED
-class AppButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MetaErrorBoundary(
-      componentName: 'AppButton',
-      fallback: _buildFallback(),
-      child: _buildContent(context),
-    );
-  }
-  
-  Widget _buildFallback() {
-    return Container(
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.red),
-      ),
-      child: Text('AppButton failed to render'),
-    );
-  }
-}
 ```
-
-### 2.2 MetaErrorBoundary Implementation
-```dart
-class MetaErrorBoundary extends StatefulWidget {
-  final String componentName;
-  final Widget fallback;
-  final Widget child;
+ERROR: [CODE]
+  File: [path]:[line]
+  Message: [What went wrong]
   
-  @override
-  State<MetaErrorBoundary> createState() => _MetaErrorBoundaryState();
-}
-
-class _MetaErrorBoundaryState extends State<MetaErrorBoundary> {
-  bool _hasError = false;
-  FlutterErrorDetails? _errorDetails;
-  
-  @override
-  void initState() {
-    super.initState();
-    // Capture errors in this subtree
-    FlutterError.onError = (details) {
-      setState(() {
-        _hasError = true;
-        _errorDetails = details;
-      });
-      // Still report to analytics
-      MetaLogger.reportError(widget.componentName, details);
-    };
-  }
-  
-  @override
-  Widget build(BuildContext context) {
-    if (_hasError) {
-      return widget.fallback;
-    }
-    return widget.child;
-  }
-}
-```
-
-### 2.3 Debug vs Release Behavior
-
-| Scenario | Debug | Release |
-|----------|-------|---------|
-| Render error | Show red box with error | Show fallback UI |
-| Missing token | Throw with stack trace | Use default value |
-| Invalid state | Assert failure | Log and recover |
-
----
-
-## 3. Token Resolution Fallbacks
-
-```dart
-class ButtonTokens {
-  final Color bgColor;
-  final Color? bgColorPressed; // Optional with fallback
-  
-  Color resolveBgColor(Set<MaterialState> states) {
-    if (states.contains(MaterialState.pressed)) {
-      return bgColorPressed ?? bgColor.withOpacity(0.8); // Fallback
-    }
-    return bgColor;
-  }
-}
+  Suggestion: [How to fix]
 ```
 
 ---
 
-## 4. Error Reporting
-
-### 4.1 Console Output (Debug)
-```
-══════════════════════════════════════════════════════════════
-Forge ERROR: AppButton
-──────────────────────────────────────────────────────────────
-Component: AppButton
-Error: NoSuchMethodError: 'bgColor'
-Stack: 
-  ButtonRenderer.build (button_renderer.dart:45)
-  AppButton.build (app_button.dart:23)
-══════════════════════════════════════════════════════════════
-```
-
-### 4.2 Analytics Integration
-```dart
-MetaConfig.errorReporter = (component, error, stack) {
-  Crashlytics.recordError(error, stack, reason: 'Forge: $component');
-};
-```
-
----
-
-## 5. Graceful Degradation Rules
-
-| Failure | Fallback |
-|---------|----------|
-| Theme not found | Use Material as default |
-| Token missing | Use hardcoded default |
-| Renderer crashes | Show error boundary |
-| Animation fails | Skip animation, show final state |
-| Asset missing | Show placeholder |
-
----
-
-*Document Version: 1.0*
-
+*Document Version: 2.0 (AST-aligned)*

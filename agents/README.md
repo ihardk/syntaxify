@@ -6,52 +6,37 @@ inherits_from: default
 
 # Forge Multi-Agent System
 
-> Specialized AI agents for different aspects of the Forge project.
+> Specialized AI agents for the Forge compile-time UI generator.
 
 ## Agent Roster
 
-| Agent | Role | Triggers |
-|-------|------|----------|
-| [Architect](./architect.md) | System Design | architecture, patterns, tradeoffs |
-| [Engineer](./engineer.md) | Implementation | implement, build, CLI, fix |
-| [Designer](./designer.md) | Design System | tokens, themes, colors |
-| [QA](./qa.md) | Quality | test, benchmark, validate |
-| [DevEx](./devex.md) | Developer Experience | docs, errors, debug |
-| [Product](./product.md) | Product Strategy | roadmap, prioritize, metrics |
+| Agent                       | Role                 | Focus                             |
+| --------------------------- | -------------------- | --------------------------------- |
+| [Architect](./architect.md) | System Design        | AST structure, compiler, emitters |
+| [Engineer](./engineer.md)   | Implementation       | CLI, parsers, code emission       |
+| [Designer](./designer.md)   | Semantics            | Node variants, icon names, tokens |
+| [QA](./qa.md)               | Quality              | Golden tests, validation          |
+| [DevEx](./devex.md)         | Developer Experience | Docs, errors, ARCHITECTURE.md     |
+| [Product](./product.md)     | Product Strategy     | 5-stage roadmap, positioning      |
 
-## Compatibility
+## Core Documents
 
-These agent definitions work with:
-- **Antigravity** - Read as context files
-- **Claude Code** - Use as Skills with triggers
-- **Agent-OS** - Profiles with YAML frontmatter
+All agents reference these authoritative docs:
 
-## YAML Frontmatter Schema
-
-```yaml
----
-name: AgentName
-description: What this agent does
-triggers:
-  - keyword1
-  - keyword2
-primary_docs:
-  - planning/doc1.md
-  - planning/doc2.md
----
-```
+- `planning/AST.md` — UI AST specification
+- `planning/SPEC.md` — Core Forge specification
+- `planning/ROADMAP.md` — 5-stage development plan
+- `planning/AST_EXAMPLES.md` — Reference examples
 
 ## How to Use
 
-**Antigravity/Claude Code:**
-> "Work as the Engineer agent on Phase 1"
+> "Work as the Engineer agent on Stage 2"
 
-**Agent-OS:**
-The YAML frontmatter provides Skills metadata for automatic activation based on triggers.
+## Current Stage
 
-## Agent Interaction Rules
+**Stage 2: Lock Correctness & Narrative**
 
-1. **Single Owner** - Each task has ONE primary agent
-2. **Consultation** - Agents can consult others
-3. **Escalation** - Cross-cutting concerns → Architect
-4. **Documentation** - All decisions reference planning docs
+1. Fix callback → action identifier
+2. Update README language
+3. Add golden test
+4. Write ARCHITECTURE.md
