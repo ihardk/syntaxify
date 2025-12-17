@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 
 import 'package:forge/src/generator/forge_generator.dart';
+import 'init_command.dart';
 
 /// Build command - generates Flutter widgets from meta definitions
 class BuildCommand extends Command<int> {
@@ -57,7 +59,29 @@ class BuildCommand extends Command<int> {
     final tokensDir = argResults?['tokens'] as String? ?? 'design_system';
     final designSystemDir =
         argResults?['design-system'] as String? ?? 'design_system';
-    final outputDir = argResults?['output'] as String? ?? 'lib/generated';
+    final outputDir = argResults?['output'] as String? ?? 'lib/forge';
+
+    // Check availability
+    final metaExists = Directory(metaDir).existsSync();
+    final dsExists = Directory(designSystemDir).existsSync();
+
+    if (!metaExists || !dsExists) {
+      if (!metaExists) logger.warn('Directory not found: $metaDir');
+      if (!dsExists) logger.warn('Directory not found: $designSystemDir');
+
+      logger.info('Project seems uninitialized.');
+      if (logger.confirm('Would you like to run "forge init" now?')) {
+        final initCmd = InitCommand(logger: logger);
+        final result = await initCmd.run();
+        if (result != ExitCode.success.code) {
+          return result;
+        }
+        // Proceed to build...
+      } else {
+        logger.err('Build aborted. Run "forge init" first.');
+        return ExitCode.config.code;
+      }
+    }
 
     logger.info('');
     logger.info('🔨 Forge Build');

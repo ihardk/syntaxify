@@ -6,17 +6,53 @@ A powerful CLI tool that generates production-ready, type-safe Flutter widgets f
 
 ### 1. Prerequisites
 - Dart SDK installed
-- A Flutter project structure with `meta/` and `design_system/` directories.
-
-### 2. Running a Build
-Run the generator from your project root:
+### 1. Add Dependency
+Add `forge` to your project's `dev_dependencies`:
 
 ```bash
-# Default build (Output: lib/forge)
-dart run generator/bin/forge.dart build
+flutter pub add dev:forge
+# OR
+dart pub add dev:forge
+```
 
-# Build specific component only
-dart run generator/bin/forge.dart build --component=button
+### 2. Initialize Project
+Scaffold the required directories (`meta/` and `design_system/`):
+
+```bash
+dart run forge init
+```
+
+### 3. Build Components
+Generate your Flutter widgets:
+
+```bash
+dart run forge build
+``` --output=lib/forge
+
+### 🔧 Method 2: Local Script (For Contributors)
+Run the script directly from the source code:
+
+```bash
+# In repo root
+dart run generator/bin/forge.dart build --output=lib/forge
+```
+
+### ⚡ Shortcuts (Windows)
+We have provided batch scripts for common tasks:
+
+- `.\forge.bat` -> Wraps `dart run generator/bin/forge.dart`
+- `.\test_build.bat` -> Builds to `lib/forge` (Verification)
+- `.\update_example.bat` -> Builds to `generator/example/lib/forge` (Example App)
+
+### 📱 Update Example App
+To regenerate the code used by the example app:
+
+```bash
+dart run generator/bin/forge.dart build \
+  --meta=generator/meta \
+  --design-system=generator/design_system \
+  --tokens=generator/design_system \
+  --output=generator/example/lib/forge
 ```
 
 ---

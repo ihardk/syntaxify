@@ -19,3 +19,8 @@ part 'button_variant.dart';
 part 'styles/material_style.dart';
 part 'styles/cupertino_style.dart';
 part 'styles/neo_style.dart';
+
+// Renderers (Mixins)
+part 'styles/material/button_renderer.dart';
+part 'styles/cupertino/button_renderer.dart';
+part 'styles/neo/button_renderer.dart';

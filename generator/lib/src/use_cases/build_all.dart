@@ -127,6 +127,34 @@ class BuildAllUseCase {
         }
       }
 
+      // Mixin Renderers (Source: design_system/styles/<style>/ -> Dest: design_system/styles/<style>/)
+      // TODO: Implement recursive copy or glob finding to avoid hardcoding
+      final rendererFiles = [
+        'material/button_renderer.dart',
+        'cupertino/button_renderer.dart',
+        'neo/button_renderer.dart',
+      ];
+
+      for (final file in rendererFiles) {
+        try {
+          final srcPath = path.join(designSystemDir, 'styles', file);
+          if (await fileSystem.exists(srcPath)) {
+            // Create sub-directory (e.g., styles/material/)
+            final subDir = path.dirname(file);
+            await fileSystem.createDirectory(
+                path.join(outputDir, 'design_system', 'styles', subDir));
+
+            final destPath =
+                path.join(outputDir, 'design_system', 'styles', file);
+            await fileSystem.copyFile(srcPath, destPath);
+            generatedFiles.add('design_system/styles/$file');
+            logger.success('Copied: design_system/styles/$file');
+          }
+        } catch (e) {
+          warnings.add('Could not copy renderer $file: $e');
+        }
+      }
+
       // Copy token files (Source: design_system/tokens/ -> Dest: design_system/tokens/)
       await fileSystem
           .createDirectory(path.join(outputDir, 'design_system', 'tokens'));

@@ -1,6 +1,6 @@
 name: forge
 description: Forge UI code generator - produces production-ready Flutter widgets from design tokens.
-version: 0.0.1
+version: 0.0.3
 
 environment:
   sdk: '>=3.2.0 <4.0.0'
