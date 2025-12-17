@@ -46,7 +46,8 @@ class BuildAllUseCase {
     final warnings = <String>[];
 
     // Create output directories
-    await fileSystem.createDirectory(path.join(outputDir, 'components'));
+    await fileSystem
+        .createDirectory(path.join(outputDir, 'generated', 'components'));
 
     // Generate each component
     for (final component in components) {
@@ -63,12 +64,12 @@ class BuildAllUseCase {
 
         final filePath = await _generateComponent.execute(
           component: component,
-          outputDir: outputDir,
+          outputDir: path.join(outputDir, 'generated'),
           tokens: matchingTokens,
         );
 
-        generatedFiles.add(filePath);
-        logger.success('Generated: $filePath');
+        generatedFiles.add('generated/$filePath');
+        logger.success('Generated: generated/$filePath');
       } catch (e) {
         logger.err('Failed to generate ${component.className}: $e');
         errors.add('Failed to generate ${component.className}: $e');

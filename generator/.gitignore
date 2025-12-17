@@ -1,3 +1,16 @@
-# https://dart.dev/guides/libraries/private-files
-# Created by `dart pub`
+# Miscellaneous
+.DS_Store
+.idea/
+.vscode/
+*.iml
+
+# Build & Dependencies
+build/
 .dart_tool/
+.packages
+.pub/
+pubspec.lock
+
+# Flutter
+.flutter-plugins
+.flutter-plugins-dependencies

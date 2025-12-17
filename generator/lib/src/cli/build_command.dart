@@ -37,7 +37,7 @@ class BuildCommand extends Command<int> {
         'output',
         abbr: 'o',
         help: 'Output directory for generated files',
-        defaultsTo: 'lib/generated',
+        defaultsTo: 'lib/forge',
       );
   }
 

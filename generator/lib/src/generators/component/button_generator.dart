@@ -62,7 +62,7 @@ class ButtonGenerator implements ComponentGenerator {
     return [
       Directive.import('package:flutter/material.dart'),
       Directive.import(
-          '../design_system/design_system.dart'), // Barrel: AppTheme, DesignStyle, styles
+          '../../design_system/design_system.dart'), // Barrel: AppTheme, DesignStyle, styles
     ];
   }
 

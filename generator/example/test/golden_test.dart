@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:example/generated/index.dart';
+import 'package:example/forge/index.dart';
 
 /// Golden tests for AppButton across all style × variant combinations.
 ///

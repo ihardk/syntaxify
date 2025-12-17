@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:example/generated/index.dart';
+import 'package:example/forge/index.dart';
 
 void main() {
   group('AppButton Renderer Pattern Tests', () {
