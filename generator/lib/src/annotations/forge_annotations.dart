@@ -7,11 +7,12 @@ library forge_annotations;
 /// Marks a class as a Forge component specification.
 ///
 /// The generator will create a Flutter widget from this spec.
-class MetaComponent {
+/// Note: Named ForgeComponent to avoid collision with internal MetaComponent model.
+class ForgeComponent {
   /// Optional description of the component.
   final String? description;
 
-  const MetaComponent({this.description});
+  const ForgeComponent({this.description});
 }
 
 /// Marks a field as required in the generated widget.

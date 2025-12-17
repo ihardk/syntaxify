@@ -42,7 +42,7 @@ class TokenParser {
     }
 
     await for (final entity in directory.list(recursive: true)) {
-      if (entity is File && entity.path.endsWith('.tokens.dart')) {
+      if (entity is File && entity.path.endsWith('_tokens.dart')) {
         final tokenDef = await parseFile(entity);
         if (tokenDef != null) {
           tokens.add(tokenDef);

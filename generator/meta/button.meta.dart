@@ -8,7 +8,7 @@
 
 import 'package:forge/src/annotations/forge_annotations.dart';
 
-@MetaComponent(description: 'A customizable button component')
+@ForgeComponent(description: 'A customizable button component')
 class ButtonMeta {
   /// The button label text
   @Required()

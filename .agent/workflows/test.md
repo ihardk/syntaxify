@@ -1,32 +1,70 @@
 ---
-description: Run tests and validate code quality
+description: Run tests for generator and generated code
 ---
 
-# Test Workflow
+# Testing Workflow
 
-// turbo-all
+Standard workflow for testing Forge generator and generated components.
 
-1. Read testing strategy:
-```
-view planning/testing_strategy.md
-```
+## Prerequisites
+- Generator project has been built
+- Example app has generated files in `example/lib/generated/`
 
-2. Run unit tests:
+## Testing Steps
+
+### 1. Run Generator Unit Tests
+// turbo
 ```bash
-cd d:\Workspace\forge\example
-flutter test
-```
-
-3. Run generator tests (once implemented):
-```bash
-cd d:\Workspace\forge\generator
+cd generator
 dart test
 ```
 
-4. Check for lint issues:
+**Expected:** All parser, generator, and use case tests pass.
+
+### 2. Build Generated Code to Example
+// turbo
 ```bash
-cd d:\Workspace\forge\example
-flutter analyze
+cd generator
+dart run bin/forge.dart build --output example/lib/generated
 ```
 
-5. Report results
+**Expected:** 4+ files generated (components, theme, tokens, index).
+
+### 3. Run Widget Tests
+// turbo
+```bash
+cd generator/example
+flutter test
+```
+
+**Expected:** All widget tests pass (rendering, tokens, interactions, semantics).
+
+## Test Coverage Targets (from QA Agent)
+
+| Category | Target |
+|----------|--------|
+| Generator Unit Tests | 95% |
+| Widget Tests | 90% |
+| Token Coverage | 100% |
+
+## Test Categories
+
+### Generator Tests (`generator/test/`)
+- **Parser tests:** Meta file parsing, annotation extraction
+- **Generator tests:** Code output correctness, SOLID compliance
+- **Registry tests:** Component generator selection
+
+### Widget Tests (`generator/example/test/`)
+- **Rendering:** Label, layout, appearance
+- **Tokens:** Correct token application per DesignStyle
+- **Interactions:** tap, disabled, loading states
+- **Accessibility:** Semantics labels
+- **Theme switching:** Dynamic style changes
+
+## Adding New Component Tests
+
+1. Create widget test file: `example/test/<component>_test.dart`
+2. Test with all DesignStyles: material, cupertino, neo
+3. Test interactions: tap, hover, focus, disabled
+4. Test accessibility: semantics, keyboard nav
+5. Run: `flutter test`

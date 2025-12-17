@@ -68,10 +68,10 @@ class _MetaComponentVisitor extends RecursiveAstVisitor<void> {
 
   @override
   void visitClassDeclaration(ClassDeclaration node) {
-    // Check for @MetaComponent annotation - check annotation name using toSource
+    // Check for @ForgeComponent annotation - check annotation name using toSource
     final hasMetaAnnotation = node.metadata.any((annotation) {
       final name = annotation.name.toSource();
-      return name == 'MetaComponent';
+      return name == 'ForgeComponent' || name == 'MetaComponent';
     });
 
     if (hasMetaAnnotation) {

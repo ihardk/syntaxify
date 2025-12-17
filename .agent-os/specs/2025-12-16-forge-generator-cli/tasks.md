@@ -1,73 +1,58 @@
-# Tasks Checklist
+# Tasks Checklist - Phase 1 Complete
 
-Tasks for spec: @.agent-os/specs/2025-12-16-forge-generator-cli/spec.md
+## Phase 1: SOLID Architecture Implementation ✅
 
-## Phase 1 Tasks
+### Core Interfaces (Dependency Inversion)
+- [x] `ComponentGenerator` interface
+- [x] `FileSystem` interface
+- [x] `CodeFormatter` interface
 
-### 1. Project Setup
-- [x] Create `generator/` folder
-- [x] Initialize Dart project with `dart create`
-- [x] Set up pubspec.yaml with dependencies
-- [x] Create folder structure (bin, lib, test)
+### Per-Component Generators (Open/Closed)
+- [x] `ButtonGenerator` - button-specific generation
+- [x] `GenericGenerator` - fallback for unknown components
+- [x] `GeneratorRegistry` - factory pattern
 
-### 2. CLI Parser
-- [x] Create `bin/forge.dart` entry point
-- [x] Implement argument parsing with `args` package
-- [x] Add `build` command handler
-- [x] Add `clean` command handler
-- [x] Add `--component` flag support
+### Infrastructure Layer
+- [x] `LocalFileSystem` - production implementation
+- [x] `MemoryFileSystem` - testing mock
+- [x] `DartCodeFormatter` / `NoOpFormatter`
 
-### 3. Meta File Parser
-- [x] Create `parser/meta_parser.dart`
-- [x] Parse class definition from source
-- [x] Extract `@MetaComponent` annotation
-- [x] Extract field definitions with annotations
-- [x] Handle `@Required`, `@Optional`
+### Use Cases Layer (Single Responsibility)
+- [x] `GenerateComponentUseCase`
+- [x] `BuildAllUseCase`
 
-### 4. Token File Parser
-- [x] Create `parser/token_parser.dart`
-- [x] Parse token class from source
-- [x] Extract token properties with types
+### CLI & Integration
+- [x] Refactored `ForgeGenerator` with DI
+- [x] Build command wired up
+- [x] All 13 tests passing
 
-### 5. Code Generator
-- [x] Create `generator/widget_generator.dart`
-- [x] Create file header template
-- [x] Create widget class template
-- [x] Create build method template
-- [x] Use AppTheme.of(context) pattern ✓
+## Generated Output Quality
+- [x] Dartdoc comments on all classes/fields
+- [x] Uses `AppTheme.of(context)` pattern
+- [x] Semantics wrapper for accessibility
+- [x] Token-driven styling (no hardcoded values)
 
-### 6. Theme Generator
-- [x] Create `generator/theme_generator.dart`
-- [x] Generate AppTheme InheritedWidget
-- [x] Generate AppThemeData with factory constructors
-- [x] Support DesignStyle (material/cupertino/neo)
-
-### 7. File Writer
-- [x] Write to `lib/generated/components/` folder
-- [x] Write to `lib/generated/theme/` folder
-- [x] Copy token files to output
-- [x] Generate barrel file (index.dart)
-- [x] Format output with dart format
-
-### 8. Integration
-- [x] Connect all components in main CLI
-- [x] Test with Button component
-- [x] Verify output matches architecture (AppTheme pattern)
-
-### 9. Testing
-- [x] Unit tests for meta parser (6 tests)
-- [x] Unit tests for widget generator (7 tests)
-- [ ] Integration test for full flow
-
-## Output Structure (Matches technical_specs.md)
+## Project Structure (Clean Architecture)
 
 ```
-lib/generated/
-├── components/
-│   └── app_button.dart     ← Uses AppTheme.of(context).button
-├── theme/
-│   └── app_theme.dart      ← InheritedWidget + AppThemeData
-├── tokens/
-│   └── button_tokens.dart  ← ButtonTokens + ButtonTokensLibrary
-└── index.dart              ← Barrel file
+lib/src/
+├── core/interfaces/           ← DOMAIN (abstractions)
+│   ├── component_generator.dart
+│   ├── file_system.dart
+│   └── code_formatter.dart
+├── generators/                ← STRATEGY (implementations)
+│   ├── component/
+│   │   ├── button_generator.dart
+│   │   └── generic_generator.dart
+│   └── generator_registry.dart
+├── infrastructure/            ← DATA (I/O)
+│   ├── local_file_system.dart
+│   ├── memory_file_system.dart
+│   └── dart_code_formatter.dart
+├── use_cases/                 ← USE CASES
+│   ├── generate_component.dart
+│   └── build_all.dart
+└── cli/                       ← PRESENTATION
+    ├── build_command.dart
+    └── clean_command.dart
 ```
