@@ -1,11 +1,11 @@
-# Phase 0: Validation Prototype Plan
+# Phase 1: Generator Implementation Plan (Completed)
 
 **Goal:** Prove the "Code Generator" approach works by building the **Multi-Style Button Demo** (Material / Cupertino / Neo) discussed in the conversation.
 
 ## 1. Project Setup
 Instead of just empty folders, we will create a working playground.
-- [ ] Initialize `forge` (The Tool) as a generic Dart console app.
-- [ ] Initialize `meta_demo` (The App) as a standard Flutter app.
+- [x] Initialize `forge` (The Tool) as a generic Dart console app.
+- [x] Initialize `meta_demo` (The App) as a standard Flutter app.
 
 ## 2. Meta Definitions (The Input)
 We will create these specific files in `meta_demo/meta/`:
@@ -18,12 +18,12 @@ We will create these specific files in `meta_demo/meta/`:
 ## 3. The Generator Logic (The Tool)
 We will write a **Simple Script** (v0 of the generator) that:
 1.  Reads `theme.meta.dart`.
-2.  Generates `lib/theme/app_theme.dart` containing:
+2.  Generates `lib/forge/design_system/app_theme.dart` containing:
     *   `AppThemeData` class.
     *   `AppTheme` inherited widget.
     *   `AppTheme.material`, `AppTheme.cupertino`, `AppTheme.neo` factories.
 3.  Reads `button.meta.dart`.
-4.  Generates `lib/components/app_button.dart` that:
+4.  Generates `lib/forge/generated/components/app_button.dart` that:
     *   Looks up `AppTheme.of(context).button`.
     *   Applies the tokens (radius, color, border) to a Container.
 
@@ -41,5 +41,5 @@ We will build `lib/main.dart` in the `meta_demo` app:
 *   **Crucial:** The `lib/main.dart` has NO `if (style == neo)` logic. It just uses `AppTheme`.
 
 ## Next Step
-Shall I start by creating the folder structure for `forge` and `meta_demo`?
+Phase 1 Validation Complete. Proceeding to P2 (First Component Refinement).
 
