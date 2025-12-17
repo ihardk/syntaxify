@@ -1,48 +1,115 @@
 # Forge Coding Standards
 
-## Language & Framework
+## Core Principles
 
-- **Language:** Dart 3.2+
-- **Framework:** Flutter 3.16+
-- **Style:** Follow official Dart style guide
+### 1. SOLID Design Principles
 
-## Project Structure
+| Principle | Application in Forge |
+|-----------|---------------------|
+| **S** - Single Responsibility | Each class does one thing (Parser parses, Generator generates) |
+| **O** - Open/Closed | Extend via new renderers, don't modify existing |
+| **L** - Liskov Substitution | All renderers are interchangeable |
+| **I** - Interface Segregation | Small, focused interfaces (not god interfaces) |
+| **D** - Dependency Inversion | Depend on abstractions (e.g., `FileSystem` interface) |
+
+### 2. Clean Architecture
 
 ```
-forge/
-├── agents/       # AI agent role definitions
-├── planning/     # Architecture and design docs
-├── example/      # Demo app with manual prototype
-├── generator/    # The forge CLI tool (to be built)
-└── .agent-os/    # Agent-OS configuration
+┌─────────────────────────────────────────────────────────────┐
+│                     PRESENTATION                             │
+│   CLI commands, output formatting, user interaction          │
+└─────────────────────────────────────────────────────────────┘
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                     USE CASES                                │
+│   GenerateComponent, ParseMeta, ValidateTokens               │
+└─────────────────────────────────────────────────────────────┘
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                     DOMAIN                                   │
+│   MetaSpec, TokenDefinition, ComponentModel (pure Dart)      │
+└─────────────────────────────────────────────────────────────┘
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                     DATA / INFRASTRUCTURE                    │
+│   FileParser, CodeWriter, AnalyzerAdapter                    │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-## Naming Conventions
+### 3. TDD/BDD Approach
 
-### Files
-- Dart: `snake_case.dart`
-- Generated: `app_{component}.dart`
+```dart
+// Write test FIRST (Red)
+test('should parse @MetaComponent annotation', () {
+  final result = parser.parse(buttonMetaSource);
+  expect(result.componentName, equals('Button'));
+  expect(result.fields, hasLength(3));
+});
+
+// Then implement (Green)
+// Then refactor (Refactor)
+```
+
+**BDD for feature specs:**
+```gherkin
+Feature: Component Generation
+
+  Scenario: Generate button from meta
+    Given a meta file "button.meta.dart"
+    When I run "forge build"
+    Then "app_button.dart" should exist
+    And it should compile without errors
+```
+
+### 4. Design Patterns
+
+| Pattern | Usage |
+|---------|-------|
+| **Factory** | `ComponentFactory.create(metaType)` |
+| **Strategy** | Different renderers per theme |
+| **Builder** | Code generation with `CodeBuilder` |
+| **Template Method** | Base renderer with hooks |
+| **Visitor** | AST traversal for parsing |
+| **Repository** | File system abstraction |
+
+## Generated Code Standards
+
+### State Management Agnostic
+
+Generated code uses simple `InheritedWidget` for theme access:
+
+```dart
+// Generated - works with ANY state management
+class ForgeTheme extends InheritedWidget {
+  final ForgeThemeData data;
+  
+  static ForgeThemeData of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<ForgeTheme>()!.data;
+  }
+}
+
+// User wraps with their choice:
+// - Riverpod: ProviderScope wraps ForgeTheme
+// - Bloc: BlocProvider wraps ForgeTheme
+// - GetX: GetMaterialApp wraps ForgeTheme
+```
+
+### No Framework Lock-in
+
+Generated widgets are pure Flutter:
+- ✅ No Riverpod imports
+- ✅ No Bloc imports
+- ✅ No GetX imports
+- ✅ Works with `StatelessWidget` / `StatefulWidget`
+
+## File Naming
+
+- `snake_case.dart` for all files
 - Tests: `{name}_test.dart`
+- Generated: `app_{component}.dart`
 
-### Classes
-- Specs: `Meta{Component}Spec`
-- Tokens: `{Component}Tokens`
-- Renderers: `{Component}Renderer`
-- Generated: `App{Component}`
+## Documentation
 
-### Callbacks
-- Action: `onPressed`, `onChanged`, `onSubmitted`
-- State: `onEnabledChanged`, `onValidationChanged`
-
-## Code Quality
-
-- All public APIs have dartdoc comments
-- No dynamic typing
-- Generated code is `dart format` compliant
-- Build time < 2s for 10 components
-
-## Testing
-
-- Unit tests for token resolution (100% coverage)
-- Widget tests for component rendering
-- Golden tests for visual regression
+- All public APIs have dartdoc
+- Examples in doc comments
+- Link to Forge docs
