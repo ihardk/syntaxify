@@ -7,10 +7,10 @@ library design_system;
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'button_tokens.dart';
+import 'tokens/button_tokens.dart';
 
 // Re-export for convenience
-export 'button_tokens.dart';
+export 'tokens/button_tokens.dart';
 
 // Part files - same library as sealed class
 part 'app_theme.dart';

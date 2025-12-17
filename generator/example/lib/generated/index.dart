@@ -5,11 +5,4 @@
 // ============================================
 
 export 'components/app_button.dart';
-export 'tokens/design_system.dart';
-export 'tokens/app_theme.dart';
-export 'tokens/design_style.dart';
-export 'tokens/button_variant.dart';
-export 'tokens/styles/material_style.dart';
-export 'tokens/styles/cupertino_style.dart';
-export 'tokens/styles/neo_style.dart';
-export 'tokens/button_tokens.dart';
+export 'design_system/design_system.dart';

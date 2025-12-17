@@ -26,7 +26,12 @@ class BuildCommand extends Command<int> {
       ..addOption(
         'tokens',
         help: 'Directory containing token files',
-        defaultsTo: 'tokens',
+        defaultsTo: 'design_system',
+      )
+      ..addOption(
+        'design-system',
+        help: 'Directory containing design system templates',
+        defaultsTo: 'design_system',
       )
       ..addOption(
         'output',
@@ -49,14 +54,17 @@ class BuildCommand extends Command<int> {
     final component = argResults?['component'] as String?;
     final theme = argResults?['theme'] as String?;
     final metaDir = argResults?['meta'] as String? ?? 'meta';
-    final tokensDir = argResults?['tokens'] as String? ?? 'tokens';
+    final tokensDir = argResults?['tokens'] as String? ?? 'design_system';
+    final designSystemDir =
+        argResults?['design-system'] as String? ?? 'design_system';
     final outputDir = argResults?['output'] as String? ?? 'lib/generated';
 
     logger.info('');
     logger.info('🔨 Forge Build');
-    logger.info('   Meta:   $metaDir/');
-    logger.info('   Tokens: $tokensDir/');
-    logger.info('   Output: $outputDir/');
+    logger.info('   Meta:          $metaDir/');
+    logger.info('   Tokens:        $tokensDir/');
+    logger.info('   Design System: $designSystemDir/');
+    logger.info('   Output:        $outputDir/');
     logger.info('');
 
     final progress = logger.progress('Building components');
@@ -65,6 +73,7 @@ class BuildCommand extends Command<int> {
       final generator = ForgeGenerator(
         metaDirectory: metaDir,
         tokensDirectory: tokensDir,
+        designSystemDirectory: designSystemDir,
         outputDirectory: outputDir,
         logger: logger,
       );

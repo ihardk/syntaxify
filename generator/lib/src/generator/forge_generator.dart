@@ -24,6 +24,7 @@ class ForgeGenerator {
     required this.metaDirectory,
     required this.tokensDirectory,
     required this.outputDirectory,
+    required this.designSystemDirectory,
     required this.logger,
     FileSystem? fileSystem,
     GeneratorRegistry? registry,
@@ -33,6 +34,7 @@ class ForgeGenerator {
   final String metaDirectory;
   final String tokensDirectory;
   final String outputDirectory;
+  final String designSystemDirectory;
   final Logger logger;
   final FileSystem fileSystem;
   final GeneratorRegistry registry;
@@ -94,7 +96,7 @@ class ForgeGenerator {
         components: components,
         tokens: tokens,
         outputDir: outputDirectory,
-        tokensDir: tokensDirectory,
+        designSystemDir: designSystemDirectory,
       );
     } catch (e) {
       stopwatch.stop();

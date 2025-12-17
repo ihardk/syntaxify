@@ -38,17 +38,15 @@ class BuildAllUseCase {
     required List<MetaComponent> components,
     required List<TokenDefinition> tokens,
     required String outputDir,
-    String? tokensDir,
+    String? designSystemDir,
   }) async {
     final stopwatch = Stopwatch()..start();
     final generatedFiles = <String>[];
-    final warnings = <String>[];
     final errors = <String>[];
+    final warnings = <String>[];
 
     // Create output directories
     await fileSystem.createDirectory(path.join(outputDir, 'components'));
-    await fileSystem.createDirectory(path.join(outputDir, 'theme'));
-    await fileSystem.createDirectory(path.join(outputDir, 'tokens'));
 
     // Generate each component
     for (final component in components) {
@@ -78,10 +76,15 @@ class BuildAllUseCase {
     }
 
     // Copy design system files (modular structure)
-    if (tokensDir != null) {
-      // Core design system files
+    if (designSystemDir != null) {
+      // 1. Create design_system directory
+      await fileSystem.createDirectory(path.join(outputDir, 'design_system'));
+      await fileSystem
+          .createDirectory(path.join(outputDir, 'design_system', 'styles'));
+
+      // Core design system files (Source: design_system/ -> Dest: design_system/)
       final designSystemFiles = [
-        'design_system.dart', // Barrel file
+        'design_system.dart',
         'app_theme.dart',
         'design_style.dart',
         'button_variant.dart',
@@ -89,60 +92,62 @@ class BuildAllUseCase {
 
       for (final file in designSystemFiles) {
         try {
-          final srcPath = path.join(tokensDir, file);
+          final srcPath = path.join(designSystemDir, file);
           if (await fileSystem.exists(srcPath)) {
-            final destPath = path.join(outputDir, 'tokens', file);
+            final destPath = path.join(outputDir, 'design_system', file);
             await fileSystem.copyFile(srcPath, destPath);
-            generatedFiles.add('tokens/$file');
-            logger.success('Copied: tokens/$file');
+            generatedFiles.add('design_system/$file');
+            logger.success('Copied: design_system/$file');
           }
         } catch (e) {
           warnings.add('Could not copy $file: $e');
         }
       }
 
-      // Create styles subdirectory
-      await fileSystem
-          .createDirectory(path.join(outputDir, 'tokens', 'styles'));
-
-      // Style implementation files
+      // Style implementation files (Source: design_system/styles/ -> Dest: design_system/styles/)
       final styleFiles = [
-        'styles/material_style.dart',
-        'styles/cupertino_style.dart',
-        'styles/neo_style.dart',
+        'material_style.dart',
+        'cupertino_style.dart',
+        'neo_style.dart',
       ];
 
       for (final file in styleFiles) {
         try {
-          final srcPath = path.join(tokensDir, file);
+          final srcPath = path.join(designSystemDir, 'styles', file);
           if (await fileSystem.exists(srcPath)) {
-            final destPath = path.join(outputDir, 'tokens', file);
+            final destPath =
+                path.join(outputDir, 'design_system', 'styles', file);
             await fileSystem.copyFile(srcPath, destPath);
-            generatedFiles.add('tokens/$file');
-            logger.success('Copied: tokens/$file');
+            generatedFiles.add('design_system/styles/$file');
+            logger.success('Copied: design_system/styles/$file');
           }
         } catch (e) {
           warnings.add('Could not copy $file: $e');
         }
       }
-    }
 
-    // Copy token files
-    if (tokensDir != null) {
+      // Copy token files (Source: design_system/tokens/ -> Dest: design_system/tokens/)
+      await fileSystem
+          .createDirectory(path.join(outputDir, 'design_system', 'tokens'));
+
       for (final token in tokens) {
         try {
           final componentName = token.componentName.toLowerCase();
-          final srcPath = path.join(tokensDir, '${componentName}_tokens.dart');
+          final srcPath = path.join(
+              designSystemDir, 'tokens', '${componentName}_tokens.dart');
           final destPath = path.join(
             outputDir,
+            'design_system',
             'tokens',
             '${componentName}_tokens.dart',
           );
 
           if (await fileSystem.exists(srcPath)) {
             await fileSystem.copyFile(srcPath, destPath);
-            generatedFiles.add('tokens/${componentName}_tokens.dart');
-            logger.success('Copied: tokens/${componentName}_tokens.dart');
+            generatedFiles
+                .add('design_system/tokens/${componentName}_tokens.dart');
+            logger.success(
+                'Copied: design_system/tokens/${componentName}_tokens.dart');
           }
         } catch (e) {
           warnings.add('Could not copy token file for ${token.componentName}');
@@ -169,8 +174,16 @@ class BuildAllUseCase {
     String outputDir,
     List<String> files,
   ) async {
+    // Exclude part files that are already exported by design_system.dart
     final exports = files
         .where((f) => f.endsWith('.dart') && !f.endsWith('index.dart'))
+        .where((f) {
+          // Only export design_system.dart from the design_system directory
+          if (f.startsWith('design_system/')) {
+            return f == 'design_system/design_system.dart';
+          }
+          return true;
+        })
         .map((f) => "export '$f';")
         .join('\n');
 
