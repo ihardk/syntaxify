@@ -1,0 +1,90 @@
+import 'dart:io';
+
+import 'package:test/test.dart';
+
+import 'package:forge/src/parser/meta_parser.dart';
+import 'package:forge/src/models/meta_component.dart';
+import 'package:mason_logger/mason_logger.dart';
+
+void main() {
+  group('MetaParser', () {
+    late MetaParser parser;
+    late Logger logger;
+
+    setUp(() {
+      logger = Logger(level: Level.quiet);
+      parser = MetaParser(logger: logger);
+    });
+
+    test('parses @MetaComponent annotation', () async {
+      final file = File('meta/button.meta.dart');
+      final result = await parser.parseFile(file);
+
+      expect(result, isNotNull);
+      expect(result!.className, equals('ButtonMeta'));
+    });
+
+    test('extracts required fields', () async {
+      final file = File('meta/button.meta.dart');
+      final result = await parser.parseFile(file);
+
+      expect(result, isNotNull);
+
+      final labelField = result!.fields.firstWhere(
+        (f) => f.name == 'label',
+        orElse: () => throw StateError('label field not found'),
+      );
+
+      expect(labelField.isRequired, isTrue);
+      expect(labelField.type, equals('String'));
+    });
+
+    test('extracts optional fields', () async {
+      final file = File('meta/button.meta.dart');
+      final result = await parser.parseFile(file);
+
+      expect(result, isNotNull);
+
+      final onPressedField = result!.fields.firstWhere(
+        (f) => f.name == 'onPressed',
+        orElse: () => throw StateError('onPressed field not found'),
+      );
+
+      expect(onPressedField.isRequired, isFalse);
+    });
+
+    test('extracts all fields from ButtonMeta', () async {
+      final file = File('meta/button.meta.dart');
+      final result = await parser.parseFile(file);
+
+      expect(result, isNotNull);
+      expect(result!.fields.length, greaterThanOrEqualTo(4));
+
+      final fieldNames = result.fields.map((f) => f.name).toList();
+      expect(fieldNames, contains('label'));
+      expect(fieldNames, contains('onPressed'));
+      expect(fieldNames, contains('isLoading'));
+      expect(fieldNames, contains('isDisabled'));
+    });
+
+    test('returns null for files without @MetaComponent', () async {
+      // Create a temp file without annotation
+      final tempFile = File('test/fixtures/no_meta.dart');
+      await tempFile.create(recursive: true);
+      await tempFile.writeAsString('class NotAMeta {}');
+
+      final result = await parser.parseFile(tempFile);
+      expect(result, isNull);
+
+      await tempFile.delete();
+    });
+
+    test('parses directory returning all components', () async {
+      final dir = Directory('meta');
+      final result = await parser.parseDirectory(dir);
+
+      expect(result.components, isNotEmpty);
+      expect(result.hasErrors, isFalse);
+    });
+  });
+}
