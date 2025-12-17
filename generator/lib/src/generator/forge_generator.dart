@@ -97,6 +97,7 @@ class ForgeGenerator {
         tokens: tokens,
         outputDir: outputDirectory,
         designSystemDir: designSystemDirectory,
+        metaDirectoryPath: metaDirectory,
       );
     } catch (e) {
       stopwatch.stop();

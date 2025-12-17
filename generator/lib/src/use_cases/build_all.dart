@@ -1,5 +1,6 @@
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as path;
+import 'dart:io';
 
 import 'package:forge/src/core/interfaces/file_system.dart';
 import 'package:forge/src/generators/generator_registry.dart';
@@ -7,7 +8,11 @@ import 'package:forge/src/generator/theme_generator.dart';
 import 'package:forge/src/models/build_result.dart';
 import 'package:forge/src/models/meta_component.dart';
 import 'package:forge/src/models/token_definition.dart';
+import 'package:code_builder/code_builder.dart';
+import 'package:dart_style/dart_style.dart';
 import 'package:forge/src/use_cases/generate_component.dart';
+import 'package:forge/src/parser/registry_parser.dart';
+import 'package:forge/src/generators/registry/icon_registry_generator.dart';
 
 /// Use case for building all components.
 ///
@@ -38,8 +43,10 @@ class BuildAllUseCase {
     required List<MetaComponent> components,
     required List<TokenDefinition> tokens,
     required String outputDir,
+    required String metaDirectoryPath,
     String? designSystemDir,
   }) async {
+    final metaDirectory = Directory(metaDirectoryPath);
     final stopwatch = Stopwatch()..start();
     final generatedFiles = <String>[];
     final errors = <String>[];
@@ -89,7 +96,6 @@ class BuildAllUseCase {
         'app_theme.dart',
         'design_style.dart',
         'button_variant.dart',
-        'app_icons.dart',
       ];
 
       for (final file in designSystemFiles) {
@@ -157,6 +163,42 @@ class BuildAllUseCase {
         } catch (e) {
           warnings.add('Could not copy renderer $file: $e');
         }
+      }
+
+      // HANDLE APP ICONS (Generate or Copy)
+      try {
+        final registryParser = RegistryParser(logger: logger);
+        final registryDefs = await registryParser.parseDirectory(metaDirectory);
+
+        if (registryDefs.isNotEmpty) {
+          final iconGen = IconRegistryGenerator();
+          final lib = iconGen.build(registryDefs.first);
+          // Use DartEmitter with orderDirectives? Or manual.
+          final emitter = DartEmitter(
+              allocator: Allocator.simplePrefixing(), orderDirectives: true);
+          final content = lib.accept(emitter).toString();
+
+          await fileSystem.writeFile(
+            path.join(outputDir, 'design_system', 'app_icons.dart'),
+            DartFormatter().format(content),
+          );
+          generatedFiles.add('design_system/app_icons.dart');
+          logger.success('Generated: design_system/app_icons.dart');
+        } else {
+          // Fallback: Copy if exists in source
+          if (designSystemDir != null) {
+            final srcPath = path.join(designSystemDir, 'app_icons.dart');
+            if (await fileSystem.exists(srcPath)) {
+              final destPath =
+                  path.join(outputDir, 'design_system', 'app_icons.dart');
+              await fileSystem.copyFile(srcPath, destPath);
+              generatedFiles.add('design_system/app_icons.dart');
+              logger.success('Copied: design_system/app_icons.dart (Fallback)');
+            }
+          }
+        }
+      } catch (e) {
+        warnings.add('Failed to handle AppIcons: $e');
       }
 
       // Copy token files (Source: design_system/tokens/ -> Dest: design_system/tokens/)

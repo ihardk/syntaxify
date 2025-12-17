@@ -46,3 +46,15 @@ class State {
 
   const State(this.values);
 }
+
+/// Marks a class as an Icon Registry.
+class IconRegistry {
+  const IconRegistry();
+}
+
+/// Maps a constant to a specific IconData string (e.g., 'Icons.home').
+class IconMapping {
+  final String iconData;
+
+  const IconMapping(this.iconData);
+}
