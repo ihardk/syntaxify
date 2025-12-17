@@ -9,6 +9,6 @@ part of '../design_system.dart';
 /// - Hard drop shadows (4px offset)
 /// - Vibrant colors (gold, coral)
 /// - Uppercase text with heavy font weight
-class NeoStyle extends DesignStyle with NeoButtonRenderer {
+class NeoStyle extends DesignStyle with NeoButtonRenderer, NeoInputRenderer {
   const NeoStyle();
 }

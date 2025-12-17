@@ -1,5 +1,6 @@
 import 'package:forge/src/core/interfaces/component_generator.dart';
 import 'package:forge/src/generators/component/button_generator.dart';
+import 'package:forge/src/generators/component/input_generator.dart';
 import 'package:forge/src/generators/component/generic_generator.dart';
 import 'package:forge/src/models/meta_component.dart';
 
@@ -22,6 +23,7 @@ class GeneratorRegistry {
   GeneratorRegistry() {
     // Register default generators
     register(ButtonGenerator());
+    register(InputGenerator());
   }
 
   final List<ComponentGenerator> _generators = [];

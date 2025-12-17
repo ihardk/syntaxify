@@ -30,4 +30,23 @@ sealed class DesignStyle {
     bool isLoading = false,
     bool isDisabled = false,
   });
+
+  /// Get tokens for input component
+  InputTokens get inputTokens;
+
+  /// Render an input widget (HOW)
+  Widget renderInput({
+    required TextEditingController? controller,
+    String? label,
+    String? hint,
+    String? errorText,
+    bool obscureText = false,
+    bool enabled = true,
+    ValueChanged<String>? onChanged,
+    ValueChanged<String>? onSubmitted,
+    String? prefixIconName,
+    String? suffixIconName,
+    VoidCallback? onTapPrefix,
+    VoidCallback? onTapSuffix,
+  });
 }

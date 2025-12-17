@@ -22,6 +22,8 @@ Scaffold the required directories (`meta/` and `design_system/`):
 dart run forge init
 ```
 
+*Note: If you skip this step, `forge build` will detect missing files and ask to initialize for you.*
+
 ### 3. Build Components
 Generate your Flutter widgets:
 

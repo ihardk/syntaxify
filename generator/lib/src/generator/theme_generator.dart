@@ -49,7 +49,7 @@ class ThemeGenerator {
   Iterable<Directive> _generateImports(List<TokenDefinition> tokens) {
     return [
       Directive.import('package:flutter/material.dart'),
-      Directive.import('../tokens/design_styles.dart'),
+      Directive.import('../design_system.dart'),
     ];
   }
 

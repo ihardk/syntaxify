@@ -7,6 +7,7 @@ part of '../design_system.dart';
 /// - Rounded corners (8dp radius)
 /// - Filled and outlined button variants
 /// - Native Material widgets (ElevatedButton, FilledButton, OutlinedButton)
-class MaterialStyle extends DesignStyle with MaterialButtonRenderer {
+class MaterialStyle extends DesignStyle
+    with MaterialButtonRenderer, MaterialInputRenderer {
   const MaterialStyle();
 }

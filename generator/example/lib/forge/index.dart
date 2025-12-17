@@ -5,4 +5,5 @@
 // ============================================
 
 export 'generated/components/app_button.dart';
+export 'generated/components/app_input.dart';
 export 'design_system/design_system.dart';

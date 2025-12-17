@@ -1,29 +1,33 @@
-# Forge Product Roadmap
+# Product Roadmap
 
-> Last Updated: 2025-12-16
+## Phase 0: Foundation (Completed)
 
-## Current Phase
+**Goal:** Establish the core generator architecture and CLI.
+**Success Criteria:** Can generate a fully functional Button component from a meta-definition.
 
-🔄 **Phase 1: Generator Foundation**
+### Features
+- [x] Initial CLI (`init`, `build`)
+- [x] Meta-Definition Schema
+- [x] Button Component (Material, Cupertino, Neo)
+- [x] Smart Build Prompts
+- [x] Local `dart run` workflow support
 
-## Roadmap
+## Phase 1: Component Expansion
 
-| Phase | Name | Status | Description |
-|-------|------|--------|-------------|
-| 0 | Manual Prototype | ✅ Complete | Validate architecture with handwritten code |
-| 1 | Generator Foundation | 🔄 In Progress | Build `forge` CLI with basic generation |
-| 2 | First Component | ⬜ Planned | Full Button with all state tokens |
-| 3 | Multi-Theme | ⬜ Planned | Runtime theme switching |
-| 4 | Complex Inputs | ⬜ Planned | Forms and validation |
-| 5 | Layout System | ⬜ Planned | Row, Column, Container |
-| 6 | Slivers | ⬜ Planned | Advanced scrolling |
-| 7 | CLI Product | ⬜ Planned | pub.dev publishing |
+**Goal:** Expand available components to cover basic form inputs.
+**Success Criteria:** Functional Text Field and Card components.
 
-## Phase 1 Deliverables
+### Features
+- [ ] Input Component (TextField) `[L]`
+- [ ] Card/Container Component `[M]`
+- [ ] Meta-definition for validation rules `[M]`
 
-See: @.agent-os/specs/2025-12-16-forge-generator-cli/spec.md
+## Phase 2: Layout & Navigation
 
-- `forge build` command
-- Meta file parsing
-- Code generation
-- File output with headers
+**Goal:** Support screen-level generation.
+**Success Criteria:** Generate a Scaffold with AppBar and body content.
+
+### Features
+- [ ] Scaffold/Screen Component `[L]`
+- [ ] AppBar Component `[S]`
+- [ ] List/Grid View Generation `[XL]`

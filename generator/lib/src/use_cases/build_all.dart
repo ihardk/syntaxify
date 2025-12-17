@@ -89,6 +89,7 @@ class BuildAllUseCase {
         'app_theme.dart',
         'design_style.dart',
         'button_variant.dart',
+        'app_icons.dart',
       ];
 
       for (final file in designSystemFiles) {
@@ -133,6 +134,9 @@ class BuildAllUseCase {
         'material/button_renderer.dart',
         'cupertino/button_renderer.dart',
         'neo/button_renderer.dart',
+        'material/input_renderer.dart',
+        'cupertino/input_renderer.dart',
+        'neo/input_renderer.dart',
       ];
 
       for (final file in rendererFiles) {
@@ -158,6 +162,21 @@ class BuildAllUseCase {
       // Copy token files (Source: design_system/tokens/ -> Dest: design_system/tokens/)
       await fileSystem
           .createDirectory(path.join(outputDir, 'design_system', 'tokens'));
+
+      // Explicitly copy shared tokens
+      try {
+        final iconTokenPath =
+            path.join(designSystemDir, 'tokens', 'icon_token.dart');
+        if (await fileSystem.exists(iconTokenPath)) {
+          final destPath = path.join(
+              outputDir, 'design_system', 'tokens', 'icon_token.dart');
+          await fileSystem.copyFile(iconTokenPath, destPath);
+          generatedFiles.add('design_system/tokens/icon_token.dart');
+          logger.success('Copied: design_system/tokens/icon_token.dart');
+        }
+      } catch (e) {
+        warnings.add('Could not copy icon_token.dart: $e');
+      }
 
       for (final token in tokens) {
         try {

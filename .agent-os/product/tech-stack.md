@@ -1,40 +1,22 @@
-# Forge Tech Stack
+# Technical Stack
 
-## Core Technologies
+- application_framework: Dart 3.2+ (Console)
+- database_system: n/a
+- javascript_framework: n/a
+- import_strategy: n/a
+- css_framework: n/a
+- ui_component_library: n/a
+- fonts_provider: n/a
+- icon_library: n/a
+- application_hosting: Pub.dev (eventually)
+- database_hosting: n/a
+- asset_hosting: n/a
+- deployment_solution: GitHub Actions
+- code_repository_url: https://github.com/user/forge
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| Dart | 3.2+ | Generator language |
-| Flutter | 3.16+ | Target framework |
-
-## Generator Dependencies
-
-```yaml
-dependencies:
-  args: ^2.4.0      # CLI parsing
-  path: ^1.8.0      # File paths
-  
-dev_dependencies:
-  test: ^1.24.0
-  lints: ^3.0.0
-```
-
-## Generated Code Dependencies
-
-```yaml
-dependencies:
-  flutter:
-    sdk: flutter
-  # Zero external dependencies!
-```
-
-## Project Structure
-
-```
-forge/
-├── agents/        # AI agent definitions
-├── planning/      # Architecture docs
-├── generator/     # Forge CLI (to be built)
-├── example/       # Demo app
-└── .agent-os/     # Agent-OS config
-```
+## Core Dependencies
+- `analyzer`: Static analysis of meta files.
+- `code_builder`: Generation of Dart AST.
+- `dart_style`: Formatting output.
+- `mason_logger`: CLI interaction.
+- `args`: Command parsing.
