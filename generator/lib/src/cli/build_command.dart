@@ -56,9 +56,16 @@ class BuildCommand extends Command<int> {
     final component = argResults?['component'] as String?;
     final theme = argResults?['theme'] as String?;
     final metaDir = argResults?['meta'] as String? ?? 'meta';
-    final tokensDir = argResults?['tokens'] as String? ?? 'design_system';
-    final designSystemDir =
-        argResults?['design-system'] as String? ?? 'design_system';
+
+    // Smart defaults - prefer lib/syntax/design_system if it exists
+    final tokensDir = argResults?['tokens'] as String? ??
+        (Directory('lib/syntax/design_system').existsSync()
+            ? 'lib/syntax/design_system'
+            : 'design_system');
+    final designSystemDir = argResults?['design-system'] as String? ??
+        (Directory('lib/syntax/design_system').existsSync()
+            ? 'lib/syntax/design_system'
+            : 'design_system');
     final outputDir = argResults?['output'] as String? ?? 'lib/syntax';
 
     // Check availability
