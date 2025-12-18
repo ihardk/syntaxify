@@ -9,7 +9,7 @@ export 'src/core/interfaces/file_system.dart';
 export 'src/core/interfaces/code_formatter.dart';
 
 // Models (Domain Layer)
-export 'src/models/meta_component.dart';
+export 'src/models/component_definition.dart';
 export 'src/models/token_definition.dart';
 export 'src/models/build_result.dart';
 

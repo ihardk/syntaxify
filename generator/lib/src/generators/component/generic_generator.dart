@@ -2,7 +2,7 @@ import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 
 import 'package:forge/src/core/interfaces/component_generator.dart';
-import 'package:forge/src/models/ast_node.dart';
+import 'package:forge/src/models/component_definition.dart';
 import 'package:forge/src/models/token_definition.dart';
 
 /// Fallback generator for components without a specific generator.
@@ -21,14 +21,14 @@ class GenericGenerator implements ComponentGenerator {
   String get componentType => 'generic';
 
   @override
-  bool canHandle(AstNode node) => true; // Handles everything
+  bool canHandle(ComponentDefinition component) => true; // Handles everything
 
   @override
   String generate({
-    required AstNode node,
+    required ComponentDefinition component,
     TokenDefinition? tokens,
   }) {
-    final componentName = node.className.replaceAll('Meta', '');
+    final componentName = component.className.replaceAll('Meta', '');
     final className = 'App$componentName';
     final tokenName = componentName.toLowerCase();
 
@@ -36,7 +36,7 @@ class GenericGenerator implements ComponentGenerator {
       (b) => b
         ..comments.addAll(_generateHeader(componentName))
         ..directives.addAll(_generateImports())
-        ..body.add(_generateWidgetClass(node, className, tokenName)),
+        ..body.add(_generateWidgetClass(component, className, tokenName)),
     );
 
     final code = library.accept(_emitter).toString();
@@ -62,7 +62,7 @@ class GenericGenerator implements ComponentGenerator {
   }
 
   Class _generateWidgetClass(
-    AstNode node,
+    ComponentDefinition component,
     String className,
     String tokenName,
   ) {
@@ -71,16 +71,16 @@ class GenericGenerator implements ComponentGenerator {
         ..name = className
         ..docs.add('/// Generated $className component.')
         ..extend = refer('StatelessWidget')
-        ..fields.addAll(_generateFields(node))
-        ..constructors.add(_generateConstructor(node))
-        ..methods.add(_generateBuildMethod(node, tokenName)),
+        ..fields.addAll(_generateFields(component))
+        ..constructors.add(_generateConstructor(component))
+        ..methods.add(_generateBuildMethod(component, tokenName)),
     );
   }
 
-  Iterable<Field> _generateFields(AstNode node) {
+  Iterable<Field> _generateFields(ComponentDefinition component) {
     final fields = <Field>[];
 
-    for (final prop in node.properties) {
+    for (final prop in component.properties) {
       final typeStr = prop.isRequired
           ? prop.type
           : prop.type.endsWith('?')
@@ -98,7 +98,7 @@ class GenericGenerator implements ComponentGenerator {
     return fields;
   }
 
-  Constructor _generateConstructor(AstNode node) {
+  Constructor _generateConstructor(ComponentDefinition component) {
     final params = <Parameter>[];
 
     params.add(Parameter(
@@ -107,7 +107,7 @@ class GenericGenerator implements ComponentGenerator {
         ..name = 'super.key',
     ));
 
-    for (final prop in node.properties) {
+    for (final prop in component.properties) {
       params.add(Parameter(
         (b) => b
           ..named = true
@@ -126,7 +126,7 @@ class GenericGenerator implements ComponentGenerator {
     );
   }
 
-  Method _generateBuildMethod(AstNode node, String tokenName) {
+  Method _generateBuildMethod(ComponentDefinition component, String tokenName) {
     final body = '''
       final tokens = AppTheme.of(context).$tokenName;
       

@@ -6,21 +6,17 @@ import 'package:forge/src/core/interfaces/file_system.dart';
 import 'package:forge/src/generators/generator_registry.dart';
 import 'package:forge/src/generator/theme_generator.dart';
 import 'package:forge/src/models/build_result.dart';
-import 'package:forge/src/models/ast_node.dart';
+import 'package:forge/src/models/component_definition.dart';
 import 'package:forge/src/models/token_definition.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:forge/src/use_cases/generate_component.dart';
 import 'package:forge/src/parser/registry_parser.dart';
 import 'package:forge/src/generators/registry/icon_registry_generator.dart';
+import 'package:forge/src/use_cases/generate_screen.dart';
+import 'package:forge/src/models/ast/screen_definition.dart';
 
 /// Use case for building all components.
-///
-/// Orchestrates the full build process:
-/// 1. Generates each component using appropriate generator
-/// 2. Generates theme provider
-/// 3. Copies token files
-/// 4. Creates barrel file
 class BuildAllUseCase {
   BuildAllUseCase({
     required this.fileSystem,
@@ -36,11 +32,15 @@ class BuildAllUseCase {
     fileSystem: fileSystem,
     registry: registry,
   );
+  late final _generateScreen = GenerateScreenUseCase(
+    fileSystem: fileSystem,
+  );
   late final _themeGenerator = ThemeGenerator();
 
   /// Execute the full build.
   Future<BuildResult> execute({
-    required List<AstNode> components,
+    required List<ComponentDefinition> components,
+    required List<ScreenDefinition> screens,
     required List<TokenDefinition> tokens,
     required String outputDir,
     required String metaDirectoryPath,
@@ -56,6 +56,22 @@ class BuildAllUseCase {
     await fileSystem
         .createDirectory(path.join(outputDir, 'generated', 'components'));
 
+    // Generate screens
+    for (final screen in screens) {
+      try {
+        logger.info('Generating Screen: ${screen.id}');
+        final filePath = await _generateScreen.execute(
+          screen: screen,
+          outputDir: path.join(outputDir, 'generated'),
+        );
+        generatedFiles.add('generated/$filePath');
+        logger.success('Generated: generated/$filePath');
+      } catch (e) {
+        logger.err('Failed to generate screen ${screen.id}: $e');
+        errors.add('Failed to generate screen ${screen.id}: $e');
+      }
+    }
+
     // Generate each component
     for (final component in components) {
       try {
@@ -70,7 +86,7 @@ class BuildAllUseCase {
             .firstOrNull;
 
         final filePath = await _generateComponent.execute(
-          node: component,
+          component: component,
           outputDir: path.join(outputDir, 'generated'),
           tokens: matchingTokens,
         );

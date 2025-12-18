@@ -47,7 +47,7 @@ enum ButtonSize {
       final result = await parser.parseDirectory(tempDir);
 
       expect(result.hasErrors, isFalse);
-      expect(result.nodes.length, equals(1));
+      expect(result.components.length, equals(1));
 
       // Verify Enums
       expect(result.enums.length, equals(2));

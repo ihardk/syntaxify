@@ -2,7 +2,7 @@ import 'package:forge/src/core/interfaces/component_generator.dart';
 import 'package:forge/src/generators/component/button_generator.dart';
 import 'package:forge/src/generators/component/input_generator.dart';
 import 'package:forge/src/generators/component/generic_generator.dart';
-import 'package:forge/src/models/ast_node.dart';
+import 'package:forge/src/models/component_definition.dart';
 
 /// Registry of component generators.
 ///
@@ -38,9 +38,9 @@ class GeneratorRegistry {
   ///
   /// Returns the first registered generator that can handle the component,
   /// or falls back to GenericGenerator.
-  ComponentGenerator forComponent(AstNode node) {
+  ComponentGenerator forComponent(ComponentDefinition component) {
     for (final generator in _generators) {
-      if (generator.canHandle(node)) {
+      if (generator.canHandle(component)) {
         return generator;
       }
     }

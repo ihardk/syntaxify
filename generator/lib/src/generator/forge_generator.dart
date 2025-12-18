@@ -56,11 +56,11 @@ class ForgeGenerator {
       final metaDir = Directory(metaDirectory);
       final parseResult = await _metaParser.parseDirectory(metaDir);
 
-      if (parseResult.hasErrors) {
+      if (parseResult.errors.isNotEmpty) {
         errors.addAll(parseResult.errors);
       }
 
-      var components = parseResult.nodes;
+      var components = parseResult.components;
       logger.info('Found ${components.length} component(s)');
 
       // Filter by component name if specified
@@ -94,6 +94,7 @@ class ForgeGenerator {
 
       return buildUseCase.execute(
         components: components,
+        screens: parseResult.screens,
         tokens: tokens,
         outputDir: outputDirectory,
         designSystemDir: designSystemDirectory,

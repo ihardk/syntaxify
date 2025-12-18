@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'ast_node.dart';
+part of 'component_definition.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,34 +15,36 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$AstNode {
+mixin _$ComponentDefinition {
   String get name => throw _privateConstructorUsedError;
   String get className => throw _privateConstructorUsedError;
-  List<AstProp> get properties => throw _privateConstructorUsedError;
+  List<ComponentProp> get properties => throw _privateConstructorUsedError;
   List<String> get variants => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $AstNodeCopyWith<AstNode> get copyWith => throw _privateConstructorUsedError;
+  $ComponentDefinitionCopyWith<ComponentDefinition> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AstNodeCopyWith<$Res> {
-  factory $AstNodeCopyWith(AstNode value, $Res Function(AstNode) then) =
-      _$AstNodeCopyWithImpl<$Res, AstNode>;
+abstract class $ComponentDefinitionCopyWith<$Res> {
+  factory $ComponentDefinitionCopyWith(
+          ComponentDefinition value, $Res Function(ComponentDefinition) then) =
+      _$ComponentDefinitionCopyWithImpl<$Res, ComponentDefinition>;
   @useResult
   $Res call(
       {String name,
       String className,
-      List<AstProp> properties,
+      List<ComponentProp> properties,
       List<String> variants,
       String? description});
 }
 
 /// @nodoc
-class _$AstNodeCopyWithImpl<$Res, $Val extends AstNode>
-    implements $AstNodeCopyWith<$Res> {
-  _$AstNodeCopyWithImpl(this._value, this._then);
+class _$ComponentDefinitionCopyWithImpl<$Res, $Val extends ComponentDefinition>
+    implements $ComponentDefinitionCopyWith<$Res> {
+  _$ComponentDefinitionCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -70,7 +72,7 @@ class _$AstNodeCopyWithImpl<$Res, $Val extends AstNode>
       properties: null == properties
           ? _value.properties
           : properties // ignore: cast_nullable_to_non_nullable
-              as List<AstProp>,
+              as List<ComponentProp>,
       variants: null == variants
           ? _value.variants
           : variants // ignore: cast_nullable_to_non_nullable
@@ -84,26 +86,27 @@ class _$AstNodeCopyWithImpl<$Res, $Val extends AstNode>
 }
 
 /// @nodoc
-abstract class _$$AstNodeImplCopyWith<$Res> implements $AstNodeCopyWith<$Res> {
-  factory _$$AstNodeImplCopyWith(
-          _$AstNodeImpl value, $Res Function(_$AstNodeImpl) then) =
-      __$$AstNodeImplCopyWithImpl<$Res>;
+abstract class _$$ComponentDefinitionImplCopyWith<$Res>
+    implements $ComponentDefinitionCopyWith<$Res> {
+  factory _$$ComponentDefinitionImplCopyWith(_$ComponentDefinitionImpl value,
+          $Res Function(_$ComponentDefinitionImpl) then) =
+      __$$ComponentDefinitionImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String name,
       String className,
-      List<AstProp> properties,
+      List<ComponentProp> properties,
       List<String> variants,
       String? description});
 }
 
 /// @nodoc
-class __$$AstNodeImplCopyWithImpl<$Res>
-    extends _$AstNodeCopyWithImpl<$Res, _$AstNodeImpl>
-    implements _$$AstNodeImplCopyWith<$Res> {
-  __$$AstNodeImplCopyWithImpl(
-      _$AstNodeImpl _value, $Res Function(_$AstNodeImpl) _then)
+class __$$ComponentDefinitionImplCopyWithImpl<$Res>
+    extends _$ComponentDefinitionCopyWithImpl<$Res, _$ComponentDefinitionImpl>
+    implements _$$ComponentDefinitionImplCopyWith<$Res> {
+  __$$ComponentDefinitionImplCopyWithImpl(_$ComponentDefinitionImpl _value,
+      $Res Function(_$ComponentDefinitionImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -115,7 +118,7 @@ class __$$AstNodeImplCopyWithImpl<$Res>
     Object? variants = null,
     Object? description = freezed,
   }) {
-    return _then(_$AstNodeImpl(
+    return _then(_$ComponentDefinitionImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -127,7 +130,7 @@ class __$$AstNodeImplCopyWithImpl<$Res>
       properties: null == properties
           ? _value._properties
           : properties // ignore: cast_nullable_to_non_nullable
-              as List<AstProp>,
+              as List<ComponentProp>,
       variants: null == variants
           ? _value._variants
           : variants // ignore: cast_nullable_to_non_nullable
@@ -142,11 +145,11 @@ class __$$AstNodeImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AstNodeImpl implements _AstNode {
-  const _$AstNodeImpl(
+class _$ComponentDefinitionImpl implements _ComponentDefinition {
+  const _$ComponentDefinitionImpl(
       {required this.name,
       required this.className,
-      required final List<AstProp> properties,
+      required final List<ComponentProp> properties,
       required final List<String> variants,
       this.description})
       : _properties = properties,
@@ -156,9 +159,9 @@ class _$AstNodeImpl implements _AstNode {
   final String name;
   @override
   final String className;
-  final List<AstProp> _properties;
+  final List<ComponentProp> _properties;
   @override
-  List<AstProp> get properties {
+  List<ComponentProp> get properties {
     if (_properties is EqualUnmodifiableListView) return _properties;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_properties);
@@ -177,14 +180,14 @@ class _$AstNodeImpl implements _AstNode {
 
   @override
   String toString() {
-    return 'AstNode(name: $name, className: $className, properties: $properties, variants: $variants, description: $description)';
+    return 'ComponentDefinition(name: $name, className: $className, properties: $properties, variants: $variants, description: $description)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AstNodeImpl &&
+            other is _$ComponentDefinitionImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.className, className) ||
                 other.className == className) &&
@@ -207,36 +210,37 @@ class _$AstNodeImpl implements _AstNode {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AstNodeImplCopyWith<_$AstNodeImpl> get copyWith =>
-      __$$AstNodeImplCopyWithImpl<_$AstNodeImpl>(this, _$identity);
+  _$$ComponentDefinitionImplCopyWith<_$ComponentDefinitionImpl> get copyWith =>
+      __$$ComponentDefinitionImplCopyWithImpl<_$ComponentDefinitionImpl>(
+          this, _$identity);
 }
 
-abstract class _AstNode implements AstNode {
-  const factory _AstNode(
+abstract class _ComponentDefinition implements ComponentDefinition {
+  const factory _ComponentDefinition(
       {required final String name,
       required final String className,
-      required final List<AstProp> properties,
+      required final List<ComponentProp> properties,
       required final List<String> variants,
-      final String? description}) = _$AstNodeImpl;
+      final String? description}) = _$ComponentDefinitionImpl;
 
   @override
   String get name;
   @override
   String get className;
   @override
-  List<AstProp> get properties;
+  List<ComponentProp> get properties;
   @override
   List<String> get variants;
   @override
   String? get description;
   @override
   @JsonKey(ignore: true)
-  _$$AstNodeImplCopyWith<_$AstNodeImpl> get copyWith =>
+  _$$ComponentDefinitionImplCopyWith<_$ComponentDefinitionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$AstProp {
+mixin _$ComponentProp {
   String get name => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
   bool get isRequired => throw _privateConstructorUsedError;
@@ -244,13 +248,15 @@ mixin _$AstProp {
   String? get description => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $AstPropCopyWith<AstProp> get copyWith => throw _privateConstructorUsedError;
+  $ComponentPropCopyWith<ComponentProp> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AstPropCopyWith<$Res> {
-  factory $AstPropCopyWith(AstProp value, $Res Function(AstProp) then) =
-      _$AstPropCopyWithImpl<$Res, AstProp>;
+abstract class $ComponentPropCopyWith<$Res> {
+  factory $ComponentPropCopyWith(
+          ComponentProp value, $Res Function(ComponentProp) then) =
+      _$ComponentPropCopyWithImpl<$Res, ComponentProp>;
   @useResult
   $Res call(
       {String name,
@@ -261,9 +267,9 @@ abstract class $AstPropCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AstPropCopyWithImpl<$Res, $Val extends AstProp>
-    implements $AstPropCopyWith<$Res> {
-  _$AstPropCopyWithImpl(this._value, this._then);
+class _$ComponentPropCopyWithImpl<$Res, $Val extends ComponentProp>
+    implements $ComponentPropCopyWith<$Res> {
+  _$ComponentPropCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -305,10 +311,11 @@ class _$AstPropCopyWithImpl<$Res, $Val extends AstProp>
 }
 
 /// @nodoc
-abstract class _$$AstPropImplCopyWith<$Res> implements $AstPropCopyWith<$Res> {
-  factory _$$AstPropImplCopyWith(
-          _$AstPropImpl value, $Res Function(_$AstPropImpl) then) =
-      __$$AstPropImplCopyWithImpl<$Res>;
+abstract class _$$ComponentPropImplCopyWith<$Res>
+    implements $ComponentPropCopyWith<$Res> {
+  factory _$$ComponentPropImplCopyWith(
+          _$ComponentPropImpl value, $Res Function(_$ComponentPropImpl) then) =
+      __$$ComponentPropImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -320,11 +327,11 @@ abstract class _$$AstPropImplCopyWith<$Res> implements $AstPropCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$AstPropImplCopyWithImpl<$Res>
-    extends _$AstPropCopyWithImpl<$Res, _$AstPropImpl>
-    implements _$$AstPropImplCopyWith<$Res> {
-  __$$AstPropImplCopyWithImpl(
-      _$AstPropImpl _value, $Res Function(_$AstPropImpl) _then)
+class __$$ComponentPropImplCopyWithImpl<$Res>
+    extends _$ComponentPropCopyWithImpl<$Res, _$ComponentPropImpl>
+    implements _$$ComponentPropImplCopyWith<$Res> {
+  __$$ComponentPropImplCopyWithImpl(
+      _$ComponentPropImpl _value, $Res Function(_$ComponentPropImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -336,7 +343,7 @@ class __$$AstPropImplCopyWithImpl<$Res>
     Object? defaultValue = freezed,
     Object? description = freezed,
   }) {
-    return _then(_$AstPropImpl(
+    return _then(_$ComponentPropImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -363,8 +370,8 @@ class __$$AstPropImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AstPropImpl implements _AstProp {
-  const _$AstPropImpl(
+class _$ComponentPropImpl implements _ComponentProp {
+  const _$ComponentPropImpl(
       {required this.name,
       required this.type,
       required this.isRequired,
@@ -384,14 +391,14 @@ class _$AstPropImpl implements _AstProp {
 
   @override
   String toString() {
-    return 'AstProp(name: $name, type: $type, isRequired: $isRequired, defaultValue: $defaultValue, description: $description)';
+    return 'ComponentProp(name: $name, type: $type, isRequired: $isRequired, defaultValue: $defaultValue, description: $description)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AstPropImpl &&
+            other is _$ComponentPropImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.isRequired, isRequired) ||
@@ -409,17 +416,17 @@ class _$AstPropImpl implements _AstProp {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AstPropImplCopyWith<_$AstPropImpl> get copyWith =>
-      __$$AstPropImplCopyWithImpl<_$AstPropImpl>(this, _$identity);
+  _$$ComponentPropImplCopyWith<_$ComponentPropImpl> get copyWith =>
+      __$$ComponentPropImplCopyWithImpl<_$ComponentPropImpl>(this, _$identity);
 }
 
-abstract class _AstProp implements AstProp {
-  const factory _AstProp(
+abstract class _ComponentProp implements ComponentProp {
+  const factory _ComponentProp(
       {required final String name,
       required final String type,
       required final bool isRequired,
       final String? defaultValue,
-      final String? description}) = _$AstPropImpl;
+      final String? description}) = _$ComponentPropImpl;
 
   @override
   String get name;
@@ -433,32 +440,34 @@ abstract class _AstProp implements AstProp {
   String? get description;
   @override
   @JsonKey(ignore: true)
-  _$$AstPropImplCopyWith<_$AstPropImpl> get copyWith =>
+  _$$ComponentPropImplCopyWith<_$ComponentPropImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$AstEnum {
+mixin _$ComponentEnum {
   String get name => throw _privateConstructorUsedError;
   List<String> get values => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $AstEnumCopyWith<AstEnum> get copyWith => throw _privateConstructorUsedError;
+  $ComponentEnumCopyWith<ComponentEnum> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AstEnumCopyWith<$Res> {
-  factory $AstEnumCopyWith(AstEnum value, $Res Function(AstEnum) then) =
-      _$AstEnumCopyWithImpl<$Res, AstEnum>;
+abstract class $ComponentEnumCopyWith<$Res> {
+  factory $ComponentEnumCopyWith(
+          ComponentEnum value, $Res Function(ComponentEnum) then) =
+      _$ComponentEnumCopyWithImpl<$Res, ComponentEnum>;
   @useResult
   $Res call({String name, List<String> values, String? description});
 }
 
 /// @nodoc
-class _$AstEnumCopyWithImpl<$Res, $Val extends AstEnum>
-    implements $AstEnumCopyWith<$Res> {
-  _$AstEnumCopyWithImpl(this._value, this._then);
+class _$ComponentEnumCopyWithImpl<$Res, $Val extends ComponentEnum>
+    implements $ComponentEnumCopyWith<$Res> {
+  _$ComponentEnumCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -490,21 +499,22 @@ class _$AstEnumCopyWithImpl<$Res, $Val extends AstEnum>
 }
 
 /// @nodoc
-abstract class _$$AstEnumImplCopyWith<$Res> implements $AstEnumCopyWith<$Res> {
-  factory _$$AstEnumImplCopyWith(
-          _$AstEnumImpl value, $Res Function(_$AstEnumImpl) then) =
-      __$$AstEnumImplCopyWithImpl<$Res>;
+abstract class _$$ComponentEnumImplCopyWith<$Res>
+    implements $ComponentEnumCopyWith<$Res> {
+  factory _$$ComponentEnumImplCopyWith(
+          _$ComponentEnumImpl value, $Res Function(_$ComponentEnumImpl) then) =
+      __$$ComponentEnumImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name, List<String> values, String? description});
 }
 
 /// @nodoc
-class __$$AstEnumImplCopyWithImpl<$Res>
-    extends _$AstEnumCopyWithImpl<$Res, _$AstEnumImpl>
-    implements _$$AstEnumImplCopyWith<$Res> {
-  __$$AstEnumImplCopyWithImpl(
-      _$AstEnumImpl _value, $Res Function(_$AstEnumImpl) _then)
+class __$$ComponentEnumImplCopyWithImpl<$Res>
+    extends _$ComponentEnumCopyWithImpl<$Res, _$ComponentEnumImpl>
+    implements _$$ComponentEnumImplCopyWith<$Res> {
+  __$$ComponentEnumImplCopyWithImpl(
+      _$ComponentEnumImpl _value, $Res Function(_$ComponentEnumImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -514,7 +524,7 @@ class __$$AstEnumImplCopyWithImpl<$Res>
     Object? values = null,
     Object? description = freezed,
   }) {
-    return _then(_$AstEnumImpl(
+    return _then(_$ComponentEnumImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -533,8 +543,8 @@ class __$$AstEnumImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AstEnumImpl implements _AstEnum {
-  const _$AstEnumImpl(
+class _$ComponentEnumImpl implements _ComponentEnum {
+  const _$ComponentEnumImpl(
       {required this.name,
       required final List<String> values,
       this.description})
@@ -555,14 +565,14 @@ class _$AstEnumImpl implements _AstEnum {
 
   @override
   String toString() {
-    return 'AstEnum(name: $name, values: $values, description: $description)';
+    return 'ComponentEnum(name: $name, values: $values, description: $description)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AstEnumImpl &&
+            other is _$ComponentEnumImpl &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality().equals(other._values, _values) &&
             (identical(other.description, description) ||
@@ -576,15 +586,15 @@ class _$AstEnumImpl implements _AstEnum {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AstEnumImplCopyWith<_$AstEnumImpl> get copyWith =>
-      __$$AstEnumImplCopyWithImpl<_$AstEnumImpl>(this, _$identity);
+  _$$ComponentEnumImplCopyWith<_$ComponentEnumImpl> get copyWith =>
+      __$$ComponentEnumImplCopyWithImpl<_$ComponentEnumImpl>(this, _$identity);
 }
 
-abstract class _AstEnum implements AstEnum {
-  const factory _AstEnum(
+abstract class _ComponentEnum implements ComponentEnum {
+  const factory _ComponentEnum(
       {required final String name,
       required final List<String> values,
-      final String? description}) = _$AstEnumImpl;
+      final String? description}) = _$ComponentEnumImpl;
 
   @override
   String get name;
@@ -594,14 +604,16 @@ abstract class _AstEnum implements AstEnum {
   String? get description;
   @override
   @JsonKey(ignore: true)
-  _$$AstEnumImplCopyWith<_$AstEnumImpl> get copyWith =>
+  _$$ComponentEnumImplCopyWith<_$ComponentEnumImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$ParseResult {
-  List<AstNode> get nodes => throw _privateConstructorUsedError;
-  List<AstEnum> get enums => throw _privateConstructorUsedError;
+  List<ComponentDefinition> get components =>
+      throw _privateConstructorUsedError;
+  List<ScreenDefinition> get screens => throw _privateConstructorUsedError;
+  List<ComponentEnum> get enums => throw _privateConstructorUsedError;
   List<String> get errors => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -615,7 +627,11 @@ abstract class $ParseResultCopyWith<$Res> {
           ParseResult value, $Res Function(ParseResult) then) =
       _$ParseResultCopyWithImpl<$Res, ParseResult>;
   @useResult
-  $Res call({List<AstNode> nodes, List<AstEnum> enums, List<String> errors});
+  $Res call(
+      {List<ComponentDefinition> components,
+      List<ScreenDefinition> screens,
+      List<ComponentEnum> enums,
+      List<String> errors});
 }
 
 /// @nodoc
@@ -631,19 +647,24 @@ class _$ParseResultCopyWithImpl<$Res, $Val extends ParseResult>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? nodes = null,
+    Object? components = null,
+    Object? screens = null,
     Object? enums = null,
     Object? errors = null,
   }) {
     return _then(_value.copyWith(
-      nodes: null == nodes
-          ? _value.nodes
-          : nodes // ignore: cast_nullable_to_non_nullable
-              as List<AstNode>,
+      components: null == components
+          ? _value.components
+          : components // ignore: cast_nullable_to_non_nullable
+              as List<ComponentDefinition>,
+      screens: null == screens
+          ? _value.screens
+          : screens // ignore: cast_nullable_to_non_nullable
+              as List<ScreenDefinition>,
       enums: null == enums
           ? _value.enums
           : enums // ignore: cast_nullable_to_non_nullable
-              as List<AstEnum>,
+              as List<ComponentEnum>,
       errors: null == errors
           ? _value.errors
           : errors // ignore: cast_nullable_to_non_nullable
@@ -660,7 +681,11 @@ abstract class _$$ParseResultImplCopyWith<$Res>
       __$$ParseResultImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<AstNode> nodes, List<AstEnum> enums, List<String> errors});
+  $Res call(
+      {List<ComponentDefinition> components,
+      List<ScreenDefinition> screens,
+      List<ComponentEnum> enums,
+      List<String> errors});
 }
 
 /// @nodoc
@@ -674,19 +699,24 @@ class __$$ParseResultImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? nodes = null,
+    Object? components = null,
+    Object? screens = null,
     Object? enums = null,
     Object? errors = null,
   }) {
     return _then(_$ParseResultImpl(
-      nodes: null == nodes
-          ? _value._nodes
-          : nodes // ignore: cast_nullable_to_non_nullable
-              as List<AstNode>,
+      components: null == components
+          ? _value._components
+          : components // ignore: cast_nullable_to_non_nullable
+              as List<ComponentDefinition>,
+      screens: null == screens
+          ? _value._screens
+          : screens // ignore: cast_nullable_to_non_nullable
+              as List<ScreenDefinition>,
       enums: null == enums
           ? _value._enums
           : enums // ignore: cast_nullable_to_non_nullable
-              as List<AstEnum>,
+              as List<ComponentEnum>,
       errors: null == errors
           ? _value._errors
           : errors // ignore: cast_nullable_to_non_nullable
@@ -699,26 +729,37 @@ class __$$ParseResultImplCopyWithImpl<$Res>
 
 class _$ParseResultImpl extends _ParseResult {
   const _$ParseResultImpl(
-      {required final List<AstNode> nodes,
-      final List<AstEnum> enums = const [],
+      {required final List<ComponentDefinition> components,
+      final List<ScreenDefinition> screens = const [],
+      final List<ComponentEnum> enums = const [],
       required final List<String> errors})
-      : _nodes = nodes,
+      : _components = components,
+        _screens = screens,
         _enums = enums,
         _errors = errors,
         super._();
 
-  final List<AstNode> _nodes;
+  final List<ComponentDefinition> _components;
   @override
-  List<AstNode> get nodes {
-    if (_nodes is EqualUnmodifiableListView) return _nodes;
+  List<ComponentDefinition> get components {
+    if (_components is EqualUnmodifiableListView) return _components;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_nodes);
+    return EqualUnmodifiableListView(_components);
   }
 
-  final List<AstEnum> _enums;
+  final List<ScreenDefinition> _screens;
   @override
   @JsonKey()
-  List<AstEnum> get enums {
+  List<ScreenDefinition> get screens {
+    if (_screens is EqualUnmodifiableListView) return _screens;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_screens);
+  }
+
+  final List<ComponentEnum> _enums;
+  @override
+  @JsonKey()
+  List<ComponentEnum> get enums {
     if (_enums is EqualUnmodifiableListView) return _enums;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_enums);
@@ -734,7 +775,7 @@ class _$ParseResultImpl extends _ParseResult {
 
   @override
   String toString() {
-    return 'ParseResult(nodes: $nodes, enums: $enums, errors: $errors)';
+    return 'ParseResult(components: $components, screens: $screens, enums: $enums, errors: $errors)';
   }
 
   @override
@@ -742,7 +783,9 @@ class _$ParseResultImpl extends _ParseResult {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ParseResultImpl &&
-            const DeepCollectionEquality().equals(other._nodes, _nodes) &&
+            const DeepCollectionEquality()
+                .equals(other._components, _components) &&
+            const DeepCollectionEquality().equals(other._screens, _screens) &&
             const DeepCollectionEquality().equals(other._enums, _enums) &&
             const DeepCollectionEquality().equals(other._errors, _errors));
   }
@@ -750,7 +793,8 @@ class _$ParseResultImpl extends _ParseResult {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_nodes),
+      const DeepCollectionEquality().hash(_components),
+      const DeepCollectionEquality().hash(_screens),
       const DeepCollectionEquality().hash(_enums),
       const DeepCollectionEquality().hash(_errors));
 
@@ -763,15 +807,18 @@ class _$ParseResultImpl extends _ParseResult {
 
 abstract class _ParseResult extends ParseResult {
   const factory _ParseResult(
-      {required final List<AstNode> nodes,
-      final List<AstEnum> enums,
+      {required final List<ComponentDefinition> components,
+      final List<ScreenDefinition> screens,
+      final List<ComponentEnum> enums,
       required final List<String> errors}) = _$ParseResultImpl;
   const _ParseResult._() : super._();
 
   @override
-  List<AstNode> get nodes;
+  List<ComponentDefinition> get components;
   @override
-  List<AstEnum> get enums;
+  List<ScreenDefinition> get screens;
+  @override
+  List<ComponentEnum> get enums;
   @override
   List<String> get errors;
   @override

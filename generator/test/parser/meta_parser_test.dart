@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:test/test.dart';
 
 import 'package:forge/src/parser/meta_parser.dart';
-import 'package:forge/src/models/ast_node.dart';
+import 'package:forge/src/models/component_definition.dart';
 import 'package:mason_logger/mason_logger.dart';
 
 void main() {
@@ -83,8 +83,9 @@ void main() {
       final dir = Directory('meta');
       final result = await parser.parseDirectory(dir);
 
-      expect(result.nodes, isNotEmpty); // Access nodes instead of components
-      expect(result.hasErrors, isFalse);
+      expect(
+          result.components, isNotEmpty); // Access components instead of nodes
+      expect(result.errors, isEmpty);
     });
   });
 }
