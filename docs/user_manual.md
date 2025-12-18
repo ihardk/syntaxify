@@ -1,124 +1,291 @@
 # Syntax User Manual 🛠️
 
-Welcome to **Syntax**, the Meta-Framework for Flutter. Syntax allows you to define your application's components and design system in high-level "Meta" files, automatically generating production-ready, scalable code.
+**AST-based Flutter UI Code Generator**
+
+Syntax generates production-ready Flutter widgets from declarative component definitions and screen layouts.
 
 ## 🚀 Getting Started
 
 ### 1. Installation
-Add `Syntax` to your `dev_dependencies` in `pubspec.yaml`:
 
+**Global Installation (Recommended):**
+```bash
+cd generator
+dart pub global activate --source path .
+```
+
+**Or add to your project:**
 ```yaml
 dev_dependencies:
-  Syntax: ^0.0.1 # Or path dependency
+  syntax:
+    path: ../generator  # Adjust path as needed
 ```
 
-### 2. Initialization
-Initialize your project structure. This creates the `meta/` and `design_system/` directories.
+### 2. Initialize Your Project
+
+Create the required directory structure:
 
 ```bash
-dart run Syntax init
+syntax init
 ```
+
+This creates:
+- `meta/` - Component definitions
+- `lib/syntax/design_system/` - Customizable design system
 
 ### 3. The Workflow
-The Syntax workflow is simple:
-1.  **Define**: Edit `.meta.dart` files in `meta/` directory.
-2.  **Style**: Customize renderers in `design_system/`.
-3.  **Build**: Run the generator.
+
+1. **Define** - Edit component specs in `meta/`
+2. **Build** - Generate code
+3. **Use** - Import and use generated components
 
 ```bash
-dart run Syntax build
+syntax build --meta=meta --design-system=lib/syntax/design_system --tokens=lib/syntax/design_system --output=lib/syntax
 ```
-
-The generated code lives in `lib/Syntax/`. You should treat this folder as read-only (mostly).
 
 ---
 
 ## 📂 Project Structure
 
-*   `meta/`: Your Source of Truth.
-    *   `button.meta.dart`: Defines button variants and properties.
-    *   `input.meta.dart`: Defines input fields.
-    *   `app_icons.dart`: Defines semantic icons.
-*   `design_system/`: Your Implementation Details.
-    *   `styles/`: Contains Renderers (Material, Cupertino, Neo).
-    *   `tokens/`: Usage-specific tokens.
-*   `lib/Syntax/`: The Generated Code.
-    *   `generated/components/`: The Widgets you use in your app (`AppButton`, `AppInput`).
-    *   `design_system/`: The Runtime configuration.
+After running `syntax init` and `syntax build`:
+
+```
+your_project/
+├── meta/                          # Component definitions (edit these)
+│   ├── button.meta.dart
+│   ├── input.meta.dart
+│   ├── text.meta.dart
+│   └── app_icons.dart
+│
+└── lib/
+    ├── screens/                   # Generated screens (EDITABLE ✏️)
+    │   └── login_screen.dart      # You can modify these
+    │
+    └── syntax/
+        ├── design_system/         # Design system (CUSTOMIZABLE 🎨)
+        │   ├── styles/            # Material, Cupertino, Neo
+        │   └── tokens/            # Design tokens
+        │
+        └── generated/             # Generated components (DON'T EDIT 🔒)
+            ├── components/
+            │   ├── app_button.dart
+            │   ├── app_input.dart
+            │   └── app_text.dart
+            └── index.dart
+```
+
+**Key Principles:**
+- **Screens** (`lib/screens/`) - Generated once, then you own them
+- **Design System** (`lib/syntax/design_system/`) - Customize styles and tokens
+- **Components** (`lib/syntax/generated/`) - Regenerated on every build
 
 ---
 
 ## 🎨 Design System
 
-Syntax uses a "Renderer Pattern". Changing the style doesn't require rewriting widgets.
+Syntax supports three design styles out of the box.
 
 ### Switching Styles
-In `lib/main.dart` (or wherever you init `AppTheme`):
+
+Wrap your app with `AppTheme`:
 
 ```dart
-final theme = AppTheme(
-  style: NeoStyle(), // Switch to MaterialStyle() or CupertinoStyle()
-);
+import 'package:your_app/syntax/design_system/design_system.dart';
+
+MaterialApp(
+  home: AppTheme(
+    style: MaterialStyle(),  // or CupertinoStyle() or NeoStyle()
+    child: YourHomePage(),
+  ),
+)
 ```
 
-### Customizing Renderers
-Edit files in `design_system/styles/<style>/`.
-For example, to change how a specific button looks in Material, edit `design_system/styles/material/button_renderer.dart`.
+### Customizing Styles
 
+Edit files in `lib/syntax/design_system/styles/<style>/`:
+
+**Example:** Customize Material button
 ```dart
+// lib/syntax/design_system/styles/material/button_renderer.dart
+
 mixin MaterialButtonRenderer on ButtonTokens {
   Widget renderButton(BuildContext context, AppButton button) {
-     // Your custom implementation
-     return ElevatedButton(...);
+    final tokens = buttonTokens(button.variant);
+    
+    return ElevatedButton(
+      onPressed: button.onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: tokens.bgColor,
+        // Your customizations here
+      ),
+      child: Text(button.label),
+    );
   }
 }
 ```
 
 ---
 
-## 🧩 Components
+## 🧩 Using Components
 
 ### AppButton
-Use the generated `AppButton` widget.
 
 ```dart
+import 'package:your_app/syntax/index.dart';
+
 AppButton(
   label: 'Click Me',
-  onPressed: () {},
   variant: ButtonVariant.primary,
+  onPressed: () => print('Clicked!'),
 )
 ```
 
-### AppIcons
-Define icons in `meta/app_icons.dart` using annotations. This is your **Single Source of Truth**.
+### AppInput
 
-**1. Define in `meta/app_icons.dart`:**
 ```dart
+AppInput(
+  label: 'Email',
+  hint: 'Enter your email',
+  keyboardType: TextInputType.emailAddress,
+  onChanged: (value) => print(value),
+)
+```
+
+### AppText
+
+```dart
+AppText(
+  text: 'Hello World',
+  variant: 'headlineMedium',
+)
+```
+
+---
+
+## 🎯 Icons
+
+Define semantic icons in `meta/app_icons.dart`:
+
+```dart
+import 'package:syntax/syntax.dart';
+
 @IconRegistry()
 class AppIcon {
   @IconMapping('Icons.search')
   static const search = 'search';
+  
+  @IconMapping('Icons.person')
+  static const user = 'user';
 }
 ```
 
-**2. Run Build:**
-```bash
-dart run Syntax build
-```
+After running `syntax build`, use them:
 
-**3. Use in Code:**
 ```dart
-AppIcon.search // Type-safe string 'search'
+AppInput(
+  prefixIcon: AppIcon.search,  // Type-safe string
+)
 ```
 
-The runtime will map this string to `Icons.search` automatically.
+The runtime maps `'search'` → `Icons.search` automatically.
+
+---
+
+## 📱 Screens
+
+Screens are generated to `lib/screens/` and are **editable**.
+
+**Define a screen in `meta/login.screen.dart`:**
+```dart
+import 'package:syntax/syntax.dart';
+
+final loginScreen = ScreenDefinition(
+  id: 'login',
+  layout: AstNode.column(
+    children: [
+      AstNode.text(text: 'Welcome Back'),
+      AstNode.textField(
+        label: 'Email',
+        keyboardType: KeyboardType.email,
+      ),
+      AstNode.button(
+        label: 'Sign In',
+        onPressed: 'handleLogin',
+      ),
+    ],
+  ),
+);
+```
+
+**Run build:**
+```bash
+syntax build ...
+```
+
+**Generated `lib/screens/login_screen.dart`:**
+```dart
+import 'package:flutter/material.dart';
+import 'package:your_app/syntax/index.dart';
+
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          AppText(text: 'Welcome Back'),
+          AppInput(label: 'Email', keyboardType: TextInputType.emailAddress),
+          AppButton(label: 'Sign In', onPressed: handleLogin),
+        ],
+      ),
+    );
+  }
+  
+  void handleLogin() {
+    // TODO: Add your logic here
+  }
+}
+```
+
+**You can now edit this file freely!**
 
 ---
 
 ## ❓ Troubleshooting
 
 **"Type not found" errors?**
-Ensure you run `dart run Syntax build` after creating new meta files.
+- Run `syntax build` after creating new meta files
+- Check that imports point to `package:your_app/syntax/index.dart`
 
 **"File not found"?**
-Ensure `meta/` directory exists in your project root. Run `dart run Syntax init` to repair structure.
+- Ensure `meta/` exists: run `syntax init`
+- Check paths in build command
+
+**Screens not generating?**
+- Ensure screen files end with `.screen.dart`
+- Check that `ScreenDefinition` is properly defined
+
+**Components look wrong?**
+- Check which `DesignStyle` is active in `AppTheme`
+- Customize renderers in `lib/syntax/design_system/styles/`
+
+---
+
+## 🔄 Rebuild Workflow
+
+When you change component definitions:
+
+1. Edit `meta/*.meta.dart` files
+2. Run `syntax build ...`
+3. Components in `lib/syntax/generated/` are regenerated
+4. Screens in `lib/screens/` are **not** overwritten
+5. Design system in `lib/syntax/design_system/` is **not** overwritten
+
+**Safe to edit:**
+- ✅ `lib/screens/*` - Your screens
+- ✅ `lib/syntax/design_system/*` - Your styles
+
+**Don't edit (will be overwritten):**
+- ❌ `lib/syntax/generated/*` - Regenerated on build

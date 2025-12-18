@@ -1,6 +1,8 @@
 name: syntax
 description: AST-based Flutter UI code generator with multi-style design system support
-version: 0.0.3
+version: 0.1.0
+repository: https://github.com/ihardk/syntax
+homepage: https://github.com/ihardk/syntax
 
 environment:
   sdk: '>=3.2.0 <4.0.0'

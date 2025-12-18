@@ -26,7 +26,7 @@ To debug the generator while running it against the example project:
           "name": "Debug Build (Example)",
           "request": "launch",
           "type": "dart",
-          "program": "bin/Syntax.dart",
+          "program": "bin/syntax.dart",
           "args": ["build", "--verbose"],
           "cwd": "${workspaceFolder}/example"
         }
@@ -80,7 +80,7 @@ Decide what configuration the user provides.
 Create a template in `meta/card.meta.dart`:
 
 ```dart
-@syntaxComponent(description: 'A container card')
+@SyntaxComponent(description: 'A container card')
 class CardMeta {
   @Required()
   final String child;

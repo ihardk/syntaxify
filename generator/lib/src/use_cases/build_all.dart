@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:syntax/src/core/interfaces/file_system.dart';
 import 'package:syntax/src/generators/generator_registry.dart';
-import 'package:syntax/src/generator/theme_generator.dart';
+
 import 'package:syntax/src/models/build_result.dart';
 import 'package:syntax/src/models/component_definition.dart';
 import 'package:syntax/src/models/token_definition.dart';
@@ -35,7 +35,6 @@ class BuildAllUseCase {
   late final _generateScreen = GenerateScreenUseCase(
     fileSystem: fileSystem,
   );
-  late final _themeGenerator = ThemeGenerator();
 
   /// Execute the full build.
   Future<BuildResult> execute({
@@ -223,15 +222,13 @@ class BuildAllUseCase {
           logger.success('Generated: design_system/app_icons.dart');
         } else {
           // Fallback: Copy if exists in source
-          if (designSystemDir != null) {
-            final srcPath = path.join(designSystemDir, 'app_icons.dart');
-            if (await fileSystem.exists(srcPath)) {
-              final destPath =
-                  path.join(outputDir, 'design_system', 'app_icons.dart');
-              await fileSystem.copyFile(srcPath, destPath);
-              generatedFiles.add('design_system/app_icons.dart');
-              logger.success('Copied: design_system/app_icons.dart (Fallback)');
-            }
+          final srcPath = path.join(designSystemDir!, 'app_icons.dart');
+          if (await fileSystem.exists(srcPath)) {
+            final destPath =
+                path.join(outputDir, 'design_system', 'app_icons.dart');
+            await fileSystem.copyFile(srcPath, destPath);
+            generatedFiles.add('design_system/app_icons.dart');
+            logger.success('Copied: design_system/app_icons.dart (Fallback)');
           }
         }
       } catch (e) {
