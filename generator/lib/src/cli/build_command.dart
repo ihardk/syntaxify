@@ -12,27 +12,29 @@ class BuildCommand extends Command<int> {
       ..addOption(
         'component',
         abbr: 'c',
-        help: 'Generate a specific component only',
+        help: 'Build a specific component only (e.g., AppButton)',
       )
       ..addOption(
         'theme',
         abbr: 't',
-        help: 'Generate for a specific theme only',
+        help: 'Build for a specific theme only (e.g., material)',
       )
       ..addOption(
         'meta',
         abbr: 'm',
-        help: 'Directory containing meta files',
+        help: 'Path to meta directory containing component definitions',
         defaultsTo: 'meta',
       )
       ..addOption(
         'tokens',
-        help: 'Directory containing token files',
+        help:
+            'Path to tokens directory (auto-detects lib/syntax/design_system)',
         defaultsTo: 'design_system',
       )
       ..addOption(
         'design-system',
-        help: 'Directory containing design system templates',
+        help:
+            'Path to design system directory (auto-detects lib/syntax/design_system)',
         defaultsTo: 'design_system',
       )
       ..addOption(
@@ -49,7 +51,27 @@ class BuildCommand extends Command<int> {
   String get name => 'build';
 
   @override
-  String get description => 'Generate Flutter widgets from meta definitions';
+  String get description => '''
+Generate Flutter widgets from meta definitions.
+
+Usage:
+  syntax build                    # Auto-detect project structure
+  syntax build -m meta -o lib     # Custom paths
+  syntax build -c AppButton       # Build specific component
+
+Options:
+  -m, --meta              Meta directory (default: "meta")
+  -o, --output            Output directory (default: "lib/syntax")
+  --design-system         Design system directory (auto-detected)
+  --tokens                Tokens directory (auto-detected)
+  -c, --component         Build specific component only
+  -t, --theme             Build for specific theme only
+
+Examples:
+  syntax build                                    # Build everything
+  syntax build --component=AppButton              # Build one component
+  syntax build --meta=specs --output=lib/gen     # Custom paths
+''';
 
   @override
   Future<int> run() async {
