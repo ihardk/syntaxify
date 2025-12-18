@@ -1,4 +1,4 @@
 @echo off
-echo 🏗️ Initializing Forge Project...
-dart run generator/bin/forge.dart init %*
+echo 🏗️ Initializing Syntax Project...
+dart run generator/bin/syntax.dart init %*
 echo Done.

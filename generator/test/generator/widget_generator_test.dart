@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 
-import 'package:forge/src/generator/widget_generator.dart';
-import 'package:forge/src/models/meta_component.dart';
+import 'package:syntax/src/generator/widget_generator.dart';
+import 'package:syntax/src/models/component_definition.dart';
 
 void main() {
   group('WidgetGenerator', () {
@@ -12,11 +12,11 @@ void main() {
     });
 
     test('generates valid Dart code', () {
-      final component = MetaComponent(
+      final component = ComponentDefinition(
         name: 'button_meta',
         className: 'ButtonMeta',
-        fields: [
-          const MetaField(
+        properties: [
+          const ComponentProp(
             name: 'label',
             type: 'String',
             isRequired: true,
@@ -33,10 +33,10 @@ void main() {
     });
 
     test('includes required imports', () {
-      final component = MetaComponent(
+      final component = ComponentDefinition(
         name: 'button_meta',
         className: 'ButtonMeta',
-        fields: [],
+        properties: [],
         variants: [],
       );
 
@@ -47,11 +47,11 @@ void main() {
     });
 
     test('uses AppTheme.of(context) pattern', () {
-      final component = MetaComponent(
+      final component = ComponentDefinition(
         name: 'button_meta',
         className: 'ButtonMeta',
-        fields: [
-          const MetaField(name: 'label', type: 'String', isRequired: true),
+        properties: [
+          const ComponentProp(name: 'label', type: 'String', isRequired: true),
         ],
         variants: [],
       );
@@ -62,10 +62,10 @@ void main() {
     });
 
     test('strips Meta suffix from class name', () {
-      final component = MetaComponent(
+      final component = ComponentDefinition(
         name: 'button_meta',
         className: 'ButtonMeta',
-        fields: [],
+        properties: [],
         variants: [],
       );
 
@@ -76,12 +76,12 @@ void main() {
     });
 
     test('generates constructor with required params', () {
-      final component = MetaComponent(
+      final component = ComponentDefinition(
         name: 'button_meta',
         className: 'ButtonMeta',
-        fields: [
-          const MetaField(name: 'label', type: 'String', isRequired: true),
-          const MetaField(
+        properties: [
+          const ComponentProp(name: 'label', type: 'String', isRequired: true),
+          const ComponentProp(
               name: 'onPressed', type: 'VoidCallback?', isRequired: false),
         ],
         variants: [],
@@ -94,12 +94,13 @@ void main() {
     });
 
     test('handles disabled state in generated code', () {
-      final component = MetaComponent(
+      final component = ComponentDefinition(
         name: 'button_meta',
         className: 'ButtonMeta',
-        fields: [
-          const MetaField(name: 'label', type: 'String', isRequired: true),
-          const MetaField(name: 'isDisabled', type: 'bool', isRequired: false),
+        properties: [
+          const ComponentProp(name: 'label', type: 'String', isRequired: true),
+          const ComponentProp(
+              name: 'isDisabled', type: 'bool', isRequired: false),
         ],
         variants: [],
       );
@@ -111,12 +112,13 @@ void main() {
     });
 
     test('handles loading state in generated code', () {
-      final component = MetaComponent(
+      final component = ComponentDefinition(
         name: 'button_meta',
         className: 'ButtonMeta',
-        fields: [
-          const MetaField(name: 'label', type: 'String', isRequired: true),
-          const MetaField(name: 'isLoading', type: 'bool', isRequired: false),
+        properties: [
+          const ComponentProp(name: 'label', type: 'String', isRequired: true),
+          const ComponentProp(
+              name: 'isLoading', type: 'bool', isRequired: false),
         ],
         variants: [],
       );

@@ -1,2 +1,2 @@
 @echo off
-dart run generator/bin/forge.dart %*
+dart run generator/bin/syntax.dart %*

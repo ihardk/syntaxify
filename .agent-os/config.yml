@@ -1,7 +1,7 @@
 # Project Configuration
 
 # Profile to use
-profile: forge
+profile: syntax
 
 # Agent tools configuration
 claude_code_commands: true

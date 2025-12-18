@@ -1,4 +1,4 @@
-import 'package:forge/src/core/interfaces/file_system.dart';
+import 'package:syntax/src/core/interfaces/file_system.dart';
 
 /// In-memory file system for testing.
 ///

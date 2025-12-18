@@ -1,9 +1,9 @@
 import 'package:path/path.dart' as path;
 
-import 'package:forge/src/core/interfaces/file_system.dart';
-import 'package:forge/src/generators/generator_registry.dart';
-import 'package:forge/src/models/meta_component.dart';
-import 'package:forge/src/models/token_definition.dart';
+import 'package:syntax/src/core/interfaces/file_system.dart';
+import 'package:syntax/src/generators/generator_registry.dart';
+import 'package:syntax/src/models/component_definition.dart';
+import 'package:syntax/src/models/token_definition.dart';
 
 /// Use case for generating a single component.
 ///
@@ -22,7 +22,7 @@ class GenerateComponentUseCase {
   ///
   /// Returns the path to the generated file.
   Future<String> execute({
-    required MetaComponent component,
+    required ComponentDefinition component,
     required String outputDir,
     TokenDefinition? tokens,
   }) async {

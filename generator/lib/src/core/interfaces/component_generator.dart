@@ -1,5 +1,5 @@
-import 'package:forge/src/models/meta_component.dart';
-import 'package:forge/src/models/token_definition.dart';
+import 'package:syntax/src/models/component_definition.dart';
+import 'package:syntax/src/models/token_definition.dart';
 
 /// Abstract interface for component code generators.
 ///
@@ -17,10 +17,10 @@ abstract class ComponentGenerator {
   ///
   /// Returns formatted Dart source code string.
   String generate({
-    required MetaComponent component,
+    required ComponentDefinition component,
     TokenDefinition? tokens,
   });
 
   /// Whether this generator can handle the given component.
-  bool canHandle(MetaComponent component);
+  bool canHandle(ComponentDefinition component);
 }

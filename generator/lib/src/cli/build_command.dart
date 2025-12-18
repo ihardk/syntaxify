@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 
-import 'package:forge/src/generator/forge_generator.dart';
+import 'package:syntax/src/generator/syntax_generator.dart';
 import 'init_command.dart';
 
 /// Build command - generates Flutter widgets from meta definitions
@@ -39,7 +39,7 @@ class BuildCommand extends Command<int> {
         'output',
         abbr: 'o',
         help: 'Output directory for generated files',
-        defaultsTo: 'lib/forge',
+        defaultsTo: 'lib/syntax',
       );
   }
 
@@ -59,7 +59,7 @@ class BuildCommand extends Command<int> {
     final tokensDir = argResults?['tokens'] as String? ?? 'design_system';
     final designSystemDir =
         argResults?['design-system'] as String? ?? 'design_system';
-    final outputDir = argResults?['output'] as String? ?? 'lib/forge';
+    final outputDir = argResults?['output'] as String? ?? 'lib/syntax';
 
     // Check availability
     final metaExists = Directory(metaDir).existsSync();
@@ -70,7 +70,7 @@ class BuildCommand extends Command<int> {
       if (!dsExists) logger.warn('Directory not found: $designSystemDir');
 
       logger.info('Project seems uninitialized.');
-      if (logger.confirm('Would you like to run "forge init" now?')) {
+      if (logger.confirm('Would you like to run "syntax init" now?')) {
         final initCmd = InitCommand(logger: logger);
         final result = await initCmd.run();
         if (result != ExitCode.success.code) {
@@ -78,13 +78,13 @@ class BuildCommand extends Command<int> {
         }
         // Proceed to build...
       } else {
-        logger.err('Build aborted. Run "forge init" first.');
+        logger.err('Build aborted. Run "syntax init" first.');
         return ExitCode.config.code;
       }
     }
 
     logger.info('');
-    logger.info('🔨 Forge Build');
+    logger.info('🔨 Syntax Build');
     logger.info('   Meta:          $metaDir/');
     logger.info('   Tokens:        $tokensDir/');
     logger.info('   Design System: $designSystemDir/');
@@ -94,7 +94,7 @@ class BuildCommand extends Command<int> {
     final progress = logger.progress('Building components');
 
     try {
-      final generator = ForgeGenerator(
+      final generator = SyntaxGenerator(
         metaDirectory: metaDir,
         tokensDirectory: tokensDir,
         designSystemDirectory: designSystemDir,

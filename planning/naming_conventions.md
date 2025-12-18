@@ -1,171 +1,95 @@
 # Naming Conventions
 
-> Consistent naming standards for Forge framework.
+> Consistent naming standards for Syntax AST and generated code.
 
 ---
 
 ## 1. File Naming
 
-| Type | Pattern | Example |
-|------|---------|---------|
-| Meta definition | `{component}.meta.dart` | `button.meta.dart` |
-| Token definition | `{component}.tokens.dart` | `button.tokens.dart` |
-| Theme config | `theme.{name}.yaml` | `theme.material.yaml` |
-| Generated component | `app_{component}.dart` | `app_button.dart` |
-| Generated theme | `app_theme.dart` | `app_theme.dart` |
+| Type                 | Pattern                    | Example                 |
+| -------------------- | -------------------------- | ----------------------- |
+| AST definition       | `{screen}.dart`            | `login.dart`            |
+| Generated widget     | `{screen}_screen.dart`     | `login_screen.dart`     |
+| Generated controller | `{screen}_controller.dart` | `login_controller.dart` |
 
 ---
 
-## 2. Class Naming
+## 2. AST Node Naming
 
-| Type | Pattern | Example |
-|------|---------|---------|
-| Meta Spec | `{Component}Spec` | `ButtonSpec`, `InputSpec` |
-| Tokens | `{Component}Tokens` | `ButtonTokens`, `InputTokens` |
-| Generated Widget | `App{Component}` | `AppButton`, `AppInput` |
-| Implementation Variant | `{Style}{Component}Impl` | `MaterialButtonImpl`, `GlassButtonImpl` |
-| State Enum | `{Component}State` | `ButtonState`, `InputState` |
+| Type        | Pattern            | Example                         |
+| ----------- | ------------------ | ------------------------------- |
+| Screen root | `ScreenDefinition` | `ScreenDefinition(id: 'login')` |
+| Layout      | `{Type}Node`       | `ColumnNode`, `RowNode`         |
+| Primitive   | `{Type}Node`       | `ButtonNode`, `TextNode`        |
 
 ---
 
-## 3. Callback Naming
+## 3. Action Naming
 
-### 3.1 Standard Callbacks
+Actions are **semantic strings**, not callbacks.
 
-| Action | Name | Signature |
-|--------|------|-----------|
-| Tap/Click | `onPressed` | `VoidCallback?` |
-| Value change | `onChanged` | `ValueChanged<T>?` |
-| Submit | `onSubmitted` | `ValueChanged<String>?` |
-| Focus gained | `onFocusGained` | `VoidCallback?` |
-| Focus lost | `onFocusLost` | `VoidCallback?` |
-| Long press | `onLongPress` | `VoidCallback?` |
-| Swipe | `onSwipe` | `ValueChanged<SwipeDirection>?` |
+| Pattern     | Example                          |
+| ----------- | -------------------------------- |
+| Verb        | `'login'`, `'submit'`, `'save'`  |
+| Verb + Noun | `'saveActivity'`, `'deleteItem'` |
 
-### 3.2 Why `onPressed` not `onTap`
-- **Consistency:** Flutter's `ElevatedButton` uses `onPressed`
-- **Semantics:** "Press" implies intentional action, "Tap" is gesture-specific
-- **Accessibility:** Screen readers say "Press button"
+❌ **Never:**
+```dart
+onPressed: () => login()  // Runtime callback
+```
 
----
-
-## 4. Token Property Naming
-
-### 4.1 Visual Properties
-| Property | Name | Type |
-|----------|------|------|
-| Background | `bgColor` | `Color` |
-| Foreground/Text | `textColor` | `Color` |
-| Border | `borderColor`, `borderWidth` | `Color`, `double` |
-| Corner radius | `radius` | `double` |
-| Shadow | `shadowOffset`, `shadowBlur` | `Offset`, `double` |
-| Elevation | `elevation` | `double` |
-| Opacity | `opacity` | `double` |
-
-### 4.2 Spacing Properties
-| Property | Name | Type |
-|----------|------|------|
-| All sides | `padding` | `EdgeInsets` |
-| Outer spacing | `margin` | `EdgeInsets` |
-| Between items | `gap` or `spacing` | `double` |
-
-### 4.3 State Variations
-| Pattern | Example |
-|---------|---------|
-| `{property}{State}` | `bgColorPressed`, `borderColorFocused` |
-| Hover | `bgColorHover` |
-| Pressed | `bgColorPressed` |
-| Disabled | `bgColorDisabled` |
-| Error | `borderColorError` |
+✅ **Always:**
+```dart
+onPressed: 'login'  // Semantic identifier
+```
 
 ---
 
-## 5. Slot Naming
+## 4. Variant Naming
 
-| Slot Type | Name |
-|-----------|------|
-| Primary content | `child` |
-| Before main content | `leading` |
-| After main content | `trailing` |
-| Header | `header` |
-| Footer | `footer` |
-| Actions (buttons) | `actions` |
-| Icon | `icon` |
-| Title | `title` |
-| Subtitle | `subtitle` |
+| Pattern       | Example                         |
+| ------------- | ------------------------------- |
+| ButtonVariant | `primary`, `secondary`, `ghost` |
+| TextVariant   | `heading`, `body`, `caption`    |
 
 ---
 
-## 6. Theme & Style Naming
+## 5. Semantic Icon Names
 
-| Concept | Name |
-|---------|------|
-| Design system enum | `DesignStyle` |
-| Enum values | `material`, `cupertino`, `neo` (lowercase) |
-| Theme provider | `MetaTheme` |
-| Theme data | `MetaThemeData` |
-| Brightness | `light`, `dark` |
-
----
-
-## 7. Generator CLI Naming
-
-| Command | Action |
-|---------|--------|
-| `forge build` | Generate all code |
-| `forge watch` | Watch mode |
-| `forge clean` | Remove generated files |
-| `forge list` | List components |
-| `forge inspect {name}` | Show component details |
-| `forge migrate` | Run migrations |
+| Name       | Meaning           |
+| ---------- | ----------------- |
+| `'email'`  | Email icon        |
+| `'lock'`   | Password/security |
+| `'search'` | Search action     |
+| `'menu'`   | Navigation menu   |
 
 ---
 
-## 8. Abbreviations
+## 6. Boolean Naming
 
-**Allowed:**
-- `bg` = background
-- `btn` = button (in comments only)
-- `impl` = implementation
-
-**Not Allowed:**
-- `clr` → use `color`
-- `txt` → use `text`
-- `bdr` → use `border`
+| Pattern         | Example                   |
+| --------------- | ------------------------- |
+| `is{Adjective}` | `isLoading`, `isDisabled` |
+| `has{Noun}`     | `hasError`, `hasIcon`     |
 
 ---
 
-## 9. Boolean Naming
-
-| Pattern | Example |
-|---------|---------|
-| `is{Adjective}` | `isLoading`, `isDisabled`, `isSelected` |
-| `has{Noun}` | `hasError`, `hasIcon` |
-| `can{Verb}` | `canSubmit`, `canDismiss` |
-| `should{Verb}` | `shouldValidate` |
-
----
-
-## 10. Anti-Patterns
+## 7. Anti-Patterns
 
 ❌ **Avoid:**
 ```dart
-onTap          // Use onPressed
-onClick        // Use onPressed  
-color          // Use bgColor or textColor
-disabled       // Use isDisabled
-loading        // Use isLoading
+onTap           // Use onPressed (semantic string)
+onClick         // Use onPressed
+VoidCallback    // Use String for action name
 ```
 
 ✅ **Prefer:**
 ```dart
-onPressed
-bgColor / textColor
-isDisabled
-isLoading
+onPressed: 'submit'
+variant: 'primary'
+icon: 'email'
 ```
 
 ---
 
-*Document Version: 1.0*
-
+*Document Version: 2.0 (AST-aligned)*

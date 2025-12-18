@@ -2,25 +2,21 @@ import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as path;
 import 'dart:io';
 
-import 'package:forge/src/core/interfaces/file_system.dart';
-import 'package:forge/src/generators/generator_registry.dart';
-import 'package:forge/src/generator/theme_generator.dart';
-import 'package:forge/src/models/build_result.dart';
-import 'package:forge/src/models/meta_component.dart';
-import 'package:forge/src/models/token_definition.dart';
+import 'package:syntax/src/core/interfaces/file_system.dart';
+import 'package:syntax/src/generators/generator_registry.dart';
+
+import 'package:syntax/src/models/build_result.dart';
+import 'package:syntax/src/models/component_definition.dart';
+import 'package:syntax/src/models/token_definition.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
-import 'package:forge/src/use_cases/generate_component.dart';
-import 'package:forge/src/parser/registry_parser.dart';
-import 'package:forge/src/generators/registry/icon_registry_generator.dart';
+import 'package:syntax/src/use_cases/generate_component.dart';
+import 'package:syntax/src/parser/registry_parser.dart';
+import 'package:syntax/src/generators/registry/icon_registry_generator.dart';
+import 'package:syntax/src/use_cases/generate_screen.dart';
+import 'package:syntax/src/models/ast/screen_definition.dart';
 
 /// Use case for building all components.
-///
-/// Orchestrates the full build process:
-/// 1. Generates each component using appropriate generator
-/// 2. Generates theme provider
-/// 3. Copies token files
-/// 4. Creates barrel file
 class BuildAllUseCase {
   BuildAllUseCase({
     required this.fileSystem,
@@ -36,11 +32,14 @@ class BuildAllUseCase {
     fileSystem: fileSystem,
     registry: registry,
   );
-  late final _themeGenerator = ThemeGenerator();
+  late final _generateScreen = GenerateScreenUseCase(
+    fileSystem: fileSystem,
+  );
 
   /// Execute the full build.
   Future<BuildResult> execute({
-    required List<MetaComponent> components,
+    required List<ComponentDefinition> components,
+    required List<ScreenDefinition> screens,
     required List<TokenDefinition> tokens,
     required String outputDir,
     required String metaDirectoryPath,
@@ -55,6 +54,39 @@ class BuildAllUseCase {
     // Create output directories
     await fileSystem
         .createDirectory(path.join(outputDir, 'generated', 'components'));
+
+    // Read package name from pubspec.yaml for screen imports
+    String? packageName;
+    try {
+      final pubspecPath = 'pubspec.yaml';
+      if (await fileSystem.exists(pubspecPath)) {
+        final content = await fileSystem.readFile(pubspecPath);
+        final nameMatch =
+            RegExp(r'^name:\s*(.+)$', multiLine: true).firstMatch(content);
+        if (nameMatch != null) {
+          packageName = nameMatch.group(1)?.trim();
+        }
+      }
+    } catch (e) {
+      logger.warn('Could not read package name from pubspec.yaml: $e');
+    }
+
+    // Generate screens to lib/screens/ (editable)
+    for (final screen in screens) {
+      try {
+        logger.info('Generating Screen: ${screen.id}');
+        final filePath = await _generateScreen.execute(
+          screen: screen,
+          outputDir: outputDir,
+          packageName: packageName,
+        );
+        generatedFiles.add(filePath);
+        logger.success('Generated: $filePath');
+      } catch (e) {
+        logger.err('Failed to generate screen ${screen.id}: $e');
+        errors.add('Failed to generate screen ${screen.id}: $e');
+      }
+    }
 
     // Generate each component
     for (final component in components) {
@@ -96,6 +128,7 @@ class BuildAllUseCase {
         'app_theme.dart',
         'design_style.dart',
         'button_variant.dart',
+        'enums.dart',
       ];
 
       for (final file in designSystemFiles) {
@@ -143,6 +176,9 @@ class BuildAllUseCase {
         'material/input_renderer.dart',
         'cupertino/input_renderer.dart',
         'neo/input_renderer.dart',
+        'material/text_renderer.dart',
+        'cupertino/text_renderer.dart',
+        'neo/text_renderer.dart',
       ];
 
       for (final file in rendererFiles) {
@@ -186,15 +222,13 @@ class BuildAllUseCase {
           logger.success('Generated: design_system/app_icons.dart');
         } else {
           // Fallback: Copy if exists in source
-          if (designSystemDir != null) {
-            final srcPath = path.join(designSystemDir, 'app_icons.dart');
-            if (await fileSystem.exists(srcPath)) {
-              final destPath =
-                  path.join(outputDir, 'design_system', 'app_icons.dart');
-              await fileSystem.copyFile(srcPath, destPath);
-              generatedFiles.add('design_system/app_icons.dart');
-              logger.success('Copied: design_system/app_icons.dart (Fallback)');
-            }
+          final srcPath = path.join(designSystemDir, 'app_icons.dart');
+          if (await fileSystem.exists(srcPath)) {
+            final destPath =
+                path.join(outputDir, 'design_system', 'app_icons.dart');
+            await fileSystem.copyFile(srcPath, destPath);
+            generatedFiles.add('design_system/app_icons.dart');
+            logger.success('Copied: design_system/app_icons.dart (Fallback)');
           }
         }
       } catch (e) {
@@ -279,7 +313,7 @@ class BuildAllUseCase {
 
     final content = '''
 // ============================================
-// GENERATED BY FORGE v0.1.0
+// GENERATED BY SYNTAX v0.1.0
 // DO NOT MODIFY - Regenerated on build
 // Barrel file exporting all generated code
 // ============================================

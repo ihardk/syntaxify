@@ -1,8 +1,8 @@
-import 'package:forge/src/annotations/forge_annotations.dart';
+import 'package:syntax/src/annotations/syntax_annotations.dart';
 import 'app_icons.dart';
 
 /// Text Input component specification
-@ForgeComponent(
+@SyntaxComponent(
     description: 'A text input field with optional label, hint, and icons')
 class InputMeta {
   /// The label text displayed above or inside the input
