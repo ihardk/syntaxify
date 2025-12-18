@@ -1,126 +1,88 @@
 # Syntax ⚡
 
-**AST-based Flutter UI Code Generator**
+**AST-based Flutter UI Code Generator with Multi-Style Design System**
 
-> Stop writing repetitive UI code. Define components once, generate for any design system.
+> Stop writing repetitive UI code. Define components once, render in any design system.
 
 ## 🤔 Why Syntax?
 
 **The Problem:**
-- Writing the same button/input/card code for Material, Cupertino, and custom designs
+- Writing the same button/input/card for Material, Cupertino, and custom designs
 - Maintaining consistency across hundreds of components
 - Refactoring UI patterns across entire codebases
 - Keeping design tokens in sync with implementation
 
 **The Solution:**
-Syntax generates production-ready Flutter widgets from declarative definitions. Write your UI structure once as data, generate type-safe code for any design system.
+Syntax separates **WHAT** (component behavior) from **HOW** (visual rendering). Define your UI structure once, generate type-safe code for any design system.
 
-## 🚀 Quick Start
+## 🎨 The Design System Architecture
 
-```bash
-# Install
-cd generator && dart pub global activate --source path .
+### The Renderer Pattern
 
-# Initialize
-cd your_flutter_project
-syntax init
+Syntax uses a unique **renderer pattern** that separates concerns:
 
-# Build
-syntax build
-
-# Use
-import 'package:your_app/syntax/index.dart';
-AppButton(label: 'Click Me', onPressed: () => print('Hello!'))
-```
-
-## ✨ Features
-
-- **AST-Based** - Type-safe, declarative UI definitions
-- **Multi-Style** - Material, Cupertino, Neo (or create your own)
-- **Smart Defaults** - Auto-detects project structure
-- **Editable Screens** - Generated screens you can customize
-- **Git-Friendly** - Clean, readable generated code
-
-## 📂 Architecture
-
-```
-your_project/
-├── meta/                      # Define components here
-└── lib/
-    ├── screens/               # Editable generated screens
-    └── syntax/
-        ├── design_system/     # Customize styles
-        └── generated/         # Auto-generated components
-```
-
-## 🎯 Example
-
-### Component Generation
-
-**Define once:**
+**WHAT (Component Definition):**
 ```dart
-@SyntaxComponent()
-class ButtonMeta {
-  @Required() final String label;
-  @Optional() final String? variant;
-}
+AppButton(
+  label: 'Click Me',
+  variant: ButtonVariant.primary,
+  onPressed: () => print('Hello!'),
+)
 ```
 
-**Get three implementations:**
-- Material Design button
-- Cupertino button  
-- Neo (modern) button
+**HOW (Style Rendering):**
+- **Material**: Renders as `ElevatedButton` with Material Design tokens
+- **Cupertino**: Renders as `CupertinoButton` with iOS styling
+- **Neo**: Renders with modern, neumorphic design
 
-**Use anywhere:**
+**The Magic:** Same component code, different visual output based on `AppTheme`:
+
 ```dart
-AppButton(label: 'Submit', variant: ButtonVariant.primary)
+AppTheme(
+  style: MaterialStyle(),  // or CupertinoStyle() or NeoStyle()
+  child: MaterialApp(home: YourApp()),
+)
 ```
 
-### Screen Generation
+### Why This Matters
 
-**Before (Manual):**
-```dart
-class LoginScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Text('Welcome Back', style: Theme.of(context).textTheme.headlineMedium),
-          TextField(
-            decoration: InputDecoration(labelText: 'Email'),
-            keyboardType: TextInputType.emailAddress,
-          ),
-          ElevatedButton(
-            onPressed: handleLogin,
-            child: Text('Sign In'),
-          ),
-        ],
-      ),
-    );
-  }
-}
-```
+1. **Write Once, Render Anywhere** - One component definition works across all design systems
+2. **Easy Theme Switching** - Change one line to switch your entire app's design
+3. **Consistent Behavior** - Button logic stays the same, only visuals change
+4. **Custom Styles** - Create your own design system by implementing `DesignStyle`
 
-**After (Syntax):**
-```dart
-// meta/login.screen.dart
-final loginScreen = ScreenDefinition(
-  id: 'login',
-  layout: AstNode.column(children: [
-    AstNode.text(text: 'Welcome Back'),
-    AstNode.textField(label: 'Email', keyboardType: KeyboardType.email),
-    AstNode.button(label: 'Sign In', onPressed: 'handleLogin'),
-  ]),
-);
-```
+## 📦 What's Currently Available
 
-**Result:** Generates `lib/screens/login_screen.dart` with proper imports, type-safe callbacks, and design system integration. Edit the generated file as needed!
+### ✅ Components with Full Renderer Pattern
 
-## 📦 Installation
+These components work with Material, Cupertino, and Neo styles:
 
-**From GitHub:**
+- **AppButton** - Buttons with variants (primary, secondary, text, outlined)
+- **AppText** - Text with typography variants (display, headline, body, label)
+- **AppInput** - Text fields with validation and keyboard types
+
+### 🚧 Custom Components (Basic Support)
+
+You can define custom components (e.g., Card, Badge, Avatar), and Syntax will:
+- ✅ Generate the component class
+- ✅ Create constructor and fields
+- ⚠️ Generate basic Container widget (not full renderer pattern yet)
+
+**Coming Soon:** Full renderer pattern for more components (Card, Badge, Avatar, Chip, etc.)
+
+### 🎯 Screen Generation
+
+- ✅ Generate editable screen scaffolds from AST definitions
+- ✅ Type-safe callbacks
+- ✅ Proper imports and structure
+
+## 🚀 Complete Getting Started Guide
+
+### Step 1: Install Syntax
+
+**Option A: From GitHub (Recommended)**
 ```yaml
+# pubspec.yaml
 dev_dependencies:
   syntax:
     git:
@@ -129,27 +91,278 @@ dev_dependencies:
       path: generator
 ```
 
-**Global:**
+**Option B: Global Installation**
 ```bash
-dart pub global activate --source path generator/
+cd generator
+dart pub get
+dart pub global activate --source path .
 ```
 
-## 🔄 Workflow
+### Step 2: Initialize Your Project
 
-1. Edit `meta/*.meta.dart` - Define component APIs
-2. Run `syntax build` - Generate implementations
-3. Use in your app - Import from `package:your_app/syntax/`
+```bash
+cd your_flutter_project
+syntax init
+```
 
-Components regenerate on build. Screens generate once (you own them).
+This creates:
+- `meta/` - Where you define component APIs
+- `lib/syntax/design_system/` - Customizable design system
 
-## 📖 Documentation
+### Step 3: Define Components
+
+Edit `meta/button.meta.dart`:
+```dart
+import 'package:syntax/syntax.dart';
+
+@SyntaxComponent(description: 'A customizable button')
+class ButtonMeta {
+  @Required()
+  final String label;
+  
+  @Optional()
+  final String? variant;
+  
+  @Optional()
+  final VoidCallback? onPressed;
+}
+```
+
+### Step 4: Build
+
+```bash
+syntax build
+```
+
+This generates:
+- `lib/syntax/generated/components/app_button.dart` - The component
+- `lib/syntax/design_system/` - Design system files (Material, Cupertino, Neo)
+- `lib/syntax/index.dart` - Barrel export
+
+### Step 5: Use in Your App
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:your_app/syntax/index.dart';
+import 'package:your_app/syntax/design_system/design_system.dart';
+
+void main() {
+  runApp(
+    AppTheme(
+      style: MaterialStyle(),  // Try CupertinoStyle() or NeoStyle()!
+      child: MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: AppButton(
+              label: 'Click Me',
+              variant: ButtonVariant.primary,
+              onPressed: () => print('Hello from Syntax!'),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+```
+
+### Step 6: Generate Screens (Optional)
+
+Create `meta/login.screen.dart`:
+```dart
+import 'package:syntax/syntax.dart';
+
+final loginScreen = ScreenDefinition(
+  id: 'login',
+  layout: AstNode.column(children: [
+    AstNode.text(text: 'Welcome Back'),
+    AstNode.textField(label: 'Email', keyboardType: KeyboardType.email),
+    AstNode.textField(label: 'Password', obscureText: true),
+    AstNode.button(label: 'Sign In', onPressed: 'handleLogin'),
+  ]),
+);
+```
+
+Run `syntax build` again - generates `lib/screens/login_screen.dart` (editable!)
+
+## 📂 Project Structure
+
+```
+your_project/
+├── meta/                          # YOU EDIT: Component & screen definitions
+│   ├── button.meta.dart
+│   ├── input.meta.dart
+│   ├── text.meta.dart
+│   ├── login.screen.dart
+│   └── app_icons.dart
+│
+└── lib/
+    ├── screens/                   # EDITABLE: Generated screens
+    │   └── login_screen.dart      # Generated once, then you own it
+    │
+    └── syntax/
+        ├── design_system/         # CUSTOMIZABLE: Styles & tokens
+        │   ├── design_system.dart
+        │   ├── app_theme.dart
+        │   ├── styles/
+        │   │   ├── material_style.dart
+        │   │   ├── cupertino_style.dart
+        │   │   └── neo_style.dart
+        │   └── tokens/
+        │       ├── button_tokens.dart
+        │       └── input_tokens.dart
+        │
+        ├── generated/             # DON'T EDIT: Auto-regenerated
+        │   └── components/
+        │       ├── app_button.dart
+        │       ├── app_input.dart
+        │       └── app_text.dart
+        │
+        └── index.dart             # Barrel export
+```
+
+## 🎯 Real-World Example
+
+### Before Syntax (Manual Approach)
+
+**Material Button:**
+```dart
+ElevatedButton(
+  onPressed: onPressed,
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.blue,
+    padding: EdgeInsets.all(16),
+  ),
+  child: Text(label),
+)
+```
+
+**Cupertino Button:**
+```dart
+CupertinoButton.filled(
+  onPressed: onPressed,
+  padding: EdgeInsets.all(16),
+  child: Text(label),
+)
+```
+
+**Custom Button:**
+```dart
+Container(
+  decoration: BoxDecoration(
+    gradient: LinearGradient(...),
+    borderRadius: BorderRadius.circular(12),
+    boxShadow: [BoxShadow(...)],
+  ),
+  child: Material(
+    color: Colors.transparent,
+    child: InkWell(
+      onTap: onPressed,
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Text(label),
+      ),
+    ),
+  ),
+)
+```
+
+**Problem:** 3 different implementations, hard to maintain, inconsistent behavior.
+
+### After Syntax
+
+**One Definition:**
+```dart
+AppButton(label: 'Submit', onPressed: handleSubmit)
+```
+
+**Three Renderings:**
+- Wrap with `MaterialStyle()` → Material Design
+- Wrap with `CupertinoStyle()` → iOS Design
+- Wrap with `NeoStyle()` → Modern Design
+
+**Result:** Consistent API, different visuals, easy to switch.
+
+## ✨ Features
+
+- **AST-Based Generation** - Type-safe, declarative UI definitions
+- **Renderer Pattern** - Separates WHAT (behavior) from HOW (rendering)
+- **Multi-Style Support** - Material, Cupertino, Neo (3 components currently, more coming)
+- **Smart Defaults** - Auto-detects project structure
+- **Screen Generation** - Generate editable screen scaffolds
+- **Design Tokens** - Centralized styling with tokens
+- **Git-Friendly** - Clean, readable generated code
+- **Extensible** - Create custom design styles by implementing `DesignStyle`
+
+## 🗺️ Roadmap
+
+**v0.1.0 (Current)**
+- ✅ Core architecture with renderer pattern
+- ✅ 3 components (Button, Text, Input)
+- ✅ 3 design styles (Material, Cupertino, Neo)
+- ✅ Screen generation
+- ✅ Smart build defaults
+
+**v0.2.0 (Next)**
+- 🔄 More components with full renderer pattern:
+  - Card, Badge, Avatar, Chip, Switch, Checkbox, Radio
+- 🔄 Golden tests for visual regression
+- 🔄 Better error messages
+
+**v1.0.0 (Future)**
+- 🔮 Complete component library
+- 🔮 Theme editor UI
+- 🔮 VS Code extension
+- 🔮 Component marketplace
+
+## 🔄 Development Workflow
+
+1. **Define** - Edit `meta/*.meta.dart` to define component APIs
+2. **Build** - Run `syntax build` to generate implementations
+3. **Use** - Import from `package:your_app/syntax/` and use
+4. **Customize** - Edit design system tokens in `lib/syntax/design_system/`
+5. **Switch Styles** - Change `AppTheme(style: ...)` to try different designs
+
+**Key Principle:** Components regenerate on every build. Screens generate once (you own them).
+
+## �️ Advanced Usage
+
+### Creating Custom Design Styles
+
+Implement `DesignStyle` interface:
+```dart
+class MyCustomStyle extends DesignStyle 
+    with MaterialButtonRenderer, MaterialInputRenderer {
+  // Override tokens and rendering logic
+}
+```
+
+### Build Options
+
+```bash
+# Build everything (auto-detects paths)
+syntax build
+
+# Build specific component
+syntax build --component=AppButton
+
+# Custom paths
+syntax build --meta=specs --output=lib/gen
+
+# Build for specific theme
+syntax build --theme=material
+```
+
+Run `syntax build --help` for all options.
+
+## �📖 Documentation
 
 - **[User Manual](docs/user_manual.md)** - Complete usage guide
 - **[Developer Manual](docs/developer_manual.md)** - Architecture & contributing
 
 ## 🤝 Contributing
 
-See [Developer Manual](docs/developer_manual.md) for details.
+See [Developer Manual](docs/developer_manual.md) for architecture details and contribution guidelines.
 
 ## 📄 License
 
@@ -157,4 +370,4 @@ MIT License - See [LICENSE](LICENSE) for details
 
 ---
 
-**Built with ❤️ for Flutter developers who value consistency and productivity**
+**Built with ❤️ for Flutter developers who value consistency, productivity, and beautiful code**
