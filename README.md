@@ -2,130 +2,159 @@
 
 **AST-based Flutter UI Code Generator**
 
-Syntax generates production-ready Flutter widgets from declarative component definitions and screen layouts. Define your UI structure once, generate type-safe code for Material, Cupertino, and Neo design systems or create your own.
+> Stop writing repetitive UI code. Define components once, generate for any design system.
 
-## 📚 Documentation
+## 🤔 Why Syntax?
 
-*   **[User Manual](docs/user_manual.md)**: Complete guide to using Syntax
-*   **[Developer Manual](docs/developer_manual.md)**: Architecture and contribution guide
+**The Problem:**
+- Writing the same button/input/card code for Material, Cupertino, and custom designs
+- Maintaining consistency across hundreds of components
+- Refactoring UI patterns across entire codebases
+- Keeping design tokens in sync with implementation
+
+**The Solution:**
+Syntax generates production-ready Flutter widgets from declarative definitions. Write your UI structure once as data, generate type-safe code for any design system.
 
 ## 🚀 Quick Start
 
-### 1. Install Syntax Globally
-
 ```bash
-cd generator
-dart pub get
-dart pub global activate --source path .
-```
+# Install
+cd generator && dart pub global activate --source path .
 
-### 2. Initialize Your Project
-
-```bash
+# Initialize
 cd your_flutter_project
 syntax init
-```
 
-This creates:
-- `meta/` - Component definitions
-- `lib/syntax/design_system/` - Customizable styles
-
-### 3. Build
-
-```bash
+# Build
 syntax build
-```
 
-Syntax auto-detects your project structure and generates all necessary files.
-
-### 4. Use Generated Components
-
-```dart
+# Use
 import 'package:your_app/syntax/index.dart';
-
-AppButton(
-  label: 'Click Me',
-  variant: ButtonVariant.primary,
-  onPressed: () => print('Hello!'),
-)
+AppButton(label: 'Click Me', onPressed: () => print('Hello!'))
 ```
 
 ## ✨ Features
 
 - **AST-Based** - Type-safe, declarative UI definitions
-- **Multi-Style** - Material, Cupertino, and Neo design systems
-- **Editable Screens** - Generated screens can be customized
-- **Customizable Design** - Full control over styles and tokens
+- **Multi-Style** - Material, Cupertino, Neo (or create your own)
+- **Smart Defaults** - Auto-detects project structure
+- **Editable Screens** - Generated screens you can customize
 - **Git-Friendly** - Clean, readable generated code
 
-## 📂 Project Structure
+## 📂 Architecture
 
 ```
 your_project/
-├── meta/                      # Component definitions
+├── meta/                      # Define components here
 └── lib/
-    ├── screens/               # Generated screens (editable)
+    ├── screens/               # Editable generated screens
     └── syntax/
-        ├── design_system/     # Styles & tokens (customizable)
-        └── generated/         # Components (regenerated on build)
+        ├── design_system/     # Customize styles
+        └── generated/         # Auto-generated components
 ```
 
 ## 🎯 Example
 
-**Define in `meta/button.meta.dart`:**
+### Component Generation
+
+**Define once:**
 ```dart
-@SyntaxComponent(description: 'A customizable button')
+@SyntaxComponent()
 class ButtonMeta {
-  @Required()
-  final String label;
-  
-  @Optional()
-  final String? variant;
+  @Required() final String label;
+  @Optional() final String? variant;
 }
 ```
 
-**Build:**
-```bash
-syntax build
-```
+**Get three implementations:**
+- Material Design button
+- Cupertino button  
+- Neo (modern) button
 
-**Use:**
+**Use anywhere:**
 ```dart
-AppButton(label: 'Submit', variant: 'primary')
+AppButton(label: 'Submit', variant: ButtonVariant.primary)
 ```
 
-## 📦 Installation Options
+### Screen Generation
 
-**Global (Recommended):**
+**Before (Manual):**
+```dart
+class LoginScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          Text('Welcome Back', style: Theme.of(context).textTheme.headlineMedium),
+          TextField(
+            decoration: InputDecoration(labelText: 'Email'),
+            keyboardType: TextInputType.emailAddress,
+          ),
+          ElevatedButton(
+            onPressed: handleLogin,
+            child: Text('Sign In'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+**After (Syntax):**
+```dart
+// meta/login.screen.dart
+final loginScreen = ScreenDefinition(
+  id: 'login',
+  layout: AstNode.column(children: [
+    AstNode.text(text: 'Welcome Back'),
+    AstNode.textField(label: 'Email', keyboardType: KeyboardType.email),
+    AstNode.button(label: 'Sign In', onPressed: 'handleLogin'),
+  ]),
+);
+```
+
+**Result:** Generates `lib/screens/login_screen.dart` with proper imports, type-safe callbacks, and design system integration. Edit the generated file as needed!
+
+## 📦 Installation
+
+**From GitHub:**
+```yaml
+dev_dependencies:
+  syntax:
+    git:
+      url: https://github.com/ihardk/syntax.git
+      ref: v0.1.0
+      path: generator
+```
+
+**Global:**
 ```bash
 dart pub global activate --source path generator/
 ```
 
-**Project Dependency:**
-```yaml
-dev_dependencies:
-  syntax:
-    path: ../generator
-```
-
 ## 🔄 Workflow
 
-1. Edit `meta/*.meta.dart` files
-2. Run `syntax build`
-3. Components regenerated in `lib/syntax/generated/`
-4. Screens generated once in `lib/screens/` (you can edit)
-5. Design system in `lib/syntax/design_system/` (you can customize)
+1. Edit `meta/*.meta.dart` - Define component APIs
+2. Run `syntax build` - Generate implementations
+3. Use in your app - Import from `package:your_app/syntax/`
 
-## 📖 Learn More
+Components regenerate on build. Screens generate once (you own them).
 
-- [User Manual](docs/user_manual.md) - Complete usage guide
-- [Developer Manual](docs/developer_manual.md) - Architecture details
-- [Planning Docs](planning/) - Design decisions and roadmap
+## 📖 Documentation
+
+- **[User Manual](docs/user_manual.md)** - Complete usage guide
+- **[Developer Manual](docs/developer_manual.md)** - Architecture & contributing
 
 ## 🤝 Contributing
 
-See [Developer Manual](docs/developer_manual.md) for architecture details and contribution guidelines.
+See [Developer Manual](docs/developer_manual.md) for details.
 
 ## 📄 License
 
-MIT License - See LICENSE file for details
+MIT License - See [LICENSE](LICENSE) for details
+
+---
+
+**Built with ❤️ for Flutter developers who value consistency and productivity**
