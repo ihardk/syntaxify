@@ -11,6 +11,7 @@ export 'src/core/interfaces/code_formatter.dart';
 // Models (Domain Layer)
 export 'src/models/component_definition.dart';
 export 'src/models/token_definition.dart';
+export 'src/models/ast/nodes.dart';
 export 'src/models/build_result.dart';
 
 // Annotations

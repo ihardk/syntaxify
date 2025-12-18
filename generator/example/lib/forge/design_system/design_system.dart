@@ -9,13 +9,11 @@ import 'package:flutter/cupertino.dart';
 
 import 'tokens/button_tokens.dart';
 import 'tokens/input_tokens.dart';
-import 'tokens/icon_token.dart';
 import 'app_icons.dart';
 
 // Re-export for convenience
 export 'tokens/button_tokens.dart';
 export 'tokens/input_tokens.dart';
-export 'tokens/icon_token.dart';
 export 'app_icons.dart';
 
 // Part files - same library as sealed class
