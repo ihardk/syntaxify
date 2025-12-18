@@ -3,16 +3,16 @@ part of '../../design_system.dart';
 mixin CupertinoInputRenderer on DesignStyle {
   @override
   InputTokens get inputTokens => const InputTokens(
-    textStyle: TextStyle(fontSize: 16, color: CupertinoColors.black),
-    hintStyle: TextStyle(fontSize: 16, color: CupertinoColors.systemGrey),
-    backgroundColor: CupertinoColors.white,
-    borderColor: CupertinoColors.systemGrey4,
-    focusBorderColor: CupertinoColors.activeBlue,
-    errorColor: CupertinoColors.systemRed,
-    borderWidth: 1.0,
-    borderRadius: 8.0,
-    contentPadding: EdgeInsets.all(12),
-  );
+        textStyle: TextStyle(fontSize: 16, color: CupertinoColors.black),
+        hintStyle: TextStyle(fontSize: 16, color: CupertinoColors.systemGrey),
+        backgroundColor: CupertinoColors.white,
+        borderColor: CupertinoColors.systemGrey4,
+        focusBorderColor: CupertinoColors.activeBlue,
+        errorColor: CupertinoColors.systemRed,
+        borderWidth: 1.0,
+        borderRadius: 8.0,
+        contentPadding: EdgeInsets.all(12),
+      );
 
   @override
   Widget renderInput({
@@ -28,6 +28,7 @@ mixin CupertinoInputRenderer on DesignStyle {
     String? suffixIconName,
     VoidCallback? onTapPrefix,
     VoidCallback? onTapSuffix,
+    TextInputType? keyboardType,
   }) {
     final prefixIconData = AppIcons.get(prefixIconName);
     final suffixIconData = AppIcons.get(suffixIconName);
@@ -49,6 +50,7 @@ mixin CupertinoInputRenderer on DesignStyle {
           onSubmitted: onSubmitted,
           obscureText: obscureText,
           enabled: enabled,
+          keyboardType: keyboardType,
           placeholder: hint,
           padding: inputTokens.contentPadding,
           decoration: BoxDecoration(

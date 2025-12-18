@@ -29,6 +29,14 @@ mixin CupertinoButtonRenderer on DesignStyle {
           padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           borderColor: Color(0xFF007AFF),
         );
+      case ButtonVariant.text:
+        return const ButtonTokens(
+          radius: 100,
+          borderWidth: 0,
+          bgColor: Colors.transparent,
+          textColor: Color(0xFF007AFF),
+          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        );
     }
   }
 
@@ -79,6 +87,11 @@ mixin CupertinoButtonRenderer on DesignStyle {
             onPressed: effectiveOnPressed,
             child: Text(label, style: TextStyle(color: tokens.textColor)),
           ),
+        );
+      case ButtonVariant.text:
+        return CupertinoButton(
+          onPressed: effectiveOnPressed,
+          child: Text(label, style: TextStyle(color: tokens.textColor)),
         );
     }
   }

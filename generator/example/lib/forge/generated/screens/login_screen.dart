@@ -1,9 +1,9 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // Analyzed by Forge
 
-import 'package:flutter/material.dart' hide AppTheme;
-import '../../../forge/index.dart';
-import '../../../forge/design_system/design_system.dart';
+import 'package:flutter/material.dart';
+import '../../index.dart';
+import '../../design_system/design_system.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({
@@ -21,11 +21,15 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Login')),
       body: Column(children: [
+        AppText(
+          text: 'Welcome Back',
+          variant: TextVariant.headlineMedium,
+        ),
         Spacer(flex: 1),
         AppInput(
           label: 'Username',
           hint: 'user@example.com',
-          controller: TextEditingController(),
+          keyboardType: TextInputType.emailAddress,
         ),
         AppInput(
           label: 'Password',
@@ -39,7 +43,7 @@ class LoginScreen extends StatelessWidget {
         AppButton(
           label: 'Forgot Password?',
           onPressed: onForgot,
-          variant: ButtonVariant.primary,
+          variant: ButtonVariant.text,
         ),
       ]),
     );

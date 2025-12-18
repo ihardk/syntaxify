@@ -8,6 +8,6 @@ part of '../design_system.dart';
 /// - Filled and outlined button variants
 /// - Native Material widgets (ElevatedButton, FilledButton, OutlinedButton)
 class MaterialStyle extends DesignStyle
-    with MaterialButtonRenderer, MaterialInputRenderer {
+    with MaterialButtonRenderer, MaterialInputRenderer, MaterialTextRenderer {
   const MaterialStyle();
 }

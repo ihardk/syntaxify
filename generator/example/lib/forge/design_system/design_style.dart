@@ -48,5 +48,18 @@ sealed class DesignStyle {
     String? suffixIconName,
     VoidCallback? onTapPrefix,
     VoidCallback? onTapSuffix,
+    TextInputType? keyboardType,
+  });
+
+  /// Get tokens for text component
+  TextTokens get textTokens;
+
+  /// Render a text widget (HOW)
+  Widget renderText({
+    required String text,
+    TextVariant? variant,
+    TextAlign? align,
+    int? maxLines,
+    TextOverflow? overflow,
   });
 }

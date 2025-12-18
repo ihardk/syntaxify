@@ -49,12 +49,14 @@ class LayoutEmitter {
   }
 
   Expression _emitText(TextNode node) {
-    return refer('Text').newInstance([
-      literalString(node.text),
-    ], {
+    return refer('AppText').newInstance([], {
+      'text': literalString(node.text),
       if (node.variant != null)
-        'style':
-            refer('DesignSystem.of(context).typography.${node.variant!.name}'),
+        'variant': refer('TextVariant.${node.variant!.name}'),
+      if (node.align != null) 'align': refer('TextAlign.${node.align!.name}'),
+      if (node.maxLines != null) 'maxLines': literalNum(node.maxLines!),
+      if (node.overflow != null)
+        'overflow': refer('TextOverflow.${node.overflow!.name}'),
     });
   }
 
@@ -73,12 +75,37 @@ class LayoutEmitter {
   }
 
   Expression _emitTextField(TextFieldNode node) {
+    // Map KeyboardType enum to Flutter's TextInputType
+    String? keyboardTypeValue;
+    if (node.keyboardType != null) {
+      switch (node.keyboardType!) {
+        case KeyboardType.email:
+          keyboardTypeValue = 'emailAddress';
+          break;
+        case KeyboardType.number:
+          keyboardTypeValue = 'number';
+          break;
+        case KeyboardType.phone:
+          keyboardTypeValue = 'phone';
+          break;
+        case KeyboardType.url:
+          keyboardTypeValue = 'url';
+          break;
+        case KeyboardType.multiline:
+          keyboardTypeValue = 'multiline';
+          break;
+        case KeyboardType.text:
+          keyboardTypeValue = 'text';
+          break;
+      }
+    }
+
     return refer('AppInput').newInstance([], {
       'label': literalString(node.label ?? ''),
       if (node.hint != null) 'hint': literalString(node.hint!),
       if (node.obscureText == true) 'obscureText': literalTrue,
-      if (node.keyboardType != null)
-        'keyboardType': refer('TextInputType.${node.keyboardType!.name}'),
+      if (keyboardTypeValue != null)
+        'keyboardType': refer('TextInputType.$keyboardTypeValue'),
     });
   }
 

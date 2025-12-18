@@ -3,21 +3,21 @@ part of '../../design_system.dart';
 mixin NeoInputRenderer on DesignStyle {
   @override
   InputTokens get inputTokens => const InputTokens(
-    textStyle: TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w700,
-      color: Colors.black,
-      fontFamily: 'Courier', // Brutalist mono vibes
-    ),
-    hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
-    backgroundColor: Colors.white,
-    borderColor: Colors.black,
-    focusBorderColor: Colors.black,
-    errorColor: Colors.redAccent,
-    borderWidth: 3.0,
-    borderRadius: 0.0, // Sharp aesthetic
-    contentPadding: EdgeInsets.all(16),
-  );
+        textStyle: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+          color: Colors.black,
+          fontFamily: 'Courier', // Brutalist mono vibes
+        ),
+        hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
+        backgroundColor: Colors.white,
+        borderColor: Colors.black,
+        focusBorderColor: Colors.black,
+        errorColor: Colors.redAccent,
+        borderWidth: 3.0,
+        borderRadius: 0.0, // Sharp aesthetic
+        contentPadding: EdgeInsets.all(16),
+      );
 
   @override
   Widget renderInput({
@@ -33,6 +33,7 @@ mixin NeoInputRenderer on DesignStyle {
     String? suffixIconName,
     VoidCallback? onTapPrefix,
     VoidCallback? onTapSuffix,
+    TextInputType? keyboardType,
   }) {
     final prefixIconData = AppIcons.get(prefixIconName);
     final suffixIconData = AppIcons.get(suffixIconName);
@@ -79,6 +80,7 @@ mixin NeoInputRenderer on DesignStyle {
                   onSubmitted: onSubmitted,
                   obscureText: obscureText,
                   enabled: enabled,
+                  keyboardType: keyboardType,
                   style: inputTokens.textStyle,
                   decoration: InputDecoration(
                     hintText: hint,
@@ -119,8 +121,8 @@ mixin NeoInputRenderer on DesignStyle {
         padding: const EdgeInsets.all(12),
         decoration: const BoxDecoration(
           border: Border(
-            // Separate icon with border if you want, or just spacing
-          ),
+              // Separate icon with border if you want, or just spacing
+              ),
         ),
         child: Icon(icon, color: Colors.black, size: 24),
       ),

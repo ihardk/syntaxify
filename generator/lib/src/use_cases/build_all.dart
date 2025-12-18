@@ -112,6 +112,7 @@ class BuildAllUseCase {
         'app_theme.dart',
         'design_style.dart',
         'button_variant.dart',
+        'enums.dart',
       ];
 
       for (final file in designSystemFiles) {
@@ -159,6 +160,9 @@ class BuildAllUseCase {
         'material/input_renderer.dart',
         'cupertino/input_renderer.dart',
         'neo/input_renderer.dart',
+        'material/text_renderer.dart',
+        'cupertino/text_renderer.dart',
+        'neo/text_renderer.dart',
       ];
 
       for (final file in rendererFiles) {

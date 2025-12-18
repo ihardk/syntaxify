@@ -29,6 +29,14 @@ mixin MaterialButtonRenderer on DesignStyle {
           padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           borderColor: Colors.blue,
         );
+      case ButtonVariant.text:
+        return const ButtonTokens(
+          radius: 8,
+          borderWidth: 0,
+          bgColor: Colors.transparent,
+          textColor: Colors.blue,
+          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        );
     }
   }
 
@@ -70,6 +78,12 @@ mixin MaterialButtonRenderer on DesignStyle {
         );
       case ButtonVariant.outlined:
         return OutlinedButton(
+          onPressed: effectiveOnPressed,
+          style: _buttonStyle(tokens, variant),
+          child: Text(label),
+        );
+      case ButtonVariant.text:
+        return TextButton(
           onPressed: effectiveOnPressed,
           style: _buttonStyle(tokens, variant),
           child: Text(label),

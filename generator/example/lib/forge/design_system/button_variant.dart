@@ -11,4 +11,7 @@ enum ButtonVariant {
 
   /// Outlined button (transparent background)
   outlined,
+
+  /// Text-only button (no background)
+  text,
 }

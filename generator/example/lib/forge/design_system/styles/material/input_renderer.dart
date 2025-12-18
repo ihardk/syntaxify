@@ -3,16 +3,16 @@ part of '../../design_system.dart';
 mixin MaterialInputRenderer on DesignStyle {
   @override
   InputTokens get inputTokens => const InputTokens(
-    textStyle: TextStyle(fontSize: 16, color: Colors.black87),
-    hintStyle: TextStyle(fontSize: 16, color: Colors.black54),
-    backgroundColor: Colors.transparent,
-    borderColor: Colors.black54,
-    focusBorderColor: Colors.blue,
-    errorColor: Colors.red,
-    borderWidth: 1.0,
-    borderRadius: 4.0,
-    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-  );
+        textStyle: TextStyle(fontSize: 16, color: Colors.black87),
+        hintStyle: TextStyle(fontSize: 16, color: Colors.black54),
+        backgroundColor: Colors.transparent,
+        borderColor: Colors.black54,
+        focusBorderColor: Colors.blue,
+        errorColor: Colors.red,
+        borderWidth: 1.0,
+        borderRadius: 4.0,
+        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+      );
 
   @override
   Widget renderInput({
@@ -28,6 +28,7 @@ mixin MaterialInputRenderer on DesignStyle {
     String? suffixIconName,
     VoidCallback? onTapPrefix,
     VoidCallback? onTapSuffix,
+    TextInputType? keyboardType,
   }) {
     // Resolve icons from registry
     final prefixIconData = AppIcons.get(prefixIconName);
@@ -39,6 +40,7 @@ mixin MaterialInputRenderer on DesignStyle {
       onSubmitted: onSubmitted,
       obscureText: obscureText,
       enabled: enabled,
+      keyboardType: keyboardType,
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,

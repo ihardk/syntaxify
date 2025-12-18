@@ -19,9 +19,9 @@ class ScreenGenerator {
       ])
       ..directives.addAll([
         Directive.import('package:flutter/material.dart'),
-        Directive.import('../index.dart'), // For generated components
+        Directive.import('../../index.dart'), // For generated components
         Directive.import(
-            '../design_system/design_system.dart'), // For design system
+            '../../design_system/design_system.dart'), // For design system
       ])
       ..body.add(_buildScreenClass(screen)));
 

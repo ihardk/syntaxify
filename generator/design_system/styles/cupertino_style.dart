@@ -8,6 +8,9 @@ part of '../design_system.dart';
 /// - iOS blue accent color (#007AFF)
 /// - Native Cupertino widgets (CupertinoButton)
 class CupertinoStyle extends DesignStyle
-    with CupertinoButtonRenderer, CupertinoInputRenderer {
+    with
+        CupertinoButtonRenderer,
+        CupertinoInputRenderer,
+        CupertinoTextRenderer {
   const CupertinoStyle();
 }

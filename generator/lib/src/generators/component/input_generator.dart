@@ -125,6 +125,10 @@ class InputGenerator implements ComponentGenerator {
         ..name = 'onTapSuffix'
         ..type = refer('VoidCallback?')
         ..modifier = FieldModifier.final$),
+      Field((b) => b
+        ..name = 'keyboardType'
+        ..type = refer('TextInputType?')
+        ..modifier = FieldModifier.final$),
     ];
   }
 
@@ -186,6 +190,10 @@ class InputGenerator implements ComponentGenerator {
             ..name = 'onTapSuffix'
             ..named = true
             ..toThis = true),
+          Parameter((p) => p
+            ..name = 'keyboardType'
+            ..named = true
+            ..toThis = true),
         ]),
     );
   }
@@ -215,6 +223,7 @@ class InputGenerator implements ComponentGenerator {
           suffixIconName: suffixIcon,
           onTapPrefix: onTapPrefix,
           onTapSuffix: onTapSuffix,
+          keyboardType: keyboardType,
         );
         '''),
     );
