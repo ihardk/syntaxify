@@ -1,4 +1,4 @@
-# Forge Dependencies
+# Syntax Dependencies
 
 > Complete documentation of all package dependencies.
 

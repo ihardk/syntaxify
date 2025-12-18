@@ -1,5 +1,5 @@
-import 'package:forge/src/models/component_definition.dart';
-import 'package:forge/src/models/token_definition.dart';
+import 'package:syntax/src/models/component_definition.dart';
+import 'package:syntax/src/models/token_definition.dart';
 
 /// Abstract interface for component code generators.
 ///

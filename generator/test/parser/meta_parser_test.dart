@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:test/test.dart';
 
-import 'package:forge/src/parser/meta_parser.dart';
-import 'package:forge/src/models/component_definition.dart';
+import 'package:syntax/src/parser/meta_parser.dart';
+import 'package:syntax/src/models/component_definition.dart';
 import 'package:mason_logger/mason_logger.dart';
 
 void main() {

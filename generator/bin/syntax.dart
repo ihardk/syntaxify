@@ -3,17 +3,17 @@ import 'dart:io';
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 
-import 'package:forge/src/cli/build_command.dart';
-import 'package:forge/src/cli/clean_command.dart';
-import 'package:forge/src/cli/init_command.dart';
+import 'package:syntax/src/cli/build_command.dart';
+import 'package:syntax/src/cli/clean_command.dart';
+import 'package:syntax/src/cli/init_command.dart';
 
-/// Forge CLI entry point
+/// Syntax CLI entry point
 Future<void> main(List<String> arguments) async {
   final logger = Logger();
 
   final runner = CommandRunner<int>(
-    'forge',
-    'Forge UI code generator - produces production-ready Flutter widgets from design tokens.',
+    'syntax',
+    'Syntax UI code generator - produces production-ready Flutter widgets from design tokens.',
   )
     ..addCommand(InitCommand(logger: logger))
     ..addCommand(BuildCommand(logger: logger))

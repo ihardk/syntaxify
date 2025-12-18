@@ -1,6 +1,6 @@
 # Technical Specification
 
-> AST Nodes for Forge UI Compiler (Stage 2 & 3 Focus)
+> AST Nodes for Syntax UI Compiler (Stage 2 & 3 Focus)
 > Version: 2.1 (P0 & P1 Nodes Only)
 
 Full reference including P2/P3 nodes: `node-reference.md`

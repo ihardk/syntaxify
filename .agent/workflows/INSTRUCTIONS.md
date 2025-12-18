@@ -1,4 +1,4 @@
-# Forge Workflow Commands
+# Syntax Workflow Commands
 
 > Quick reference for all available slash commands and workflows.
 
@@ -45,13 +45,13 @@
 
 ---
 
-## Forge-Specific Workflows
+## Syntax-Specific Workflows
 
 ### `/build`
-**Purpose:** Build/generate Forge components.
+**Purpose:** Build/generate Syntax components.
 ```bash
 cd generator
-dart run bin/forge.dart build
+dart run bin/syntax.dart build
 ```
 - Reads technical specs
 - Runs generator

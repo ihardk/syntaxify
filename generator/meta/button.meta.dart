@@ -1,14 +1,14 @@
 /// Button component specification
 ///
 /// Defines the API surface for the AppButton widget.
-/// This file is read by the Forge generator.
+/// This file is read by the Syntax generator.
 
 // This is a SPECIFICATION file, not runtime code.
 // The generator parses these annotations to create the widget.
 
-import 'package:forge/src/annotations/forge_annotations.dart';
+import 'package:syntax/src/annotations/syntax_annotations.dart';
 
-@ForgeComponent(description: 'A customizable button component')
+@SyntaxComponent(description: 'A customizable button component')
 class ButtonMeta {
   /// The button label text
   @Required()

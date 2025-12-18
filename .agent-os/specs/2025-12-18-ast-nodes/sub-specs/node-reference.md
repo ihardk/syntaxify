@@ -1,6 +1,6 @@
 # Node Reference
 
-> Complete AST Node Reference for Forge UI Compiler
+> Complete AST Node Reference for Syntax UI Compiler
 > Includes all Priority Tiers (P0-P3) with strict Enum typing.
 
 ---

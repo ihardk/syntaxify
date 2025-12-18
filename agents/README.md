@@ -1,12 +1,12 @@
 ---
-description: Multi-agent system for Forge project
-profile: forge
+description: Multi-agent system for Syntax project
+profile: syntax
 inherits_from: default
 ---
 
-# Forge Multi-Agent System
+# Syntax Multi-Agent System
 
-> Specialized AI agents for the Forge compile-time UI generator.
+> Specialized AI agents for the Syntax compile-time UI generator.
 
 ## Agent Roster
 
@@ -24,7 +24,7 @@ inherits_from: default
 All agents reference these authoritative docs:
 
 - `planning/AST.md` — UI AST specification
-- `planning/SPEC.md` — Core Forge specification
+- `planning/SPEC.md` — Core Syntax specification
 - `planning/ROADMAP.md` — 5-stage development plan
 - `planning/AST_EXAMPLES.md` — Reference examples
 

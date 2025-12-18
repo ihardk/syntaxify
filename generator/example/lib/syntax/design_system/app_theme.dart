@@ -1,7 +1,7 @@
 /// AppTheme InheritedWidget
 part of 'design_system.dart';
 
-/// Forge theme provider using sealed DesignStyle pattern.
+/// Syntax theme provider using sealed DesignStyle pattern.
 ///
 /// Usage:
 /// ```dart

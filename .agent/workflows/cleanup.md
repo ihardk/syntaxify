@@ -17,30 +17,30 @@ description: Clean up generated files and rebuild fresh
 
 ### 1. Clean Generated Code
 ```bash
-cd d:\Workspace\forge\generator
-dart run bin/forge.dart clean
+cd d:\Workspace\syntax\generator
+dart run bin/syntax.dart clean
 ```
 
 Or manually:
 ```bash
-rm -rf generator/example/lib/forge/generated/
+rm -rf generator/example/lib/syntax/generated/
 ```
 
 ### 2. Clean Build Artifacts
 ```bash
-cd d:\Workspace\forge\generator
+cd d:\Workspace\syntax\generator
 dart pub get
 ```
 
 ```bash
-cd d:\Workspace\forge\generator\example
+cd d:\Workspace\syntax\generator\example
 flutter clean
 flutter pub get
 ```
 
 ### 3. Clean Test Caches
 ```bash
-cd d:\Workspace\forge\generator
+cd d:\Workspace\syntax\generator
 rm -rf .dart_tool/
 ```
 
@@ -57,20 +57,20 @@ flutter analyze
 ### Remove All Transient Files
 ```bash
 # Generator
-cd d:\Workspace\forge\generator
+cd d:\Workspace\syntax\generator
 rm -rf .dart_tool/ build/ pubspec.lock
 
 # Example app
-cd d:\Workspace\forge\generator\example
+cd d:\Workspace\syntax\generator\example
 rm -rf .dart_tool/ build/ pubspec.lock
 ```
 
 ### Reinstall Dependencies
 ```bash
-cd d:\Workspace\forge\generator
+cd d:\Workspace\syntax\generator
 dart pub get
 
-cd d:\Workspace\forge\generator\example
+cd d:\Workspace\syntax\generator\example
 flutter pub get
 ```
 

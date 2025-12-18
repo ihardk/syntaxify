@@ -1,6 +1,6 @@
-# Forge Standards
+# Syntax Standards
 
-> Coding standards and best practices for the Forge project.
+> Coding standards and best practices for the Syntax project.
 
 ## Core Documents
 
@@ -15,6 +15,6 @@
 ## Related Planning Docs
 
 - `planning/AST.md` — UI AST specification
-- `planning/SPEC.md` — Core Forge rules
+- `planning/SPEC.md` — Core Syntax rules
 - `planning/naming_conventions.md` — Naming standards
 - `planning/technical_specs.md` — CLI specs

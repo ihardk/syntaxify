@@ -1,35 +1,35 @@
-# Forge User Manual 🛠️
+# Syntax User Manual 🛠️
 
-Welcome to **Forge**, the Meta-Framework for Flutter. Forge allows you to define your application's components and design system in high-level "Meta" files, automatically generating production-ready, scalable code.
+Welcome to **Syntax**, the Meta-Framework for Flutter. Syntax allows you to define your application's components and design system in high-level "Meta" files, automatically generating production-ready, scalable code.
 
 ## 🚀 Getting Started
 
 ### 1. Installation
-Add `forge` to your `dev_dependencies` in `pubspec.yaml`:
+Add `Syntax` to your `dev_dependencies` in `pubspec.yaml`:
 
 ```yaml
 dev_dependencies:
-  forge: ^0.0.1 # Or path dependency
+  Syntax: ^0.0.1 # Or path dependency
 ```
 
 ### 2. Initialization
 Initialize your project structure. This creates the `meta/` and `design_system/` directories.
 
 ```bash
-dart run forge init
+dart run Syntax init
 ```
 
 ### 3. The Workflow
-The Forge workflow is simple:
+The Syntax workflow is simple:
 1.  **Define**: Edit `.meta.dart` files in `meta/` directory.
 2.  **Style**: Customize renderers in `design_system/`.
 3.  **Build**: Run the generator.
 
 ```bash
-dart run forge build
+dart run Syntax build
 ```
 
-The generated code lives in `lib/forge/`. You should treat this folder as read-only (mostly).
+The generated code lives in `lib/Syntax/`. You should treat this folder as read-only (mostly).
 
 ---
 
@@ -42,7 +42,7 @@ The generated code lives in `lib/forge/`. You should treat this folder as read-o
 *   `design_system/`: Your Implementation Details.
     *   `styles/`: Contains Renderers (Material, Cupertino, Neo).
     *   `tokens/`: Usage-specific tokens.
-*   `lib/forge/`: The Generated Code.
+*   `lib/Syntax/`: The Generated Code.
     *   `generated/components/`: The Widgets you use in your app (`AppButton`, `AppInput`).
     *   `design_system/`: The Runtime configuration.
 
@@ -50,7 +50,7 @@ The generated code lives in `lib/forge/`. You should treat this folder as read-o
 
 ## 🎨 Design System
 
-Forge uses a "Renderer Pattern". Changing the style doesn't require rewriting widgets.
+Syntax uses a "Renderer Pattern". Changing the style doesn't require rewriting widgets.
 
 ### Switching Styles
 In `lib/main.dart` (or wherever you init `AppTheme`):
@@ -103,7 +103,7 @@ class AppIcon {
 
 **2. Run Build:**
 ```bash
-dart run forge build
+dart run Syntax build
 ```
 
 **3. Use in Code:**
@@ -118,7 +118,7 @@ The runtime will map this string to `Icons.search` automatically.
 ## ❓ Troubleshooting
 
 **"Type not found" errors?**
-Ensure you run `dart run forge build` after creating new meta files.
+Ensure you run `dart run Syntax build` after creating new meta files.
 
 **"File not found"?**
-Ensure `meta/` directory exists in your project root. Run `dart run forge init` to repair structure.
+Ensure `meta/` directory exists in your project root. Run `dart run Syntax init` to repair structure.

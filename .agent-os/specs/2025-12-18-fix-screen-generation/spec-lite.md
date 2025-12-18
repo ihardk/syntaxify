@@ -1,3 +1,3 @@
 # Spec Summary (Lite)
 
-Improve the `ScreenGenerator` subsystem to fully parse P0 screen definitions (including properties like `onPressed` and `hint`) and emit code that utilizes the Forge Design System components (`AppButton`, `AppInput`) instead of raw Material widgets.
+Improve the `ScreenGenerator` subsystem to fully parse P0 screen definitions (including properties like `onPressed` and `hint`) and emit code that utilizes the Syntax Design System components (`AppButton`, `AppInput`) instead of raw Material widgets.

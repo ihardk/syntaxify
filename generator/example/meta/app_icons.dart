@@ -1,4 +1,4 @@
-import 'package:forge/src/annotations/forge_annotations.dart';
+import 'package:syntax/src/annotations/syntax_annotations.dart';
 
 /// App Icon Registry
 ///

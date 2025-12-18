@@ -1,22 +1,30 @@
 /// Button component specification
 ///
 /// Defines the API surface for the AppButton widget.
-/// This file is read by the Forge generator.
+/// This file is read by the Syntax generator.
 
 // This is a SPECIFICATION file, not runtime code.
 // The generator parses these annotations to create the widget.
 
-import 'package:forge/src/annotations/forge_annotations.dart';
+import 'package:syntax/src/annotations/syntax_annotations.dart';
 
-@ForgeComponent(description: 'A customizable button component')
+@SyntaxComponent(description: 'A customizable button component')
 class ButtonMeta {
   /// The button label text
   @Required()
   final String label;
 
-  /// Callback when button is pressed
+  /// The action to trigger (e.g. 'action:login')
   @Optional()
-  final void Function()? onPressed;
+  final String? onPressed;
+
+  /// Button variant (filled, outlined, etc)
+  @Optional()
+  final String? variant;
+
+  /// Button size (sm, md, lg)
+  @Optional()
+  final String? size;
 
   /// Whether the button shows loading state
   @Optional()
@@ -31,6 +39,8 @@ class ButtonMeta {
   const ButtonMeta({
     required this.label,
     this.onPressed,
+    this.variant,
+    this.size,
     this.isLoading = false,
     this.isDisabled = false,
   });

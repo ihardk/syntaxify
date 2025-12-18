@@ -1,6 +1,6 @@
 # Testing Strategy
 
-> Testing approach for Forge compiler and generated code.
+> Testing approach for Syntax compiler and generated code.
 
 ---
 

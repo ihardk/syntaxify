@@ -1,4 +1,4 @@
-# Forge AST Architecture Discussion
+# Syntax AST Architecture Discussion
 
 > Saved conversation from 2025-12-18
 
@@ -6,18 +6,18 @@
 
 ## Context: The Pivot
 
-We pivoted Forge from a **design-system code generator** to a **framework-agnostic AST/IR compiler**.
+We pivoted Syntax from a **design-system code generator** to a **framework-agnostic AST/IR compiler**.
 
 ---
 
-## What is Forge Now?
+## What is Syntax Now?
 
-**Old Forge:** Annotation-driven design system generator
+**Old Syntax:** Annotation-driven design system generator
 - Generated styled Flutter widgets
 - Used `VoidCallback` for actions
 - Runtime theming support
 
-**New Forge:** UI AST compiler
+**New Syntax:** UI AST compiler
 - Generates plain Flutter code from data-only AST
 - Actions are symbolic strings (`'login'`, not `() => login()`)
 - Compile-time only, no runtime interpretation
@@ -194,7 +194,7 @@ Where these skills are valued:
 3. **Primitives over domains**
 4. **Ownership over magic**
 
-> **Final Rule:** Forge exists to remove repetition, not responsibility.
+> **Final Rule:** Syntax exists to remove repetition, not responsibility.
 
 ---
 
@@ -210,6 +210,6 @@ Where these skills are valued:
 ## Reference Files
 
 - `planning/AST.md` — Full AST specification
-- `planning/SPEC.md` — Core Forge specification
+- `planning/SPEC.md` — Core Syntax specification
 - `planning/ROADMAP.md` — 5-stage development plan
 - `planning/AST_EXAMPLES.md` — Login screen example

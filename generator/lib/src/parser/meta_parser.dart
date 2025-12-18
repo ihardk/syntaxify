@@ -5,8 +5,8 @@ import 'package:analyzer/dart/ast/ast.dart' as analyzer;
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:mason_logger/mason_logger.dart';
 
-import 'package:forge/src/models/component_definition.dart';
-import 'package:forge/src/models/ast/nodes.dart';
+import 'package:syntax/src/models/component_definition.dart';
+import 'package:syntax/src/models/ast/nodes.dart';
 import 'ast_node_parser.dart';
 
 /// Parses meta component files using the Dart analyzer
@@ -86,10 +86,10 @@ class _AstNodeVisitor extends RecursiveAstVisitor<void> {
 
   @override
   void visitClassDeclaration(analyzer.ClassDeclaration classNode) {
-    // Check for @ForgeComponent annotation
+    // Check for @SyntaxComponent annotation
     final hasMetaAnnotation = classNode.metadata.any((annotation) {
       final name = annotation.name.toSource();
-      return name == 'ForgeComponent' || name == 'MetaComponent';
+      return name == 'SyntaxComponent' || name == 'MetaComponent';
     });
 
     if (hasMetaAnnotation) {

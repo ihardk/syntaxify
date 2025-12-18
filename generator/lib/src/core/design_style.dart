@@ -1,10 +1,10 @@
-/// Shared design style definitions for Forge components.
+/// Shared design style definitions for Syntax components.
 ///
 /// This is the canonical source for DesignStyle - imported by both
 /// token files and generated theme files.
 library;
 
-/// Available design styles for Forge components.
+/// Available design styles for Syntax components.
 ///
 /// Each style provides a different visual appearance:
 /// - [material]: Google Material Design styling

@@ -1,6 +1,6 @@
-/// Forge Design System - Core
+/// Syntax Design System - Core
 ///
-/// Base classes and types for the Forge design system.
+/// Base classes and types for the Syntax Design System.
 /// Uses `part` files so sealed class can be extended.
 library design_system;
 

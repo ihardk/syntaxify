@@ -1,11 +1,11 @@
-# Forge Developer Manual 🔧
+# Syntax Developer Manual 🔧
 
-This guide is for developers contributing to the Forge core (the Generator package).
+This guide is for developers contributing to the Syntax core (the Generator package).
 
 ## 🚀 Getting Started
 
 ### 1. Repository Setup
-Forge is a standard Dart package.
+Syntax is a standard Dart package.
 
 ```bash
 git clone <repo>
@@ -26,7 +26,7 @@ To debug the generator while running it against the example project:
           "name": "Debug Build (Example)",
           "request": "launch",
           "type": "dart",
-          "program": "bin/forge.dart",
+          "program": "bin/Syntax.dart",
           "args": ["build", "--verbose"],
           "cwd": "${workspaceFolder}/example"
         }
@@ -40,7 +40,7 @@ To debug the generator while running it against the example project:
 
 ## 🏗️ Architecture
 
-Forge follows **Clean Architecture** principles to separate concerns.
+Syntax follows **Clean Architecture** principles to separate concerns.
 
 ```mermaid
 graph TD
@@ -80,7 +80,7 @@ Decide what configuration the user provides.
 Create a template in `meta/card.meta.dart`:
 
 ```dart
-@ForgeComponent(description: 'A container card')
+@syntaxComponent(description: 'A container card')
 class CardMeta {
   @Required()
   final String child;

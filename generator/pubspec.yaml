@@ -1,5 +1,5 @@
-name: forge
-description: Forge UI code generator - produces production-ready Flutter widgets from design tokens.
+name: syntax
+description: AST-based Flutter UI code generator with multi-style design system support
 version: 0.0.3
 
 environment:
@@ -37,4 +37,4 @@ dev_dependencies:
   lints: ^3.0.0
 
 executables:
-  forge: forge
+  syntax: syntax

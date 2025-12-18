@@ -2,15 +2,15 @@ import 'dart:io';
 
 import 'package:mason_logger/mason_logger.dart';
 
-import 'package:forge/src/core/interfaces/file_system.dart';
-import 'package:forge/src/generators/generator_registry.dart';
-import 'package:forge/src/infrastructure/local_file_system.dart';
-import 'package:forge/src/models/build_result.dart';
-import 'package:forge/src/parser/meta_parser.dart';
-import 'package:forge/src/parser/token_parser.dart';
-import 'package:forge/src/use_cases/build_all.dart';
+import 'package:syntax/src/core/interfaces/file_system.dart';
+import 'package:syntax/src/generators/generator_registry.dart';
+import 'package:syntax/src/infrastructure/local_file_system.dart';
+import 'package:syntax/src/models/build_result.dart';
+import 'package:syntax/src/parser/meta_parser.dart';
+import 'package:syntax/src/parser/token_parser.dart';
+import 'package:syntax/src/use_cases/build_all.dart';
 
-/// Main Forge generator - orchestrates the build process.
+/// Main Syntax generator - orchestrates the build process.
 ///
 /// Uses dependency injection for testability:
 /// - FileSystem abstraction (LocalFileSystem or MemoryFileSystem)
@@ -19,8 +19,8 @@ import 'package:forge/src/use_cases/build_all.dart';
 /// Following Clean Architecture:
 /// - This is the PRESENTATION layer (CLI integration)
 /// - Delegates to USE CASES (BuildAllUseCase)
-class ForgeGenerator {
-  ForgeGenerator({
+class SyntaxGenerator {
+  SyntaxGenerator({
     required this.metaDirectory,
     required this.tokensDirectory,
     required this.outputDirectory,

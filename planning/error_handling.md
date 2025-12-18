@@ -1,6 +1,6 @@
 # Error Handling
 
-> How Forge handles failures at compile-time.
+> How Syntax handles failures at compile-time.
 
 ---
 
@@ -10,7 +10,7 @@
 **When:** AST definition is invalid.
 
 ```bash
-$ forge build
+$ syntax build
 
 ERROR: AST-001
   File: screens/login.dart:15

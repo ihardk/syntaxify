@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:example/forge/index.dart';
+import 'package:example/syntax/index.dart';
 import '../meta/app_icons.dart' as meta;
 
 void main() {

@@ -7,7 +7,7 @@
 
 ## Overview
 
-Define all AST nodes for the Forge UI compiler, covering layout nodes, primitive component nodes, and the screen root. This specification establishes the complete node vocabulary that Forge will support for cross-platform code generation.
+Define all AST nodes for the Syntax UI compiler, covering layout nodes, primitive component nodes, and the screen root. This specification establishes the complete node vocabulary that Syntax will support for cross-platform code generation.
 
 ---
 
@@ -15,7 +15,7 @@ Define all AST nodes for the Forge UI compiler, covering layout nodes, primitive
 
 ### Comprehensive Node Vocabulary
 
-As a Forge user, I want a complete set of AST nodes, so that I can describe any standard UI layout.
+As a Syntax user, I want a complete set of AST nodes, so that I can describe any standard UI layout.
 
 Once implemented, I can define screens using a combination of layout nodes (Column, Row, Stack, List) and primitive nodes (Text, Button, TextField, Icon, Image, Toggle, Spacer) to compose complex UIs from simple building blocks.
 

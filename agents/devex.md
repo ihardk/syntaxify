@@ -21,7 +21,7 @@ primary_docs:
 
 ## Role
 
-The DevEx ensures developers have a great experience using Forge. Focus on documentation, error messages, and clear communication.
+The DevEx ensures developers have a great experience using Syntax. Focus on documentation, error messages, and clear communication.
 
 ## Responsibilities
 

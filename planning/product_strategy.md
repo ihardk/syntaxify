@@ -8,13 +8,13 @@
 
 **"Own your UI, not just your components."**
 
-Forge enables developers to define UI structure in a framework-agnostic AST, generating production-ready code for Flutter (and eventually Compose).
+Syntax enables developers to define UI structure in a framework-agnostic AST, generating production-ready code for Flutter (and eventually Compose).
 
 ---
 
 ## 2. Core Principle
 
-> Forge exists to remove repetition, not responsibility.
+> Syntax exists to remove repetition, not responsibility.
 
 ---
 
@@ -64,7 +64,7 @@ Forge enables developers to define UI structure in a framework-agnostic AST, gen
 
 ---
 
-## 6. What Forge Is NOT
+## 6. What Syntax Is NOT
 
 - NOT a runtime framework
 - NOT a widget library

@@ -1,7 +1,7 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
-import 'package:forge/src/emitters/layout_emitter.dart';
-import 'package:forge/src/models/ast/nodes.dart';
+import 'package:syntax/src/emitters/layout_emitter.dart';
+import 'package:syntax/src/models/ast/nodes.dart';
 
 /// Generates a full Screen widget from a [ScreenDefinition].
 class ScreenGenerator {
@@ -11,17 +11,24 @@ class ScreenGenerator {
 
   final LayoutEmitter layoutEmitter;
 
-  String generate(ScreenDefinition screen) {
+  String generate(ScreenDefinition screen, {String? packageName}) {
     final library = Library((b) => b
       ..comments.addAll([
         'GENERATED CODE - DO NOT MODIFY BY HAND',
-        'Analyzed by Forge',
+        'Analyzed by Syntax',
       ])
       ..directives.addAll([
         Directive.import('package:flutter/material.dart'),
-        Directive.import('../../index.dart'), // For generated components
-        Directive.import(
-            '../../design_system/design_system.dart'), // For design system
+        if (packageName != null) ...[
+          Directive.import('package:$packageName/syntax/index.dart'),
+          Directive.import(
+              'package:$packageName/syntax/design_system/design_system.dart'),
+        ] else ...[
+          // Fallback to relative imports if package name not provided
+          Directive.import('../../index.dart'), // For generated components
+          Directive.import(
+              '../../design_system/design_system.dart'), // For design system
+        ],
       ])
       ..body.add(_buildScreenClass(screen)));
 

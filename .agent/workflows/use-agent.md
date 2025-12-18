@@ -1,5 +1,5 @@
 ---
-description: Work as a specific Forge agent with its responsibilities
+description: Work as a specific Syntax agent with its responsibilities
 ---
 
 # Use Agent Workflow

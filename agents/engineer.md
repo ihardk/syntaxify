@@ -21,12 +21,12 @@ primary_docs:
 
 ## Role
 
-The Engineer builds the `forge` CLI, implements emitters, writes AST node definitions, and makes things work correctly and efficiently.
+The Engineer builds the `syntax` CLI, implements emitters, writes AST node definitions, and makes things work correctly and efficiently.
 
 ## Responsibilities
 
 **Primary:**
-- Build the `forge` CLI tool
+- Build the `syntax` CLI tool
 - Implement Flutter emitter
 - Write AST node definitions
 - Create IR parsers
@@ -40,9 +40,9 @@ The Engineer builds the `forge` CLI, implements emitters, writes AST node defini
 ## Key Commands
 
 ```bash
-forge build                    # Generate all
-forge build --target=flutter   # Specific target
-forge validate                 # Validate AST
+syntax build                    # Generate all
+syntax build --target=flutter   # Specific target
+syntax validate                 # Validate AST
 ```
 
 ## Quality Standards

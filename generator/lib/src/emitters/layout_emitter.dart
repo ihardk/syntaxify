@@ -1,5 +1,5 @@
 import 'package:code_builder/code_builder.dart';
-import 'package:forge/src/models/ast/nodes.dart';
+import 'package:syntax/src/models/ast/nodes.dart';
 
 /// Emits Flutter code from AST nodes.
 class LayoutEmitter {

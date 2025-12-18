@@ -1,8 +1,8 @@
 ---
-description: Complete list of available Agent-OS and Forge workflows
+description: Complete list of available Agent-OS and Syntax workflows
 ---
 
-# Forge Workflow Commands
+# Syntax Workflow Commands
 
 ## 🚀 Main Orchestration
 
@@ -57,7 +57,7 @@ All workflows reference these core docs:
 | Doc                              | Purpose                  |
 | -------------------------------- | ------------------------ |
 | `planning/AST.md`                | UI AST specification     |
-| `planning/SPEC.md`               | Core Forge rules         |
+| `planning/SPEC.md`               | Core Syntax rules        |
 | `planning/ROADMAP.md`            | 5-stage development plan |
 | `planning/technical_specs.md`    | CLI and output specs     |
 | `planning/testing_strategy.md`   | Testing approach         |

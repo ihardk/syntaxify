@@ -1,7 +1,7 @@
 import 'package:path/path.dart' as path;
-import 'package:forge/src/core/interfaces/file_system.dart';
-import 'package:forge/src/models/ast/screen_definition.dart';
-import 'package:forge/src/generators/screen_generator.dart';
+import 'package:syntax/src/core/interfaces/file_system.dart';
+import 'package:syntax/src/models/ast/screen_definition.dart';
+import 'package:syntax/src/generators/screen_generator.dart';
 
 class GenerateScreenUseCase {
   GenerateScreenUseCase({
@@ -15,12 +15,14 @@ class GenerateScreenUseCase {
   Future<String> execute({
     required ScreenDefinition screen,
     required String outputDir,
+    String? packageName,
   }) async {
-    final code = screenGenerator.generate(screen);
+    final code = screenGenerator.generate(screen, packageName: packageName);
     final fileName = '${screen.id}_screen.dart';
 
-    // Screens go into lib/screens for now
-    final screensDir = path.join(outputDir, 'screens');
+    // Screens go to lib/screens/ (editable by user)
+    // Not under outputDir - they're separate from generated code
+    final screensDir = path.join('lib', 'screens');
     await fileSystem.createDirectory(screensDir);
 
     final filePath = path.join(screensDir, fileName);

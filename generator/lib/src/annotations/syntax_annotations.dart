@@ -1,18 +1,18 @@
-/// Forge annotations for defining meta components.
+/// Syntax annotations for defining meta components.
 ///
 /// These annotations are used in `.meta.dart` files to define
-/// component specifications that the Forge generator will process.
-library forge_annotations;
+/// component specifications that the Syntax generator will process.
+library syntax_annotations;
 
-/// Marks a class as a Forge component specification.
+/// Marks a class as a Syntax component specification.
 ///
 /// The generator will create a Flutter widget from this spec.
-/// Note: Named ForgeComponent to avoid collision with internal MetaComponent model.
-class ForgeComponent {
+/// Note: Named SyntaxComponent to avoid collision with internal MetaComponent model.
+class SyntaxComponent {
   /// Optional description of the component.
   final String? description;
 
-  const ForgeComponent({this.description});
+  const SyntaxComponent({this.description});
 }
 
 /// Marks a field as required in the generated widget.

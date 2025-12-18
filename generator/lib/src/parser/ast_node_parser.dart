@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/ast/ast.dart' as analyzer;
-import 'package:forge/src/models/ast/nodes.dart';
+import 'package:syntax/src/models/ast/nodes.dart';
 
-/// Helper class to parse Dart AST expressions into Forge AST nodes.
+/// Helper class to parse Dart AST expressions into Syntax AST nodes.
 class AstNodeParser {
   const AstNodeParser();
 
