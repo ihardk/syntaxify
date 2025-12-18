@@ -33,8 +33,10 @@ This creates:
 ### 3. Build
 
 ```bash
-syntax build --meta=meta --design-system=lib/syntax/design_system --tokens=lib/syntax/design_system --output=lib/syntax
+syntax build
 ```
+
+Syntax auto-detects your project structure and generates all necessary files.
 
 ### 4. Use Generated Components
 
@@ -84,7 +86,7 @@ class ButtonMeta {
 
 **Build:**
 ```bash
-syntax build ...
+syntax build
 ```
 
 **Use:**
