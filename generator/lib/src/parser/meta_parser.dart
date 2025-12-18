@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:analyzer/dart/analysis/utilities.dart';
-import 'package:analyzer/dart/ast/ast.dart';
+import 'package:analyzer/dart/ast/ast.dart' hide AstNode;
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:mason_logger/mason_logger.dart';
 
-import 'package:forge/src/models/meta_component.dart';
+import 'package:forge/src/models/ast_node.dart';
 
 /// Parses meta component files using the Dart analyzer
 class MetaParser {
@@ -14,22 +14,22 @@ class MetaParser {
   final Logger logger;
 
   /// Parse a single meta file
-  Future<MetaComponent?> parseFile(File file) async {
+  Future<AstNode?> parseFile(File file) async {
     try {
       logger.info('Parsing file: ${file.path}');
       final content = await file.readAsString();
       final result = parseString(content: content);
 
-      final visitor = _MetaComponentVisitor();
+      final visitor = _AstNodeVisitor();
       result.unit.visitChildren(visitor);
 
-      if (visitor.component != null) {
-        logger.success('Parsed component: ${visitor.component!.name}');
+      if (visitor.node != null) {
+        logger.success('Parsed component: ${visitor.node!.name}');
       } else {
-        logger.warn('No @MetaComponent annotation found in ${file.path}');
+        logger.warn('No @ForgeComponent annotation found in ${file.path}');
       }
 
-      return visitor.component;
+      return visitor.node;
     } catch (e, stackTrace) {
       logger.err('Failed to parse ${file.path}: $e');
       logger.detail(stackTrace.toString());
@@ -39,52 +39,52 @@ class MetaParser {
 
   /// Parse all meta files in a directory
   Future<ParseResult> parseDirectory(Directory directory) async {
-    final components = <MetaComponent>[];
+    final nodes = <AstNode>[];
     final errors = <String>[];
 
     if (!await directory.exists()) {
       errors.add('Directory does not exist: ${directory.path}');
-      return ParseResult(components: components, errors: errors);
+      return ParseResult(nodes: nodes, errors: errors);
     }
 
     await for (final entity in directory.list(recursive: true)) {
       if (entity is File && entity.path.endsWith('.meta.dart')) {
-        final component = await parseFile(entity);
-        if (component != null) {
-          components.add(component);
+        final node = await parseFile(entity);
+        if (node != null) {
+          nodes.add(node);
         } else {
           errors.add('Failed to parse: ${entity.path}');
         }
       }
     }
 
-    return ParseResult(components: components, errors: errors);
+    return ParseResult(nodes: nodes, errors: errors);
   }
 }
 
 /// AST visitor that extracts meta component information
-class _MetaComponentVisitor extends RecursiveAstVisitor<void> {
-  MetaComponent? component;
+class _AstNodeVisitor extends RecursiveAstVisitor<void> {
+  AstNode? node;
 
   @override
-  void visitClassDeclaration(ClassDeclaration node) {
-    // Check for @ForgeComponent annotation - check annotation name using toSource
-    final hasMetaAnnotation = node.metadata.any((annotation) {
+  void visitClassDeclaration(ClassDeclaration classNode) {
+    // Check for @ForgeComponent annotation
+    final hasMetaAnnotation = classNode.metadata.any((annotation) {
       final name = annotation.name.toSource();
       return name == 'ForgeComponent' || name == 'MetaComponent';
     });
 
     if (hasMetaAnnotation) {
-      final fields = <MetaField>[];
+      final properties = <AstProp>[];
       final variants = <String>[];
 
-      // Extract fields from class members
-      for (final member in node.members) {
+      // Extract properties from class members
+      for (final member in classNode.members) {
         if (member is FieldDeclaration) {
           for (final variable in member.fields.variables) {
-            final field = _extractField(variable, member);
-            if (field != null) {
-              fields.add(field);
+            final prop = _extractProperty(variable, member);
+            if (prop != null) {
+              properties.add(prop);
             }
 
             // Check for @Variant annotation
@@ -111,19 +111,19 @@ class _MetaComponentVisitor extends RecursiveAstVisitor<void> {
         }
       }
 
-      component = MetaComponent(
-        name: _toSnakeCase(node.name.lexeme),
-        className: node.name.lexeme,
-        fields: fields,
+      node = AstNode(
+        name: _toSnakeCase(classNode.name.lexeme),
+        className: classNode.name.lexeme,
+        properties: properties,
         variants: variants,
-        description: _extractDocComment(node),
+        description: _extractDocComment(classNode),
       );
     }
 
-    super.visitClassDeclaration(node);
+    super.visitClassDeclaration(classNode);
   }
 
-  MetaField? _extractField(
+  AstProp? _extractProperty(
       VariableDeclaration variable, FieldDeclaration declaration) {
     final isRequired = declaration.metadata.any(
       (a) => a.name.toSource() == 'Required',
@@ -132,7 +132,7 @@ class _MetaComponentVisitor extends RecursiveAstVisitor<void> {
     final typeNode = declaration.fields.type;
     final typeName = typeNode?.toSource() ?? 'dynamic';
 
-    return MetaField(
+    return AstProp(
       name: variable.name.lexeme,
       type: typeName,
       isRequired: isRequired,

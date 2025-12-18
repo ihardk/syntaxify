@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'meta_component.dart';
+part of 'ast_node.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,36 +15,34 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$MetaComponent {
+mixin _$AstNode {
   String get name => throw _privateConstructorUsedError;
   String get className => throw _privateConstructorUsedError;
-  List<MetaField> get fields => throw _privateConstructorUsedError;
+  List<AstProp> get properties => throw _privateConstructorUsedError;
   List<String> get variants => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $MetaComponentCopyWith<MetaComponent> get copyWith =>
-      throw _privateConstructorUsedError;
+  $AstNodeCopyWith<AstNode> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MetaComponentCopyWith<$Res> {
-  factory $MetaComponentCopyWith(
-          MetaComponent value, $Res Function(MetaComponent) then) =
-      _$MetaComponentCopyWithImpl<$Res, MetaComponent>;
+abstract class $AstNodeCopyWith<$Res> {
+  factory $AstNodeCopyWith(AstNode value, $Res Function(AstNode) then) =
+      _$AstNodeCopyWithImpl<$Res, AstNode>;
   @useResult
   $Res call(
       {String name,
       String className,
-      List<MetaField> fields,
+      List<AstProp> properties,
       List<String> variants,
       String? description});
 }
 
 /// @nodoc
-class _$MetaComponentCopyWithImpl<$Res, $Val extends MetaComponent>
-    implements $MetaComponentCopyWith<$Res> {
-  _$MetaComponentCopyWithImpl(this._value, this._then);
+class _$AstNodeCopyWithImpl<$Res, $Val extends AstNode>
+    implements $AstNodeCopyWith<$Res> {
+  _$AstNodeCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -56,7 +54,7 @@ class _$MetaComponentCopyWithImpl<$Res, $Val extends MetaComponent>
   $Res call({
     Object? name = null,
     Object? className = null,
-    Object? fields = null,
+    Object? properties = null,
     Object? variants = null,
     Object? description = freezed,
   }) {
@@ -69,10 +67,10 @@ class _$MetaComponentCopyWithImpl<$Res, $Val extends MetaComponent>
           ? _value.className
           : className // ignore: cast_nullable_to_non_nullable
               as String,
-      fields: null == fields
-          ? _value.fields
-          : fields // ignore: cast_nullable_to_non_nullable
-              as List<MetaField>,
+      properties: null == properties
+          ? _value.properties
+          : properties // ignore: cast_nullable_to_non_nullable
+              as List<AstProp>,
       variants: null == variants
           ? _value.variants
           : variants // ignore: cast_nullable_to_non_nullable
@@ -86,27 +84,26 @@ class _$MetaComponentCopyWithImpl<$Res, $Val extends MetaComponent>
 }
 
 /// @nodoc
-abstract class _$$MetaComponentImplCopyWith<$Res>
-    implements $MetaComponentCopyWith<$Res> {
-  factory _$$MetaComponentImplCopyWith(
-          _$MetaComponentImpl value, $Res Function(_$MetaComponentImpl) then) =
-      __$$MetaComponentImplCopyWithImpl<$Res>;
+abstract class _$$AstNodeImplCopyWith<$Res> implements $AstNodeCopyWith<$Res> {
+  factory _$$AstNodeImplCopyWith(
+          _$AstNodeImpl value, $Res Function(_$AstNodeImpl) then) =
+      __$$AstNodeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String name,
       String className,
-      List<MetaField> fields,
+      List<AstProp> properties,
       List<String> variants,
       String? description});
 }
 
 /// @nodoc
-class __$$MetaComponentImplCopyWithImpl<$Res>
-    extends _$MetaComponentCopyWithImpl<$Res, _$MetaComponentImpl>
-    implements _$$MetaComponentImplCopyWith<$Res> {
-  __$$MetaComponentImplCopyWithImpl(
-      _$MetaComponentImpl _value, $Res Function(_$MetaComponentImpl) _then)
+class __$$AstNodeImplCopyWithImpl<$Res>
+    extends _$AstNodeCopyWithImpl<$Res, _$AstNodeImpl>
+    implements _$$AstNodeImplCopyWith<$Res> {
+  __$$AstNodeImplCopyWithImpl(
+      _$AstNodeImpl _value, $Res Function(_$AstNodeImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -114,11 +111,11 @@ class __$$MetaComponentImplCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? className = null,
-    Object? fields = null,
+    Object? properties = null,
     Object? variants = null,
     Object? description = freezed,
   }) {
-    return _then(_$MetaComponentImpl(
+    return _then(_$AstNodeImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -127,10 +124,10 @@ class __$$MetaComponentImplCopyWithImpl<$Res>
           ? _value.className
           : className // ignore: cast_nullable_to_non_nullable
               as String,
-      fields: null == fields
-          ? _value._fields
-          : fields // ignore: cast_nullable_to_non_nullable
-              as List<MetaField>,
+      properties: null == properties
+          ? _value._properties
+          : properties // ignore: cast_nullable_to_non_nullable
+              as List<AstProp>,
       variants: null == variants
           ? _value._variants
           : variants // ignore: cast_nullable_to_non_nullable
@@ -145,26 +142,26 @@ class __$$MetaComponentImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$MetaComponentImpl implements _MetaComponent {
-  const _$MetaComponentImpl(
+class _$AstNodeImpl implements _AstNode {
+  const _$AstNodeImpl(
       {required this.name,
       required this.className,
-      required final List<MetaField> fields,
+      required final List<AstProp> properties,
       required final List<String> variants,
       this.description})
-      : _fields = fields,
+      : _properties = properties,
         _variants = variants;
 
   @override
   final String name;
   @override
   final String className;
-  final List<MetaField> _fields;
+  final List<AstProp> _properties;
   @override
-  List<MetaField> get fields {
-    if (_fields is EqualUnmodifiableListView) return _fields;
+  List<AstProp> get properties {
+    if (_properties is EqualUnmodifiableListView) return _properties;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_fields);
+    return EqualUnmodifiableListView(_properties);
   }
 
   final List<String> _variants;
@@ -180,18 +177,19 @@ class _$MetaComponentImpl implements _MetaComponent {
 
   @override
   String toString() {
-    return 'MetaComponent(name: $name, className: $className, fields: $fields, variants: $variants, description: $description)';
+    return 'AstNode(name: $name, className: $className, properties: $properties, variants: $variants, description: $description)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MetaComponentImpl &&
+            other is _$AstNodeImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.className, className) ||
                 other.className == className) &&
-            const DeepCollectionEquality().equals(other._fields, _fields) &&
+            const DeepCollectionEquality()
+                .equals(other._properties, _properties) &&
             const DeepCollectionEquality().equals(other._variants, _variants) &&
             (identical(other.description, description) ||
                 other.description == description));
@@ -202,43 +200,43 @@ class _$MetaComponentImpl implements _MetaComponent {
       runtimeType,
       name,
       className,
-      const DeepCollectionEquality().hash(_fields),
+      const DeepCollectionEquality().hash(_properties),
       const DeepCollectionEquality().hash(_variants),
       description);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$MetaComponentImplCopyWith<_$MetaComponentImpl> get copyWith =>
-      __$$MetaComponentImplCopyWithImpl<_$MetaComponentImpl>(this, _$identity);
+  _$$AstNodeImplCopyWith<_$AstNodeImpl> get copyWith =>
+      __$$AstNodeImplCopyWithImpl<_$AstNodeImpl>(this, _$identity);
 }
 
-abstract class _MetaComponent implements MetaComponent {
-  const factory _MetaComponent(
+abstract class _AstNode implements AstNode {
+  const factory _AstNode(
       {required final String name,
       required final String className,
-      required final List<MetaField> fields,
+      required final List<AstProp> properties,
       required final List<String> variants,
-      final String? description}) = _$MetaComponentImpl;
+      final String? description}) = _$AstNodeImpl;
 
   @override
   String get name;
   @override
   String get className;
   @override
-  List<MetaField> get fields;
+  List<AstProp> get properties;
   @override
   List<String> get variants;
   @override
   String? get description;
   @override
   @JsonKey(ignore: true)
-  _$$MetaComponentImplCopyWith<_$MetaComponentImpl> get copyWith =>
+  _$$AstNodeImplCopyWith<_$AstNodeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$MetaField {
+mixin _$AstProp {
   String get name => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
   bool get isRequired => throw _privateConstructorUsedError;
@@ -246,14 +244,13 @@ mixin _$MetaField {
   String? get description => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $MetaFieldCopyWith<MetaField> get copyWith =>
-      throw _privateConstructorUsedError;
+  $AstPropCopyWith<AstProp> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MetaFieldCopyWith<$Res> {
-  factory $MetaFieldCopyWith(MetaField value, $Res Function(MetaField) then) =
-      _$MetaFieldCopyWithImpl<$Res, MetaField>;
+abstract class $AstPropCopyWith<$Res> {
+  factory $AstPropCopyWith(AstProp value, $Res Function(AstProp) then) =
+      _$AstPropCopyWithImpl<$Res, AstProp>;
   @useResult
   $Res call(
       {String name,
@@ -264,9 +261,9 @@ abstract class $MetaFieldCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MetaFieldCopyWithImpl<$Res, $Val extends MetaField>
-    implements $MetaFieldCopyWith<$Res> {
-  _$MetaFieldCopyWithImpl(this._value, this._then);
+class _$AstPropCopyWithImpl<$Res, $Val extends AstProp>
+    implements $AstPropCopyWith<$Res> {
+  _$AstPropCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -308,11 +305,10 @@ class _$MetaFieldCopyWithImpl<$Res, $Val extends MetaField>
 }
 
 /// @nodoc
-abstract class _$$MetaFieldImplCopyWith<$Res>
-    implements $MetaFieldCopyWith<$Res> {
-  factory _$$MetaFieldImplCopyWith(
-          _$MetaFieldImpl value, $Res Function(_$MetaFieldImpl) then) =
-      __$$MetaFieldImplCopyWithImpl<$Res>;
+abstract class _$$AstPropImplCopyWith<$Res> implements $AstPropCopyWith<$Res> {
+  factory _$$AstPropImplCopyWith(
+          _$AstPropImpl value, $Res Function(_$AstPropImpl) then) =
+      __$$AstPropImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -324,11 +320,11 @@ abstract class _$$MetaFieldImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$MetaFieldImplCopyWithImpl<$Res>
-    extends _$MetaFieldCopyWithImpl<$Res, _$MetaFieldImpl>
-    implements _$$MetaFieldImplCopyWith<$Res> {
-  __$$MetaFieldImplCopyWithImpl(
-      _$MetaFieldImpl _value, $Res Function(_$MetaFieldImpl) _then)
+class __$$AstPropImplCopyWithImpl<$Res>
+    extends _$AstPropCopyWithImpl<$Res, _$AstPropImpl>
+    implements _$$AstPropImplCopyWith<$Res> {
+  __$$AstPropImplCopyWithImpl(
+      _$AstPropImpl _value, $Res Function(_$AstPropImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -340,7 +336,7 @@ class __$$MetaFieldImplCopyWithImpl<$Res>
     Object? defaultValue = freezed,
     Object? description = freezed,
   }) {
-    return _then(_$MetaFieldImpl(
+    return _then(_$AstPropImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -367,8 +363,8 @@ class __$$MetaFieldImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$MetaFieldImpl implements _MetaField {
-  const _$MetaFieldImpl(
+class _$AstPropImpl implements _AstProp {
+  const _$AstPropImpl(
       {required this.name,
       required this.type,
       required this.isRequired,
@@ -388,14 +384,14 @@ class _$MetaFieldImpl implements _MetaField {
 
   @override
   String toString() {
-    return 'MetaField(name: $name, type: $type, isRequired: $isRequired, defaultValue: $defaultValue, description: $description)';
+    return 'AstProp(name: $name, type: $type, isRequired: $isRequired, defaultValue: $defaultValue, description: $description)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MetaFieldImpl &&
+            other is _$AstPropImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.isRequired, isRequired) ||
@@ -413,17 +409,17 @@ class _$MetaFieldImpl implements _MetaField {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$MetaFieldImplCopyWith<_$MetaFieldImpl> get copyWith =>
-      __$$MetaFieldImplCopyWithImpl<_$MetaFieldImpl>(this, _$identity);
+  _$$AstPropImplCopyWith<_$AstPropImpl> get copyWith =>
+      __$$AstPropImplCopyWithImpl<_$AstPropImpl>(this, _$identity);
 }
 
-abstract class _MetaField implements MetaField {
-  const factory _MetaField(
+abstract class _AstProp implements AstProp {
+  const factory _AstProp(
       {required final String name,
       required final String type,
       required final bool isRequired,
       final String? defaultValue,
-      final String? description}) = _$MetaFieldImpl;
+      final String? description}) = _$AstPropImpl;
 
   @override
   String get name;
@@ -437,13 +433,13 @@ abstract class _MetaField implements MetaField {
   String? get description;
   @override
   @JsonKey(ignore: true)
-  _$$MetaFieldImplCopyWith<_$MetaFieldImpl> get copyWith =>
+  _$$AstPropImplCopyWith<_$AstPropImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$ParseResult {
-  List<MetaComponent> get components => throw _privateConstructorUsedError;
+  List<AstNode> get nodes => throw _privateConstructorUsedError;
   List<String> get errors => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -457,7 +453,7 @@ abstract class $ParseResultCopyWith<$Res> {
           ParseResult value, $Res Function(ParseResult) then) =
       _$ParseResultCopyWithImpl<$Res, ParseResult>;
   @useResult
-  $Res call({List<MetaComponent> components, List<String> errors});
+  $Res call({List<AstNode> nodes, List<String> errors});
 }
 
 /// @nodoc
@@ -473,14 +469,14 @@ class _$ParseResultCopyWithImpl<$Res, $Val extends ParseResult>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? components = null,
+    Object? nodes = null,
     Object? errors = null,
   }) {
     return _then(_value.copyWith(
-      components: null == components
-          ? _value.components
-          : components // ignore: cast_nullable_to_non_nullable
-              as List<MetaComponent>,
+      nodes: null == nodes
+          ? _value.nodes
+          : nodes // ignore: cast_nullable_to_non_nullable
+              as List<AstNode>,
       errors: null == errors
           ? _value.errors
           : errors // ignore: cast_nullable_to_non_nullable
@@ -497,7 +493,7 @@ abstract class _$$ParseResultImplCopyWith<$Res>
       __$$ParseResultImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<MetaComponent> components, List<String> errors});
+  $Res call({List<AstNode> nodes, List<String> errors});
 }
 
 /// @nodoc
@@ -511,14 +507,14 @@ class __$$ParseResultImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? components = null,
+    Object? nodes = null,
     Object? errors = null,
   }) {
     return _then(_$ParseResultImpl(
-      components: null == components
-          ? _value._components
-          : components // ignore: cast_nullable_to_non_nullable
-              as List<MetaComponent>,
+      nodes: null == nodes
+          ? _value._nodes
+          : nodes // ignore: cast_nullable_to_non_nullable
+              as List<AstNode>,
       errors: null == errors
           ? _value._errors
           : errors // ignore: cast_nullable_to_non_nullable
@@ -531,18 +527,17 @@ class __$$ParseResultImplCopyWithImpl<$Res>
 
 class _$ParseResultImpl extends _ParseResult {
   const _$ParseResultImpl(
-      {required final List<MetaComponent> components,
-      required final List<String> errors})
-      : _components = components,
+      {required final List<AstNode> nodes, required final List<String> errors})
+      : _nodes = nodes,
         _errors = errors,
         super._();
 
-  final List<MetaComponent> _components;
+  final List<AstNode> _nodes;
   @override
-  List<MetaComponent> get components {
-    if (_components is EqualUnmodifiableListView) return _components;
+  List<AstNode> get nodes {
+    if (_nodes is EqualUnmodifiableListView) return _nodes;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_components);
+    return EqualUnmodifiableListView(_nodes);
   }
 
   final List<String> _errors;
@@ -555,7 +550,7 @@ class _$ParseResultImpl extends _ParseResult {
 
   @override
   String toString() {
-    return 'ParseResult(components: $components, errors: $errors)';
+    return 'ParseResult(nodes: $nodes, errors: $errors)';
   }
 
   @override
@@ -563,15 +558,14 @@ class _$ParseResultImpl extends _ParseResult {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ParseResultImpl &&
-            const DeepCollectionEquality()
-                .equals(other._components, _components) &&
+            const DeepCollectionEquality().equals(other._nodes, _nodes) &&
             const DeepCollectionEquality().equals(other._errors, _errors));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_components),
+      const DeepCollectionEquality().hash(_nodes),
       const DeepCollectionEquality().hash(_errors));
 
   @JsonKey(ignore: true)
@@ -583,12 +577,12 @@ class _$ParseResultImpl extends _ParseResult {
 
 abstract class _ParseResult extends ParseResult {
   const factory _ParseResult(
-      {required final List<MetaComponent> components,
+      {required final List<AstNode> nodes,
       required final List<String> errors}) = _$ParseResultImpl;
   const _ParseResult._() : super._();
 
   @override
-  List<MetaComponent> get components;
+  List<AstNode> get nodes;
   @override
   List<String> get errors;
   @override

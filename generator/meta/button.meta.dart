@@ -14,9 +14,17 @@ class ButtonMeta {
   @Required()
   final String label;
 
-  /// Callback when button is pressed
+  /// The action to trigger (e.g. 'action:login')
   @Optional()
-  final void Function()? onPressed;
+  final String? onPressed;
+
+  /// Button variant (filled, outlined, etc)
+  @Optional()
+  final String? variant;
+
+  /// Button size (sm, md, lg)
+  @Optional()
+  final String? size;
 
   /// Whether the button shows loading state
   @Optional()
@@ -31,6 +39,8 @@ class ButtonMeta {
   const ButtonMeta({
     required this.label,
     this.onPressed,
+    this.variant,
+    this.size,
     this.isLoading = false,
     this.isDisabled = false,
   });

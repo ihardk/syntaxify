@@ -60,7 +60,7 @@ class ForgeGenerator {
         errors.addAll(parseResult.errors);
       }
 
-      var components = parseResult.components;
+      var components = parseResult.nodes;
       logger.info('Found ${components.length} component(s)');
 
       // Filter by component name if specified

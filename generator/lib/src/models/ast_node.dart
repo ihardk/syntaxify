@@ -1,36 +1,36 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'meta_component.freezed.dart';
+part 'ast_node.freezed.dart';
 
-/// Represents a parsed meta component definition
+/// Represents a parsed AST node definition
 @freezed
-class MetaComponent with _$MetaComponent {
-  const factory MetaComponent({
+class AstNode with _$AstNode {
+  const factory AstNode({
     required String name,
     required String className,
-    required List<MetaField> fields,
+    required List<AstProp> properties,
     required List<String> variants,
     String? description,
-  }) = _MetaComponent;
+  }) = _AstNode;
 }
 
-/// Represents a field in a meta component
+/// Represents a property in an AST node
 @freezed
-class MetaField with _$MetaField {
-  const factory MetaField({
+class AstProp with _$AstProp {
+  const factory AstProp({
     required String name,
     required String type,
     required bool isRequired,
     String? defaultValue,
     String? description,
-  }) = _MetaField;
+  }) = _AstProp;
 }
 
-/// Represents the result of parsing meta files
+/// Represents the result of parsing AST files
 @freezed
 class ParseResult with _$ParseResult {
   const factory ParseResult({
-    required List<MetaComponent> components,
+    required List<AstNode> nodes,
     required List<String> errors,
   }) = _ParseResult;
 

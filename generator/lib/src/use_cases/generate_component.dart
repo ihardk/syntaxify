@@ -2,7 +2,7 @@ import 'package:path/path.dart' as path;
 
 import 'package:forge/src/core/interfaces/file_system.dart';
 import 'package:forge/src/generators/generator_registry.dart';
-import 'package:forge/src/models/meta_component.dart';
+import 'package:forge/src/models/ast_node.dart';
 import 'package:forge/src/models/token_definition.dart';
 
 /// Use case for generating a single component.
@@ -22,16 +22,16 @@ class GenerateComponentUseCase {
   ///
   /// Returns the path to the generated file.
   Future<String> execute({
-    required MetaComponent component,
+    required AstNode node,
     required String outputDir,
     TokenDefinition? tokens,
   }) async {
     // Find appropriate generator
-    final generator = registry.forComponent(component);
+    final generator = registry.forComponent(node);
 
     // Generate code
     final code = generator.generate(
-      component: component,
+      node: node,
       tokens: tokens,
     );
 
@@ -40,8 +40,7 @@ class GenerateComponentUseCase {
     await fileSystem.createDirectory(componentsDir);
 
     // Write file
-    final componentName =
-        component.className.replaceAll('Meta', '').toLowerCase();
+    final componentName = node.className.replaceAll('Meta', '').toLowerCase();
     final fileName = 'app_$componentName.dart';
     final filePath = path.join(componentsDir, fileName);
 

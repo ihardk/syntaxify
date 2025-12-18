@@ -6,7 +6,7 @@ import 'package:forge/src/core/interfaces/file_system.dart';
 import 'package:forge/src/generators/generator_registry.dart';
 import 'package:forge/src/generator/theme_generator.dart';
 import 'package:forge/src/models/build_result.dart';
-import 'package:forge/src/models/meta_component.dart';
+import 'package:forge/src/models/ast_node.dart';
 import 'package:forge/src/models/token_definition.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
@@ -40,7 +40,7 @@ class BuildAllUseCase {
 
   /// Execute the full build.
   Future<BuildResult> execute({
-    required List<MetaComponent> components,
+    required List<AstNode> components,
     required List<TokenDefinition> tokens,
     required String outputDir,
     required String metaDirectoryPath,
@@ -70,7 +70,7 @@ class BuildAllUseCase {
             .firstOrNull;
 
         final filePath = await _generateComponent.execute(
-          component: component,
+          node: component,
           outputDir: path.join(outputDir, 'generated'),
           tokens: matchingTokens,
         );

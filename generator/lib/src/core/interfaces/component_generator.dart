@@ -1,4 +1,4 @@
-import 'package:forge/src/models/meta_component.dart';
+import 'package:forge/src/models/ast_node.dart';
 import 'package:forge/src/models/token_definition.dart';
 
 /// Abstract interface for component code generators.
@@ -17,10 +17,10 @@ abstract class ComponentGenerator {
   ///
   /// Returns formatted Dart source code string.
   String generate({
-    required MetaComponent component,
+    required AstNode node,
     TokenDefinition? tokens,
   });
 
   /// Whether this generator can handle the given component.
-  bool canHandle(MetaComponent component);
+  bool canHandle(AstNode node);
 }

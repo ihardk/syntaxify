@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 
 import 'package:forge/src/generator/widget_generator.dart';
-import 'package:forge/src/models/meta_component.dart';
+import 'package:forge/src/models/ast_node.dart';
 
 void main() {
   group('WidgetGenerator', () {
@@ -12,11 +12,11 @@ void main() {
     });
 
     test('generates valid Dart code', () {
-      final component = MetaComponent(
+      final node = AstNode(
         name: 'button_meta',
         className: 'ButtonMeta',
-        fields: [
-          const MetaField(
+        properties: [
+          const AstProp(
             name: 'label',
             type: 'String',
             isRequired: true,
@@ -25,7 +25,7 @@ void main() {
         variants: [],
       );
 
-      final output = generator.generate(component: component);
+      final output = generator.generate(node: node);
 
       expect(output, contains('class AppButton'));
       expect(output, contains('final String label'));
@@ -33,95 +33,95 @@ void main() {
     });
 
     test('includes required imports', () {
-      final component = MetaComponent(
+      final node = AstNode(
         name: 'button_meta',
         className: 'ButtonMeta',
-        fields: [],
+        properties: [],
         variants: [],
       );
 
-      final output = generator.generate(component: component);
+      final output = generator.generate(node: node);
 
       expect(output, contains("import 'package:flutter/material.dart'"));
       expect(output, contains("import '../theme/app_theme.dart'"));
     });
 
     test('uses AppTheme.of(context) pattern', () {
-      final component = MetaComponent(
+      final node = AstNode(
         name: 'button_meta',
         className: 'ButtonMeta',
-        fields: [
-          const MetaField(name: 'label', type: 'String', isRequired: true),
+        properties: [
+          const AstProp(name: 'label', type: 'String', isRequired: true),
         ],
         variants: [],
       );
 
-      final output = generator.generate(component: component);
+      final output = generator.generate(node: node);
 
       expect(output, contains('AppTheme.of(context).button'));
     });
 
     test('strips Meta suffix from class name', () {
-      final component = MetaComponent(
+      final node = AstNode(
         name: 'button_meta',
         className: 'ButtonMeta',
-        fields: [],
+        properties: [],
         variants: [],
       );
 
-      final output = generator.generate(component: component);
+      final output = generator.generate(node: node);
 
       expect(output, contains('class AppButton'));
       expect(output, isNot(contains('class AppButtonMeta')));
     });
 
     test('generates constructor with required params', () {
-      final component = MetaComponent(
+      final node = AstNode(
         name: 'button_meta',
         className: 'ButtonMeta',
-        fields: [
-          const MetaField(name: 'label', type: 'String', isRequired: true),
-          const MetaField(
+        properties: [
+          const AstProp(name: 'label', type: 'String', isRequired: true),
+          const AstProp(
               name: 'onPressed', type: 'VoidCallback?', isRequired: false),
         ],
         variants: [],
       );
 
-      final output = generator.generate(component: component);
+      final output = generator.generate(node: node);
 
       expect(output, contains('required this.label'));
       expect(output, contains('this.onPressed'));
     });
 
     test('handles disabled state in generated code', () {
-      final component = MetaComponent(
+      final node = AstNode(
         name: 'button_meta',
         className: 'ButtonMeta',
-        fields: [
-          const MetaField(name: 'label', type: 'String', isRequired: true),
-          const MetaField(name: 'isDisabled', type: 'bool', isRequired: false),
+        properties: [
+          const AstProp(name: 'label', type: 'String', isRequired: true),
+          const AstProp(name: 'isDisabled', type: 'bool', isRequired: false),
         ],
         variants: [],
       );
 
-      final output = generator.generate(component: component);
+      final output = generator.generate(node: node);
 
       expect(output, contains('isDisabled'));
       expect(output, contains('isDisabled ? null : onPressed'));
     });
 
     test('handles loading state in generated code', () {
-      final component = MetaComponent(
+      final node = AstNode(
         name: 'button_meta',
         className: 'ButtonMeta',
-        fields: [
-          const MetaField(name: 'label', type: 'String', isRequired: true),
-          const MetaField(name: 'isLoading', type: 'bool', isRequired: false),
+        properties: [
+          const AstProp(name: 'label', type: 'String', isRequired: true),
+          const AstProp(name: 'isLoading', type: 'bool', isRequired: false),
         ],
         variants: [],
       );
 
-      final output = generator.generate(component: component);
+      final output = generator.generate(node: node);
 
       expect(output, contains('isLoading'));
       expect(output, contains('CircularProgressIndicator'));

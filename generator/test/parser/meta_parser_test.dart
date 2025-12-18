@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:test/test.dart';
 
 import 'package:forge/src/parser/meta_parser.dart';
-import 'package:forge/src/models/meta_component.dart';
+import 'package:forge/src/models/ast_node.dart';
 import 'package:mason_logger/mason_logger.dart';
 
 void main() {
@@ -30,8 +30,8 @@ void main() {
 
       expect(result, isNotNull);
 
-      final labelField = result!.fields.firstWhere(
-        (f) => f.name == 'label',
+      final labelField = result!.properties.firstWhere(
+        (f) => f.name == 'label', // Access properties instead of fields
         orElse: () => throw StateError('label field not found'),
       );
 
@@ -45,7 +45,7 @@ void main() {
 
       expect(result, isNotNull);
 
-      final onPressedField = result!.fields.firstWhere(
+      final onPressedField = result!.properties.firstWhere(
         (f) => f.name == 'onPressed',
         orElse: () => throw StateError('onPressed field not found'),
       );
@@ -58,9 +58,9 @@ void main() {
       final result = await parser.parseFile(file);
 
       expect(result, isNotNull);
-      expect(result!.fields.length, greaterThanOrEqualTo(4));
+      expect(result!.properties.length, greaterThanOrEqualTo(4));
 
-      final fieldNames = result.fields.map((f) => f.name).toList();
+      final fieldNames = result.properties.map((f) => f.name).toList();
       expect(fieldNames, contains('label'));
       expect(fieldNames, contains('onPressed'));
       expect(fieldNames, contains('isLoading'));
@@ -83,7 +83,7 @@ void main() {
       final dir = Directory('meta');
       final result = await parser.parseDirectory(dir);
 
-      expect(result.components, isNotEmpty);
+      expect(result.nodes, isNotEmpty); // Access nodes instead of components
       expect(result.hasErrors, isFalse);
     });
   });
