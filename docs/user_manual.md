@@ -87,17 +87,29 @@ Syntax supports three design styles out of the box.
 
 ### Switching Styles
 
-Wrap your app with `AppTheme`:
+Wrap your app with `AppTheme` and pass a `DesignStyle`:
 
 ```dart
+import 'package:flutter/material.dart';
 import 'package:your_app/syntax/design_system/design_system.dart';
 
-MaterialApp(
-  home: AppTheme(
-    style: MaterialStyle(),  // or CupertinoStyle() or NeoStyle()
-    child: YourHomePage(),
-  ),
-)
+void main() {
+  runApp(
+    AppTheme(
+      style: MaterialStyle(),  // or CupertinoStyle() or NeoStyle()
+      child: MaterialApp(
+        home: YourHomePage(),
+      ),
+    ),
+  );
+}
+```
+
+Access the theme in your widgets:
+
+```dart
+final theme = AppTheme.of(context);
+final buttonStyle = theme.style.button;  // Access style-specific tokens
 ```
 
 ### Customizing Styles
