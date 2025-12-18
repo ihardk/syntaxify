@@ -438,8 +438,170 @@ abstract class _AstProp implements AstProp {
 }
 
 /// @nodoc
+mixin _$AstEnum {
+  String get name => throw _privateConstructorUsedError;
+  List<String> get values => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AstEnumCopyWith<AstEnum> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AstEnumCopyWith<$Res> {
+  factory $AstEnumCopyWith(AstEnum value, $Res Function(AstEnum) then) =
+      _$AstEnumCopyWithImpl<$Res, AstEnum>;
+  @useResult
+  $Res call({String name, List<String> values, String? description});
+}
+
+/// @nodoc
+class _$AstEnumCopyWithImpl<$Res, $Val extends AstEnum>
+    implements $AstEnumCopyWith<$Res> {
+  _$AstEnumCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? values = null,
+    Object? description = freezed,
+  }) {
+    return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      values: null == values
+          ? _value.values
+          : values // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$AstEnumImplCopyWith<$Res> implements $AstEnumCopyWith<$Res> {
+  factory _$$AstEnumImplCopyWith(
+          _$AstEnumImpl value, $Res Function(_$AstEnumImpl) then) =
+      __$$AstEnumImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String name, List<String> values, String? description});
+}
+
+/// @nodoc
+class __$$AstEnumImplCopyWithImpl<$Res>
+    extends _$AstEnumCopyWithImpl<$Res, _$AstEnumImpl>
+    implements _$$AstEnumImplCopyWith<$Res> {
+  __$$AstEnumImplCopyWithImpl(
+      _$AstEnumImpl _value, $Res Function(_$AstEnumImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? values = null,
+    Object? description = freezed,
+  }) {
+    return _then(_$AstEnumImpl(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      values: null == values
+          ? _value._values
+          : values // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$AstEnumImpl implements _AstEnum {
+  const _$AstEnumImpl(
+      {required this.name,
+      required final List<String> values,
+      this.description})
+      : _values = values;
+
+  @override
+  final String name;
+  final List<String> _values;
+  @override
+  List<String> get values {
+    if (_values is EqualUnmodifiableListView) return _values;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_values);
+  }
+
+  @override
+  final String? description;
+
+  @override
+  String toString() {
+    return 'AstEnum(name: $name, values: $values, description: $description)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AstEnumImpl &&
+            (identical(other.name, name) || other.name == name) &&
+            const DeepCollectionEquality().equals(other._values, _values) &&
+            (identical(other.description, description) ||
+                other.description == description));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, name,
+      const DeepCollectionEquality().hash(_values), description);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AstEnumImplCopyWith<_$AstEnumImpl> get copyWith =>
+      __$$AstEnumImplCopyWithImpl<_$AstEnumImpl>(this, _$identity);
+}
+
+abstract class _AstEnum implements AstEnum {
+  const factory _AstEnum(
+      {required final String name,
+      required final List<String> values,
+      final String? description}) = _$AstEnumImpl;
+
+  @override
+  String get name;
+  @override
+  List<String> get values;
+  @override
+  String? get description;
+  @override
+  @JsonKey(ignore: true)
+  _$$AstEnumImplCopyWith<_$AstEnumImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$ParseResult {
   List<AstNode> get nodes => throw _privateConstructorUsedError;
+  List<AstEnum> get enums => throw _privateConstructorUsedError;
   List<String> get errors => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -453,7 +615,7 @@ abstract class $ParseResultCopyWith<$Res> {
           ParseResult value, $Res Function(ParseResult) then) =
       _$ParseResultCopyWithImpl<$Res, ParseResult>;
   @useResult
-  $Res call({List<AstNode> nodes, List<String> errors});
+  $Res call({List<AstNode> nodes, List<AstEnum> enums, List<String> errors});
 }
 
 /// @nodoc
@@ -470,6 +632,7 @@ class _$ParseResultCopyWithImpl<$Res, $Val extends ParseResult>
   @override
   $Res call({
     Object? nodes = null,
+    Object? enums = null,
     Object? errors = null,
   }) {
     return _then(_value.copyWith(
@@ -477,6 +640,10 @@ class _$ParseResultCopyWithImpl<$Res, $Val extends ParseResult>
           ? _value.nodes
           : nodes // ignore: cast_nullable_to_non_nullable
               as List<AstNode>,
+      enums: null == enums
+          ? _value.enums
+          : enums // ignore: cast_nullable_to_non_nullable
+              as List<AstEnum>,
       errors: null == errors
           ? _value.errors
           : errors // ignore: cast_nullable_to_non_nullable
@@ -493,7 +660,7 @@ abstract class _$$ParseResultImplCopyWith<$Res>
       __$$ParseResultImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<AstNode> nodes, List<String> errors});
+  $Res call({List<AstNode> nodes, List<AstEnum> enums, List<String> errors});
 }
 
 /// @nodoc
@@ -508,6 +675,7 @@ class __$$ParseResultImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? nodes = null,
+    Object? enums = null,
     Object? errors = null,
   }) {
     return _then(_$ParseResultImpl(
@@ -515,6 +683,10 @@ class __$$ParseResultImplCopyWithImpl<$Res>
           ? _value._nodes
           : nodes // ignore: cast_nullable_to_non_nullable
               as List<AstNode>,
+      enums: null == enums
+          ? _value._enums
+          : enums // ignore: cast_nullable_to_non_nullable
+              as List<AstEnum>,
       errors: null == errors
           ? _value._errors
           : errors // ignore: cast_nullable_to_non_nullable
@@ -527,8 +699,11 @@ class __$$ParseResultImplCopyWithImpl<$Res>
 
 class _$ParseResultImpl extends _ParseResult {
   const _$ParseResultImpl(
-      {required final List<AstNode> nodes, required final List<String> errors})
+      {required final List<AstNode> nodes,
+      final List<AstEnum> enums = const [],
+      required final List<String> errors})
       : _nodes = nodes,
+        _enums = enums,
         _errors = errors,
         super._();
 
@@ -538,6 +713,15 @@ class _$ParseResultImpl extends _ParseResult {
     if (_nodes is EqualUnmodifiableListView) return _nodes;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_nodes);
+  }
+
+  final List<AstEnum> _enums;
+  @override
+  @JsonKey()
+  List<AstEnum> get enums {
+    if (_enums is EqualUnmodifiableListView) return _enums;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_enums);
   }
 
   final List<String> _errors;
@@ -550,7 +734,7 @@ class _$ParseResultImpl extends _ParseResult {
 
   @override
   String toString() {
-    return 'ParseResult(nodes: $nodes, errors: $errors)';
+    return 'ParseResult(nodes: $nodes, enums: $enums, errors: $errors)';
   }
 
   @override
@@ -559,6 +743,7 @@ class _$ParseResultImpl extends _ParseResult {
         (other.runtimeType == runtimeType &&
             other is _$ParseResultImpl &&
             const DeepCollectionEquality().equals(other._nodes, _nodes) &&
+            const DeepCollectionEquality().equals(other._enums, _enums) &&
             const DeepCollectionEquality().equals(other._errors, _errors));
   }
 
@@ -566,6 +751,7 @@ class _$ParseResultImpl extends _ParseResult {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_nodes),
+      const DeepCollectionEquality().hash(_enums),
       const DeepCollectionEquality().hash(_errors));
 
   @JsonKey(ignore: true)
@@ -578,11 +764,14 @@ class _$ParseResultImpl extends _ParseResult {
 abstract class _ParseResult extends ParseResult {
   const factory _ParseResult(
       {required final List<AstNode> nodes,
+      final List<AstEnum> enums,
       required final List<String> errors}) = _$ParseResultImpl;
   const _ParseResult._() : super._();
 
   @override
   List<AstNode> get nodes;
+  @override
+  List<AstEnum> get enums;
   @override
   List<String> get errors;
   @override

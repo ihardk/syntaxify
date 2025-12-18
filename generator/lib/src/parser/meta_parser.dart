@@ -40,6 +40,7 @@ class MetaParser {
   /// Parse all meta files in a directory
   Future<ParseResult> parseDirectory(Directory directory) async {
     final nodes = <AstNode>[];
+    final enums = <AstEnum>[];
     final errors = <String>[];
 
     if (!await directory.exists()) {
@@ -49,22 +50,45 @@ class MetaParser {
 
     await for (final entity in directory.list(recursive: true)) {
       if (entity is File && entity.path.endsWith('.meta.dart')) {
-        final node = await parseFile(entity);
-        if (node != null) {
-          nodes.add(node);
-        } else {
-          errors.add('Failed to parse: ${entity.path}');
+        final content = await entity.readAsString();
+        final unitResult = parseString(content: content);
+
+        final visitor = _AstNodeVisitor();
+        unitResult.unit.visitChildren(visitor);
+
+        if (visitor.node != null) {
+          nodes.add(visitor.node!);
+        }
+
+        enums.addAll(visitor.enums);
+
+        if (visitor.node == null && visitor.enums.isEmpty) {
+          errors.add('Failed to parse (no component or enums): ${entity.path}');
         }
       }
     }
 
-    return ParseResult(nodes: nodes, errors: errors);
+    return ParseResult(nodes: nodes, enums: enums, errors: errors);
   }
 }
 
 /// AST visitor that extracts meta component information
 class _AstNodeVisitor extends RecursiveAstVisitor<void> {
   AstNode? node;
+  final enums = <AstEnum>[];
+
+  @override
+  void visitEnumDeclaration(EnumDeclaration node) {
+    final values = node.constants.map((c) => c.name.lexeme).toList();
+
+    enums.add(AstEnum(
+      name: node.name.lexeme,
+      values: values,
+      description: _extractDocComment(node),
+    ));
+
+    super.visitEnumDeclaration(node);
+  }
 
   @override
   void visitClassDeclaration(ClassDeclaration classNode) {

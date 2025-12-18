@@ -26,11 +26,22 @@ class AstProp with _$AstProp {
   }) = _AstProp;
 }
 
+/// Represents an Enum definition
+@freezed
+class AstEnum with _$AstEnum {
+  const factory AstEnum({
+    required String name,
+    required List<String> values,
+    String? description,
+  }) = _AstEnum;
+}
+
 /// Represents the result of parsing AST files
 @freezed
 class ParseResult with _$ParseResult {
   const factory ParseResult({
     required List<AstNode> nodes,
+    @Default([]) List<AstEnum> enums,
     required List<String> errors,
   }) = _ParseResult;
 
