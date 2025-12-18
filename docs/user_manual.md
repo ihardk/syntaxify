@@ -290,6 +290,39 @@ class LoginScreen extends StatelessWidget {
 When you change component definitions:
 
 1. Edit `meta/*.meta.dart` files
+
+### 4. Build Your Components
+
+Generate components and screens:
+
+```bash
+syntax build
+```
+
+**Common Options:**
+```bash
+# Build everything (auto-detects paths)
+syntax build
+
+# Build specific component
+syntax build --component=AppButton
+
+# Custom paths
+syntax build --meta=specs --output=lib/gen
+
+# Build for specific theme
+syntax build --theme=material
+```
+
+**All Options:**
+- `-m, --meta` - Meta directory (default: `meta`)
+- `-o, --output` - Output directory (default: `lib/syntax`)
+- `--design-system` - Design system directory (auto-detects `lib/syntax/design_system`)
+- `--tokens` - Tokens directory (auto-detects `lib/syntax/design_system`)
+- `-c, --component` - Build specific component only
+- `-t, --theme` - Build for specific theme only
+
+**Tip:** Run `syntax build --help` for full documentation.
 2. Run `syntax build ...`
 3. Components in `lib/syntax/generated/` are regenerated
 4. Screens in `lib/screens/` are **not** overwritten
