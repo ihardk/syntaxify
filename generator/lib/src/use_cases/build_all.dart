@@ -222,7 +222,7 @@ class BuildAllUseCase {
           logger.success('Generated: design_system/app_icons.dart');
         } else {
           // Fallback: Copy if exists in source
-          final srcPath = path.join(designSystemDir!, 'app_icons.dart');
+          final srcPath = path.join(designSystemDir, 'app_icons.dart');
           if (await fileSystem.exists(srcPath)) {
             final destPath =
                 path.join(outputDir, 'design_system', 'app_icons.dart');
