@@ -1,4 +1,4 @@
-import 'package:syntax/syntax.dart';
+import 'package:syntaxify/syntax.dart';
 
 /// Login screen definition
 ///

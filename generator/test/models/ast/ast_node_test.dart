@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:syntax/src/models/ast/nodes.dart';
+import 'package:syntaxify/src/models/ast/nodes.dart';
 
 void main() {
   group('AstNode', () {

@@ -1,6 +1,6 @@
 import 'package:dart_style/dart_style.dart';
 
-import 'package:syntax/src/core/interfaces/code_formatter.dart';
+import 'package:syntaxify/src/core/interfaces/code_formatter.dart';
 
 /// Dart code formatter using dart_style package.
 class DartCodeFormatter implements CodeFormatter {

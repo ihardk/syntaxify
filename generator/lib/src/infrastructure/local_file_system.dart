@@ -2,7 +2,7 @@ import 'dart:io' as io;
 
 import 'package:path/path.dart' as path;
 
-import 'package:syntax/src/core/interfaces/file_system.dart';
+import 'package:syntaxify/src/core/interfaces/file_system.dart';
 
 /// Local file system implementation.
 ///

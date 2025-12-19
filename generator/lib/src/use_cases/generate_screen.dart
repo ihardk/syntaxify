@@ -1,7 +1,7 @@
 import 'package:path/path.dart' as path;
-import 'package:syntax/src/core/interfaces/file_system.dart';
-import 'package:syntax/src/models/ast/screen_definition.dart';
-import 'package:syntax/src/generators/screen_generator.dart';
+import 'package:syntaxify/src/core/interfaces/file_system.dart';
+import 'package:syntaxify/src/models/ast/screen_definition.dart';
+import 'package:syntaxify/src/generators/screen_generator.dart';
 
 class GenerateScreenUseCase {
   GenerateScreenUseCase({

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:test/test.dart';
 import 'package:mason_logger/mason_logger.dart';
-import 'package:syntax/src/parser/meta_parser.dart';
+import 'package:syntaxify/src/parser/meta_parser.dart';
 
 void main() {
   group('MetaParser Enum Parsing', () {
@@ -23,7 +23,7 @@ void main() {
     test('parses enums from meta file', () async {
       final file = File('${tempDir.path}/button.meta.dart');
       await file.writeAsString('''
-import 'package:syntax/syntax.dart';
+import 'package:syntaxify/syntax.dart';
 
 @SyntaxComponent
 class ButtonMeta {

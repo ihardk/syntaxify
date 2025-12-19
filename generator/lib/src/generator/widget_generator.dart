@@ -1,9 +1,9 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 
-import 'package:syntax/src/models/component_definition.dart';
-import 'package:syntax/src/models/token_definition.dart';
-import 'package:syntax/src/core/interfaces/component_generator.dart';
+import 'package:syntaxify/src/models/component_definition.dart';
+import 'package:syntaxify/src/models/token_definition.dart';
+import 'package:syntaxify/src/core/interfaces/component_generator.dart';
 
 /// Generates Flutter widget code following the Syntax architecture:
 /// - Widget receives tokens from AppTheme.of(context)

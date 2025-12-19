@@ -5,7 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:mason_logger/mason_logger.dart';
 
-import 'package:syntax/src/models/token_definition.dart';
+import 'package:syntaxify/src/models/token_definition.dart';
 
 /// Parses token definition files using the Dart analyzer
 class TokenParser {

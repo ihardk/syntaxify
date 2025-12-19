@@ -24,9 +24,9 @@ Initial alpha release to reserve package name and gather early feedback.
 - ✅ Neo (Modern/Custom)
 
 **CLI Commands:**
-- ✅ `syntax init` - Initialize project structure
-- ✅ `syntax build` - Generate components with smart path detection
-- ✅ `syntax clean` - Remove generated files
+- ✅ `syntaxify init` - Initialize project structure
+- ✅ `syntaxify build` - Generate components with smart path detection
+- ✅ `syntaxify clean` - Remove generated files
 
 **Screen Generation:**
 - ✅ Generate screen scaffolds from meta definitions

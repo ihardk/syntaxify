@@ -1,7 +1,7 @@
 import 'package:code_builder/code_builder.dart';
-import 'package:syntax/src/generators/screen_generator.dart';
-import 'package:syntax/src/models/ast/nodes.dart';
-import 'package:syntax/src/models/ast/screen_definition.dart';
+import 'package:syntaxify/src/generators/screen_generator.dart';
+import 'package:syntaxify/src/models/ast/nodes.dart';
+import 'package:syntaxify/src/models/ast/screen_definition.dart';
 import 'package:test/test.dart';
 
 void main() {

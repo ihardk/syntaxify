@@ -1,7 +1,7 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
-import 'package:syntax/src/emitters/layout_emitter.dart';
-import 'package:syntax/src/models/ast/nodes.dart';
+import 'package:syntaxify/src/emitters/layout_emitter.dart';
+import 'package:syntaxify/src/models/ast/nodes.dart';
 
 /// Generates a full Screen widget from a [ScreenDefinition].
 class ScreenGenerator {

@@ -44,7 +44,7 @@ example/
 ## 🎨 How It Works
 
 1. **Define** - Components defined in `meta/` folder
-2. **Generate** - Run `syntax build` to generate code
+2. **Generate** - Run `syntaxify build` to generate code
 3. **Use** - Import and use with `AppTheme`
 
 ```dart
@@ -62,13 +62,13 @@ To regenerate the components:
 
 ```bash
 cd ..
-syntax build --meta=example/meta --output=example/lib/syntax
+syntaxify build --meta=example/meta --output=example/lib/syntax
 ```
 
 Or from the root:
 ```bash
 cd example
-syntax build
+syntaxify build
 ```
 
 ## 💡 Key Takeaways

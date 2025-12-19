@@ -5,8 +5,8 @@ import 'package:analyzer/dart/ast/ast.dart' as analyzer;
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:mason_logger/mason_logger.dart';
 
-import 'package:syntax/src/models/component_definition.dart';
-import 'package:syntax/src/models/ast/nodes.dart';
+import 'package:syntaxify/src/models/component_definition.dart';
+import 'package:syntaxify/src/models/ast/nodes.dart';
 import 'ast_node_parser.dart';
 
 /// Parses meta component files using the Dart analyzer

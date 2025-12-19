@@ -1,9 +1,9 @@
 import 'package:path/path.dart' as path;
 
-import 'package:syntax/src/core/interfaces/file_system.dart';
-import 'package:syntax/src/generators/generator_registry.dart';
-import 'package:syntax/src/models/component_definition.dart';
-import 'package:syntax/src/models/token_definition.dart';
+import 'package:syntaxify/src/core/interfaces/file_system.dart';
+import 'package:syntaxify/src/generators/generator_registry.dart';
+import 'package:syntaxify/src/models/component_definition.dart';
+import 'package:syntaxify/src/models/token_definition.dart';
 
 /// Use case for generating a single component.
 ///

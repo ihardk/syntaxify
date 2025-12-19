@@ -12,13 +12,13 @@ Syntax generates production-ready Flutter widgets from declarative component def
 ```yaml
 # pubspec.yaml
 dev_dependencies:
-  syntax: ^0.1.0-alpha.1
+  syntaxify: ^0.1.0-alpha.1
 ```
 
 **From GitHub (Latest):**
 ```yaml
 dev_dependencies:
-  syntax:
+  syntaxify:
     git:
       url: https://github.com/ihardk/syntax.git
       ref: v0.1.0
@@ -32,7 +32,7 @@ dev_dependencies:
 Create the required directory structure:
 
 ```bash
-syntax init
+syntaxify init
 ```
 
 This creates:
@@ -46,14 +46,14 @@ This creates:
 3. **Use** - Import and use generated components
 
 ```bash
-syntax build
+syntaxify build
 ```
 
 ---
 
 ## 📂 Project Structure
 
-After running `syntax init` and `syntax build`:
+After running `syntaxify init` and `syntaxify build`:
 
 ```
 your_project/
@@ -197,7 +197,7 @@ class AppIcon {
 }
 ```
 
-After running `syntax build`, use them:
+After running `syntaxify build`, use them:
 
 ```dart
 AppInput(
@@ -237,7 +237,7 @@ final loginScreen = ScreenDefinition(
 
 **Run build:**
 ```bash
-syntax build ...
+syntaxify build ...
 ```
 
 **Generated `lib/screens/login_screen.dart`:**
@@ -274,11 +274,11 @@ class LoginScreen extends StatelessWidget {
 ## ❓ Troubleshooting
 
 **"Type not found" errors?**
-- Run `syntax build` after creating new meta files
+- Run `syntaxify build` after creating new meta files
 - Check that imports point to `package:your_app/syntax/index.dart`
 
 **"File not found"?**
-- Ensure `meta/` exists: run `syntax init`
+- Ensure `meta/` exists: run `syntaxify init`
 - Check paths in build command
 
 **Screens not generating?**
@@ -302,22 +302,22 @@ When you change component definitions:
 Generate components and screens:
 
 ```bash
-syntax build
+syntaxify build
 ```
 
 **Common Options:**
 ```bash
 # Build everything (auto-detects paths)
-syntax build
+syntaxify build
 
 # Build specific component
-syntax build --component=AppButton
+syntaxify build --component=AppButton
 
 # Custom paths
-syntax build --meta=specs --output=lib/gen
+syntaxify build --meta=specs --output=lib/gen
 
 # Build for specific theme
-syntax build --theme=material
+syntaxify build --theme=material
 ```
 
 **All Options:**
@@ -328,8 +328,8 @@ syntax build --theme=material
 - `-c, --component` - Build specific component only
 - `-t, --theme` - Build for specific theme only
 
-**Tip:** Run `syntax build --help` for full documentation.
-2. Run `syntax build ...`
+**Tip:** Run `syntaxify build --help` for full documentation.
+2. Run `syntaxify build ...`
 3. Components in `lib/syntax/generated/` are regenerated
 4. Screens in `lib/screens/` are **not** overwritten
 5. Design system in `lib/syntax/design_system/` is **not** overwritten

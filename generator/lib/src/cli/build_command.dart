@@ -3,7 +3,7 @@ import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as path;
 
-import 'package:syntax/src/generator/syntax_generator.dart';
+import 'package:syntaxify/src/generator/syntax_generator.dart';
 import 'init_command.dart';
 
 /// Build command - generates Flutter widgets from meta definitions

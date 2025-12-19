@@ -2,19 +2,19 @@ import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as path;
 import 'dart:io';
 
-import 'package:syntax/src/core/interfaces/file_system.dart';
-import 'package:syntax/src/generators/generator_registry.dart';
+import 'package:syntaxify/src/core/interfaces/file_system.dart';
+import 'package:syntaxify/src/generators/generator_registry.dart';
 
-import 'package:syntax/src/models/build_result.dart';
-import 'package:syntax/src/models/component_definition.dart';
-import 'package:syntax/src/models/token_definition.dart';
+import 'package:syntaxify/src/models/build_result.dart';
+import 'package:syntaxify/src/models/component_definition.dart';
+import 'package:syntaxify/src/models/token_definition.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
-import 'package:syntax/src/use_cases/generate_component.dart';
-import 'package:syntax/src/parser/registry_parser.dart';
-import 'package:syntax/src/generators/registry/icon_registry_generator.dart';
-import 'package:syntax/src/use_cases/generate_screen.dart';
-import 'package:syntax/src/models/ast/screen_definition.dart';
+import 'package:syntaxify/src/use_cases/generate_component.dart';
+import 'package:syntaxify/src/parser/registry_parser.dart';
+import 'package:syntaxify/src/generators/registry/icon_registry_generator.dart';
+import 'package:syntaxify/src/use_cases/generate_screen.dart';
+import 'package:syntaxify/src/models/ast/screen_definition.dart';
 
 /// Use case for building all components.
 class BuildAllUseCase {

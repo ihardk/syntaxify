@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:mason_logger/mason_logger.dart';
 
-import 'package:syntax/src/core/interfaces/file_system.dart';
-import 'package:syntax/src/generators/generator_registry.dart';
-import 'package:syntax/src/infrastructure/local_file_system.dart';
-import 'package:syntax/src/models/build_result.dart';
-import 'package:syntax/src/parser/meta_parser.dart';
-import 'package:syntax/src/parser/token_parser.dart';
-import 'package:syntax/src/use_cases/build_all.dart';
+import 'package:syntaxify/src/core/interfaces/file_system.dart';
+import 'package:syntaxify/src/generators/generator_registry.dart';
+import 'package:syntaxify/src/infrastructure/local_file_system.dart';
+import 'package:syntaxify/src/models/build_result.dart';
+import 'package:syntaxify/src/parser/meta_parser.dart';
+import 'package:syntaxify/src/parser/token_parser.dart';
+import 'package:syntaxify/src/use_cases/build_all.dart';
 
 /// Main Syntax generator - orchestrates the build process.
 ///

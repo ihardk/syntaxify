@@ -1,5 +1,5 @@
 import 'package:code_builder/code_builder.dart';
-import 'package:syntax/src/parser/registry_parser.dart';
+import 'package:syntaxify/src/parser/registry_parser.dart';
 
 class IconRegistryGenerator {
   IconRegistryGenerator();

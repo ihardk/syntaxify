@@ -9,7 +9,7 @@ Add Syntax to your project:
 
 ```yaml
 dev_dependencies:
-  syntax:
+  syntaxify:
     git:
       url: https://github.com/ihardk/syntax.git
       ref: v0.1.0
@@ -20,16 +20,16 @@ dev_dependencies:
 Scaffold the required directories:
 
 ```bash
-syntax init
+syntaxify init
 ```
 
-*Note: If you skip this step, `syntax build` will detect missing files and ask to initialize for you.*
+*Note: If you skip this step, `syntaxify build` will detect missing files and ask to initialize for you.*
 
 ### 3. Build Components
 Generate your Flutter widgets:
 
 ```bash
-syntax build
+syntaxify build
 ```
 
 ### 🔧 For Contributors
@@ -44,7 +44,7 @@ To regenerate the example app (from root):
 
 ```bash
 cd example
-syntax build
+syntaxify build
 ```
 
 ---

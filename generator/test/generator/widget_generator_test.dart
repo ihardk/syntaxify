@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 
-import 'package:syntax/src/generator/widget_generator.dart';
-import 'package:syntax/src/models/component_definition.dart';
+import 'package:syntaxify/src/generator/widget_generator.dart';
+import 'package:syntaxify/src/models/component_definition.dart';
 
 void main() {
   group('WidgetGenerator', () {

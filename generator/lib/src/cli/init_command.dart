@@ -86,8 +86,8 @@ class InitCommand extends Command<int> {
 
   Future<String?> _findGeneratorRoot() async {
     try {
-      // 1. Try to find package:syntax/ location
-      final packageUri = Uri.parse('package:syntax/src/cli/init_command.dart');
+      // 1. Try to find package:syntaxify/ location
+      final packageUri = Uri.parse('package:syntaxify/src/cli/init_command.dart');
       final resolvedUri = await Isolate.resolvePackageUri(packageUri);
 
       if (resolvedUri != null) {

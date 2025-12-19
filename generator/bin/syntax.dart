@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 
-import 'package:syntax/src/cli/build_command.dart';
-import 'package:syntax/src/cli/clean_command.dart';
-import 'package:syntax/src/cli/init_command.dart';
+import 'package:syntaxify/src/cli/build_command.dart';
+import 'package:syntaxify/src/cli/clean_command.dart';
+import 'package:syntaxify/src/cli/init_command.dart';
 
 /// Syntax CLI entry point
 Future<void> main(List<String> arguments) async {

@@ -57,7 +57,7 @@ Widget buildButton() {
 
 Syntax delivers on Flutter's original promise: **"write once, run anywhere"** - but for design systems.
 
-**With Syntax:**
+**With syntaxify:**
 ```dart
 // Write once
 AppButton(label: 'Click Me', onPressed: ...)
@@ -133,7 +133,7 @@ AppCard(child: TransactionList())
 
 **Month 2:** Client says "we want iOS-style on iOS, Material on Android"
 
-**With Syntax:**
+**With syntaxify:**
 ```dart
 // Change one line
 AppTheme(
@@ -143,7 +143,7 @@ AppTheme(
 // Done! ✅ All 50 screens updated
 ```
 
-**Without Syntax:**
+**Without syntaxify:**
 ```dart
 // Rewrite all 50 screens ❌
 // Touch 1000+ component instances
@@ -153,7 +153,7 @@ AppTheme(
 
 **Month 6:** Designer wants custom brand styling
 
-**With Syntax:**
+**With syntaxify:**
 ```dart
 // Create NeoStyle renderer
 class NeoStyle extends DesignStyle { ... }
@@ -234,7 +234,7 @@ You can define custom components (e.g., Card, Badge, Avatar), and Syntax will:
 ```yaml
 # pubspec.yaml
 dev_dependencies:
-  syntax: ^0.1.0-alpha.1
+  syntaxify: ^0.1.0-alpha.1
 ```
 
 Then run:
@@ -246,7 +246,7 @@ dart pub get
 ```yaml
 # pubspec.yaml
 dev_dependencies:
-  syntax:
+  syntaxify:
     git:
       url: https://github.com/ihardk/syntax.git
       ref: v0.1.0
@@ -268,7 +268,7 @@ Then you can run `syntax` commands from anywhere. Otherwise, use `dart run synta
 
 ```bash
 cd your_flutter_project
-syntax init
+syntaxify init
 ```
 
 This creates:
@@ -297,7 +297,7 @@ class ButtonMeta {
 ### Step 4: Build
 
 ```bash
-syntax build
+syntaxify build
 ```
 
 This generates:
@@ -349,7 +349,7 @@ final loginScreen = ScreenDefinition(
 );
 ```
 
-Run `syntax build` again - generates `lib/screens/login_screen.dart` (editable!)
+Run `syntaxify build` again - generates `lib/screens/login_screen.dart` (editable!)
 
 ## 📂 Project Structure
 
@@ -484,7 +484,7 @@ AppButton(label: 'Submit', onPressed: handleSubmit)
 ## 🔄 Development Workflow
 
 1. **Define** - Edit `meta/*.meta.dart` to define component APIs
-2. **Build** - Run `syntax build` to generate implementations
+2. **Build** - Run `syntaxify build` to generate implementations
 3. **Use** - Import from `package:your_app/syntax/` and use
 4. **Customize** - Edit design system tokens in `lib/syntax/design_system/`
 5. **Switch Styles** - Change `AppTheme(style: ...)` to try different designs
@@ -507,19 +507,19 @@ class MyCustomStyle extends DesignStyle
 
 ```bash
 # Build everything (auto-detects paths)
-syntax build
+syntaxify build
 
 # Build specific component
-syntax build --component=AppButton
+syntaxify build --component=AppButton
 
 # Custom paths
-syntax build --meta=specs --output=lib/gen
+syntaxify build --meta=specs --output=lib/gen
 
 # Build for specific theme
-syntax build --theme=material
+syntaxify build --theme=material
 ```
 
-Run `syntax build --help` for all options.
+Run `syntaxify build --help` for all options.
 
 ## �📖 Documentation
 

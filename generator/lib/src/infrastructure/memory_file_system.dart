@@ -1,4 +1,4 @@
-import 'package:syntax/src/core/interfaces/file_system.dart';
+import 'package:syntaxify/src/core/interfaces/file_system.dart';
 
 /// In-memory file system for testing.
 ///

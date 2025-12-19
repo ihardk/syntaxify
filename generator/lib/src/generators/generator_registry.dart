@@ -1,9 +1,9 @@
-import 'package:syntax/src/core/interfaces/component_generator.dart';
-import 'package:syntax/src/generators/component/button_generator.dart';
-import 'package:syntax/src/generators/component/input_generator.dart';
-import 'package:syntax/src/generators/component/text_generator.dart';
-import 'package:syntax/src/generators/component/generic_generator.dart';
-import 'package:syntax/src/models/component_definition.dart';
+import 'package:syntaxify/src/core/interfaces/component_generator.dart';
+import 'package:syntaxify/src/generators/component/button_generator.dart';
+import 'package:syntaxify/src/generators/component/input_generator.dart';
+import 'package:syntaxify/src/generators/component/text_generator.dart';
+import 'package:syntaxify/src/generators/component/generic_generator.dart';
+import 'package:syntaxify/src/models/component_definition.dart';
 
 /// Registry of component generators.
 ///
