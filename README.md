@@ -109,6 +109,62 @@ Most Flutter solutions offer partial fixes:
 - Same code, native feel on each platform
 - Support Material, Cupertino, and custom designs simultaneously
 
+### Real-World Example: Fintech App
+
+Imagine building a fintech app with a team:
+
+**Day 1:** Define components once
+```dart
+// meta/button.meta.dart
+@SyntaxComponent()
+class ButtonMeta {
+  @Required() final String label;
+  @Required() final VoidCallback onPressed;
+  @Optional() final ButtonVariant variant;
+}
+```
+
+**Week 1:** Build 50 screens using those components
+```dart
+AppButton(label: 'Transfer', onPressed: handleTransfer)
+AppInput(label: 'Amount', onChanged: setAmount)
+AppCard(child: TransactionList())
+```
+
+**Month 2:** Client says "we want iOS-style on iOS, Material on Android"
+
+**With Syntax:**
+```dart
+// Change one line
+AppTheme(
+  style: Platform.isIOS ? CupertinoStyle() : MaterialStyle(),
+  child: MyApp(),
+)
+// Done! ✅ All 50 screens updated
+```
+
+**Without Syntax:**
+```dart
+// Rewrite all 50 screens ❌
+// Touch 1000+ component instances
+// 2-3 weeks of work
+// High risk of bugs and inconsistencies
+```
+
+**Month 6:** Designer wants custom brand styling
+
+**With Syntax:**
+```dart
+// Create NeoStyle renderer
+class NeoStyle extends DesignStyle { ... }
+
+// Switch to it
+AppTheme(style: NeoStyle(), child: MyApp())
+// All components now use brand design ✅
+```
+
+**The difference:** Weeks of work vs. minutes of configuration.
+
 ## 🎨 The Design System Architecture
 
 ### The Renderer Pattern
