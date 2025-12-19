@@ -170,7 +170,7 @@ class _SyntaxDemoState extends State<SyntaxDemo> {
           // Button Components
           AppButton(
             label: 'Primary Button',
-            variant: ButtonVariant.filled,
+            variant: ButtonVariant.primary,
             onPressed: () => _showMessage('Primary button pressed!'),
           ),
 

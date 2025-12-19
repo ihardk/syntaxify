@@ -1,214 +1,54 @@
+/// Syntax Core Philosophy - The Renderer Pattern
+///
+/// This file demonstrates the underlying architecture of Syntax:
+/// Separating WHAT (component definition) from HOW (visual rendering).
+///
+/// This is the philosophy that powers all of Syntax's generated components.
+
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
-// =============================================================================
-// LAYER 1: DATA (Tokens & Enums)
-// =============================================================================
+// ============================================================================
+// PHILOSOPHY: Separate WHAT from HOW
+// ============================================================================
+//
+// Traditional Flutter:
+//   - You write ElevatedButton for Material
+//   - You write CupertinoButton for iOS
+//   - You write custom Container for your design
+//   - Result: 3 different implementations, hard to maintain
+//
+// Syntax Approach:
+//   - Define WHAT: "I want a button with this label and callback"
+//   - Define HOW: "Render it using Material/Cupertino/Neo style"
+//   - Result: One definition, multiple renderings
+//
+// ============================================================================
 
-enum DesignStyle { material, cupertino, neo }
+/// Design styles available
+enum DesignStyle {
+  material,
+  cupertino,
+  neo,
+}
 
-/// Design Tokens: The DNA of the button component.
-/// Pure data. No widgets.
-class ButtonTokens {
-  final double radius;
-  final double borderWidth;
-  final Color bgColor;
-  final Color textColor;
-  final Offset shadowOffset;
-  final double elevation;
+// ============================================================================
+// PART 1: The "WHAT" - Component Specification
+// ============================================================================
 
-  const ButtonTokens({
-    required this.radius,
-    required this.borderWidth,
-    required this.bgColor,
-    required this.textColor,
-    required this.shadowOffset,
-    this.elevation = 0,
+/// A UI node represents WHAT we want to display
+/// It contains NO information about HOW to render it
+class UINode {
+  final String type;
+  final dynamic spec;
+
+  const UINode({
+    required this.type,
+    required this.spec,
   });
 }
 
-class BadgeTokens {
-  final double radius;
-  final Color bgColor;
-  final Color textColor;
-  final EdgeInsets padding;
-  final TextStyle textStyle;
-
-  const BadgeTokens({
-    required this.radius,
-    required this.bgColor,
-    required this.textColor,
-    required this.padding,
-    required this.textStyle,
-  });
-}
-
-class CardTokens {
-  final double radius;
-  final double borderWidth;
-  final Color bgColor;
-  final Color borderColor;
-  final Offset shadowOffset;
-  final double elevation;
-  final EdgeInsets padding;
-
-  const CardTokens({
-    required this.radius,
-    required this.borderWidth,
-    required this.bgColor,
-    this.borderColor = Colors.black,
-    required this.shadowOffset,
-    this.elevation = 0,
-    required this.padding,
-  });
-}
-
-class InputTokens {
-  final double radius;
-  final double borderWidth;
-  final Color filledColor;
-  final Color borderColor;
-  final EdgeInsets padding;
-  final TextStyle textStyle;
-
-  const InputTokens({
-    required this.radius,
-    required this.borderWidth,
-    required this.filledColor,
-    required this.borderColor,
-    required this.padding,
-    required this.textStyle,
-  });
-}
-
-// =============================================================================
-// LAYER 2: REGISTRY (The "Theme" Source)
-// =============================================================================
-
-class TokenLibrary {
-  static ButtonTokens button(DesignStyle style) {
-    switch (style) {
-      case DesignStyle.material:
-        // Standard rounded, shadowed, blue button
-        return const ButtonTokens(
-          radius: 8,
-          borderWidth: 0,
-          bgColor: Colors.blue,
-          textColor: Colors.white,
-          shadowOffset: Offset(0, 2),
-          elevation: 2,
-        );
-
-      case DesignStyle.cupertino:
-        // Flat, fully rounded, lighter
-        return const ButtonTokens(
-          radius: 100, // Pill shape
-          borderWidth: 0,
-          bgColor: Color(0xFF007AFF),
-          textColor: Colors.white,
-          shadowOffset: Offset.zero,
-        );
-
-      case DesignStyle.neo:
-        // Hard edges, thick borders, aggressive shadow
-        return const ButtonTokens(
-          radius: 0,
-          borderWidth: 3,
-          bgColor: Color(0xFFFFD700), // Gold
-          textColor: Colors.black,
-          shadowOffset: Offset(5, 5),
-        );
-    }
-  }
-
-  static BadgeTokens badge(DesignStyle style) {
-    switch (style) {
-      case DesignStyle.material:
-        return const BadgeTokens(
-            radius: 4,
-            bgColor: Colors.red,
-            textColor: Colors.white,
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            textStyle: TextStyle(fontSize: 12));
-      case DesignStyle.cupertino:
-        return const BadgeTokens(
-            radius: 100,
-            bgColor: Colors.red,
-            textColor: Colors.white,
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-            textStyle: TextStyle(fontSize: 12));
-      case DesignStyle.neo:
-        return const BadgeTokens(
-            radius: 0,
-            bgColor: Colors.black,
-            textColor: Colors.white,
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            textStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.bold));
-    }
-  }
-
-  static CardTokens card(DesignStyle style) {
-    switch (style) {
-      case DesignStyle.material:
-        return const CardTokens(
-            radius: 12,
-            borderWidth: 0,
-            bgColor: Colors.white,
-            shadowOffset: Offset(0, 2),
-            elevation: 4,
-            padding: EdgeInsets.all(16));
-      case DesignStyle.cupertino:
-        return const CardTokens(
-            radius: 16,
-            borderWidth: 0,
-            bgColor: Colors.white,
-            shadowOffset: Offset.zero,
-            elevation: 0,
-            padding: EdgeInsets.all(16));
-      case DesignStyle.neo:
-        return const CardTokens(
-            radius: 0,
-            borderWidth: 3,
-            bgColor: Colors.white,
-            shadowOffset: Offset(6, 6),
-            elevation: 0,
-            padding: EdgeInsets.all(20));
-    }
-  }
-
-  static InputTokens input(DesignStyle style) {
-    switch (style) {
-      case DesignStyle.material:
-        return const InputTokens(
-            radius: 4,
-            borderWidth: 1,
-            filledColor: Colors.white,
-            borderColor: Colors.grey,
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-            textStyle: TextStyle(fontSize: 16));
-      case DesignStyle.cupertino:
-        return const InputTokens(
-            radius: 8,
-            borderWidth: 0,
-            filledColor: Color(0xFFE5E5EA),
-            borderColor: Colors.transparent,
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-            textStyle: TextStyle(fontSize: 16));
-      case DesignStyle.neo:
-        return const InputTokens(
-            radius: 0,
-            borderWidth: 3,
-            filledColor: Colors.white,
-            borderColor: Colors.black,
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold));
-    }
-  }
-}
-
-// =============================================================================
-// LAYER 3: SPEC (The API)
-// =============================================================================
-
+/// Button specification - defines WHAT a button is
 class MetaButtonSpec {
   final String label;
   final VoidCallback? onPressed;
@@ -219,75 +59,469 @@ class MetaButtonSpec {
   });
 }
 
-class MetaBadgeSpec {
-  final String label;
-  const MetaBadgeSpec({required this.label});
-}
-
-class MetaCardSpec {
-  final Widget child;
-  const MetaCardSpec({required this.child});
-}
-
+/// Input specification - defines WHAT an input is
 class MetaInputSpec {
   final String placeholder;
   final ValueChanged<String>? onChanged;
-  const MetaInputSpec({required this.placeholder, this.onChanged});
-}
 
-class UINode {
-  final String type;
-  final dynamic spec;
-
-  const UINode({required this.type, required this.spec});
-}
-
-// =============================================================================
-// LAYER 4: RENDERER (The generic widget)
-// =============================================================================
-
-class ButtonRenderer extends StatelessWidget {
-  final ButtonTokens tokens;
-  final MetaButtonSpec spec;
-
-  const ButtonRenderer({
-    super.key,
-    required this.tokens,
-    required this.spec,
+  const MetaInputSpec({
+    required this.placeholder,
+    this.onChanged,
   });
+}
+
+/// Badge specification - defines WHAT a badge is
+class MetaBadgeSpec {
+  final String label;
+
+  const MetaBadgeSpec({
+    required this.label,
+  });
+}
+
+/// Card specification - defines WHAT a card is
+class MetaCardSpec {
+  final Widget child;
+
+  const MetaCardSpec({
+    required this.child,
+  });
+}
+
+// ============================================================================
+// PART 2: The "HOW" - Rendering Engine
+// ============================================================================
+
+/// The rendering engine decides HOW to render a UINode
+/// based on the current DesignStyle
+class UIEngine {
+  /// Build a widget from a UINode using the specified style
+  static Widget build(UINode node, DesignStyle style) {
+    switch (node.type) {
+      case 'button':
+        return _renderButton(node.spec as MetaButtonSpec, style);
+      case 'input':
+        return _renderInput(node.spec as MetaInputSpec, style);
+      case 'badge':
+        return _renderBadge(node.spec as MetaBadgeSpec, style);
+      case 'card':
+        return _renderCard(node.spec as MetaCardSpec, style);
+      default:
+        return const Text('Unknown component');
+    }
+  }
+
+  // ------------------------------------------------------------------------
+  // Button Renderers - Same spec, different implementations
+  // ------------------------------------------------------------------------
+
+  static Widget _renderButton(MetaButtonSpec spec, DesignStyle style) {
+    switch (style) {
+      case DesignStyle.material:
+        return ElevatedButton(
+          onPressed: spec.onPressed,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            foregroundColor: Colors.white,
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          child: Text(spec.label),
+        );
+
+      case DesignStyle.cupertino:
+        return CupertinoButton.filled(
+          onPressed: spec.onPressed,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          child: Text(spec.label),
+        );
+
+      case DesignStyle.neo:
+        return Container(
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFFE0E5EC), Color(0xFFFFFFFF)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0xFFA3B1C6),
+                offset: Offset(4, 4),
+                blurRadius: 8,
+              ),
+              BoxShadow(
+                color: Colors.white,
+                offset: Offset(-4, -4),
+                blurRadius: 8,
+              ),
+            ],
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: spec.onPressed,
+              borderRadius: BorderRadius.circular(12),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                child: Center(
+                  child: Text(
+                    spec.label,
+                    style: const TextStyle(
+                      color: Color(0xFF4A5568),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+    }
+  }
+
+  // ------------------------------------------------------------------------
+  // Input Renderers
+  // ------------------------------------------------------------------------
+
+  static Widget _renderInput(MetaInputSpec spec, DesignStyle style) {
+    switch (style) {
+      case DesignStyle.material:
+        return TextField(
+          onChanged: spec.onChanged,
+          decoration: InputDecoration(
+            hintText: spec.placeholder,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            filled: true,
+            fillColor: Colors.grey[100],
+          ),
+        );
+
+      case DesignStyle.cupertino:
+        return CupertinoTextField(
+          onChanged: spec.onChanged,
+          placeholder: spec.placeholder,
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: CupertinoColors.systemGrey6,
+            borderRadius: BorderRadius.circular(8),
+          ),
+        );
+
+      case DesignStyle.neo:
+        return Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFFE0E5EC),
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0xFFA3B1C6),
+                offset: Offset(2, 2),
+                blurRadius: 4,
+                inset: true,
+              ),
+              BoxShadow(
+                color: Colors.white,
+                offset: Offset(-2, -2),
+                blurRadius: 4,
+                inset: true,
+              ),
+            ],
+          ),
+          child: TextField(
+            onChanged: spec.onChanged,
+            decoration: InputDecoration(
+              hintText: spec.placeholder,
+              border: InputBorder.none,
+              contentPadding: const EdgeInsets.all(16),
+            ),
+          ),
+        );
+    }
+  }
+
+  // ------------------------------------------------------------------------
+  // Badge Renderers
+  // ------------------------------------------------------------------------
+
+  static Widget _renderBadge(MetaBadgeSpec spec, DesignStyle style) {
+    switch (style) {
+      case DesignStyle.material:
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Text(
+            spec.label,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        );
+
+      case DesignStyle.cupertino:
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(
+            color: CupertinoColors.activeBlue,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Text(
+            spec.label,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        );
+
+      case DesignStyle.neo:
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFFE0E5EC), Color(0xFFFFFFFF)],
+            ),
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0xFFA3B1C6),
+                offset: Offset(2, 2),
+                blurRadius: 4,
+              ),
+              BoxShadow(
+                color: Colors.white,
+                offset: Offset(-2, -2),
+                blurRadius: 4,
+              ),
+            ],
+          ),
+          child: Text(
+            spec.label,
+            style: const TextStyle(
+              color: Color(0xFF4A5568),
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        );
+    }
+  }
+
+  // ------------------------------------------------------------------------
+  // Card Renderers
+  // ------------------------------------------------------------------------
+
+  static Widget _renderCard(MetaCardSpec spec, DesignStyle style) {
+    switch (style) {
+      case DesignStyle.material:
+        return Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: spec.child,
+          ),
+        );
+
+      case DesignStyle.cupertino:
+        return Container(
+          decoration: BoxDecoration(
+            color: CupertinoColors.systemBackground,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: CupertinoColors.separator,
+              width: 0.5,
+            ),
+          ),
+          padding: const EdgeInsets.all(16),
+          child: spec.child,
+        );
+
+      case DesignStyle.neo:
+        return Container(
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFFE0E5EC), Color(0xFFFFFFFF)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0xFFA3B1C6),
+                offset: Offset(6, 6),
+                blurRadius: 12,
+              ),
+              BoxShadow(
+                color: Colors.white,
+                offset: Offset(-6, -6),
+                blurRadius: 12,
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.all(16),
+          child: spec.child,
+        );
+    }
+  }
+}
+
+// ============================================================================
+// PART 3: Example Usage
+// ============================================================================
+
+/// This demonstrates the philosophy in action
+///
+/// Run this with:
+/// ```dart
+/// import 'meta_arch.dart';
+///
+/// void main() {
+///   runApp(const MaterialApp(home: PhilosophyDemo()));
+/// }
+/// ```
+class PhilosophyDemo extends StatefulWidget {
+  const PhilosophyDemo({super.key});
+
+  @override
+  State<PhilosophyDemo> createState() => _PhilosophyDemoState();
+}
+
+class _PhilosophyDemoState extends State<PhilosophyDemo> {
+  DesignStyle currentStyle = DesignStyle.material;
+  String inputText = "";
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: spec.onPressed,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        decoration: BoxDecoration(
-          color: tokens.bgColor,
-          borderRadius: BorderRadius.circular(tokens.radius),
-          border: tokens.borderWidth > 0
-              ? Border.all(color: Colors.black, width: tokens.borderWidth)
-              : null,
-          boxShadow: [
-            if (tokens.shadowOffset != Offset.zero)
-              BoxShadow(
-                color: Colors.black,
-                offset: tokens.shadowOffset,
+    // Define WHAT we want (the UI structure)
+    final buttonNode = UINode(
+      type: 'button',
+      spec: MetaButtonSpec(
+        label: "CLICK ME",
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Button Pressed! Input: $inputText")),
+          );
+        },
+      ),
+    );
+
+    return Scaffold(
+      backgroundColor: Colors.grey[100],
+      appBar: AppBar(title: const Text("Syntax Philosophy Demo")),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Style Switcher
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: const [
+                    BoxShadow(blurRadius: 10, color: Colors.black12)
+                  ],
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: DesignStyle.values.map((style) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Column(
+                        children: [
+                          Radio<DesignStyle>(
+                            value: style,
+                            groupValue: currentStyle,
+                            onChanged: (v) => setState(() => currentStyle = v!),
+                          ),
+                          Text(
+                            style.name.toUpperCase(),
+                            style: const TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
               ),
-            if (tokens.elevation > 0 && tokens.shadowOffset == Offset.zero)
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: tokens.elevation * 2,
-                offset: Offset(0, tokens.elevation),
-              )
-          ],
-        ),
-        child: Text(
-          spec.label,
-          style: TextStyle(
-            color: tokens.textColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
+
+              const SizedBox(height: 50),
+
+              // The same components, different renderings
+              UIEngine.build(buttonNode, currentStyle),
+              const SizedBox(height: 20),
+              UIEngine.build(
+                const UINode(
+                  type: 'badge',
+                  spec: MetaBadgeSpec(label: "NEW ARRIVAL"),
+                ),
+                currentStyle,
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: UIEngine.build(
+                  UINode(
+                    type: 'input',
+                    spec: MetaInputSpec(
+                      placeholder: "Type something...",
+                      onChanged: (value) => setState(() => inputText = value),
+                    ),
+                  ),
+                  currentStyle,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text("You typed: $inputText"),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: UIEngine.build(
+                  const UINode(
+                    type: 'card',
+                    spec: MetaCardSpec(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Philosophy Card",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            "This card changes its appearance based on the selected style. "
+                            "Same definition, different rendering!",
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  currentStyle,
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -295,124 +529,31 @@ class ButtonRenderer extends StatelessWidget {
   }
 }
 
-class BadgeRenderer extends StatelessWidget {
-  final BadgeTokens tokens;
-  final MetaBadgeSpec spec;
-  const BadgeRenderer({super.key, required this.tokens, required this.spec});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: tokens.padding,
-      decoration: BoxDecoration(
-        color: tokens.bgColor,
-        borderRadius: BorderRadius.circular(tokens.radius),
-      ),
-      child: Text(spec.label,
-          style: tokens.textStyle.copyWith(color: tokens.textColor)),
-    );
-  }
-}
-
-class CardRenderer extends StatelessWidget {
-  final CardTokens tokens;
-  final MetaCardSpec spec;
-  const CardRenderer({super.key, required this.tokens, required this.spec});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: tokens.padding,
-      decoration: BoxDecoration(
-        color: tokens.bgColor,
-        borderRadius: BorderRadius.circular(tokens.radius),
-        border: tokens.borderWidth > 0
-            ? Border.all(color: tokens.borderColor, width: tokens.borderWidth)
-            : null,
-        boxShadow: [
-          if (tokens.shadowOffset != Offset.zero)
-            BoxShadow(color: Colors.black, offset: tokens.shadowOffset),
-          if (tokens.elevation > 0 && tokens.shadowOffset == Offset.zero)
-            BoxShadow(
-                color: Colors.black12,
-                blurRadius: tokens.elevation * 2,
-                offset: Offset(0, tokens.elevation))
-        ],
-      ),
-      child: spec.child,
-    );
-  }
-}
-
-class InputRenderer extends StatelessWidget {
-  final InputTokens tokens;
-  final MetaInputSpec spec;
-  const InputRenderer({super.key, required this.tokens, required this.spec});
-
-  @override
-  Widget build(BuildContext context) {
-    // We map generic tokens to Flutter's specific InputBorder system
-    final borderSide = tokens.borderWidth > 0
-        ? BorderSide(color: tokens.borderColor, width: tokens.borderWidth)
-        : BorderSide.none;
-
-    final outlineBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(tokens.radius),
-      borderSide: borderSide,
-    );
-
-    return TextField(
-      onChanged: spec.onChanged,
-      style: tokens.textStyle.copyWith(color: Colors.black),
-      decoration: InputDecoration(
-        hintText: spec.placeholder,
-        hintStyle: tokens.textStyle.copyWith(color: Colors.grey),
-        filled: true,
-        fillColor: tokens.filledColor,
-        contentPadding: tokens.padding,
-        border: outlineBorder,
-        enabledBorder: outlineBorder,
-        focusedBorder: outlineBorder.copyWith(
-          borderSide: borderSide.copyWith(
-              color: tokens.borderColor == Colors.transparent
-                  ? Colors.grey.withOpacity(0.5)
-                  : tokens.borderColor),
-        ),
-      ),
-    );
-  }
-}
-
-// =============================================================================
-// LAYER 5: ENGINE (The Glue)
-// =============================================================================
-
-class UIEngine {
-  static Widget build(UINode node, DesignStyle style) {
-    switch (node.type) {
-      case 'button':
-        final spec = node.spec as MetaButtonSpec;
-        final tokens = TokenLibrary.button(style);
-        return ButtonRenderer(tokens: tokens, spec: spec);
-
-      case 'badge':
-        final spec = node.spec as MetaBadgeSpec;
-        final tokens = TokenLibrary.badge(style);
-        return BadgeRenderer(tokens: tokens, spec: spec);
-
-      case 'card':
-        final spec = node.spec as MetaCardSpec;
-        final tokens = TokenLibrary.card(style);
-        return CardRenderer(tokens: tokens, spec: spec);
-
-      case 'input':
-        final spec = node.spec as MetaInputSpec;
-        final tokens = TokenLibrary.input(style);
-        return InputRenderer(tokens: tokens, spec: spec);
-
-      default:
-        return Text("Unknown node type: ${node.type}");
-    }
-  }
-}
+// ============================================================================
+// KEY TAKEAWAYS
+// ============================================================================
+//
+// 1. SEPARATION OF CONCERNS
+//    - UINode = WHAT (component definition)
+//    - UIEngine = HOW (rendering logic)
+//
+// 2. SINGLE SOURCE OF TRUTH
+//    - Define your UI structure once
+//    - Render it in multiple ways
+//
+// 3. EASY THEME SWITCHING
+//    - Change one variable (currentStyle)
+//    - Entire app updates
+//
+// 4. MAINTAINABILITY
+//    - Update rendering logic in one place
+//    - All components benefit
+//
+// 5. THIS IS WHAT SYNTAX DOES
+//    - Syntax generates this pattern for you
+//    - You define components in meta/
+//    - Syntax generates the renderers
+//    - You use AppButton, AppText, AppInput
+//    - They work with Material, Cupertino, Neo
+//
+// ============================================================================
