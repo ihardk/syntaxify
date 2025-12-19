@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.1.0-alpha.8 - 2025-12-20
+
+### New Features
+- **Screen Generation**: Generate full screens from AST definitions
+  - Login, Register, Home screens as examples
+  - Callbacks extracted as `VoidCallback?` fields
+  - AppBar with title support
+
+### Breaking Changes
+- `ScreenDefinition.appBar` changed from `AppBarNode?` to `AstNode?`
+
+### Dependency Upgrades
+- dart_style 3.x (added `languageVersion` parameter)
+- analyzer 9.x (handled `name2` deprecation)
+- freezed compatibility with sealed classes
+
+### Documentation
+- Added AST Nodes section to API reference
+- Updated project structure examples
+- Improved dartdoc comments on public API
+
+---
+
 ## 0.1.0-alpha.1 - 2025-12-19
 
 **⚠️ Alpha Release - API may change**

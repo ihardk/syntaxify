@@ -17,9 +17,11 @@
 // Create meta/login.screen.dart
 final loginScreen = ScreenDefinition(
   id: 'login',
+  appBar: AstNode.appBar(title: 'Login'),
   layout: AstNode.column(children: [
-    AstNode.text(text: 'Welcome'),
-    AstNode.textField(label: 'Email'),
+    AstNode.text(text: 'Welcome', variant: TextVariant.headlineLarge),
+    AstNode.textField(label: 'Email', keyboardType: KeyboardType.email),
+    AstNode.textField(label: 'Password', obscureText: true),
     AstNode.button(label: 'Login', onPressed: 'handleLogin'),
   ]),
 );
@@ -34,9 +36,9 @@ final loginScreen = ScreenDefinition(
 
 ## 👀 See It In Action
 
-![Syntaxify Demo](generator/assets/example.gif)
+![Syntaxify Demo](https://raw.githubusercontent.com/ihardk/syntaxify/main/generator/assets/example.gif)
 
-**Check out the [example app](generator/example/)** - A working Flutter app demonstrating all features with live style switching!
+**Check out the [example app](../example/)** - A working Flutter app demonstrating all features with live style switching!
 
 ```bash
 cd example && flutter run
