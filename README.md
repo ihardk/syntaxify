@@ -230,7 +230,19 @@ You can define custom components (e.g., Card, Badge, Avatar), and Syntax will:
 
 ### Step 1: Install Syntax
 
-**Option A: From GitHub (Recommended)**
+**Option A: From pub.dev (Recommended)**
+```yaml
+# pubspec.yaml
+dev_dependencies:
+  syntax: ^0.1.0-alpha.1
+```
+
+Then run:
+```bash
+dart pub get
+```
+
+**Option B: From GitHub (Latest)**
 ```yaml
 # pubspec.yaml
 dev_dependencies:
@@ -241,12 +253,7 @@ dev_dependencies:
       path: generator
 ```
 
-**Option B: Global Installation**
-```bash
-cd generator
-dart pub get
-dart pub global activate --source path .
-```
+> ⚠️ **Alpha Release**: This package is in alpha. API may change. See [CHANGELOG](https://pub.dev/packages/syntax/changelog) for updates.
 
 ### Step 2: Initialize Your Project
 

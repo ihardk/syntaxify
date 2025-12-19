@@ -8,8 +8,14 @@ Syntax generates production-ready Flutter widgets from declarative component def
 
 ### 1. Installation
 
-Add Syntax to your project:
+**From pub.dev (Recommended):**
+```yaml
+# pubspec.yaml
+dev_dependencies:
+  syntax: ^0.1.0-alpha.1
+```
 
+**From GitHub (Latest):**
 ```yaml
 dev_dependencies:
   syntax:
@@ -18,6 +24,8 @@ dev_dependencies:
       ref: v0.1.0
       path: generator
 ```
+
+> ⚠️ **Alpha Release**: API may change. See [pub.dev](https://pub.dev/packages/syntax) for updates.
 
 ### 2. Initialize Your Project
 
