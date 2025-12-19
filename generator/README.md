@@ -34,7 +34,7 @@ final loginScreen = ScreenDefinition(
 
 ## 👀 See It In Action
 
-![Syntaxify Demo](assets/example.gif)
+![Syntaxify Demo](https://raw.githubusercontent.com/ihardk/syntaxify/main/generator/assets/example.gif)
 
 **Check out the [example app](../example/)** - A working Flutter app demonstrating all features with live style switching!
 
