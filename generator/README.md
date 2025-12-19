@@ -5,7 +5,9 @@
 > Stop writing repetitive UI code. Define components once, render in any design system.
 
 [![pub package](https://img.shields.io/pub/v/syntaxify.svg)](https://pub.dev/packages/syntaxify)
+[![GitHub stars](https://img.shields.io/github/stars/ihardk/syntaxify?style=social)](https://github.com/ihardk/syntaxify)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support-yellow.svg)](https://buymeacoffee.com/ihardik)
 
 ---
 
@@ -32,7 +34,7 @@ final loginScreen = ScreenDefinition(
 
 ## 👀 See It In Action
 
-**Check out the [example app](example/)** - A working Flutter app demonstrating all features with live style switching!
+**Check out the [example app](../example/)** - A working Flutter app demonstrating all features with live style switching!
 
 ```bash
 cd example && flutter run
@@ -624,6 +626,6 @@ MIT License - See [LICENSE](LICENSE) for details
 
 **Built with ❤️ for Flutter developers who value consistency, productivity, and beautiful code**
 
-[⭐ Star us on GitHub](https://github.com/ihardk/syntaxify) • [📦 pub.dev](https://pub.dev/packages/syntaxify)
+[⭐ Star us on GitHub](https://github.com/ihardk/syntaxify) • [📦 pub.dev](https://pub.dev/packages/syntaxify) • [☕ Buy Me a Coffee](https://buymeacoffee.com/ihardik)
 
 </div>
