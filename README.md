@@ -4,6 +4,14 @@
 
 > Stop writing repetitive UI code. Define components once, render in any design system.
 
+## 👀 See It In Action
+
+**Check out the [example app](example/)** - A working Flutter app demonstrating all features with live style switching!
+
+```bash
+cd example && flutter run
+```
+
 ## 🤔 Why Syntax?
 
 **The Problem:**
