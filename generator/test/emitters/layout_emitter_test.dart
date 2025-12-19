@@ -6,7 +6,8 @@ import 'package:test/test.dart';
 
 void main() {
   final emitter = DartEmitter(useNullSafetySyntax: true);
-  final formatter = DartFormatter();
+  final formatter =
+      DartFormatter(languageVersion: DartFormatter.latestLanguageVersion);
   const layoutEmitter = LayoutEmitter();
 
   String emit(AstNode node) {

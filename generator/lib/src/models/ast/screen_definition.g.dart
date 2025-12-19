@@ -6,19 +6,17 @@ part of 'screen_definition.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ScreenDefinitionImpl _$$ScreenDefinitionImplFromJson(
-        Map<String, dynamic> json) =>
-    _$ScreenDefinitionImpl(
+_ScreenDefinition _$ScreenDefinitionFromJson(Map<String, dynamic> json) =>
+    _ScreenDefinition(
       id: json['id'] as String,
       layout: AstNode.fromJson(json['layout'] as Map<String, dynamic>),
       appBar: json['appBar'] == null
           ? null
-          : AppBarNode.fromJson(json['appBar'] as Map<String, dynamic>),
+          : AstNode.fromJson(json['appBar'] as Map<String, dynamic>),
       padding: json['padding'] as String?,
     );
 
-Map<String, dynamic> _$$ScreenDefinitionImplToJson(
-        _$ScreenDefinitionImpl instance) =>
+Map<String, dynamic> _$ScreenDefinitionToJson(_ScreenDefinition instance) =>
     <String, dynamic>{
       'id': instance.id,
       'layout': instance.layout.toJson(),

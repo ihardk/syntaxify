@@ -221,7 +221,8 @@ class BuildAllUseCase {
 
           await fileSystem.writeFile(
             path.join(outputDir, 'design_system', 'app_icons.dart'),
-            DartFormatter().format(content),
+            DartFormatter(languageVersion: DartFormatter.latestLanguageVersion)
+                .format(content),
           );
           generatedFiles.add('design_system/app_icons.dart');
           logger.success('Generated: design_system/app_icons.dart');

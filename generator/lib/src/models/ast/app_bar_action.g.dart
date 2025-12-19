@@ -6,14 +6,14 @@ part of 'app_bar_action.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$AppBarActionImpl _$$AppBarActionImplFromJson(Map<String, dynamic> json) =>
-    _$AppBarActionImpl(
+_AppBarAction _$AppBarActionFromJson(Map<String, dynamic> json) =>
+    _AppBarAction(
       icon: json['icon'] as String,
       onPressed: json['onPressed'] as String,
       tooltip: json['tooltip'] as String?,
     );
 
-Map<String, dynamic> _$$AppBarActionImplToJson(_$AppBarActionImpl instance) =>
+Map<String, dynamic> _$AppBarActionToJson(_AppBarAction instance) =>
     <String, dynamic>{
       'icon': instance.icon,
       'onPressed': instance.onPressed,

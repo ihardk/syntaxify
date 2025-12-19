@@ -4,7 +4,7 @@ part 'build_result.freezed.dart';
 
 /// Result of a build operation
 @freezed
-class BuildResult with _$BuildResult {
+sealed class BuildResult with _$BuildResult {
   const factory BuildResult({
     required int filesGenerated,
     required List<String> generatedFiles,

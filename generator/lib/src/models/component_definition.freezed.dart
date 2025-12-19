@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,89 +9,60 @@ part of 'component_definition.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ComponentDefinition {
-  String get name => throw _privateConstructorUsedError;
-  String get className => throw _privateConstructorUsedError;
-  List<ComponentProp> get properties => throw _privateConstructorUsedError;
-  List<String> get variants => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
+  String get name;
+  String get className;
+  List<ComponentProp> get properties;
+  List<String> get variants;
+  String? get description;
 
-  @JsonKey(ignore: true)
-  $ComponentDefinitionCopyWith<ComponentDefinition> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ComponentDefinitionCopyWith<$Res> {
-  factory $ComponentDefinitionCopyWith(
-          ComponentDefinition value, $Res Function(ComponentDefinition) then) =
-      _$ComponentDefinitionCopyWithImpl<$Res, ComponentDefinition>;
-  @useResult
-  $Res call(
-      {String name,
-      String className,
-      List<ComponentProp> properties,
-      List<String> variants,
-      String? description});
-}
-
-/// @nodoc
-class _$ComponentDefinitionCopyWithImpl<$Res, $Val extends ComponentDefinition>
-    implements $ComponentDefinitionCopyWith<$Res> {
-  _$ComponentDefinitionCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
+  /// Create a copy of ComponentDefinition
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
+  $ComponentDefinitionCopyWith<ComponentDefinition> get copyWith =>
+      _$ComponentDefinitionCopyWithImpl<ComponentDefinition>(
+          this as ComponentDefinition, _$identity);
+
   @override
-  $Res call({
-    Object? name = null,
-    Object? className = null,
-    Object? properties = null,
-    Object? variants = null,
-    Object? description = freezed,
-  }) {
-    return _then(_value.copyWith(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      className: null == className
-          ? _value.className
-          : className // ignore: cast_nullable_to_non_nullable
-              as String,
-      properties: null == properties
-          ? _value.properties
-          : properties // ignore: cast_nullable_to_non_nullable
-              as List<ComponentProp>,
-      variants: null == variants
-          ? _value.variants
-          : variants // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ComponentDefinition &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.className, className) ||
+                other.className == className) &&
+            const DeepCollectionEquality()
+                .equals(other.properties, properties) &&
+            const DeepCollectionEquality().equals(other.variants, variants) &&
+            (identical(other.description, description) ||
+                other.description == description));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      name,
+      className,
+      const DeepCollectionEquality().hash(properties),
+      const DeepCollectionEquality().hash(variants),
+      description);
+
+  @override
+  String toString() {
+    return 'ComponentDefinition(name: $name, className: $className, properties: $properties, variants: $variants, description: $description)';
   }
 }
 
 /// @nodoc
-abstract class _$$ComponentDefinitionImplCopyWith<$Res>
-    implements $ComponentDefinitionCopyWith<$Res> {
-  factory _$$ComponentDefinitionImplCopyWith(_$ComponentDefinitionImpl value,
-          $Res Function(_$ComponentDefinitionImpl) then) =
-      __$$ComponentDefinitionImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $ComponentDefinitionCopyWith<$Res> {
+  factory $ComponentDefinitionCopyWith(
+          ComponentDefinition value, $Res Function(ComponentDefinition) _then) =
+      _$ComponentDefinitionCopyWithImpl;
   @useResult
   $Res call(
       {String name,
@@ -102,13 +73,15 @@ abstract class _$$ComponentDefinitionImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ComponentDefinitionImplCopyWithImpl<$Res>
-    extends _$ComponentDefinitionCopyWithImpl<$Res, _$ComponentDefinitionImpl>
-    implements _$$ComponentDefinitionImplCopyWith<$Res> {
-  __$$ComponentDefinitionImplCopyWithImpl(_$ComponentDefinitionImpl _value,
-      $Res Function(_$ComponentDefinitionImpl) _then)
-      : super(_value, _then);
+class _$ComponentDefinitionCopyWithImpl<$Res>
+    implements $ComponentDefinitionCopyWith<$Res> {
+  _$ComponentDefinitionCopyWithImpl(this._self, this._then);
 
+  final ComponentDefinition _self;
+  final $Res Function(ComponentDefinition) _then;
+
+  /// Create a copy of ComponentDefinition
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -118,35 +91,209 @@ class __$$ComponentDefinitionImplCopyWithImpl<$Res>
     Object? variants = null,
     Object? description = freezed,
   }) {
-    return _then(_$ComponentDefinitionImpl(
+    return _then(_self.copyWith(
       name: null == name
-          ? _value.name
+          ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
       className: null == className
-          ? _value.className
+          ? _self.className
           : className // ignore: cast_nullable_to_non_nullable
               as String,
       properties: null == properties
-          ? _value._properties
+          ? _self.properties
           : properties // ignore: cast_nullable_to_non_nullable
               as List<ComponentProp>,
       variants: null == variants
-          ? _value._variants
+          ? _self.variants
           : variants // ignore: cast_nullable_to_non_nullable
               as List<String>,
       description: freezed == description
-          ? _value.description
+          ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [ComponentDefinition].
+extension ComponentDefinitionPatterns on ComponentDefinition {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ComponentDefinition value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ComponentDefinition() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ComponentDefinition value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ComponentDefinition():
+        return $default(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ComponentDefinition value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ComponentDefinition() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String name,
+            String className,
+            List<ComponentProp> properties,
+            List<String> variants,
+            String? description)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ComponentDefinition() when $default != null:
+        return $default(_that.name, _that.className, _that.properties,
+            _that.variants, _that.description);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            String name,
+            String className,
+            List<ComponentProp> properties,
+            List<String> variants,
+            String? description)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ComponentDefinition():
+        return $default(_that.name, _that.className, _that.properties,
+            _that.variants, _that.description);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String name,
+            String className,
+            List<ComponentProp> properties,
+            List<String> variants,
+            String? description)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ComponentDefinition() when $default != null:
+        return $default(_that.name, _that.className, _that.properties,
+            _that.variants, _that.description);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 
-class _$ComponentDefinitionImpl implements _ComponentDefinition {
-  const _$ComponentDefinitionImpl(
+class _ComponentDefinition implements ComponentDefinition {
+  const _ComponentDefinition(
       {required this.name,
       required this.className,
       required final List<ComponentProp> properties,
@@ -178,16 +325,20 @@ class _$ComponentDefinitionImpl implements _ComponentDefinition {
   @override
   final String? description;
 
+  /// Create a copy of ComponentDefinition
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ComponentDefinition(name: $name, className: $className, properties: $properties, variants: $variants, description: $description)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ComponentDefinitionCopyWith<_ComponentDefinition> get copyWith =>
+      __$ComponentDefinitionCopyWithImpl<_ComponentDefinition>(
+          this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ComponentDefinitionImpl &&
+            other is _ComponentDefinition &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.className, className) ||
                 other.className == className) &&
@@ -207,161 +358,66 @@ class _$ComponentDefinitionImpl implements _ComponentDefinition {
       const DeepCollectionEquality().hash(_variants),
       description);
 
-  @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ComponentDefinitionImplCopyWith<_$ComponentDefinitionImpl> get copyWith =>
-      __$$ComponentDefinitionImplCopyWithImpl<_$ComponentDefinitionImpl>(
-          this, _$identity);
-}
-
-abstract class _ComponentDefinition implements ComponentDefinition {
-  const factory _ComponentDefinition(
-      {required final String name,
-      required final String className,
-      required final List<ComponentProp> properties,
-      required final List<String> variants,
-      final String? description}) = _$ComponentDefinitionImpl;
-
-  @override
-  String get name;
-  @override
-  String get className;
-  @override
-  List<ComponentProp> get properties;
-  @override
-  List<String> get variants;
-  @override
-  String? get description;
-  @override
-  @JsonKey(ignore: true)
-  _$$ComponentDefinitionImplCopyWith<_$ComponentDefinitionImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$ComponentProp {
-  String get name => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
-  bool get isRequired => throw _privateConstructorUsedError;
-  String? get defaultValue => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $ComponentPropCopyWith<ComponentProp> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ComponentPropCopyWith<$Res> {
-  factory $ComponentPropCopyWith(
-          ComponentProp value, $Res Function(ComponentProp) then) =
-      _$ComponentPropCopyWithImpl<$Res, ComponentProp>;
-  @useResult
-  $Res call(
-      {String name,
-      String type,
-      bool isRequired,
-      String? defaultValue,
-      String? description});
-}
-
-/// @nodoc
-class _$ComponentPropCopyWithImpl<$Res, $Val extends ComponentProp>
-    implements $ComponentPropCopyWith<$Res> {
-  _$ComponentPropCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? name = null,
-    Object? type = null,
-    Object? isRequired = null,
-    Object? defaultValue = freezed,
-    Object? description = freezed,
-  }) {
-    return _then(_value.copyWith(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      isRequired: null == isRequired
-          ? _value.isRequired
-          : isRequired // ignore: cast_nullable_to_non_nullable
-              as bool,
-      defaultValue: freezed == defaultValue
-          ? _value.defaultValue
-          : defaultValue // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+  String toString() {
+    return 'ComponentDefinition(name: $name, className: $className, properties: $properties, variants: $variants, description: $description)';
   }
 }
 
 /// @nodoc
-abstract class _$$ComponentPropImplCopyWith<$Res>
-    implements $ComponentPropCopyWith<$Res> {
-  factory _$$ComponentPropImplCopyWith(
-          _$ComponentPropImpl value, $Res Function(_$ComponentPropImpl) then) =
-      __$$ComponentPropImplCopyWithImpl<$Res>;
+abstract mixin class _$ComponentDefinitionCopyWith<$Res>
+    implements $ComponentDefinitionCopyWith<$Res> {
+  factory _$ComponentDefinitionCopyWith(_ComponentDefinition value,
+          $Res Function(_ComponentDefinition) _then) =
+      __$ComponentDefinitionCopyWithImpl;
   @override
   @useResult
   $Res call(
       {String name,
-      String type,
-      bool isRequired,
-      String? defaultValue,
+      String className,
+      List<ComponentProp> properties,
+      List<String> variants,
       String? description});
 }
 
 /// @nodoc
-class __$$ComponentPropImplCopyWithImpl<$Res>
-    extends _$ComponentPropCopyWithImpl<$Res, _$ComponentPropImpl>
-    implements _$$ComponentPropImplCopyWith<$Res> {
-  __$$ComponentPropImplCopyWithImpl(
-      _$ComponentPropImpl _value, $Res Function(_$ComponentPropImpl) _then)
-      : super(_value, _then);
+class __$ComponentDefinitionCopyWithImpl<$Res>
+    implements _$ComponentDefinitionCopyWith<$Res> {
+  __$ComponentDefinitionCopyWithImpl(this._self, this._then);
 
-  @pragma('vm:prefer-inline')
+  final _ComponentDefinition _self;
+  final $Res Function(_ComponentDefinition) _then;
+
+  /// Create a copy of ComponentDefinition
+  /// with the given fields replaced by the non-null parameter values.
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? name = null,
-    Object? type = null,
-    Object? isRequired = null,
-    Object? defaultValue = freezed,
+    Object? className = null,
+    Object? properties = null,
+    Object? variants = null,
     Object? description = freezed,
   }) {
-    return _then(_$ComponentPropImpl(
+    return _then(_ComponentDefinition(
       name: null == name
-          ? _value.name
+          ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
+      className: null == className
+          ? _self.className
+          : className // ignore: cast_nullable_to_non_nullable
               as String,
-      isRequired: null == isRequired
-          ? _value.isRequired
-          : isRequired // ignore: cast_nullable_to_non_nullable
-              as bool,
-      defaultValue: freezed == defaultValue
-          ? _value.defaultValue
-          : defaultValue // ignore: cast_nullable_to_non_nullable
-              as String?,
+      properties: null == properties
+          ? _self._properties
+          : properties // ignore: cast_nullable_to_non_nullable
+              as List<ComponentProp>,
+      variants: null == variants
+          ? _self._variants
+          : variants // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       description: freezed == description
-          ? _value.description
+          ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
@@ -369,9 +425,270 @@ class __$$ComponentPropImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
+mixin _$ComponentProp {
+  String get name;
+  String get type;
+  bool get isRequired;
+  String? get defaultValue;
+  String? get description;
 
-class _$ComponentPropImpl implements _ComponentProp {
-  const _$ComponentPropImpl(
+  /// Create a copy of ComponentProp
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $ComponentPropCopyWith<ComponentProp> get copyWith =>
+      _$ComponentPropCopyWithImpl<ComponentProp>(
+          this as ComponentProp, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ComponentProp &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.isRequired, isRequired) ||
+                other.isRequired == isRequired) &&
+            (identical(other.defaultValue, defaultValue) ||
+                other.defaultValue == defaultValue) &&
+            (identical(other.description, description) ||
+                other.description == description));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, name, type, isRequired, defaultValue, description);
+
+  @override
+  String toString() {
+    return 'ComponentProp(name: $name, type: $type, isRequired: $isRequired, defaultValue: $defaultValue, description: $description)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $ComponentPropCopyWith<$Res> {
+  factory $ComponentPropCopyWith(
+          ComponentProp value, $Res Function(ComponentProp) _then) =
+      _$ComponentPropCopyWithImpl;
+  @useResult
+  $Res call(
+      {String name,
+      String type,
+      bool isRequired,
+      String? defaultValue,
+      String? description});
+}
+
+/// @nodoc
+class _$ComponentPropCopyWithImpl<$Res>
+    implements $ComponentPropCopyWith<$Res> {
+  _$ComponentPropCopyWithImpl(this._self, this._then);
+
+  final ComponentProp _self;
+  final $Res Function(ComponentProp) _then;
+
+  /// Create a copy of ComponentProp
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? type = null,
+    Object? isRequired = null,
+    Object? defaultValue = freezed,
+    Object? description = freezed,
+  }) {
+    return _then(_self.copyWith(
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      isRequired: null == isRequired
+          ? _self.isRequired
+          : isRequired // ignore: cast_nullable_to_non_nullable
+              as bool,
+      defaultValue: freezed == defaultValue
+          ? _self.defaultValue
+          : defaultValue // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: freezed == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [ComponentProp].
+extension ComponentPropPatterns on ComponentProp {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ComponentProp value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ComponentProp() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ComponentProp value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ComponentProp():
+        return $default(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ComponentProp value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ComponentProp() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String name, String type, bool isRequired,
+            String? defaultValue, String? description)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ComponentProp() when $default != null:
+        return $default(_that.name, _that.type, _that.isRequired,
+            _that.defaultValue, _that.description);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String name, String type, bool isRequired,
+            String? defaultValue, String? description)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ComponentProp():
+        return $default(_that.name, _that.type, _that.isRequired,
+            _that.defaultValue, _that.description);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String name, String type, bool isRequired,
+            String? defaultValue, String? description)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ComponentProp() when $default != null:
+        return $default(_that.name, _that.type, _that.isRequired,
+            _that.defaultValue, _that.description);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+
+class _ComponentProp implements ComponentProp {
+  const _ComponentProp(
       {required this.name,
       required this.type,
       required this.isRequired,
@@ -389,16 +706,19 @@ class _$ComponentPropImpl implements _ComponentProp {
   @override
   final String? description;
 
+  /// Create a copy of ComponentProp
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ComponentProp(name: $name, type: $type, isRequired: $isRequired, defaultValue: $defaultValue, description: $description)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ComponentPropCopyWith<_ComponentProp> get copyWith =>
+      __$ComponentPropCopyWithImpl<_ComponentProp>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ComponentPropImpl &&
+            other is _ComponentProp &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.isRequired, isRequired) ||
@@ -413,128 +733,66 @@ class _$ComponentPropImpl implements _ComponentProp {
   int get hashCode => Object.hash(
       runtimeType, name, type, isRequired, defaultValue, description);
 
-  @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ComponentPropImplCopyWith<_$ComponentPropImpl> get copyWith =>
-      __$$ComponentPropImplCopyWithImpl<_$ComponentPropImpl>(this, _$identity);
-}
-
-abstract class _ComponentProp implements ComponentProp {
-  const factory _ComponentProp(
-      {required final String name,
-      required final String type,
-      required final bool isRequired,
-      final String? defaultValue,
-      final String? description}) = _$ComponentPropImpl;
-
-  @override
-  String get name;
-  @override
-  String get type;
-  @override
-  bool get isRequired;
-  @override
-  String? get defaultValue;
-  @override
-  String? get description;
-  @override
-  @JsonKey(ignore: true)
-  _$$ComponentPropImplCopyWith<_$ComponentPropImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$ComponentEnum {
-  String get name => throw _privateConstructorUsedError;
-  List<String> get values => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $ComponentEnumCopyWith<ComponentEnum> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ComponentEnumCopyWith<$Res> {
-  factory $ComponentEnumCopyWith(
-          ComponentEnum value, $Res Function(ComponentEnum) then) =
-      _$ComponentEnumCopyWithImpl<$Res, ComponentEnum>;
-  @useResult
-  $Res call({String name, List<String> values, String? description});
-}
-
-/// @nodoc
-class _$ComponentEnumCopyWithImpl<$Res, $Val extends ComponentEnum>
-    implements $ComponentEnumCopyWith<$Res> {
-  _$ComponentEnumCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? name = null,
-    Object? values = null,
-    Object? description = freezed,
-  }) {
-    return _then(_value.copyWith(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      values: null == values
-          ? _value.values
-          : values // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+  String toString() {
+    return 'ComponentProp(name: $name, type: $type, isRequired: $isRequired, defaultValue: $defaultValue, description: $description)';
   }
 }
 
 /// @nodoc
-abstract class _$$ComponentEnumImplCopyWith<$Res>
-    implements $ComponentEnumCopyWith<$Res> {
-  factory _$$ComponentEnumImplCopyWith(
-          _$ComponentEnumImpl value, $Res Function(_$ComponentEnumImpl) then) =
-      __$$ComponentEnumImplCopyWithImpl<$Res>;
+abstract mixin class _$ComponentPropCopyWith<$Res>
+    implements $ComponentPropCopyWith<$Res> {
+  factory _$ComponentPropCopyWith(
+          _ComponentProp value, $Res Function(_ComponentProp) _then) =
+      __$ComponentPropCopyWithImpl;
   @override
   @useResult
-  $Res call({String name, List<String> values, String? description});
+  $Res call(
+      {String name,
+      String type,
+      bool isRequired,
+      String? defaultValue,
+      String? description});
 }
 
 /// @nodoc
-class __$$ComponentEnumImplCopyWithImpl<$Res>
-    extends _$ComponentEnumCopyWithImpl<$Res, _$ComponentEnumImpl>
-    implements _$$ComponentEnumImplCopyWith<$Res> {
-  __$$ComponentEnumImplCopyWithImpl(
-      _$ComponentEnumImpl _value, $Res Function(_$ComponentEnumImpl) _then)
-      : super(_value, _then);
+class __$ComponentPropCopyWithImpl<$Res>
+    implements _$ComponentPropCopyWith<$Res> {
+  __$ComponentPropCopyWithImpl(this._self, this._then);
 
-  @pragma('vm:prefer-inline')
+  final _ComponentProp _self;
+  final $Res Function(_ComponentProp) _then;
+
+  /// Create a copy of ComponentProp
+  /// with the given fields replaced by the non-null parameter values.
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? name = null,
-    Object? values = null,
+    Object? type = null,
+    Object? isRequired = null,
+    Object? defaultValue = freezed,
     Object? description = freezed,
   }) {
-    return _then(_$ComponentEnumImpl(
+    return _then(_ComponentProp(
       name: null == name
-          ? _value.name
+          ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      values: null == values
-          ? _value._values
-          : values // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      isRequired: null == isRequired
+          ? _self.isRequired
+          : isRequired // ignore: cast_nullable_to_non_nullable
+              as bool,
+      defaultValue: freezed == defaultValue
+          ? _self.defaultValue
+          : defaultValue // ignore: cast_nullable_to_non_nullable
+              as String?,
       description: freezed == description
-          ? _value.description
+          ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
@@ -542,9 +800,243 @@ class __$$ComponentEnumImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
+mixin _$ComponentEnum {
+  String get name;
+  List<String> get values;
+  String? get description;
 
-class _$ComponentEnumImpl implements _ComponentEnum {
-  const _$ComponentEnumImpl(
+  /// Create a copy of ComponentEnum
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $ComponentEnumCopyWith<ComponentEnum> get copyWith =>
+      _$ComponentEnumCopyWithImpl<ComponentEnum>(
+          this as ComponentEnum, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ComponentEnum &&
+            (identical(other.name, name) || other.name == name) &&
+            const DeepCollectionEquality().equals(other.values, values) &&
+            (identical(other.description, description) ||
+                other.description == description));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, name,
+      const DeepCollectionEquality().hash(values), description);
+
+  @override
+  String toString() {
+    return 'ComponentEnum(name: $name, values: $values, description: $description)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $ComponentEnumCopyWith<$Res> {
+  factory $ComponentEnumCopyWith(
+          ComponentEnum value, $Res Function(ComponentEnum) _then) =
+      _$ComponentEnumCopyWithImpl;
+  @useResult
+  $Res call({String name, List<String> values, String? description});
+}
+
+/// @nodoc
+class _$ComponentEnumCopyWithImpl<$Res>
+    implements $ComponentEnumCopyWith<$Res> {
+  _$ComponentEnumCopyWithImpl(this._self, this._then);
+
+  final ComponentEnum _self;
+  final $Res Function(ComponentEnum) _then;
+
+  /// Create a copy of ComponentEnum
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? values = null,
+    Object? description = freezed,
+  }) {
+    return _then(_self.copyWith(
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      values: null == values
+          ? _self.values
+          : values // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      description: freezed == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [ComponentEnum].
+extension ComponentEnumPatterns on ComponentEnum {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ComponentEnum value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ComponentEnum() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ComponentEnum value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ComponentEnum():
+        return $default(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ComponentEnum value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ComponentEnum() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String name, List<String> values, String? description)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ComponentEnum() when $default != null:
+        return $default(_that.name, _that.values, _that.description);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String name, List<String> values, String? description)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ComponentEnum():
+        return $default(_that.name, _that.values, _that.description);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String name, List<String> values, String? description)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ComponentEnum() when $default != null:
+        return $default(_that.name, _that.values, _that.description);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+
+class _ComponentEnum implements ComponentEnum {
+  const _ComponentEnum(
       {required this.name,
       required final List<String> values,
       this.description})
@@ -563,16 +1055,19 @@ class _$ComponentEnumImpl implements _ComponentEnum {
   @override
   final String? description;
 
+  /// Create a copy of ComponentEnum
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ComponentEnum(name: $name, values: $values, description: $description)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ComponentEnumCopyWith<_ComponentEnum> get copyWith =>
+      __$ComponentEnumCopyWithImpl<_ComponentEnum>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ComponentEnumImpl &&
+            other is _ComponentEnum &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality().equals(other._values, _values) &&
             (identical(other.description, description) ||
@@ -583,103 +1078,102 @@ class _$ComponentEnumImpl implements _ComponentEnum {
   int get hashCode => Object.hash(runtimeType, name,
       const DeepCollectionEquality().hash(_values), description);
 
-  @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ComponentEnumImplCopyWith<_$ComponentEnumImpl> get copyWith =>
-      __$$ComponentEnumImplCopyWithImpl<_$ComponentEnumImpl>(this, _$identity);
-}
-
-abstract class _ComponentEnum implements ComponentEnum {
-  const factory _ComponentEnum(
-      {required final String name,
-      required final List<String> values,
-      final String? description}) = _$ComponentEnumImpl;
-
-  @override
-  String get name;
-  @override
-  List<String> get values;
-  @override
-  String? get description;
-  @override
-  @JsonKey(ignore: true)
-  _$$ComponentEnumImplCopyWith<_$ComponentEnumImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$ParseResult {
-  List<ComponentDefinition> get components =>
-      throw _privateConstructorUsedError;
-  List<ScreenDefinition> get screens => throw _privateConstructorUsedError;
-  List<ComponentEnum> get enums => throw _privateConstructorUsedError;
-  List<String> get errors => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $ParseResultCopyWith<ParseResult> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ParseResultCopyWith<$Res> {
-  factory $ParseResultCopyWith(
-          ParseResult value, $Res Function(ParseResult) then) =
-      _$ParseResultCopyWithImpl<$Res, ParseResult>;
-  @useResult
-  $Res call(
-      {List<ComponentDefinition> components,
-      List<ScreenDefinition> screens,
-      List<ComponentEnum> enums,
-      List<String> errors});
-}
-
-/// @nodoc
-class _$ParseResultCopyWithImpl<$Res, $Val extends ParseResult>
-    implements $ParseResultCopyWith<$Res> {
-  _$ParseResultCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? components = null,
-    Object? screens = null,
-    Object? enums = null,
-    Object? errors = null,
-  }) {
-    return _then(_value.copyWith(
-      components: null == components
-          ? _value.components
-          : components // ignore: cast_nullable_to_non_nullable
-              as List<ComponentDefinition>,
-      screens: null == screens
-          ? _value.screens
-          : screens // ignore: cast_nullable_to_non_nullable
-              as List<ScreenDefinition>,
-      enums: null == enums
-          ? _value.enums
-          : enums // ignore: cast_nullable_to_non_nullable
-              as List<ComponentEnum>,
-      errors: null == errors
-          ? _value.errors
-          : errors // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-    ) as $Val);
+  String toString() {
+    return 'ComponentEnum(name: $name, values: $values, description: $description)';
   }
 }
 
 /// @nodoc
-abstract class _$$ParseResultImplCopyWith<$Res>
-    implements $ParseResultCopyWith<$Res> {
-  factory _$$ParseResultImplCopyWith(
-          _$ParseResultImpl value, $Res Function(_$ParseResultImpl) then) =
-      __$$ParseResultImplCopyWithImpl<$Res>;
+abstract mixin class _$ComponentEnumCopyWith<$Res>
+    implements $ComponentEnumCopyWith<$Res> {
+  factory _$ComponentEnumCopyWith(
+          _ComponentEnum value, $Res Function(_ComponentEnum) _then) =
+      __$ComponentEnumCopyWithImpl;
   @override
+  @useResult
+  $Res call({String name, List<String> values, String? description});
+}
+
+/// @nodoc
+class __$ComponentEnumCopyWithImpl<$Res>
+    implements _$ComponentEnumCopyWith<$Res> {
+  __$ComponentEnumCopyWithImpl(this._self, this._then);
+
+  final _ComponentEnum _self;
+  final $Res Function(_ComponentEnum) _then;
+
+  /// Create a copy of ComponentEnum
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? name = null,
+    Object? values = null,
+    Object? description = freezed,
+  }) {
+    return _then(_ComponentEnum(
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      values: null == values
+          ? _self._values
+          : values // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      description: freezed == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+mixin _$ParseResult {
+  List<ComponentDefinition> get components;
+  List<ScreenDefinition> get screens;
+  List<ComponentEnum> get enums;
+  List<String> get errors;
+
+  /// Create a copy of ParseResult
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $ParseResultCopyWith<ParseResult> get copyWith =>
+      _$ParseResultCopyWithImpl<ParseResult>(this as ParseResult, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ParseResult &&
+            const DeepCollectionEquality()
+                .equals(other.components, components) &&
+            const DeepCollectionEquality().equals(other.screens, screens) &&
+            const DeepCollectionEquality().equals(other.enums, enums) &&
+            const DeepCollectionEquality().equals(other.errors, errors));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(components),
+      const DeepCollectionEquality().hash(screens),
+      const DeepCollectionEquality().hash(enums),
+      const DeepCollectionEquality().hash(errors));
+
+  @override
+  String toString() {
+    return 'ParseResult(components: $components, screens: $screens, enums: $enums, errors: $errors)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $ParseResultCopyWith<$Res> {
+  factory $ParseResultCopyWith(
+          ParseResult value, $Res Function(ParseResult) _then) =
+      _$ParseResultCopyWithImpl;
   @useResult
   $Res call(
       {List<ComponentDefinition> components,
@@ -689,13 +1183,14 @@ abstract class _$$ParseResultImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ParseResultImplCopyWithImpl<$Res>
-    extends _$ParseResultCopyWithImpl<$Res, _$ParseResultImpl>
-    implements _$$ParseResultImplCopyWith<$Res> {
-  __$$ParseResultImplCopyWithImpl(
-      _$ParseResultImpl _value, $Res Function(_$ParseResultImpl) _then)
-      : super(_value, _then);
+class _$ParseResultCopyWithImpl<$Res> implements $ParseResultCopyWith<$Res> {
+  _$ParseResultCopyWithImpl(this._self, this._then);
 
+  final ParseResult _self;
+  final $Res Function(ParseResult) _then;
+
+  /// Create a copy of ParseResult
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -704,31 +1199,202 @@ class __$$ParseResultImplCopyWithImpl<$Res>
     Object? enums = null,
     Object? errors = null,
   }) {
-    return _then(_$ParseResultImpl(
+    return _then(_self.copyWith(
       components: null == components
-          ? _value._components
+          ? _self.components
           : components // ignore: cast_nullable_to_non_nullable
               as List<ComponentDefinition>,
       screens: null == screens
-          ? _value._screens
+          ? _self.screens
           : screens // ignore: cast_nullable_to_non_nullable
               as List<ScreenDefinition>,
       enums: null == enums
-          ? _value._enums
+          ? _self.enums
           : enums // ignore: cast_nullable_to_non_nullable
               as List<ComponentEnum>,
       errors: null == errors
-          ? _value._errors
+          ? _self.errors
           : errors // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [ParseResult].
+extension ParseResultPatterns on ParseResult {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ParseResult value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ParseResult() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ParseResult value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ParseResult():
+        return $default(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ParseResult value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ParseResult() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            List<ComponentDefinition> components,
+            List<ScreenDefinition> screens,
+            List<ComponentEnum> enums,
+            List<String> errors)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ParseResult() when $default != null:
+        return $default(
+            _that.components, _that.screens, _that.enums, _that.errors);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            List<ComponentDefinition> components,
+            List<ScreenDefinition> screens,
+            List<ComponentEnum> enums,
+            List<String> errors)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ParseResult():
+        return $default(
+            _that.components, _that.screens, _that.enums, _that.errors);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            List<ComponentDefinition> components,
+            List<ScreenDefinition> screens,
+            List<ComponentEnum> enums,
+            List<String> errors)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ParseResult() when $default != null:
+        return $default(
+            _that.components, _that.screens, _that.enums, _that.errors);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 
-class _$ParseResultImpl extends _ParseResult {
-  const _$ParseResultImpl(
+class _ParseResult extends ParseResult {
+  const _ParseResult(
       {required final List<ComponentDefinition> components,
       final List<ScreenDefinition> screens = const [],
       final List<ComponentEnum> enums = const [],
@@ -773,16 +1439,19 @@ class _$ParseResultImpl extends _ParseResult {
     return EqualUnmodifiableListView(_errors);
   }
 
+  /// Create a copy of ParseResult
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ParseResult(components: $components, screens: $screens, enums: $enums, errors: $errors)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ParseResultCopyWith<_ParseResult> get copyWith =>
+      __$ParseResultCopyWithImpl<_ParseResult>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ParseResultImpl &&
+            other is _ParseResult &&
             const DeepCollectionEquality()
                 .equals(other._components, _components) &&
             const DeepCollectionEquality().equals(other._screens, _screens) &&
@@ -798,31 +1467,63 @@ class _$ParseResultImpl extends _ParseResult {
       const DeepCollectionEquality().hash(_enums),
       const DeepCollectionEquality().hash(_errors));
 
-  @JsonKey(ignore: true)
+  @override
+  String toString() {
+    return 'ParseResult(components: $components, screens: $screens, enums: $enums, errors: $errors)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$ParseResultCopyWith<$Res>
+    implements $ParseResultCopyWith<$Res> {
+  factory _$ParseResultCopyWith(
+          _ParseResult value, $Res Function(_ParseResult) _then) =
+      __$ParseResultCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {List<ComponentDefinition> components,
+      List<ScreenDefinition> screens,
+      List<ComponentEnum> enums,
+      List<String> errors});
+}
+
+/// @nodoc
+class __$ParseResultCopyWithImpl<$Res> implements _$ParseResultCopyWith<$Res> {
+  __$ParseResultCopyWithImpl(this._self, this._then);
+
+  final _ParseResult _self;
+  final $Res Function(_ParseResult) _then;
+
+  /// Create a copy of ParseResult
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  _$$ParseResultImplCopyWith<_$ParseResultImpl> get copyWith =>
-      __$$ParseResultImplCopyWithImpl<_$ParseResultImpl>(this, _$identity);
+  $Res call({
+    Object? components = null,
+    Object? screens = null,
+    Object? enums = null,
+    Object? errors = null,
+  }) {
+    return _then(_ParseResult(
+      components: null == components
+          ? _self._components
+          : components // ignore: cast_nullable_to_non_nullable
+              as List<ComponentDefinition>,
+      screens: null == screens
+          ? _self._screens
+          : screens // ignore: cast_nullable_to_non_nullable
+              as List<ScreenDefinition>,
+      enums: null == enums
+          ? _self._enums
+          : enums // ignore: cast_nullable_to_non_nullable
+              as List<ComponentEnum>,
+      errors: null == errors
+          ? _self._errors
+          : errors // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
 }
 
-abstract class _ParseResult extends ParseResult {
-  const factory _ParseResult(
-      {required final List<ComponentDefinition> components,
-      final List<ScreenDefinition> screens,
-      final List<ComponentEnum> enums,
-      required final List<String> errors}) = _$ParseResultImpl;
-  const _ParseResult._() : super._();
-
-  @override
-  List<ComponentDefinition> get components;
-  @override
-  List<ScreenDefinition> get screens;
-  @override
-  List<ComponentEnum> get enums;
-  @override
-  List<String> get errors;
-  @override
-  @JsonKey(ignore: true)
-  _$$ParseResultImplCopyWith<_$ParseResultImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

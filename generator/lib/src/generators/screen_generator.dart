@@ -33,7 +33,8 @@ class ScreenGenerator {
       ..body.add(_buildScreenClass(screen)));
 
     final emitter = DartEmitter(useNullSafetySyntax: true);
-    return DartFormatter().format('${library.accept(emitter)}');
+    return DartFormatter(languageVersion: DartFormatter.latestLanguageVersion)
+        .format('${library.accept(emitter)}');
   }
 
   Class _buildScreenClass(ScreenDefinition screen) {

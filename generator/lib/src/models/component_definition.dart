@@ -5,7 +5,7 @@ part 'component_definition.freezed.dart';
 
 /// Represents a parsed component definition (from a .meta.dart file)
 @freezed
-class ComponentDefinition with _$ComponentDefinition {
+sealed class ComponentDefinition with _$ComponentDefinition {
   const factory ComponentDefinition({
     required String name,
     required String className,
@@ -17,7 +17,7 @@ class ComponentDefinition with _$ComponentDefinition {
 
 /// Represents a property in a component definition
 @freezed
-class ComponentProp with _$ComponentProp {
+sealed class ComponentProp with _$ComponentProp {
   const factory ComponentProp({
     required String name,
     required String type,
@@ -29,7 +29,7 @@ class ComponentProp with _$ComponentProp {
 
 /// Represents an Enum definition found in the component file
 @freezed
-class ComponentEnum with _$ComponentEnum {
+sealed class ComponentEnum with _$ComponentEnum {
   const factory ComponentEnum({
     required String name,
     required List<String> values,
@@ -39,7 +39,7 @@ class ComponentEnum with _$ComponentEnum {
 
 /// Represents the result of parsing component files
 @freezed
-class ParseResult with _$ParseResult {
+sealed class ParseResult with _$ParseResult {
   const factory ParseResult({
     required List<ComponentDefinition> components,
     @Default([]) List<ScreenDefinition> screens,

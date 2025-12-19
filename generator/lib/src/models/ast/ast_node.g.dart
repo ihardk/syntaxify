@@ -6,8 +6,7 @@ part of 'ast_node.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ColumnNodeImpl _$$ColumnNodeImplFromJson(Map<String, dynamic> json) =>
-    _$ColumnNodeImpl(
+ColumnNode _$ColumnNodeFromJson(Map<String, dynamic> json) => ColumnNode(
       id: json['id'] as String?,
       visibleWhen: json['visibleWhen'] as String?,
       children: (json['children'] as List<dynamic>)
@@ -21,7 +20,7 @@ _$ColumnNodeImpl _$$ColumnNodeImplFromJson(Map<String, dynamic> json) =>
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$ColumnNodeImplToJson(_$ColumnNodeImpl instance) =>
+Map<String, dynamic> _$ColumnNodeToJson(ColumnNode instance) =>
     <String, dynamic>{
       'id': instance.id,
       'visibleWhen': instance.visibleWhen,
@@ -50,8 +49,7 @@ const _$CrossAxisAlignmentEnumMap = {
   CrossAxisAlignment.stretch: 'stretch',
 };
 
-_$RowNodeImpl _$$RowNodeImplFromJson(Map<String, dynamic> json) =>
-    _$RowNodeImpl(
+RowNode _$RowNodeFromJson(Map<String, dynamic> json) => RowNode(
       id: json['id'] as String?,
       visibleWhen: json['visibleWhen'] as String?,
       children: (json['children'] as List<dynamic>)
@@ -65,8 +63,7 @@ _$RowNodeImpl _$$RowNodeImplFromJson(Map<String, dynamic> json) =>
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$RowNodeImplToJson(_$RowNodeImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$RowNodeToJson(RowNode instance) => <String, dynamic>{
       'id': instance.id,
       'visibleWhen': instance.visibleWhen,
       'children': instance.children.map((e) => e.toJson()).toList(),
@@ -78,8 +75,7 @@ Map<String, dynamic> _$$RowNodeImplToJson(_$RowNodeImpl instance) =>
       'runtimeType': instance.$type,
     };
 
-_$TextNodeImpl _$$TextNodeImplFromJson(Map<String, dynamic> json) =>
-    _$TextNodeImpl(
+TextNode _$TextNodeFromJson(Map<String, dynamic> json) => TextNode(
       id: json['id'] as String?,
       visibleWhen: json['visibleWhen'] as String?,
       text: json['text'] as String,
@@ -90,8 +86,7 @@ _$TextNodeImpl _$$TextNodeImplFromJson(Map<String, dynamic> json) =>
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$TextNodeImplToJson(_$TextNodeImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$TextNodeToJson(TextNode instance) => <String, dynamic>{
       'id': instance.id,
       'visibleWhen': instance.visibleWhen,
       'text': instance.text,
@@ -124,8 +119,7 @@ const _$TextOverflowEnumMap = {
   TextOverflow.fade: 'fade',
 };
 
-_$ButtonNodeImpl _$$ButtonNodeImplFromJson(Map<String, dynamic> json) =>
-    _$ButtonNodeImpl(
+ButtonNode _$ButtonNodeFromJson(Map<String, dynamic> json) => ButtonNode(
       id: json['id'] as String?,
       visibleWhen: json['visibleWhen'] as String?,
       label: json['label'] as String,
@@ -141,7 +135,7 @@ _$ButtonNodeImpl _$$ButtonNodeImplFromJson(Map<String, dynamic> json) =>
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$ButtonNodeImplToJson(_$ButtonNodeImpl instance) =>
+Map<String, dynamic> _$ButtonNodeToJson(ButtonNode instance) =>
     <String, dynamic>{
       'id': instance.id,
       'visibleWhen': instance.visibleWhen,
@@ -177,8 +171,8 @@ const _$IconPositionEnumMap = {
   IconPosition.only: 'only',
 };
 
-_$TextFieldNodeImpl _$$TextFieldNodeImplFromJson(Map<String, dynamic> json) =>
-    _$TextFieldNodeImpl(
+TextFieldNode _$TextFieldNodeFromJson(Map<String, dynamic> json) =>
+    TextFieldNode(
       id: json['id'] as String?,
       visibleWhen: json['visibleWhen'] as String?,
       label: json['label'] as String?,
@@ -201,7 +195,7 @@ _$TextFieldNodeImpl _$$TextFieldNodeImplFromJson(Map<String, dynamic> json) =>
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$TextFieldNodeImplToJson(_$TextFieldNodeImpl instance) =>
+Map<String, dynamic> _$TextFieldNodeToJson(TextFieldNode instance) =>
     <String, dynamic>{
       'id': instance.id,
       'visibleWhen': instance.visibleWhen,
@@ -245,8 +239,7 @@ const _$TextFieldVariantEnumMap = {
   TextFieldVariant.filled: 'filled',
 };
 
-_$IconNodeImpl _$$IconNodeImplFromJson(Map<String, dynamic> json) =>
-    _$IconNodeImpl(
+IconNode _$IconNodeFromJson(Map<String, dynamic> json) => IconNode(
       id: json['id'] as String?,
       visibleWhen: json['visibleWhen'] as String?,
       name: json['name'] as String,
@@ -255,8 +248,7 @@ _$IconNodeImpl _$$IconNodeImplFromJson(Map<String, dynamic> json) =>
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$IconNodeImplToJson(_$IconNodeImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$IconNodeToJson(IconNode instance) => <String, dynamic>{
       'id': instance.id,
       'visibleWhen': instance.visibleWhen,
       'name': instance.name,
@@ -285,8 +277,7 @@ const _$ColorSemanticEnumMap = {
   ColorSemantic.onSurface: 'onSurface',
 };
 
-_$SpacerNodeImpl _$$SpacerNodeImplFromJson(Map<String, dynamic> json) =>
-    _$SpacerNodeImpl(
+SpacerNode _$SpacerNodeFromJson(Map<String, dynamic> json) => SpacerNode(
       id: json['id'] as String?,
       visibleWhen: json['visibleWhen'] as String?,
       size: $enumDecodeNullable(_$SpacerSizeEnumMap, json['size']),
@@ -294,7 +285,7 @@ _$SpacerNodeImpl _$$SpacerNodeImplFromJson(Map<String, dynamic> json) =>
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$SpacerNodeImplToJson(_$SpacerNodeImpl instance) =>
+Map<String, dynamic> _$SpacerNodeToJson(SpacerNode instance) =>
     <String, dynamic>{
       'id': instance.id,
       'visibleWhen': instance.visibleWhen,
@@ -312,8 +303,7 @@ const _$SpacerSizeEnumMap = {
   SpacerSize.flex: 'flex',
 };
 
-_$AppBarNodeImpl _$$AppBarNodeImplFromJson(Map<String, dynamic> json) =>
-    _$AppBarNodeImpl(
+AppBarNode _$AppBarNodeFromJson(Map<String, dynamic> json) => AppBarNode(
       id: json['id'] as String?,
       visibleWhen: json['visibleWhen'] as String?,
       title: json['title'] as String?,
@@ -325,7 +315,7 @@ _$AppBarNodeImpl _$$AppBarNodeImplFromJson(Map<String, dynamic> json) =>
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$AppBarNodeImplToJson(_$AppBarNodeImpl instance) =>
+Map<String, dynamic> _$AppBarNodeToJson(AppBarNode instance) =>
     <String, dynamic>{
       'id': instance.id,
       'visibleWhen': instance.visibleWhen,
