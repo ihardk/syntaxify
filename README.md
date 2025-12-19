@@ -255,6 +255,15 @@ dev_dependencies:
 
 > ⚠️ **Alpha Release**: This package is in alpha. API may change. See [CHANGELOG](https://pub.dev/packages/syntax/changelog) for updates.
 
+**Optional: Global Installation**
+
+If you want `syntax` available system-wide (not just in your project):
+```bash
+dart pub global activate syntax
+```
+
+Then you can run `syntax` commands from anywhere. Otherwise, use `dart run syntax` in your project.
+
 ### Step 2: Initialize Your Project
 
 ```bash
