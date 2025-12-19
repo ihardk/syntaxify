@@ -5,6 +5,17 @@ import 'app_bar_action.dart';
 part 'ast_node.freezed.dart';
 part 'ast_node.g.dart';
 
+/// Represents a node in the Syntaxify Abstract Syntax Tree.
+///
+/// Use these factory constructors to define UI layouts in `.screen.dart` files:
+/// - [AstNode.column] - Vertical layout
+/// - [AstNode.row] - Horizontal layout
+/// - [AstNode.text] - Text display
+/// - [AstNode.button] - Button widget
+/// - [AstNode.textField] - Text input field
+/// - [AstNode.icon] - Icon widget
+/// - [AstNode.spacer] - Spacing between elements
+/// - [AstNode.appBar] - App bar for screens
 @freezed
 class AstNode with _$AstNode {
   // --- Layout Nodes ---
