@@ -1,9 +1,9 @@
-import 'package:example/syntax/design_system/design_system.dart';
+import 'package:example/syntaxify/design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:example/syntax/index.dart';
+import 'package:example/syntaxify/index.dart';
 
 void main() {
   group('AppButton Renderer Pattern Tests', () {

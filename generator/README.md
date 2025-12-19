@@ -1,17 +1,17 @@
-# Syntax Generator 🔨
+# Syntaxify Generator 🔨
 
 A powerful CLI tool that generates production-ready, type-safe Flutter widgets from "Meta" definitions and Design Tokens.
 
 ## 🚀 Getting Started
 
 ### 1. Add Dependency
-Add Syntax to your project:
+Add Syntaxify to your project:
 
 ```yaml
 dev_dependencies:
   syntaxify:
     git:
-      url: https://github.com/ihardk/syntax.git
+      url: https://github.com/ihardk/syntaxify.git
       ref: v0.1.0
       path: generator
 ```
@@ -36,7 +36,7 @@ syntaxify build
 Run from source (in generator directory):
 
 ```bash
-dart run bin/syntax.dart build
+dart run bin/syntaxify.dart build
 ```
 
 ### 📱 Update Example App
@@ -56,7 +56,7 @@ Generates Flutter widgets.
 
 | Option        | Alias | Default         | Description                                          |
 | ------------- | ----- | --------------- | ---------------------------------------------------- |
-| `--output`    | `-o`  | `lib/syntax`    | Output directory for generated code                  |
+| `--output`    | `-o`  | `lib/syntaxify` | Output directory for generated code                  |
 | `--meta`      | `-m`  | `meta`          | Directory containing user definitions (`.meta.dart`) |
 | `--tokens`    |       | `design_system` | Directory containing token files                     |
 | `--component` | `-c`  | *All*           | Build only a specific component (e.g., `AppButton`)  |
@@ -65,9 +65,9 @@ Generates Flutter widgets.
 ### `clean`
 Removes generated artifacts.
 
-| Option     | Alias | Default      | Description        |
-| ---------- | ----- | ------------ | ------------------ |
-| `--output` | `-o`  | `lib/syntax` | Directory to clean |
+| Option     | Alias | Default         | Description        |
+| ---------- | ----- | --------------- | ------------------ |
+| `--output` | `-o`  | `lib/syntaxify` | Directory to clean |
 
 ---
 
@@ -107,7 +107,7 @@ The generator follows a **SOLID**, 5-layer architecture. Here is how to navigate
 1.  **Parse**: `MetaParser` reads `meta/button.meta.dart` -> creates `MetaComponent` model.
 2.  **Lookup**: `GeneratorRegistry` finds `ButtonGenerator`.
 3.  **Generate**: `ButtonGenerator` produces Dart code strings (imports, class definition, `build` method).
-4.  **Write**: `BuildAllUseCase` writes the file to `lib/syntax/generated/components/app_button.dart`.
+4.  **Write**: `BuildAllUseCase` writes the file to `lib/syntaxify/generated/components/app_button.dart`.
 
 ---
 
@@ -115,6 +115,6 @@ The generator follows a **SOLID**, 5-layer architecture. Here is how to navigate
 
 | Path                            | Purpose                                                                       |
 | ------------------------------- | ----------------------------------------------------------------------------- |
-| `bin/syntax.dart`               | **Main Entrypoint**. Run this to start.                                       |
+| `bin/syntaxify.dart`            | **Main Entrypoint**. Run this to start.                                       |
 | `design_system/`                | **Templates**. Files copied directly to user project (e.g. `app_theme.dart`). |
 | `lib/src/generators/component/` | **Widget Logic**. Edit these files to change how widgets look.                |

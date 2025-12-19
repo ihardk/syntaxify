@@ -1,4 +1,4 @@
-# Syntax Dependencies
+# Syntaxify Dependencies
 
 > Complete documentation of all package dependencies.
 
@@ -8,7 +8,7 @@
 - **Version:** `^6.4.0`
 - **Purpose:** Parse Dart source files to extract meta annotations and class definitions
 - **Docs:** https://pub.dev/packages/analyzer
-- **Why:** Official Dart team package. Handles all Dart syntax edge cases. Used instead of regex parsing.
+- **Why:** Official Dart team package. Handles all Dart syntaxify edge cases. Used instead of regex parsing.
 
 ### code_builder
 - **Version:** `^4.10.0`
@@ -97,7 +97,7 @@ environment:
 
 ### Why These Versions?
 - All packages are **latest stable** as of Dec 2024
-- Using **caret syntax** (`^`) for minor version updates
+- Using **caret syntaxify** (`^`) for minor version updates
 - SDK 3.2+ for latest Dart features (patterns, sealed classes)
 
 ---
@@ -109,7 +109,7 @@ Generated code targets:
 - **Dart:** `>=3.10.0`
 
 This ensures:
-- Pattern matching syntax
+- Pattern matching syntaxify
 - Sealed classes
 - Record types
 - Class modifiers

@@ -1,12 +1,12 @@
 /// Text component specification
 ///
 /// Defines the API surface for the AppText widget.
-/// This file is read by the Syntax generator.
+/// This file is read by the Syntaxify generator.
 
 // This is a SPECIFICATION file, not runtime code.
 // The generator parses these annotations to create the widget.
 
-import 'package:syntaxify/syntax.dart';
+import 'package:syntaxify/syntaxify.dart';
 
 @SyntaxComponent(description: 'A customizable text component')
 class TextMeta {

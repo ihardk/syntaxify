@@ -10,7 +10,7 @@ import 'package:syntaxify/src/parser/meta_parser.dart';
 import 'package:syntaxify/src/parser/token_parser.dart';
 import 'package:syntaxify/src/use_cases/build_all.dart';
 
-/// Main Syntax generator - orchestrates the build process.
+/// Main Syntaxify generator - orchestrates the build process.
 ///
 /// Uses dependency injection for testability:
 /// - FileSystem abstraction (LocalFileSystem or MemoryFileSystem)

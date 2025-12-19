@@ -1,5 +1,5 @@
 ---
-description: Build/generate Syntax components
+description: Build/generate Syntaxify components
 ---
 
 # Build Workflow
@@ -11,16 +11,16 @@ description: Build/generate Syntax components
 view planning/technical_specs.md
 ```
 
-2. Run the syntax generator (once implemented):
+2. Run the syntaxify generator (once implemented):
 ```bash
-cd d:\Workspace\syntax\generator
-dart run bin/syntax.dart build
+cd d:\Workspace\syntaxify\generator
+dart run bin/syntaxify.dart build
 ```
 
 3. Verify generated output exists in `lib/generated/`
 
 4. Run tests:
 ```bash
-cd d:\Workspace\syntax\example
+cd d:\Workspace\syntaxify\example
 flutter test
 ```

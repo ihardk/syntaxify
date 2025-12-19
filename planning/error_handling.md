@@ -1,6 +1,6 @@
 # Error Handling
 
-> How Syntax handles failures at compile-time.
+> How Syntaxify handles failures at compile-time.
 
 ---
 
@@ -10,7 +10,7 @@
 **When:** AST definition is invalid.
 
 ```bash
-$ syntax build
+$ syntaxify build
 
 ERROR: AST-001
   File: screens/login.dart:15

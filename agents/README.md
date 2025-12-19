@@ -1,12 +1,12 @@
 ---
-description: Multi-agent system for Syntax project
-profile: syntax
+description: Multi-agent system for Syntaxify project
+profile: syntaxify
 inherits_from: default
 ---
 
-# Syntax Multi-Agent System
+# Syntaxify Multi-Agent System
 
-> Specialized AI agents for the Syntax compile-time UI generator.
+> Specialized AI agents for the Syntaxify compile-time UI generator.
 
 ## Agent Roster
 
@@ -24,7 +24,7 @@ inherits_from: default
 All agents reference these authoritative docs:
 
 - `planning/AST.md` — UI AST specification
-- `planning/SPEC.md` — Core Syntax specification
+- `planning/SPEC.md` — Core Syntaxify specification
 - `planning/ROADMAP.md` — 5-stage development plan
 - `planning/AST_EXAMPLES.md` — Reference examples
 

@@ -1,11 +1,11 @@
-# Syntax Developer Manual 🔧
+# Syntaxify Developer Manual 🔧
 
-This guide is for developers contributing to the Syntax core (the Generator package).
+This guide is for developers contributing to the Syntaxify core (the Generator package).
 
 ## 🚀 Getting Started
 
 ### 1. Repository Setup
-Syntax is a standard Dart package.
+Syntaxify is a standard Dart package.
 
 ```bash
 git clone <repo>
@@ -26,7 +26,7 @@ To debug the generator while running it against the example project:
           "name": "Debug Build (Example)",
           "request": "launch",
           "type": "dart",
-          "program": "bin/syntax.dart",
+          "program": "bin/syntaxify.dart",
           "args": ["build", "--verbose"],
           "cwd": "${workspaceFolder}/../example"
         }
@@ -40,7 +40,7 @@ To debug the generator while running it against the example project:
 
 ## 🏗️ Architecture
 
-Syntax follows **Clean Architecture** principles to separate concerns.
+Syntaxify follows **Clean Architecture** principles to separate concerns.
 
 ```mermaid
 graph TD
@@ -71,7 +71,7 @@ graph TD
 
 ### The Renderer Pattern
 
-Syntax uses a **renderer pattern** to separate WHAT (component definition) from HOW (visual rendering):
+Syntaxify uses a **renderer pattern** to separate WHAT (component definition) from HOW (visual rendering):
 
 - **WHAT**: Components like `AppButton`, `AppText`, `AppInput` define behavior
 - **HOW**: `DesignStyle` implementations (Material, Cupertino, Neo) handle rendering
@@ -93,7 +93,7 @@ Decide what configuration the user provides.
 Create a template in `meta/card.meta.dart`:
 
 ```dart
-import 'package:syntax/syntax.dart';
+import 'package:syntaxify/syntaxify.dart';
 
 @SyntaxComponent(description: 'A container card')
 class CardMeta {

@@ -56,7 +56,8 @@ class ThemeGenerator {
   Class _generateAppTheme() {
     return Class(
       (b) => b
-        ..docs.add('/// Syntax theme provider using sealed DesignStyle pattern.')
+        ..docs.add(
+            '/// Syntaxify theme provider using sealed DesignStyle pattern.')
         ..docs.add('///')
         ..docs.add('/// Usage:')
         ..docs.add('/// ```dart')

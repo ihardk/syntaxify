@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/ast/ast.dart' as analyzer;
 import 'package:syntaxify/src/models/ast/nodes.dart';
 
-/// Helper class to parse Dart AST expressions into Syntax AST nodes.
+/// Helper class to parse Dart AST expressions into Syntaxify AST nodes.
 class AstNodeParser {
   const AstNodeParser();
 

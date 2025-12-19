@@ -3,6 +3,7 @@ import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as path;
 
+import 'package:syntaxify/src/config/package_config.dart' as config;
 import 'package:syntaxify/src/generator/syntax_generator.dart';
 import 'init_command.dart';
 
@@ -29,18 +30,18 @@ class BuildCommand extends Command<int> {
       ..addOption(
         'tokens',
         help:
-            'Path to tokens directory (auto-detects lib/syntax/design_system)',
+            'Path to tokens directory (auto-detects lib/syntaxify/design_system)',
       )
       ..addOption(
         'design-system',
         help:
-            'Path to design system directory (auto-detects lib/syntax/design_system)',
+            'Path to design system directory (auto-detects lib/syntaxify/design_system)',
       )
       ..addOption(
         'output',
         abbr: 'o',
         help: 'Output directory for generated files',
-        defaultsTo: 'lib/syntax',
+        defaultsTo: config.defaultOutputDir,
       );
   }
 
@@ -54,22 +55,22 @@ class BuildCommand extends Command<int> {
 Generate Flutter widgets from meta definitions.
 
 Usage:
-  syntax build                    # Auto-detect project structure
-  syntax build -m meta -o lib     # Custom paths
-  syntax build -c AppButton       # Build specific component
+  syntaxify build                    # Auto-detect project structure
+  syntaxify build -m meta -o lib     # Custom paths
+  syntaxify build -c AppButton       # Build specific component
 
 Options:
   -m, --meta              Meta directory (default: "meta")
-  -o, --output            Output directory (default: "lib/syntax")
+  -o, --output            Output directory (default: "lib/syntaxify")
   --design-system         Design system directory (auto-detected)
   --tokens                Tokens directory (auto-detected)
   -c, --component         Build specific component only
   -t, --theme             Build for specific theme only
 
 Examples:
-  syntax build                                    # Build everything
-  syntax build --component=AppButton              # Build one component
-  syntax build --meta=specs --output=lib/gen     # Custom paths
+  syntaxify build                                    # Build everything
+  syntaxify build --component=AppButton              # Build one component
+  syntaxify build --meta=specs --output=lib/gen     # Custom paths
 ''';
 
   @override
@@ -78,17 +79,18 @@ Examples:
     final theme = argResults?['theme'] as String?;
     final metaDir = argResults?['meta'] as String? ?? 'meta';
 
-    // Smart defaults - prefer lib/syntax/design_system if it exists
+    // Smart defaults - prefer design_system in output dir if it exists
     // Note: Check from current working directory (where user runs command)
     final cwd = Directory.current.path;
-    final designSystemPath = path.join(cwd, 'lib', 'syntax', 'design_system');
+    final designSystemPath = path.join(cwd, config.defaultDesignSystemDir);
     final designSystemExists = Directory(designSystemPath).existsSync();
 
     final tokensDir = argResults?['tokens'] as String? ??
-        (designSystemExists ? 'lib/syntax/design_system' : 'design_system');
+        (designSystemExists ? config.defaultDesignSystemDir : 'design_system');
     final designSystemDir = argResults?['design-system'] as String? ??
-        (designSystemExists ? 'lib/syntax/design_system' : 'design_system');
-    final outputDir = argResults?['output'] as String? ?? 'lib/syntax';
+        (designSystemExists ? config.defaultDesignSystemDir : 'design_system');
+    final outputDir =
+        argResults?['output'] as String? ?? config.defaultOutputDir;
 
     // Check availability
     final metaExists = Directory(metaDir).existsSync();
@@ -99,7 +101,7 @@ Examples:
       if (!dsExists) logger.warn('Directory not found: $designSystemDir');
 
       logger.info('Project seems uninitialized.');
-      if (logger.confirm('Would you like to run "syntax init" now?')) {
+      if (logger.confirm('Would you like to run "syntaxify init" now?')) {
         final initCmd = InitCommand(logger: logger);
         final result = await initCmd.run();
         if (result != ExitCode.success.code) {
@@ -107,13 +109,13 @@ Examples:
         }
         // Proceed to build...
       } else {
-        logger.err('Build aborted. Run "syntax init" first.');
+        logger.err('Build aborted. Run "syntaxify init" first.');
         return ExitCode.config.code;
       }
     }
 
     logger.info('');
-    logger.info('🔨 Syntax Build');
+    logger.info('🔨 Syntaxify Build');
     logger.info('   Meta:          $metaDir/');
     logger.info('   Tokens:        $tokensDir/');
     logger.info('   Design System: $designSystemDir/');

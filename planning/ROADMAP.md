@@ -1,4 +1,4 @@
-# Syntax Development Roadmap
+# Syntaxify Development Roadmap
 
 ## Current Position: Stage 2 of 5
 

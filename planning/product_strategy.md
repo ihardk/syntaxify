@@ -8,13 +8,13 @@
 
 **"Own your UI, not just your components."**
 
-Syntax enables developers to define UI structure in a framework-agnostic AST, generating production-ready code for Flutter (and eventually Compose).
+Syntaxify enables developers to define UI structure in a framework-agnostic AST, generating production-ready code for Flutter (and eventually Compose).
 
 ---
 
 ## 2. Core Principle
 
-> Syntax exists to remove repetition, not responsibility.
+> Syntaxify exists to remove repetition, not responsibility.
 
 ---
 
@@ -64,7 +64,7 @@ Syntax enables developers to define UI structure in a framework-agnostic AST, ge
 
 ---
 
-## 6. What Syntax Is NOT
+## 6. What Syntaxify Is NOT
 
 - NOT a runtime framework
 - NOT a widget library

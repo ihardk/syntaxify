@@ -1,6 +1,6 @@
 # Naming Conventions
 
-> Consistent naming standards for Syntax AST and generated code.
+> Consistent naming standards for Syntaxify AST and generated code.
 
 ---
 

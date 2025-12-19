@@ -1,2 +1,2 @@
 @echo off
-dart run generator/bin/syntax.dart %*
+dart run generator/bin/syntaxify.dart %*

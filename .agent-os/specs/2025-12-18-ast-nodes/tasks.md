@@ -31,11 +31,11 @@
   - [x] 4.5 Write unit tests for node serialization (Complete in `ast_node_test.dart`)
 
 - [ ] 5. **Update CLI & Emitter**
-  - [x] 5.1 Update `syntax build` to use new `AstNode` tree (Updated `MetaParser`, `ParseResult`, `BuildAll`, `SyntaxGenerator`)
+  - [x] 5.1 Update `syntaxify build` to use new `AstNode` tree (Updated `MetaParser`, `ParseResult`, `BuildAll`, `SyntaxGenerator`)
   - [x] 5.2 Implement basic Flutter emission for P0 nodes (Verified via `LayoutEmitter`)
   - [x] 5.3 Verify `flutter analyze` on generated code (Verified via `screen_generator_test.dart`)
 
 - [x] 6. **Verification**
   - [x] 6.1 Create `login_screen.dart` using new AST (Created in `example/meta`)
-  - [x] 6.2 Run `syntax build` and check output (Verified generation of `generated/screens/login_screen.dart`)
+  - [x] 6.2 Run `syntaxify build` and check output (Verified generation of `generated/screens/login_screen.dart`)
   - [x] 6.3 Verify generated code validity (Verified via test and manual check of structure) output quality

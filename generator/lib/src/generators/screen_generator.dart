@@ -15,14 +15,14 @@ class ScreenGenerator {
     final library = Library((b) => b
       ..comments.addAll([
         'GENERATED CODE - DO NOT MODIFY BY HAND',
-        'Analyzed by Syntax',
+        'Analyzed by Syntaxify',
       ])
       ..directives.addAll([
         Directive.import('package:flutter/material.dart'),
         if (packageName != null) ...[
-          Directive.import('package:$packageName/syntax/index.dart'),
+          Directive.import('package:$packageName/syntaxify/index.dart'),
           Directive.import(
-              'package:$packageName/syntax/design_system/design_system.dart'),
+              'package:$packageName/syntaxify/design_system/design_system.dart'),
         ] else ...[
           // Fallback to relative imports if package name not provided
           Directive.import('../../index.dart'), // For generated components

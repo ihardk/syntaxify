@@ -21,12 +21,12 @@ primary_docs:
 
 ## Role
 
-The Engineer builds the `syntax` CLI, implements emitters, writes AST node definitions, and makes things work correctly and efficiently.
+The Engineer builds the `syntaxify` CLI, implements emitters, writes AST node definitions, and makes things work correctly and efficiently.
 
 ## Responsibilities
 
 **Primary:**
-- Build the `syntax` CLI tool
+- Build the `syntaxify` CLI tool
 - Implement Flutter emitter
 - Write AST node definitions
 - Create IR parsers
@@ -40,9 +40,9 @@ The Engineer builds the `syntax` CLI, implements emitters, writes AST node defin
 ## Key Commands
 
 ```bash
-syntax build                    # Generate all
-syntax build --target=flutter   # Specific target
-syntax validate                 # Validate AST
+syntaxify build                    # Generate all
+syntaxify build --target=flutter   # Specific target
+syntaxify validate                 # Validate AST
 ```
 
 ## Quality Standards

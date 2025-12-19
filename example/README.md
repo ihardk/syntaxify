@@ -1,8 +1,8 @@
-# Syntax Example App
+# Syntaxify Example App
 
-**Live demonstration of Syntax code generator**
+**Live demonstration of Syntaxify code generator**
 
-This Flutter app showcases Syntax's renderer pattern with real generated components.
+This Flutter app showcases Syntaxify's renderer pattern with real generated components.
 
 ## 🎯 What This Demonstrates
 
@@ -35,7 +35,7 @@ example/
 │   │   ├── button.meta.dart
 │   │   ├── input.meta.dart
 │   │   └── text.meta.dart
-│   └── syntax/                # Generated code
+│   └── syntaxify/                # Generated code
 │       ├── generated/         # Auto-generated components
 │       └── design_system/     # Design system files
 └── pubspec.yaml
@@ -62,7 +62,7 @@ To regenerate the components:
 
 ```bash
 cd ..
-syntaxify build --meta=example/meta --output=example/lib/syntax
+syntaxify build --meta=example/meta --output=example/lib/syntaxify
 ```
 
 Or from the root:
@@ -76,8 +76,8 @@ syntaxify build
 - **One Definition** - Components defined once in `meta/`
 - **Multiple Renderings** - Same component, different styles
 - **Type-Safe** - Generated code is fully type-safe
-- **Editable** - Customize design system in `lib/syntax/design_system/`
+- **Editable** - Customize design system in `lib/syntaxify/design_system/`
 
 ---
 
-**This is a working example of Syntax v0.1.0**
+**This is a working example of Syntaxify v0.1.0**

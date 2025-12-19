@@ -1,6 +1,6 @@
 # Testing Strategy
 
-> Testing approach for Syntax compiler and generated code.
+> Testing approach for Syntaxify compiler and generated code.
 
 ---
 

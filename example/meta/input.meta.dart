@@ -1,4 +1,4 @@
-import 'package:syntaxify/syntax.dart';
+import 'package:syntaxify/syntaxify.dart';
 import 'app_icons.dart';
 
 /// Text Input component specification

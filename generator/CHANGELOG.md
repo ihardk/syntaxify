@@ -33,7 +33,7 @@ Initial alpha release to reserve package name and gather early feedback.
 - ✅ Preserve user edits on rebuild (screens not regenerated)
 
 ### Bug Fixes
-- Fixed path detection for lib/syntax/design_system
+- Fixed path detection for lib/syntaxify/design_system
 - Fixed screen overwrite issue (user edits now preserved)
 - Fixed barrel file exports (screens excluded)
 - Fixed meta file imports to use public API
@@ -51,7 +51,7 @@ Initial alpha release to reserve package name and gather early feedback.
 - API may change in future releases
 
 ### Roadmap
-See [GitHub](https://github.com/ihardk/syntax) for full roadmap and issues.
+See [GitHub](https://github.com/ihardk/syntaxify) for full roadmap and issues.
 
 **Star ⭐ the repo to follow development!**
 
@@ -61,19 +61,19 @@ See [GitHub](https://github.com/ihardk/syntax) for full roadmap and issues.
 
 - **Major Restructure**: Separated editable screens from generated components
   - Screens now generate to `lib/screens/` (editable by users)
-  - Components generate to `lib/syntax/generated/` (regenerated on build)
-  - Design system in `lib/syntax/design_system/` (customizable)
-- **Improved Commands**: Added `syntax` executable for shorter commands
-  - `syntax init` - Initialize project structure
-  - `syntax build` - Generate components and screens
+  - Components generate to `lib/syntaxify/generated/` (regenerated on build)
+  - Design system in `lib/syntaxify/design_system/` (customizable)
+- **Improved Commands**: Added `syntaxify` executable for shorter commands
+  - `syntaxify init` - Initialize project structure
+  - `syntaxify build` - Generate components and screens
 - **Package Imports**: Screens now use package imports instead of relative paths
-- **Init Command**: Now creates `lib/syntax/design_system/` for customization
-- **Renamed**: Project renamed from "Forge" to "Syntax"
+- **Init Command**: Now creates `lib/syntaxify/design_system/` for customization
+- **Renamed**: Project renamed from "Forge" to "Syntaxify"
 
 ## 0.0.1
 
 - Initial Alpha Release.
-- Added `Syntax` CLI with `build` and `clean` commands.
+- Added `Syntaxify` CLI with `build` and `clean` commands.
 - Implemented `Button` component generator.
 - Added support for multiple themes (`Material`, `Cupertino`, `Neo`).
 - Implemented 5-layer SOLID architecture.

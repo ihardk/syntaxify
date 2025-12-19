@@ -1,12 +1,12 @@
-# Syntax Specification
+# Syntaxify Specification
 
-This document defines **what Syntax generates**, **what it never generates**, and **where responsibility ends**. It is the authoritative contract for future development.
+This document defines **what Syntaxify generates**, **what it never generates**, and **where responsibility ends**. It is the authoritative contract for future development.
 
 ---
 
 ## 1. Design Principles
 
-Syntax is built on four immutable principles:
+Syntaxify is built on four immutable principles:
 
 1. **Generate structure, not decisions**
 2. **Compile-time over runtime**
@@ -19,7 +19,7 @@ If a feature violates any of these, it must be rejected.
 
 ## 2. Inputs (Compile‑Time IRs)
 
-Syntax operates on three independent inputs.
+Syntaxify operates on three independent inputs.
 
 ### 2.1 UI AST
 
@@ -67,9 +67,9 @@ Does NOT contain:
 
 ---
 
-## 3. What Syntax Generates
+## 3. What Syntaxify Generates
 
-Syntax MAY generate:
+Syntaxify MAY generate:
 
 ### UI Layer
 
@@ -98,9 +98,9 @@ All generated code is:
 
 ---
 
-## 4. What Syntax NEVER Generates
+## 4. What Syntaxify NEVER Generates
 
-Syntax must NEVER generate:
+Syntaxify must NEVER generate:
 
 * Business logic
 * Validation rules
@@ -136,7 +136,7 @@ These are **human responsibilities**.
 
 ## 7. Cross‑Platform Contract
 
-Syntax guarantees:
+Syntaxify guarantees:
 
 * Same AST → multiple targets
 * Platform differences live in emitters
@@ -146,7 +146,7 @@ Syntax guarantees:
 
 ## 8. Anti‑Goals
 
-Syntax explicitly does NOT aim to:
+Syntaxify explicitly does NOT aim to:
 
 * Replace Flutter / Compose
 * Become a runtime framework
@@ -169,6 +169,6 @@ If not, it is out of scope.
 
 ## 10. Final Rule
 
-> Syntax exists to remove repetition, not responsibility.
+> Syntaxify exists to remove repetition, not responsibility.
 
 This rule overrides all others.

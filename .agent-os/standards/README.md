@@ -1,6 +1,6 @@
-# Syntax Standards
+# Syntaxify Standards
 
-> Coding standards and best practices for the Syntax project.
+> Coding standards and best practices for the Syntaxify project.
 
 ## Core Documents
 
@@ -15,6 +15,6 @@
 ## Related Planning Docs
 
 - `planning/AST.md` — UI AST specification
-- `planning/SPEC.md` — Core Syntax rules
+- `planning/SPEC.md` — Core Syntaxify rules
 - `planning/naming_conventions.md` — Naming standards
 - `planning/technical_specs.md` — CLI specs

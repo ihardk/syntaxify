@@ -5,7 +5,7 @@ import 'package:syntaxify/src/models/component_definition.dart';
 import 'package:syntaxify/src/models/token_definition.dart';
 import 'package:syntaxify/src/core/interfaces/component_generator.dart';
 
-/// Generates Flutter widget code following the Syntax architecture:
+/// Generates Flutter widget code following the Syntaxify architecture:
 /// - Widget receives tokens from AppTheme.of(context)
 /// - Uses renderer pattern (tokens + spec)
 /// - No hardcoded styling in widget

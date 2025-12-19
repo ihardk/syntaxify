@@ -1,8 +1,8 @@
-# Syntax AST (Abstract Syntax Tree)
+# Syntaxify AST (Abstract Syntaxify Tree)
 
 ## 1. Purpose
 
-The Syntax AST is the **canonical, compile-time, data-only representation of UI intent and structure**. It exists solely to enable deterministic code generation for multiple UI frameworks (Flutter today, Jetpack Compose / CMP tomorrow).
+The Syntaxify AST is the **canonical, compile-time, data-only representation of UI intent and structure**. It exists solely to enable deterministic code generation for multiple UI frameworks (Flutter today, Jetpack Compose / CMP tomorrow).
 
 The AST is not executable. It is not a runtime framework. It is an **Intermediate Representation (IR)**.
 
@@ -111,7 +111,7 @@ Rules:
 
 ### 5.3 Primitive Component Nodes
 
-Syntax generates **only universal UI primitives**.
+Syntaxify generates **only universal UI primitives**.
 
 Allowed primitives:
 
@@ -185,4 +185,4 @@ The compiler (not the AST) is responsible for:
 
 ## 10. Canonical Definition (One Sentence)
 
-> The Syntax AST is a compile-time, data-only, framework-agnostic representation of UI intent and structure used exclusively for code generation.
+> The Syntaxify AST is a compile-time, data-only, framework-agnostic representation of UI intent and structure used exclusively for code generation.

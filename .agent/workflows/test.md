@@ -4,7 +4,7 @@ description: Run tests for generator and generated code
 
 # Testing Workflow
 
-Standard workflow for testing Syntax generator and generated components.
+Standard workflow for testing Syntaxify generator and generated components.
 
 ## Prerequisites
 - Generator project has been built
@@ -25,7 +25,7 @@ dart test
 // turbo
 ```bash
 cd generator
-dart run bin/syntax.dart build --output example/lib/generated
+dart run bin/syntaxify.dart build --output example/lib/generated
 ```
 
 **Expected:** 4+ files generated (components, theme, tokens, index).

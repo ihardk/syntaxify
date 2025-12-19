@@ -1,4 +1,4 @@
-import 'package:syntaxify/syntax.dart';
+import 'package:syntaxify/syntaxify.dart';
 
 /// App Icon Registry
 ///

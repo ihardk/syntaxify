@@ -1,12 +1,12 @@
-/// Syntax Core Philosophy - The Renderer Pattern
+/// Syntaxify Core Philosophy - The Renderer Pattern
 ///
-/// This file demonstrates the underlying architecture of Syntax:
+/// This file demonstrates the underlying architecture of Syntaxify:
 /// Separating WHAT (component definition) from HOW (visual rendering).
 ///
-/// This is the philosophy that powers all of Syntax's generated components.
+/// This is the philosophy that powers all of Syntaxify's generated components.
 ///⚠️ IMPORTANT: This is a PHILOSOPHY DEMONSTRATION
 ///
-/// In real Syntax usage (see ../meta/ folder), you use annotations:
+/// In real Syntaxify usage (see ../meta/ folder), you use annotations:
 /// ```dart
 /// @SyntaxComponent(description: 'A button')
 /// class ButtonMeta {
@@ -15,7 +15,7 @@
 /// }
 /// ```
 ///
-/// Then run `syntax build` to generate AppButton, AppText, AppInput.
+/// Then run `syntaxify build` to generate AppButton, AppText, AppInput.
 ///
 /// This file shows the CONCEPT that powers those generated components.
 ///
@@ -34,7 +34,7 @@ import 'package:flutter/cupertino.dart';
 //   - You write custom Container for your design
 //   - Result: 3 different implementations, hard to maintain
 //
-// Syntax Approach:
+// Syntaxify Approach:
 //   - Define WHAT: "I want a button with this label and callback"
 //   - Define HOW: "Render it using Material/Cupertino/Neo style"
 //   - Result: One definition, multiple renderings
@@ -436,7 +436,7 @@ class _PhilosophyDemoState extends State<PhilosophyDemo> {
 
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      appBar: AppBar(title: const Text("Syntax Philosophy Demo")),
+      appBar: AppBar(title: const Text("Syntaxify Philosophy Demo")),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -564,9 +564,9 @@ class _PhilosophyDemoState extends State<PhilosophyDemo> {
 //    - All components benefit
 //
 // 5. THIS IS WHAT SYNTAX DOES
-//    - Syntax generates this pattern for you
+//    - Syntaxify generates this pattern for you
 //    - You define components in meta/
-//    - Syntax generates the renderers
+//    - Syntaxify generates the renderers
 //    - You use AppButton, AppText, AppInput
 //    - They work with Material, Cupertino, Neo
 //

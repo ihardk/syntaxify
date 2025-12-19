@@ -5,7 +5,7 @@
 
 ## Overview
 
-Refine the `ScreenGenerator` and associated architecture to robustly support `P0` screen definitions, ensuring correct parsing of all properties and emitting properly linked Syntax Design System components.
+Refine the `ScreenGenerator` and associated architecture to robustly support `P0` screen definitions, ensuring correct parsing of all properties and emitting properly linked Syntaxify Design System components.
 
 ## User Stories
 

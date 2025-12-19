@@ -15,7 +15,7 @@ This is the technical specification for the spec detailed in @.agent-os/specs/20
 
 ### 2. LayoutEmitter Refactor
 -   **Imports**: The generated file must import:
-    -   `package:syntax/syntax.dart` (or distinct component files if barrel not available).
+    -   `package:syntaxify/syntaxify.dart` (or distinct component files if barrel not available).
     -   `package:flutter/material.dart`
 -   **Components**:
     -   Emit `AppButton(...)` instead of `ElevatedButton`.
@@ -39,6 +39,6 @@ None.
 ## Implementation Plan
 
 1.  **Refactor MetaParser**: Add helper methods for property extraction.
-2.  **Refactor LayoutEmitter**: Update `refer` calls to point to Syntax components.
+2.  **Refactor LayoutEmitter**: Update `refer` calls to point to Syntaxify components.
 3.  **Update ScreenGenerator**: Handle imports.
 4.  **Verify**: Re-run `login_screen.dart` E2E test.

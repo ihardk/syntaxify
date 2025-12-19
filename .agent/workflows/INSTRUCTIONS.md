@@ -1,4 +1,4 @@
-# Syntax Workflow Commands
+# Syntaxify Workflow Commands
 
 > Quick reference for all available slash commands and workflows.
 
@@ -45,13 +45,13 @@
 
 ---
 
-## Syntax-Specific Workflows
+## Syntaxify-Specific Workflows
 
 ### `/build`
-**Purpose:** Build/generate Syntax components.
+**Purpose:** Build/generate Syntaxify components.
 ```bash
 cd generator
-dart run bin/syntax.dart build
+dart run bin/syntaxify.dart build
 ```
 - Reads technical specs
 - Runs generator

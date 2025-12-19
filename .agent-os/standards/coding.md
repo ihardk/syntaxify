@@ -1,10 +1,10 @@
-# Syntax Coding Standards
+# Syntaxify Coding Standards
 
 ## Core Principles
 
 ### 1. SOLID Design Principles
 
-| Principle                     | Application in Syntax                                          |
+| Principle                     | Application in Syntaxify                                       |
 | ----------------------------- | -------------------------------------------------------------- |
 | **S** - Single Responsibility | Each class does one thing (Parser parses, Generator generates) |
 | **O** - Open/Closed           | Extend via new renderers, don't modify existing                |
@@ -56,7 +56,7 @@ Feature: Component Generation
 
   Scenario: Generate button from meta
     Given a meta file "button.meta.dart"
-    When I run "syntax build"
+    When I run "syntaxify build"
     Then "app_button.dart" should exist
     And it should compile without errors
 ```
@@ -112,4 +112,4 @@ Generated widgets are pure Flutter:
 
 - All public APIs have dartdoc
 - Examples in doc comments
-- Link to Syntax docs
+- Link to Syntaxify docs

@@ -141,7 +141,7 @@ class _IsValidDartCode extends Matcher {
   bool matches(Object? item, Map<dynamic, dynamic> matchState) {
     if (item is! String) return false;
 
-    // Basic syntax checks
+    // Basic syntaxify checks
     final hasClass = item.contains('class ');
     final hasImport = item.contains('import ');
     final balancedBraces = _balancedBraces(item);

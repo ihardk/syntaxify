@@ -23,7 +23,7 @@ void main() {
     test('parses enums from meta file', () async {
       final file = File('${tempDir.path}/button.meta.dart');
       await file.writeAsString('''
-import 'package:syntaxify/syntax.dart';
+import 'package:syntaxify/syntaxify.dart';
 
 @SyntaxComponent
 class ButtonMeta {

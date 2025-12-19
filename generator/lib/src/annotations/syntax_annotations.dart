@@ -1,10 +1,10 @@
-/// Syntax annotations for defining meta components.
+/// Syntaxify annotations for defining meta components.
 ///
 /// These annotations are used in `.meta.dart` files to define
-/// component specifications that the Syntax generator will process.
+/// component specifications that the Syntaxify generator will process.
 library syntax_annotations;
 
-/// Marks a class as a Syntax component specification.
+/// Marks a class as a Syntaxify component specification.
 ///
 /// The generator will create a Flutter widget from this spec.
 /// Note: Named SyntaxComponent to avoid collision with internal MetaComponent model.

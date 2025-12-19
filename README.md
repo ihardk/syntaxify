@@ -1,4 +1,4 @@
-# Syntax ⚡
+# Syntaxify ⚡
 
 **AST-based Flutter UI Code Generator with Multi-Style Design System**
 
@@ -12,7 +12,7 @@
 cd example && flutter run
 ```
 
-## 🤔 Why Syntax?
+## 🤔 Why Syntaxify?
 
 ### The Problem: Flutter's Design System Scalability Crisis
 
@@ -55,7 +55,7 @@ Widget buildButton() {
 
 ### The Solution: Separation of WHAT and HOW
 
-Syntax delivers on Flutter's original promise: **"write once, run anywhere"** - but for design systems.
+Syntaxify delivers on Flutter's original promise: **"write once, run anywhere"** - but for design systems.
 
 **With syntaxify:**
 ```dart
@@ -78,14 +78,14 @@ AppTheme(style: CupertinoStyle(), child: MyApp())
 // Zero component code changes needed!
 ```
 
-### What Makes Syntax Different
+### What Makes Syntaxify Different
 
 Most Flutter solutions offer partial fixes:
 - ❌ **Widget libraries** - Still manual integration, not design-system-aware
 - ❌ **Themes** - Only styling, not structure
 - ❌ **Code generation** - Not multi-platform aware
 
-**Syntax combines all three:**
+**Syntaxify combines all three:**
 - ✅ **Code generation** - Eliminate boilerplate
 - ✅ **Design system architecture** - WHAT vs HOW separation
 - ✅ **Multi-platform rendering** - One component, any design
@@ -169,7 +169,7 @@ AppTheme(style: NeoStyle(), child: MyApp())
 
 ### The Renderer Pattern
 
-Syntax uses a unique **renderer pattern** that separates concerns:
+Syntaxify uses a unique **renderer pattern** that separates concerns:
 
 **WHAT (Component Definition):**
 ```dart
@@ -213,7 +213,7 @@ These components work with Material, Cupertino, and Neo styles:
 
 ### 🚧 Custom Components (Basic Support)
 
-You can define custom components (e.g., Card, Badge, Avatar), and Syntax will:
+You can define custom components (e.g., Card, Badge, Avatar), and Syntaxify will:
 - ✅ Generate the component class
 - ✅ Create constructor and fields
 - ⚠️ Generate basic Container widget (not full renderer pattern yet)
@@ -228,7 +228,7 @@ You can define custom components (e.g., Card, Badge, Avatar), and Syntax will:
 
 ## 🚀 Complete Getting Started Guide
 
-### Step 1: Install Syntax
+### Step 1: Install Syntaxify
 
 **Option A: From pub.dev (Recommended)**
 ```yaml
@@ -248,21 +248,21 @@ dart pub get
 dev_dependencies:
   syntaxify:
     git:
-      url: https://github.com/ihardk/syntax.git
+      url: https://github.com/ihardk/syntaxify.git
       ref: v0.1.0
       path: generator
 ```
 
-> ⚠️ **Alpha Release**: This package is in alpha. API may change. See [CHANGELOG](https://pub.dev/packages/syntax/changelog) for updates.
+> ⚠️ **Alpha Release**: This package is in alpha. API may change. See [CHANGELOG](https://pub.dev/packages/syntaxify/changelog) for updates.
 
 **Optional: Global Installation**
 
-If you want `syntax` available system-wide (not just in your project):
+If you want `syntaxify` available system-wide (not just in your project):
 ```bash
-dart pub global activate syntax
+dart pub global activate syntaxify
 ```
 
-Then you can run `syntax` commands from anywhere. Otherwise, use `dart run syntax` in your project.
+Then you can run `syntaxify` commands from anywhere. Otherwise, use `dart run syntaxify` in your project.
 
 ### Step 2: Initialize Your Project
 
@@ -273,13 +273,13 @@ syntaxify init
 
 This creates:
 - `meta/` - Where you define component APIs
-- `lib/syntax/design_system/` - Customizable design system
+- `lib/syntaxify/design_system/` - Customizable design system
 
 ### Step 3: Define Components
 
 Edit `meta/button.meta.dart`:
 ```dart
-import 'package:syntax/syntax.dart';
+import 'package:syntaxify/syntaxify.dart';
 
 @SyntaxComponent(description: 'A customizable button')
 class ButtonMeta {
@@ -301,16 +301,16 @@ syntaxify build
 ```
 
 This generates:
-- `lib/syntax/generated/components/app_button.dart` - The component
-- `lib/syntax/design_system/` - Design system files (Material, Cupertino, Neo)
-- `lib/syntax/index.dart` - Barrel export
+- `lib/syntaxify/generated/components/app_button.dart` - The component
+- `lib/syntaxify/design_system/` - Design system files (Material, Cupertino, Neo)
+- `lib/syntaxify/index.dart` - Barrel export
 
 ### Step 5: Use in Your App
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:your_app/syntax/index.dart';
-import 'package:your_app/syntax/design_system/design_system.dart';
+import 'package:your_app/syntaxify/index.dart';
+import 'package:your_app/syntaxify/design_system/design_system.dart';
 
 void main() {
   runApp(
@@ -322,7 +322,7 @@ void main() {
             child: AppButton(
               label: 'Click Me',
               variant: ButtonVariant.primary,
-              onPressed: () => print('Hello from Syntax!'),
+              onPressed: () => print('Hello from Syntaxify!'),
             ),
           ),
         ),
@@ -336,7 +336,7 @@ void main() {
 
 Create `meta/login.screen.dart`:
 ```dart
-import 'package:syntax/syntax.dart';
+import 'package:syntaxify/syntaxify.dart';
 
 final loginScreen = ScreenDefinition(
   id: 'login',
@@ -366,7 +366,7 @@ your_project/
     ├── screens/                   # EDITABLE: Generated screens
     │   └── login_screen.dart      # Generated once, then you own it
     │
-    └── syntax/
+    └── syntaxify/
         ├── design_system/         # CUSTOMIZABLE: Styles & tokens
         │   ├── design_system.dart
         │   ├── app_theme.dart
@@ -389,7 +389,7 @@ your_project/
 
 ## 🎯 Real-World Example
 
-### Before Syntax (Manual Approach)
+### Before Syntaxify (Manual Approach)
 
 **Material Button:**
 ```dart
@@ -435,7 +435,7 @@ Container(
 
 **Problem:** 3 different implementations, hard to maintain, inconsistent behavior.
 
-### After Syntax
+### After Syntaxify
 
 **One Definition:**
 ```dart
@@ -485,8 +485,8 @@ AppButton(label: 'Submit', onPressed: handleSubmit)
 
 1. **Define** - Edit `meta/*.meta.dart` to define component APIs
 2. **Build** - Run `syntaxify build` to generate implementations
-3. **Use** - Import from `package:your_app/syntax/` and use
-4. **Customize** - Edit design system tokens in `lib/syntax/design_system/`
+3. **Use** - Import from `package:your_app/syntaxify/` and use
+4. **Customize** - Edit design system tokens in `lib/syntaxify/design_system/`
 5. **Switch Styles** - Change `AppTheme(style: ...)` to try different designs
 
 **Key Principle:** Components regenerate on every build. Screens generate once (you own them).

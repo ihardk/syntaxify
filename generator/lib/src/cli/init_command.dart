@@ -4,7 +4,7 @@ import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as path;
 
-/// Init command - scaffolds a new Syntax project
+/// Init command - scaffolds a new Syntaxify project
 class InitCommand extends Command<int> {
   InitCommand({required this.logger}) {
     argParser.addFlag(
@@ -25,12 +25,12 @@ class InitCommand extends Command<int> {
 
   @override
   String get description =>
-      'Initialize a new Syntax project with default structure';
+      'Initialize a new Syntaxify project with default structure';
 
   @override
   Future<int> run() async {
     final force = argResults?['force'] == true;
-    final progress = logger.progress('Initializing Syntax project');
+    final progress = logger.progress('Initializing Syntaxify project');
 
     try {
       final cwd = Directory.current.path;
@@ -61,11 +61,11 @@ class InitCommand extends Command<int> {
         logger: logger,
       );
 
-      // 2. Scaffold lib/syntax/design_system/
+      // 2. Scaffold lib/syntaxify/design_system/
       await _copyDirectory(
         source: Directory(path.join(generatorRoot, 'design_system')),
         destination:
-            Directory(path.join(cwd, 'lib', 'syntax', 'design_system')),
+            Directory(path.join(cwd, 'lib', 'syntaxify', 'design_system')),
         force: force,
         logger: logger,
       );
@@ -74,8 +74,9 @@ class InitCommand extends Command<int> {
       logger.info('');
       logger.info('Next steps:');
       logger.info('  1. Edit component definitions in meta/');
-      logger.info('  2. Customize design system in lib/syntax/design_system/');
-      logger.info('  3. Run: syntax build');
+      logger
+          .info('  2. Customize design system in lib/syntaxify/design_system/');
+      logger.info('  3. Run: syntaxify build');
 
       return ExitCode.success.code;
     } catch (e) {
@@ -87,7 +88,8 @@ class InitCommand extends Command<int> {
   Future<String?> _findGeneratorRoot() async {
     try {
       // 1. Try to find package:syntaxify/ location
-      final packageUri = Uri.parse('package:syntaxify/src/cli/init_command.dart');
+      final packageUri =
+          Uri.parse('package:syntaxify/src/cli/init_command.dart');
       final resolvedUri = await Isolate.resolvePackageUri(packageUri);
 
       if (resolvedUri != null) {

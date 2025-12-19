@@ -3,6 +3,9 @@
 /// Produces production-ready Flutter widgets from design tokens.
 library syntaxify;
 
+// Package Configuration (Single Source of Truth)
+export 'src/config/package_config.dart';
+
 // Core Interfaces (Dependency Inversion)
 export 'src/core/interfaces/component_generator.dart';
 export 'src/core/interfaces/file_system.dart';

@@ -1,9 +1,9 @@
-import 'package:syntaxify/syntax.dart';
+import 'package:syntaxify/syntaxify.dart';
 
 /// Login screen definition
 ///
-/// This demonstrates Syntax's screen generation feature.
-/// Run `syntax build` to generate lib/screens/login_screen.dart
+/// This demonstrates Syntaxify's screen generation feature.
+/// Run `syntaxify build` to generate lib/screens/login_screen.dart
 final loginScreen = ScreenDefinition(
   id: 'login',
   layout: AstNode.column(

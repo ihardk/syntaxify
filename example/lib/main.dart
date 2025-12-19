@@ -1,6 +1,6 @@
-/// Syntax Demo App
+/// Syntaxify Demo App
 ///
-/// This app demonstrates the Syntax code generator's renderer pattern.
+/// This app demonstrates the Syntaxify code generator's renderer pattern.
 ///
 /// TRADITIONAL FLUTTER:
 /// - Write ElevatedButton for Material
@@ -13,11 +13,11 @@
 /// - Renders as Material/Cupertino/Neo based on AppTheme
 /// - Result: One definition, multiple renderings
 ///
-/// See lib/syntax_arch.dart for the underlying philosophy.
+/// See lib/syntaxify_arch.dart for the underlying philosophy.
 
 import 'package:flutter/material.dart';
-import 'package:example/syntax/index.dart';
-import 'package:example/syntax/design_system/design_system.dart';
+import 'package:example/syntaxify/index.dart';
+import 'package:example/syntaxify/design_system/design_system.dart';
 import 'package:example/screens/login_screen.dart';
 
 void main() {
@@ -46,12 +46,12 @@ class _SyntaxDemoState extends State<SyntaxDemo> {
     return AppTheme(
       style: _currentStyle,
       child: MaterialApp(
-        title: 'Syntax Demo',
+        title: 'Syntaxify Demo',
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           backgroundColor: Colors.grey[100],
           appBar: AppBar(
-            title: const Text('Syntax Demo - Renderer Pattern'),
+            title: const Text('Syntaxify Demo - Renderer Pattern'),
             backgroundColor: Colors.white,
             foregroundColor: Colors.black,
             elevation: 1,
@@ -157,7 +157,7 @@ class _SyntaxDemoState extends State<SyntaxDemo> {
           // SYNTAX: AppText with variant
           // TRADITIONAL: Text with Theme.of(context).textTheme.headlineMedium
           AppText(
-            text: 'Welcome to Syntax',
+            text: 'Welcome to Syntaxify',
             variant: TextVariant.headlineMedium,
           ),
 

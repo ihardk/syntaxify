@@ -337,7 +337,7 @@ Use the file-creator subagent to create the file: sub-specs/database-schema.md O
     - migrations
   </changes>
   <specifications>
-    - exact SQL or migration syntax
+    - exact SQL or migration syntaxify
     - indexes and constraints
     - foreign key relationships
   </specifications>

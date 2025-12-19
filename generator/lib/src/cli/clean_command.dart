@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
+import 'package:syntaxify/src/config/package_config.dart' as config;
 
 /// Clean command - removes generated files
 class CleanCommand extends Command<int> {
@@ -10,7 +11,7 @@ class CleanCommand extends Command<int> {
       'output',
       abbr: 'o',
       help: 'Output directory to clean',
-      defaultsTo: 'lib/syntax',
+      defaultsTo: config.defaultOutputDir,
     );
   }
 
@@ -24,7 +25,8 @@ class CleanCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final outputDir = argResults?['output'] as String? ?? 'lib/syntax';
+    final outputDir =
+        argResults?['output'] as String? ?? config.defaultOutputDir;
     final progress = logger.progress('Cleaning generated files');
 
     try {

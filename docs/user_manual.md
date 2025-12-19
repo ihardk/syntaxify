@@ -1,8 +1,8 @@
-# Syntax User Manual 🛠️
+# Syntaxify User Manual 🛠️
 
 **AST-based Flutter UI Code Generator**
 
-Syntax generates production-ready Flutter widgets from declarative component definitions and screen layouts.
+Syntaxify generates production-ready Flutter widgets from declarative component definitions and screen layouts.
 
 ## 🚀 Getting Started
 
@@ -20,12 +20,12 @@ dev_dependencies:
 dev_dependencies:
   syntaxify:
     git:
-      url: https://github.com/ihardk/syntax.git
+      url: https://github.com/ihardk/syntaxify.git
       ref: v0.1.0
       path: generator
 ```
 
-> ⚠️ **Alpha Release**: API may change. See [pub.dev](https://pub.dev/packages/syntax) for updates.
+> ⚠️ **Alpha Release**: API may change. See [pub.dev](https://pub.dev/packages/syntaxify) for updates.
 
 ### 2. Initialize Your Project
 
@@ -37,7 +37,7 @@ syntaxify init
 
 This creates:
 - `meta/` - Component definitions
-- `lib/syntax/design_system/` - Customizable design system
+- `lib/syntaxify/design_system/` - Customizable design system
 
 ### 3. The Workflow
 
@@ -67,7 +67,7 @@ your_project/
     ├── screens/                   # Generated screens (EDITABLE ✏️)
     │   └── login_screen.dart      # You can modify these
     │
-    └── syntax/
+    └── syntaxify/
         ├── design_system/         # Design system (CUSTOMIZABLE 🎨)
         │   ├── styles/            # Material, Cupertino, Neo
         │   └── tokens/            # Design tokens
@@ -82,14 +82,14 @@ your_project/
 
 **Key Principles:**
 - **Screens** (`lib/screens/`) - Generated once, then you own them
-- **Design System** (`lib/syntax/design_system/`) - Customize styles and tokens
-- **Components** (`lib/syntax/generated/`) - Regenerated on every build
+- **Design System** (`lib/syntaxify/design_system/`) - Customize styles and tokens
+- **Components** (`lib/syntaxify/generated/`) - Regenerated on every build
 
 ---
 
 ## 🎨 Design System
 
-Syntax supports three design styles out of the box.
+Syntaxify supports three design styles out of the box.
 
 ### Switching Styles
 
@@ -97,7 +97,7 @@ Wrap your app with `AppTheme` and pass a `DesignStyle`:
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:your_app/syntax/design_system/design_system.dart';
+import 'package:your_app/syntaxify/design_system/design_system.dart';
 
 void main() {
   runApp(
@@ -120,11 +120,11 @@ final buttonStyle = theme.style.button;  // Access style-specific tokens
 
 ### Customizing Styles
 
-Edit files in `lib/syntax/design_system/styles/<style>/`:
+Edit files in `lib/syntaxify/design_system/styles/<style>/`:
 
 **Example:** Customize Material button
 ```dart
-// lib/syntax/design_system/styles/material/button_renderer.dart
+// lib/syntaxify/design_system/styles/material/button_renderer.dart
 
 mixin MaterialButtonRenderer on ButtonTokens {
   Widget renderButton(BuildContext context, AppButton button) {
@@ -149,7 +149,7 @@ mixin MaterialButtonRenderer on ButtonTokens {
 ### AppButton
 
 ```dart
-import 'package:your_app/syntax/index.dart';
+import 'package:your_app/syntaxify/index.dart';
 
 AppButton(
   label: 'Click Me',
@@ -185,7 +185,7 @@ AppText(
 Define semantic icons in `meta/app_icons.dart`:
 
 ```dart
-import 'package:syntax/syntax.dart';
+import 'package:syntaxify/syntaxify.dart';
 
 @IconRegistry()
 class AppIcon {
@@ -215,7 +215,7 @@ Screens are generated to `lib/screens/` and are **editable**.
 
 **Define a screen in `meta/login.screen.dart`:**
 ```dart
-import 'package:syntax/syntax.dart';
+import 'package:syntaxify/syntaxify.dart';
 
 final loginScreen = ScreenDefinition(
   id: 'login',
@@ -243,7 +243,7 @@ syntaxify build ...
 **Generated `lib/screens/login_screen.dart`:**
 ```dart
 import 'package:flutter/material.dart';
-import 'package:your_app/syntax/index.dart';
+import 'package:your_app/syntaxify/index.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -275,7 +275,7 @@ class LoginScreen extends StatelessWidget {
 
 **"Type not found" errors?**
 - Run `syntaxify build` after creating new meta files
-- Check that imports point to `package:your_app/syntax/index.dart`
+- Check that imports point to `package:your_app/syntaxify/index.dart`
 
 **"File not found"?**
 - Ensure `meta/` exists: run `syntaxify init`
@@ -287,7 +287,7 @@ class LoginScreen extends StatelessWidget {
 
 **Components look wrong?**
 - Check which `DesignStyle` is active in `AppTheme`
-- Customize renderers in `lib/syntax/design_system/styles/`
+- Customize renderers in `lib/syntaxify/design_system/styles/`
 
 ---
 
@@ -322,21 +322,21 @@ syntaxify build --theme=material
 
 **All Options:**
 - `-m, --meta` - Meta directory (default: `meta`)
-- `-o, --output` - Output directory (default: `lib/syntax`)
-- `--design-system` - Design system directory (auto-detects `lib/syntax/design_system`)
-- `--tokens` - Tokens directory (auto-detects `lib/syntax/design_system`)
+- `-o, --output` - Output directory (default: `lib/syntaxify`)
+- `--design-system` - Design system directory (auto-detects `lib/syntaxify/design_system`)
+- `--tokens` - Tokens directory (auto-detects `lib/syntaxify/design_system`)
 - `-c, --component` - Build specific component only
 - `-t, --theme` - Build for specific theme only
 
 **Tip:** Run `syntaxify build --help` for full documentation.
 2. Run `syntaxify build ...`
-3. Components in `lib/syntax/generated/` are regenerated
+3. Components in `lib/syntaxify/generated/` are regenerated
 4. Screens in `lib/screens/` are **not** overwritten
-5. Design system in `lib/syntax/design_system/` is **not** overwritten
+5. Design system in `lib/syntaxify/design_system/` is **not** overwritten
 
 **Safe to edit:**
 - ✅ `lib/screens/*` - Your screens
-- ✅ `lib/syntax/design_system/*` - Your styles
+- ✅ `lib/syntaxify/design_system/*` - Your styles
 
 **Don't edit (will be overwritten):**
-- ❌ `lib/syntax/generated/*` - Regenerated on build
+- ❌ `lib/syntaxify/generated/*` - Regenerated on build
