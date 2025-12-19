@@ -50,7 +50,7 @@ class AstNodeParser {
     analyzer.ArgumentList? argumentList;
 
     if (expression is analyzer.InstanceCreationExpression) {
-      typeName = expression.constructorName.type.name2.lexeme;
+      typeName = expression.constructorName.type.name.lexeme;
       constructorName = expression.constructorName.name?.name;
       argumentList = expression.argumentList;
     } else if (expression is analyzer.MethodInvocation) {

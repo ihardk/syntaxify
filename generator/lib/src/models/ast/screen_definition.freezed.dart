@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,49 +9,70 @@ part of 'screen_definition.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-ScreenDefinition _$ScreenDefinitionFromJson(Map<String, dynamic> json) {
-  return _ScreenDefinition.fromJson(json);
-}
 
 /// @nodoc
 mixin _$ScreenDefinition {
-  String get id => throw _privateConstructorUsedError;
-  AstNode get layout => throw _privateConstructorUsedError;
-  AppBarNode? get appBar => throw _privateConstructorUsedError;
-  String? get padding => throw _privateConstructorUsedError;
+  String get id;
+  AstNode get layout;
+  AstNode? get appBar;
+  String? get padding;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+  /// Create a copy of ScreenDefinition
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $ScreenDefinitionCopyWith<ScreenDefinition> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$ScreenDefinitionCopyWithImpl<ScreenDefinition>(
+          this as ScreenDefinition, _$identity);
+
+  /// Serializes this ScreenDefinition to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ScreenDefinition &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.layout, layout) || other.layout == layout) &&
+            (identical(other.appBar, appBar) || other.appBar == appBar) &&
+            (identical(other.padding, padding) || other.padding == padding));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, layout, appBar, padding);
+
+  @override
+  String toString() {
+    return 'ScreenDefinition(id: $id, layout: $layout, appBar: $appBar, padding: $padding)';
+  }
 }
 
 /// @nodoc
-abstract class $ScreenDefinitionCopyWith<$Res> {
+abstract mixin class $ScreenDefinitionCopyWith<$Res> {
   factory $ScreenDefinitionCopyWith(
-          ScreenDefinition value, $Res Function(ScreenDefinition) then) =
-      _$ScreenDefinitionCopyWithImpl<$Res, ScreenDefinition>;
+          ScreenDefinition value, $Res Function(ScreenDefinition) _then) =
+      _$ScreenDefinitionCopyWithImpl;
   @useResult
-  $Res call({String id, AstNode layout, AppBarNode? appBar, String? padding});
+  $Res call({String id, AstNode layout, AstNode? appBar, String? padding});
 
   $AstNodeCopyWith<$Res> get layout;
+  $AstNodeCopyWith<$Res>? get appBar;
 }
 
 /// @nodoc
-class _$ScreenDefinitionCopyWithImpl<$Res, $Val extends ScreenDefinition>
+class _$ScreenDefinitionCopyWithImpl<$Res>
     implements $ScreenDefinitionCopyWith<$Res> {
-  _$ScreenDefinitionCopyWithImpl(this._value, this._then);
+  _$ScreenDefinitionCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final ScreenDefinition _self;
+  final $Res Function(ScreenDefinition) _then;
 
+  /// Create a copy of ScreenDefinition
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -60,160 +81,340 @@ class _$ScreenDefinitionCopyWithImpl<$Res, $Val extends ScreenDefinition>
     Object? appBar = freezed,
     Object? padding = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       layout: null == layout
-          ? _value.layout
+          ? _self.layout
           : layout // ignore: cast_nullable_to_non_nullable
               as AstNode,
       appBar: freezed == appBar
-          ? _value.appBar
+          ? _self.appBar
           : appBar // ignore: cast_nullable_to_non_nullable
-              as AppBarNode?,
+              as AstNode?,
       padding: freezed == padding
-          ? _value.padding
+          ? _self.padding
           : padding // ignore: cast_nullable_to_non_nullable
               as String?,
-    ) as $Val);
+    ));
   }
 
+  /// Create a copy of ScreenDefinition
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $AstNodeCopyWith<$Res> get layout {
-    return $AstNodeCopyWith<$Res>(_value.layout, (value) {
-      return _then(_value.copyWith(layout: value) as $Val);
+    return $AstNodeCopyWith<$Res>(_self.layout, (value) {
+      return _then(_self.copyWith(layout: value));
+    });
+  }
+
+  /// Create a copy of ScreenDefinition
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AstNodeCopyWith<$Res>? get appBar {
+    if (_self.appBar == null) {
+      return null;
+    }
+
+    return $AstNodeCopyWith<$Res>(_self.appBar!, (value) {
+      return _then(_self.copyWith(appBar: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$ScreenDefinitionImplCopyWith<$Res>
-    implements $ScreenDefinitionCopyWith<$Res> {
-  factory _$$ScreenDefinitionImplCopyWith(_$ScreenDefinitionImpl value,
-          $Res Function(_$ScreenDefinitionImpl) then) =
-      __$$ScreenDefinitionImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String id, AstNode layout, AppBarNode? appBar, String? padding});
+/// Adds pattern-matching-related methods to [ScreenDefinition].
+extension ScreenDefinitionPatterns on ScreenDefinition {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $AstNodeCopyWith<$Res> get layout;
-}
-
-/// @nodoc
-class __$$ScreenDefinitionImplCopyWithImpl<$Res>
-    extends _$ScreenDefinitionCopyWithImpl<$Res, _$ScreenDefinitionImpl>
-    implements _$$ScreenDefinitionImplCopyWith<$Res> {
-  __$$ScreenDefinitionImplCopyWithImpl(_$ScreenDefinitionImpl _value,
-      $Res Function(_$ScreenDefinitionImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? layout = null,
-    Object? appBar = freezed,
-    Object? padding = freezed,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ScreenDefinition value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$ScreenDefinitionImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      layout: null == layout
-          ? _value.layout
-          : layout // ignore: cast_nullable_to_non_nullable
-              as AstNode,
-      appBar: freezed == appBar
-          ? _value.appBar
-          : appBar // ignore: cast_nullable_to_non_nullable
-              as AppBarNode?,
-      padding: freezed == padding
-          ? _value.padding
-          : padding // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _ScreenDefinition() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ScreenDefinition value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ScreenDefinition():
+        return $default(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ScreenDefinition value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ScreenDefinition() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String id, AstNode layout, AstNode? appBar, String? padding)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ScreenDefinition() when $default != null:
+        return $default(_that.id, _that.layout, _that.appBar, _that.padding);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            String id, AstNode layout, AstNode? appBar, String? padding)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ScreenDefinition():
+        return $default(_that.id, _that.layout, _that.appBar, _that.padding);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String id, AstNode layout, AstNode? appBar, String? padding)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ScreenDefinition() when $default != null:
+        return $default(_that.id, _that.layout, _that.appBar, _that.padding);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$ScreenDefinitionImpl implements _ScreenDefinition {
-  const _$ScreenDefinitionImpl(
+class _ScreenDefinition implements ScreenDefinition {
+  const _ScreenDefinition(
       {required this.id, required this.layout, this.appBar, this.padding});
-
-  factory _$ScreenDefinitionImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ScreenDefinitionImplFromJson(json);
+  factory _ScreenDefinition.fromJson(Map<String, dynamic> json) =>
+      _$ScreenDefinitionFromJson(json);
 
   @override
   final String id;
   @override
   final AstNode layout;
   @override
-  final AppBarNode? appBar;
+  final AstNode? appBar;
   @override
   final String? padding;
 
+  /// Create a copy of ScreenDefinition
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ScreenDefinition(id: $id, layout: $layout, appBar: $appBar, padding: $padding)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ScreenDefinitionCopyWith<_ScreenDefinition> get copyWith =>
+      __$ScreenDefinitionCopyWithImpl<_ScreenDefinition>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$ScreenDefinitionToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ScreenDefinitionImpl &&
+            other is _ScreenDefinition &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.layout, layout) || other.layout == layout) &&
-            const DeepCollectionEquality().equals(other.appBar, appBar) &&
+            (identical(other.appBar, appBar) || other.appBar == appBar) &&
             (identical(other.padding, padding) || other.padding == padding));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, layout,
-      const DeepCollectionEquality().hash(appBar), padding);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ScreenDefinitionImplCopyWith<_$ScreenDefinitionImpl> get copyWith =>
-      __$$ScreenDefinitionImplCopyWithImpl<_$ScreenDefinitionImpl>(
-          this, _$identity);
+  int get hashCode => Object.hash(runtimeType, id, layout, appBar, padding);
 
   @override
-  Map<String, dynamic> toJson() {
-    return _$$ScreenDefinitionImplToJson(
-      this,
-    );
+  String toString() {
+    return 'ScreenDefinition(id: $id, layout: $layout, appBar: $appBar, padding: $padding)';
   }
 }
 
-abstract class _ScreenDefinition implements ScreenDefinition {
-  const factory _ScreenDefinition(
-      {required final String id,
-      required final AstNode layout,
-      final AppBarNode? appBar,
-      final String? padding}) = _$ScreenDefinitionImpl;
+/// @nodoc
+abstract mixin class _$ScreenDefinitionCopyWith<$Res>
+    implements $ScreenDefinitionCopyWith<$Res> {
+  factory _$ScreenDefinitionCopyWith(
+          _ScreenDefinition value, $Res Function(_ScreenDefinition) _then) =
+      __$ScreenDefinitionCopyWithImpl;
+  @override
+  @useResult
+  $Res call({String id, AstNode layout, AstNode? appBar, String? padding});
 
-  factory _ScreenDefinition.fromJson(Map<String, dynamic> json) =
-      _$ScreenDefinitionImpl.fromJson;
-
   @override
-  String get id;
+  $AstNodeCopyWith<$Res> get layout;
   @override
-  AstNode get layout;
-  @override
-  AppBarNode? get appBar;
-  @override
-  String? get padding;
-  @override
-  @JsonKey(ignore: true)
-  _$$ScreenDefinitionImplCopyWith<_$ScreenDefinitionImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  $AstNodeCopyWith<$Res>? get appBar;
 }
+
+/// @nodoc
+class __$ScreenDefinitionCopyWithImpl<$Res>
+    implements _$ScreenDefinitionCopyWith<$Res> {
+  __$ScreenDefinitionCopyWithImpl(this._self, this._then);
+
+  final _ScreenDefinition _self;
+  final $Res Function(_ScreenDefinition) _then;
+
+  /// Create a copy of ScreenDefinition
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? layout = null,
+    Object? appBar = freezed,
+    Object? padding = freezed,
+  }) {
+    return _then(_ScreenDefinition(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      layout: null == layout
+          ? _self.layout
+          : layout // ignore: cast_nullable_to_non_nullable
+              as AstNode,
+      appBar: freezed == appBar
+          ? _self.appBar
+          : appBar // ignore: cast_nullable_to_non_nullable
+              as AstNode?,
+      padding: freezed == padding
+          ? _self.padding
+          : padding // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+
+  /// Create a copy of ScreenDefinition
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AstNodeCopyWith<$Res> get layout {
+    return $AstNodeCopyWith<$Res>(_self.layout, (value) {
+      return _then(_self.copyWith(layout: value));
+    });
+  }
+
+  /// Create a copy of ScreenDefinition
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AstNodeCopyWith<$Res>? get appBar {
+    if (_self.appBar == null) {
+      return null;
+    }
+
+    return $AstNodeCopyWith<$Res>(_self.appBar!, (value) {
+      return _then(_self.copyWith(appBar: value));
+    });
+  }
+}
+
+// dart format on

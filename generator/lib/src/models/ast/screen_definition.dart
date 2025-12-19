@@ -17,11 +17,11 @@ part 'screen_definition.g.dart';
 /// );
 /// ```
 @freezed
-class ScreenDefinition with _$ScreenDefinition {
+sealed class ScreenDefinition with _$ScreenDefinition {
   const factory ScreenDefinition({
     required String id,
     required AstNode layout,
-    AppBarNode? appBar,
+    AstNode? appBar,
     String? padding, // Token
   }) = _ScreenDefinition;
 

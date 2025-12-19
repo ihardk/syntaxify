@@ -16,7 +16,7 @@ part 'app_bar_action.g.dart';
 /// )
 /// ```
 @freezed
-class AppBarAction with _$AppBarAction {
+sealed class AppBarAction with _$AppBarAction {
   const factory AppBarAction({
     required String icon,
     required String onPressed,

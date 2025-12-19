@@ -4,7 +4,8 @@ import 'package:syntaxify/src/core/interfaces/code_formatter.dart';
 
 /// Dart code formatter using dart_style package.
 class DartCodeFormatter implements CodeFormatter {
-  final _formatter = DartFormatter();
+  final _formatter =
+      DartFormatter(languageVersion: DartFormatter.latestLanguageVersion);
 
   @override
   String format(String code) {

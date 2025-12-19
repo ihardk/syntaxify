@@ -15,7 +15,8 @@ class ThemeGenerator {
   });
 
   final String version;
-  final _formatter = DartFormatter();
+  final _formatter =
+      DartFormatter(languageVersion: DartFormatter.latestLanguageVersion);
   final _emitter = DartEmitter(useNullSafetySyntax: true);
 
   /// Generate app_theme.dart using sealed DesignStyle pattern

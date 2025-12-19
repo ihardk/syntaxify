@@ -17,7 +17,7 @@ part 'ast_node.g.dart';
 /// - [AstNode.spacer] - Spacing between elements
 /// - [AstNode.appBar] - App bar for screens
 @freezed
-class AstNode with _$AstNode {
+sealed class AstNode with _$AstNode {
   // --- Layout Nodes ---
 
   const factory AstNode.column({

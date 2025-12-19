@@ -132,7 +132,7 @@ void main() {
 }
 ```
 
-## Generate Screens (Optional)
+## Generate Screens
 
 Create `meta/login.screen.dart`:
 
@@ -141,16 +141,27 @@ import 'package:syntaxify/syntaxify.dart';
 
 final loginScreen = ScreenDefinition(
   id: 'login',
-  layout: AstNode.column(children: [
-    AstNode.text(text: 'Welcome Back'),
-    AstNode.textField(label: 'Email', keyboardType: KeyboardType.emailAddress),
-    AstNode.textField(label: 'Password', obscureText: true),
-    AstNode.button(label: 'Sign In', onPressed: 'handleLogin'),
-  ]),
+  appBar: AstNode.appBar(title: 'Login'),
+  layout: AstNode.column(
+    children: [
+      AstNode.text(text: 'Welcome Back', variant: TextVariant.headlineLarge),
+      AstNode.spacer(size: SpacerSize.lg),
+      AstNode.textField(label: 'Email', keyboardType: KeyboardType.email),
+      AstNode.textField(label: 'Password', obscureText: true),
+      AstNode.spacer(size: SpacerSize.lg),
+      AstNode.button(
+        label: 'Sign In',
+        variant: ButtonVariant.filled,
+        onPressed: 'handleLogin',  // Becomes VoidCallback? field
+      ),
+    ],
+  ),
 );
 ```
 
-Run `dart run syntaxify build` again - generates `lib/screens/login_screen.dart` (editable!)
+Run `dart run syntaxify build` - generates `lib/screens/login_screen.dart`.
+
+> **Note**: Screens are only generated once. Your edits are preserved on rebuild!
 
 ## Project Structure
 

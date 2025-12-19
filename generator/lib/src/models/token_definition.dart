@@ -4,7 +4,7 @@ part 'token_definition.freezed.dart';
 
 /// Represents a parsed token definition
 @freezed
-class TokenDefinition with _$TokenDefinition {
+sealed class TokenDefinition with _$TokenDefinition {
   const factory TokenDefinition({
     required String name,
     required String componentName,
@@ -14,7 +14,7 @@ class TokenDefinition with _$TokenDefinition {
 
 /// Represents a single token property
 @freezed
-class TokenProperty with _$TokenProperty {
+sealed class TokenProperty with _$TokenProperty {
   const factory TokenProperty({
     required String name,
     required String type,
@@ -25,7 +25,7 @@ class TokenProperty with _$TokenProperty {
 
 /// Collection of tokens for a component
 @freezed
-class ComponentTokens with _$ComponentTokens {
+sealed class ComponentTokens with _$ComponentTokens {
   const factory ComponentTokens({
     required String componentName,
     required Map<String, TokenDefinition> variantTokens,

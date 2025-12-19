@@ -17,9 +17,11 @@
 // Create meta/login.screen.dart
 final loginScreen = ScreenDefinition(
   id: 'login',
+  appBar: AstNode.appBar(title: 'Login'),
   layout: AstNode.column(children: [
-    AstNode.text(text: 'Welcome'),
-    AstNode.textField(label: 'Email'),
+    AstNode.text(text: 'Welcome', variant: TextVariant.headlineLarge),
+    AstNode.textField(label: 'Email', keyboardType: KeyboardType.email),
+    AstNode.textField(label: 'Password', obscureText: true),
     AstNode.button(label: 'Login', onPressed: 'handleLogin'),
   ]),
 );

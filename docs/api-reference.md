@@ -125,6 +125,92 @@ AppInput(
 | `TextInputType.url`          | URL keyboard          |
 | `TextInputType.multiline`    | Multiline text        |
 
+## AST Nodes (Screen Generation)
+
+Define screens using AST nodes that compile to Flutter code.
+
+### Layout Nodes
+
+```dart
+// Vertical layout
+AstNode.column(
+  mainAxisAlignment: MainAxisAlignment.center,
+  crossAxisAlignment: CrossAxisAlignment.stretch,
+  children: [
+    AstNode.text(text: 'Title'),
+    AstNode.button(label: 'Click'),
+  ],
+)
+
+// Horizontal layout
+AstNode.row(
+  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  children: [
+    AstNode.text(text: 'Left'),
+    AstNode.text(text: 'Right'),
+  ],
+)
+```
+
+### Component Nodes
+
+```dart
+// Text with variant
+AstNode.text(
+  text: 'Welcome!',
+  variant: TextVariant.headlineLarge,
+)
+
+// Button with action callback
+AstNode.button(
+  label: 'Submit',
+  variant: ButtonVariant.filled,
+  onPressed: 'handleSubmit', // Becomes VoidCallback? field
+)
+
+// Text input field
+AstNode.textField(
+  label: 'Email',
+  hint: 'Enter email',
+  keyboardType: KeyboardType.email,
+  obscureText: false,
+)
+
+// Spacing
+AstNode.spacer(size: SpacerSize.lg)
+```
+
+### Screen Definition
+
+```dart
+final loginScreen = ScreenDefinition(
+  id: 'login',
+  appBar: AstNode.appBar(title: 'Login'),
+  layout: AstNode.column(
+    children: [
+      AstNode.text(text: 'Welcome Back', variant: TextVariant.headlineLarge),
+      AstNode.textField(label: 'Email', keyboardType: KeyboardType.email),
+      AstNode.textField(label: 'Password', obscureText: true),
+      AstNode.spacer(size: SpacerSize.lg),
+      AstNode.button(label: 'Sign In', onPressed: 'handleLogin'),
+    ],
+  ),
+);
+```
+
+### Available Node Types
+
+| Node                | Purpose           | Key Properties                                 |
+| ------------------- | ----------------- | ---------------------------------------------- |
+| `AstNode.column`    | Vertical layout   | `children`, `mainAxisAlignment`                |
+| `AstNode.row`       | Horizontal layout | `children`, `mainAxisAlignment`                |
+| `AstNode.text`      | Text display      | `text`, `variant`                              |
+| `AstNode.button`    | Button            | `label`, `variant`, `onPressed`                |
+| `AstNode.textField` | Input field       | `label`, `hint`, `keyboardType`, `obscureText` |
+| `AstNode.spacer`    | Spacing           | `size`, `flex`                                 |
+| `AstNode.appBar`    | App bar           | `title`                                        |
+| `AstNode.icon`      | Icon display      | `name`, `size`, `semantic`                     |
+
 ---
 
 ## Design Styles
@@ -178,6 +264,8 @@ This single import gives you access to all components and design system.
 
 ```dart
 import 'package:your_app/screens/login_screen.dart';
+import 'package:your_app/screens/register_screen.dart';
+import 'package:your_app/screens/home_screen.dart';
 ```
 
 ---
@@ -207,14 +295,18 @@ Run `dart run syntaxify build --help` for all options.
 ```
 your_project/
 ├── meta/                          # Component & screen definitions
-│   ├── button.meta.dart
-│   ├── input.meta.dart
-│   ├── text.meta.dart
-│   └── login.screen.dart
+│   ├── button.meta.dart           # Component: AppButton
+│   ├── input.meta.dart            # Component: AppInput
+│   ├── text.meta.dart             # Component: AppText
+│   ├── login.screen.dart          # Screen: LoginScreen
+│   ├── register.screen.dart       # Screen: RegisterScreen
+│   └── home.screen.dart           # Screen: HomeScreen
 │
 └── lib/
     ├── screens/                   # Generated screens (editable)
-    │   └── login_screen.dart
+    │   ├── login_screen.dart
+    │   ├── register_screen.dart
+    │   └── home_screen.dart
     │
     └── syntaxify/
         ├── design_system/         # Customizable styles & tokens
@@ -226,6 +318,9 @@ your_project/
         │
         ├── generated/             # Auto-regenerated (don't edit)
         │   └── components/
+        │       ├── app_button.dart
+        │       ├── app_input.dart
+        │       └── app_text.dart
         │
         └── index.dart             # Barrel export
 ```
@@ -237,3 +332,4 @@ your_project/
 - [Getting Started](getting_started.md)
 - [Design System](design-system.md)
 - [Troubleshooting](troubleshooting.md)
+

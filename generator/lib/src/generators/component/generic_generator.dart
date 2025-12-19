@@ -14,7 +14,8 @@ class GenericGenerator implements ComponentGenerator {
   });
 
   final String version;
-  final _formatter = DartFormatter();
+  final _formatter =
+      DartFormatter(languageVersion: DartFormatter.latestLanguageVersion);
   final _emitter = DartEmitter(useNullSafetySyntax: true);
 
   @override

@@ -115,7 +115,7 @@ void main() {
 
       expect(screen.id, equals('home_screen'));
       expect(screen.layout, isA<ColumnNode>());
-      expect(screen.appBar?.title, equals('Home'));
+      expect((screen.appBar as AppBarNode?)?.title, equals('Home'));
     });
   });
 }
