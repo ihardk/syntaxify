@@ -1,0 +1,13 @@
+# Ignore build artifacts
+build/
+.dart_tool/
+
+# Ignore test artifacts  
+.test_cache/
+coverage/
+
+# Keep source files
+!lib/
+!bin/
+!meta/
+!design_system/
