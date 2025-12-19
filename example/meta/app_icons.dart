@@ -1,4 +1,4 @@
-import 'package:syntax/src/annotations/syntax_annotations.dart';
+import 'package:syntax/syntax.dart';
 
 /// App Icon Registry
 ///

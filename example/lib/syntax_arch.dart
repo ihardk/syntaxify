@@ -3,7 +3,22 @@
 /// This file demonstrates the underlying architecture of Syntax:
 /// Separating WHAT (component definition) from HOW (visual rendering).
 ///
-/// This is the philosophy that powers all of Syntax's generated components.
+/// ⚠️ IMPORTANT: This is a PHILOSOPHY DEMONSTRATION
+///
+/// In real Syntax usage (see ../meta/ folder), you use annotations:
+/// ```dart
+/// @SyntaxComponent(description: 'A button')
+/// class ButtonMeta {
+///   @Required() final String label;
+///   @Optional() final String? variant;
+/// }
+/// ```
+///
+/// Then run `syntax build` to generate AppButton, AppText, AppInput.
+///
+/// This file shows the CONCEPT that powers those generated components.
+///
+/// ============================================================================
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -224,13 +239,11 @@ class UIEngine {
                 color: Color(0xFFA3B1C6),
                 offset: Offset(2, 2),
                 blurRadius: 4,
-                inset: true,
               ),
               BoxShadow(
                 color: Colors.white,
                 offset: Offset(-2, -2),
                 blurRadius: 4,
-                inset: true,
               ),
             ],
           ),

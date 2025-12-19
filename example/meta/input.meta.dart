@@ -1,4 +1,4 @@
-import 'package:syntax/src/annotations/syntax_annotations.dart';
+import 'package:syntax/syntax.dart';
 import 'app_icons.dart';
 
 /// Text Input component specification

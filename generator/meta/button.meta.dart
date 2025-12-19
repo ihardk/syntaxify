@@ -6,7 +6,7 @@
 // This is a SPECIFICATION file, not runtime code.
 // The generator parses these annotations to create the widget.
 
-import 'package:syntax/src/annotations/syntax_annotations.dart';
+import 'package:syntax/syntax.dart';
 
 @SyntaxComponent(description: 'A customizable button component')
 class ButtonMeta {

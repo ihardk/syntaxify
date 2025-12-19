@@ -1,3 +1,20 @@
+/// Syntax Demo App
+///
+/// This app demonstrates the Syntax code generator's renderer pattern.
+///
+/// TRADITIONAL FLUTTER:
+/// - Write ElevatedButton for Material
+/// - Write CupertinoButton for iOS
+/// - Write custom Container for your design
+/// - Result: 3 different implementations
+///
+/// WITH SYNTAX:
+/// - Define once: AppButton(label: 'Click', onPressed: ...)
+/// - Renders as Material/Cupertino/Neo based on AppTheme
+/// - Result: One definition, multiple renderings
+///
+/// See lib/syntax_arch.dart for the underlying philosophy.
+
 import 'package:flutter/material.dart';
 import 'package:example/syntax/index.dart';
 import 'package:example/syntax/design_system/design_system.dart';
@@ -14,6 +31,8 @@ class SyntaxDemo extends StatefulWidget {
 }
 
 class _SyntaxDemoState extends State<SyntaxDemo> {
+  // SYNTAX: Single style variable controls entire app appearance
+  // TRADITIONAL: Would need to rebuild widgets or use complex theming
   DesignStyle _currentStyle = MaterialStyle();
   String _inputText = '';
 
@@ -134,7 +153,8 @@ class _SyntaxDemoState extends State<SyntaxDemo> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Text Component
+          // SYNTAX: AppText with variant
+          // TRADITIONAL: Text with Theme.of(context).textTheme.headlineMedium
           AppText(
             text: 'Welcome to Syntax',
             variant: TextVariant.headlineMedium,
@@ -149,7 +169,8 @@ class _SyntaxDemoState extends State<SyntaxDemo> {
 
           const SizedBox(height: 32),
 
-          // Input Component
+          // SYNTAX: AppInput with built-in styling
+          // TRADITIONAL: TextField with InputDecoration, controllers, etc.
           AppInput(
             label: 'Email',
             hint: 'Enter your email',
@@ -167,7 +188,9 @@ class _SyntaxDemoState extends State<SyntaxDemo> {
 
           const SizedBox(height: 24),
 
-          // Button Components
+          // SYNTAX: AppButton with variants
+          // TRADITIONAL: ElevatedButton/CupertinoButton/Custom Container
+          // Same component, different rendering based on AppTheme!
           AppButton(
             label: 'Primary Button',
             variant: ButtonVariant.primary,
