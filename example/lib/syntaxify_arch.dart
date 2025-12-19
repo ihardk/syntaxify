@@ -42,11 +42,7 @@ import 'package:flutter/cupertino.dart';
 // ============================================================================
 
 /// Design styles available
-enum DesignStyle {
-  material,
-  cupertino,
-  neo,
-}
+enum DesignStyle { material, cupertino, neo }
 
 // ============================================================================
 // PART 1: The "WHAT" - Component Specification
@@ -58,10 +54,7 @@ class UINode {
   final String type;
   final dynamic spec;
 
-  const UINode({
-    required this.type,
-    required this.spec,
-  });
+  const UINode({required this.type, required this.spec});
 }
 
 /// Button specification - defines WHAT a button is
@@ -69,10 +62,7 @@ class MetaButtonSpec {
   final String label;
   final VoidCallback? onPressed;
 
-  const MetaButtonSpec({
-    required this.label,
-    this.onPressed,
-  });
+  const MetaButtonSpec({required this.label, this.onPressed});
 }
 
 /// Input specification - defines WHAT an input is
@@ -80,28 +70,21 @@ class MetaInputSpec {
   final String placeholder;
   final ValueChanged<String>? onChanged;
 
-  const MetaInputSpec({
-    required this.placeholder,
-    this.onChanged,
-  });
+  const MetaInputSpec({required this.placeholder, this.onChanged});
 }
 
 /// Badge specification - defines WHAT a badge is
 class MetaBadgeSpec {
   final String label;
 
-  const MetaBadgeSpec({
-    required this.label,
-  });
+  const MetaBadgeSpec({required this.label});
 }
 
 /// Card specification - defines WHAT a card is
 class MetaCardSpec {
   final Widget child;
 
-  const MetaCardSpec({
-    required this.child,
-  });
+  const MetaCardSpec({required this.child});
 }
 
 // ============================================================================
@@ -182,8 +165,10 @@ class UIEngine {
               onTap: spec.onPressed,
               borderRadius: BorderRadius.circular(12),
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 16,
+                ),
                 child: Center(
                   child: Text(
                     spec.label,
@@ -211,9 +196,7 @@ class UIEngine {
           onChanged: spec.onChanged,
           decoration: InputDecoration(
             hintText: spec.placeholder,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
             filled: true,
             fillColor: Colors.grey[100],
           ),
@@ -345,10 +328,7 @@ class UIEngine {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: spec.child,
-          ),
+          child: Padding(padding: const EdgeInsets.all(16), child: spec.child),
         );
 
       case DesignStyle.cupertino:
@@ -356,10 +336,7 @@ class UIEngine {
           decoration: BoxDecoration(
             color: CupertinoColors.systemBackground,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: CupertinoColors.separator,
-              width: 0.5,
-            ),
+            border: Border.all(color: CupertinoColors.separator, width: 0.5),
           ),
           padding: const EdgeInsets.all(16),
           child: spec.child,
@@ -449,7 +426,7 @@ class _PhilosophyDemoState extends State<PhilosophyDemo> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: const [
-                    BoxShadow(blurRadius: 10, color: Colors.black12)
+                    BoxShadow(blurRadius: 10, color: Colors.black12),
                   ],
                 ),
                 child: Row(

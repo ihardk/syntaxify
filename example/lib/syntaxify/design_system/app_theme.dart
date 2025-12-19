@@ -16,11 +16,7 @@ part of 'design_system.dart';
 /// final buttonTokens = AppTheme.of(context).style.button;
 /// ```
 class AppTheme extends InheritedWidget {
-  const AppTheme({
-    super.key,
-    required this.style,
-    required super.child,
-  });
+  const AppTheme({super.key, required this.style, required super.child});
 
   /// The design style providing all component tokens and rendering.
   final DesignStyle style;
@@ -30,8 +26,10 @@ class AppTheme extends InheritedWidget {
   /// Throws if no [AppTheme] is found in the tree.
   static AppTheme of(BuildContext context) {
     final theme = context.dependOnInheritedWidgetOfExactType<AppTheme>();
-    assert(theme != null,
-        'No AppTheme found in context. Wrap your app with AppTheme.');
+    assert(
+      theme != null,
+      'No AppTheme found in context. Wrap your app with AppTheme.',
+    );
     return theme!;
   }
 

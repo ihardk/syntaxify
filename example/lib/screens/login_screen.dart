@@ -19,9 +19,8 @@ class LoginScreen extends StatelessWidget {
         body: Column(children: [
       AppText(
         text: 'Welcome Back',
-        variant: TextVariant.headlineMedium,
+        variant: TextVariant.bodyMedium,
       ),
-      Spacer(flex: 1),
       AppInput(
         label: 'Email',
         keyboardType: TextInputType.emailAddress,
@@ -30,7 +29,6 @@ class LoginScreen extends StatelessWidget {
         label: 'Password',
         obscureText: true,
       ),
-      Spacer(flex: 1),
       AppButton(
         label: 'Sign In',
         onPressed: handleLogin,
@@ -38,5 +36,3 @@ class LoginScreen extends StatelessWidget {
     ]));
   }
 }
-
-// TEST COMMENT - Should be preserved
