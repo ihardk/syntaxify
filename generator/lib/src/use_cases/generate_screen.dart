@@ -12,12 +12,11 @@ class GenerateScreenUseCase {
   final FileSystem fileSystem;
   final ScreenGenerator screenGenerator;
 
-  Future<String> execute({
+  Future<String?> execute({
     required ScreenDefinition screen,
     required String outputDir,
     String? packageName,
   }) async {
-    final code = screenGenerator.generate(screen, packageName: packageName);
     final fileName = '${screen.id}_screen.dart';
 
     // Screens go to lib/screens/ (editable by user)
@@ -26,6 +25,13 @@ class GenerateScreenUseCase {
     await fileSystem.createDirectory(screensDir);
 
     final filePath = path.join(screensDir, fileName);
+
+    // Only generate if file doesn't exist (preserve user edits)
+    if (await fileSystem.exists(filePath)) {
+      return null; // Skip - file already exists
+    }
+
+    final code = screenGenerator.generate(screen, packageName: packageName);
     await fileSystem.writeFile(filePath, code);
 
     return 'screens/$fileName';

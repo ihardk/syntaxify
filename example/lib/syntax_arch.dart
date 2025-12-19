@@ -3,7 +3,8 @@
 /// This file demonstrates the underlying architecture of Syntax:
 /// Separating WHAT (component definition) from HOW (visual rendering).
 ///
-/// ⚠️ IMPORTANT: This is a PHILOSOPHY DEMONSTRATION
+/// This is the philosophy that powers all of Syntax's generated components.
+///⚠️ IMPORTANT: This is a PHILOSOPHY DEMONSTRATION
 ///
 /// In real Syntax usage (see ../meta/ folder), you use annotations:
 /// ```dart

@@ -80,8 +80,13 @@ class BuildAllUseCase {
           outputDir: outputDir,
           packageName: packageName,
         );
-        generatedFiles.add(filePath);
-        logger.success('Generated: $filePath');
+        if (filePath != null) {
+          generatedFiles.add(filePath);
+          logger.success('Generated: $filePath');
+        } else {
+          logger.detail(
+              'Skipped: screens/${screen.id}_screen.dart (already exists)');
+        }
       } catch (e) {
         logger.err('Failed to generate screen ${screen.id}: $e');
         errors.add('Failed to generate screen ${screen.id}: $e');
