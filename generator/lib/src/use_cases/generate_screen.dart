@@ -3,6 +3,10 @@ import 'package:syntaxify/src/core/interfaces/file_system.dart';
 import 'package:syntaxify/src/models/ast/screen_definition.dart';
 import 'package:syntaxify/src/generators/screen_generator.dart';
 
+/// Use case for generating a Flutter screen from a ScreenDefinition.
+///
+/// Generates screens to `lib/screens/` which are user-editable.
+/// Screens are only generated if they don't already exist (preserves user edits).
 class GenerateScreenUseCase {
   GenerateScreenUseCase({
     required this.fileSystem,
