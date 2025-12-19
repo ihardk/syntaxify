@@ -4,9 +4,12 @@
 
 > Stop writing repetitive UI code. Define components once, render in any design system.
 
+[![pub package](https://img.shields.io/pub/v/syntaxify.svg)](https://pub.dev/packages/syntaxify)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ---
 
-## ⭐ Quick Win: Generate Screens in Seconds
+## ⚡ Quick Win: Generate Screens in Seconds
 
 ```dart
 // Create meta/login.screen.dart
@@ -34,6 +37,8 @@ final loginScreen = ScreenDefinition(
 ```bash
 cd example && flutter run
 ```
+
+---
 
 ## 🤔 Why Syntaxify?
 
@@ -83,7 +88,7 @@ Widget buildButton() {
 
 Syntaxify delivers on Flutter's original promise: **"write once, run anywhere"** - but for design systems.
 
-**With syntaxify:**
+**With Syntaxify:**
 
 ```dart
 // Write once
@@ -121,88 +126,7 @@ Most Flutter solutions offer partial fixes:
 - ✅ **Multi-platform rendering** - One component, any design
 - ✅ **Type-safe APIs** - Compile-time safety
 
-### Industry Impact
-
-**Faster Development:**
-
-- Build apps 3-5x faster with design system consistency
-- Generate components instead of writing boilerplate
-
-**Easier Maintenance:**
-
-- Change design system in one place, not 1000 files
-- Refactor UI patterns across entire codebase instantly
-
-**Better Quality:**
-
-- Generated code is consistent, tested, type-safe
-- No manual platform checks or theme wiring
-
-**True Cross-Platform:**
-
-- Same code, native feel on each platform
-- Support Material, Cupertino, and custom designs simultaneously
-
-### Real-World Example: Fintech App
-
-Imagine building a fintech app with a team:
-
-**Day 1:** Define components once
-
-```dart
-// meta/button.meta.dart
-@SyntaxComponent()
-class ButtonMeta {
-  @Required() final String label;
-  @Required() final VoidCallback onPressed;
-  @Optional() final ButtonVariant variant;
-}
-```
-
-**Week 1:** Build 50 screens using those components
-
-```dart
-AppButton(label: 'Transfer', onPressed: handleTransfer)
-AppInput(label: 'Amount', onChanged: setAmount)
-AppCard(child: TransactionList())
-```
-
-**Month 2:** Client says "we want iOS-style on iOS, Material on Android"
-
-**With syntaxify:**
-
-```dart
-// Change one line
-AppTheme(
-  style: Platform.isIOS ? CupertinoStyle() : MaterialStyle(),
-  child: MyApp(),
-)
-// Done! ✅ All 50 screens updated
-```
-
-**Without syntaxify:**
-
-```dart
-// Rewrite all 50 screens ❌
-// Touch 1000+ component instances
-// 2-3 weeks of work
-// High risk of bugs and inconsistencies
-```
-
-**Month 6:** Designer wants custom brand styling
-
-**With syntaxify:**
-
-```dart
-// Create NeoStyle renderer
-class NeoStyle extends DesignStyle { ... }
-
-// Switch to it
-AppTheme(style: NeoStyle(), child: MyApp())
-// All components now use brand design ✅
-```
-
-**The difference:** Weeks of work vs. minutes of configuration.
+---
 
 ## 🎨 The Design System Architecture
 
@@ -240,6 +164,8 @@ AppTheme(
 2. **Easy Theme Switching** - Change one line to switch your entire app's design
 3. **Consistent Behavior** - Button logic stays the same, only visuals change
 4. **Custom Styles** - Create your own design system by implementing `DesignStyle`
+
+---
 
 ## 📦 What's Currently Available
 
@@ -284,6 +210,8 @@ You can define custom components (e.g., Card, Badge, Avatar), and Syntaxify will
 - ⚠️ Generate basic Container widget (not full renderer pattern yet)
 
 **Coming Soon:** Full renderer pattern for more components (Card, Badge, Avatar, Chip, etc.)
+
+---
 
 ## 🚀 Complete Getting Started Guide
 
@@ -433,275 +361,7 @@ final loginScreen = ScreenDefinition(
 
 Run `dart run syntaxify build` again - generates `lib/screens/login_screen.dart` (editable!)
 
-## 📂 Project Structure
-
-```
-your_project/
-├── meta/                          # YOU EDIT: Component & screen definitions
-│   ├── button.meta.dart
-│   ├── input.meta.dart
-│   ├── text.meta.dart
-│   ├── login.screen.dart
-│   └── app_icons.dart
-│
-└── lib/
-    ├── screens/                   # EDITABLE: Generated screens
-    │   └── login_screen.dart      # Generated once, then you own it
-    │
-    └── syntaxify/
-        ├── design_system/         # CUSTOMIZABLE: Styles & tokens
-        │   ├── design_system.dart
-        │   ├── app_theme.dart
-        │   ├── styles/
-        │   │   ├── material_style.dart
-        │   │   ├── cupertino_style.dart
-        │   │   └── neo_style.dart
-        │   └── tokens/
-        │       ├── button_tokens.dart
-        │       └── input_tokens.dart
-        │
-        ├── generated/             # DON'T EDIT: Auto-regenerated
-        │   └── components/
-        │       ├── app_button.dart
-        │       ├── app_input.dart
-        │       └── app_text.dart
-        │
-        └── index.dart             # Barrel export
-```
-
-## 📖 API Reference
-
-### Component Usage
-
-#### AppButton
-
-**Named Constructors (Recommended):**
-
-```dart
-// Primary button (emphasized)
-AppButton.primary(
-  label: 'Submit',
-  onPressed: () => submit(),
-)
-
-// Secondary button (less emphasis)
-AppButton.secondary(
-  label: 'Cancel',
-  onPressed: () => cancel(),
-)
-
-// Outlined button (transparent background)
-AppButton.outlined(
-  label: 'Learn More',
-  onPressed: () => learnMore(),
-)
-```
-
-**With Variant Parameter:**
-
-```dart
-AppButton(
-  label: 'Click Me',
-  variant: ButtonVariant.primary,
-  onPressed: () => print('Clicked!'),
-  isLoading: false,
-  isDisabled: false,
-)
-```
-
-**Available ButtonVariant Values:**
-
-- `ButtonVariant.primary` - Filled, emphasized button
-- `ButtonVariant.secondary` - Less prominent button
-- `ButtonVariant.outlined` - Outlined, transparent background
-
-#### AppText
-
-```dart
-// Display text (largest)
-AppText(
-  text: 'Hello World',
-  variant: TextVariant.displayLarge,
-)
-
-// Headline
-AppText(
-  text: 'Section Title',
-  variant: TextVariant.headlineMedium,
-)
-
-// Title
-AppText(
-  text: 'Card Title',
-  variant: TextVariant.titleMedium,
-)
-
-// Body text (default)
-AppText(
-  text: 'This is body text for paragraphs.',
-  variant: TextVariant.bodyLarge,
-)
-
-AppText(
-  text: 'Smaller body text.',
-  variant: TextVariant.bodyMedium,
-)
-
-// Label (smallest)
-AppText(
-  text: 'Helper text',
-  variant: TextVariant.labelSmall,
-)
-```
-
-**Available TextVariant Values:**
-
-- `TextVariant.displayLarge` - Largest text (hero headings)
-- `TextVariant.headlineMedium` - Section headings
-- `TextVariant.titleMedium` - Card titles, list headers
-- `TextVariant.bodyLarge` - Body text, paragraphs
-- `TextVariant.bodyMedium` - Smaller body text
-- `TextVariant.labelSmall` - Captions, helper text
-
-#### AppInput
-
-```dart
-AppInput(
-  label: 'Email',
-  controller: emailController,
-  keyboardType: TextInputType.emailAddress,
-  hint: 'Enter your email',
-  onChanged: (value) => print(value),
-)
-
-AppInput(
-  label: 'Password',
-  controller: passwordController,
-  obscureText: true,
-  errorText: 'Password is required',
-)
-
-AppInput(
-  label: 'Phone',
-  keyboardType: TextInputType.phone,
-  prefixIcon: 'phone',
-  enabled: true,
-)
-```
-
-**Available TextInputType Values:**
-
-- `TextInputType.text` - Default text input
-- `TextInputType.emailAddress` - Email keyboard
-- `TextInputType.phone` - Phone number keyboard
-- `TextInputType.number` - Numeric keyboard
-- `TextInputType.url` - URL keyboard
-- `TextInputType.multiline` - Multiline text
-
-### Design Styles
-
-#### MaterialStyle
-
-```dart
-AppTheme(
-  style: MaterialStyle(),
-  child: MyApp(),
-)
-```
-
-Renders components using Material Design 3 widgets and tokens.
-
-#### CupertinoStyle
-
-```dart
-AppTheme(
-  style: CupertinoStyle(),
-  child: MyApp(),
-)
-```
-
-Renders components using iOS-style Cupertino widgets.
-
-#### NeoStyle
-
-```dart
-AppTheme(
-  style: NeoStyle(),
-  child: MyApp(),
-)
-```
-
-Renders components with modern neumorphic design.
-
-### Imports
-
-**Simple (Recommended):**
-
-```dart
-import 'package:your_app/syntaxify/index.dart';
-```
-
-This single import gives you access to all components and design system.
-
-**Explicit (if needed):**
-
-```dart
-import 'package:your_app/syntaxify/index.dart';
-import 'package:your_app/syntaxify/design_system/design_system.dart';
-```
-
-The second import is redundant (index.dart re-exports it), but shown for clarity.
-
-**Generated Screens:**
-
-```dart
-import 'package:your_app/screens/login_screen.dart';
-```
-
-## 🔄 Development Workflow
-
-1. **Define** - Edit `meta/*.meta.dart` to define component APIs
-2. **Build** - Run `dart run syntaxify build` to generate implementations
-3. **Use** - Import from `package:your_app/syntaxify/` and use
-4. **Customize** - Edit design system tokens in `lib/syntaxify/design_system/`
-5. **Switch Styles** - Change `AppTheme(style: ...)` to try different designs
-
-### Understanding Generated Code
-
-**Important: Two types of generated code with different lifecycles:**
-
-#### Components (Regenerate Every Build)
-
-**Location:** `lib/syntaxify/generated/components/`
-**Behavior:** Regenerated on EVERY `syntaxify build`
-**Rule:** ⚠️ **DO NOT EDIT** - Your changes will be lost!
-
-```dart
-// lib/syntaxify/generated/components/app_button.dart
-// This file is REGENERATED on every build
-class AppButton extends StatelessWidget {
-  // Generated code - DO NOT MODIFY
-}
-```
-
-#### Screens (Generate Once)
-
-**Location:** `lib/screens/`
-**Behavior:** Generated ONCE, then YOU own it
-**Rule:** ✅ **FREELY EDIT** - Won't be overwritten
-
-```dart
-// lib/screens/login_screen.dart
-// Generated once, then it's yours to edit
-class LoginScreen extends StatelessWidget {
-  // Edit this freely - it won't be regenerated
-}
-```
-
-**What happens when you rebuild?**
-
-- Components: Completely regenerated from meta files
-- Screens: Skipped (only generated if file doesn't exist)
+---
 
 ## 🎯 Real-World Example
 
@@ -770,102 +430,133 @@ AppButton.primary(label: 'Submit', onPressed: handleSubmit)
 
 **Result:** Consistent API, different visuals, easy to switch.
 
-## 🛠️ Advanced Usage
+---
 
-### Creating Custom Design Styles
+## 📂 Project Structure
 
-Implement `DesignStyle` interface:
+```
+your_project/
+├── meta/                          # YOU EDIT: Component & screen definitions
+│   ├── button.meta.dart
+│   ├── input.meta.dart
+│   ├── text.meta.dart
+│   ├── login.screen.dart
+│   └── app_icons.dart
+│
+└── lib/
+    ├── screens/                   # EDITABLE: Generated screens
+    │   └── login_screen.dart      # Generated once, then you own it
+    │
+    └── syntaxify/
+        ├── design_system/         # CUSTOMIZABLE: Styles & tokens
+        │   ├── design_system.dart
+        │   ├── app_theme.dart
+        │   ├── styles/
+        │   │   ├── material_style.dart
+        │   │   ├── cupertino_style.dart
+        │   │   └── neo_style.dart
+        │   └── tokens/
+        │       ├── button_tokens.dart
+        │       └── input_tokens.dart
+        │
+        ├── generated/             # DON'T EDIT: Auto-regenerated
+        │   └── components/
+        │       ├── app_button.dart
+        │       ├── app_input.dart
+        │       └── app_text.dart
+        │
+        └── index.dart             # Barrel export
+```
+
+---
+
+## 📖 API Reference
+
+For detailed API documentation, see **[API Reference](docs/api-reference.md)**.
+
+**Quick Overview:**
+
+| Component   | Description                                  |
+| ----------- | -------------------------------------------- |
+| `AppButton` | Primary, secondary, outlined button variants |
+| `AppText`   | Typography with 6 text style variants        |
+| `AppInput`  | Text fields with keyboard types & validation |
+
+**Design Styles:** `MaterialStyle()`, `CupertinoStyle()`, `NeoStyle()`
+
+**Import:** `import 'package:your_app/syntaxify/index.dart';`
+
+---
+
+## 🔄 Development Workflow
+
+1. **Define** - Edit `meta/*.meta.dart` to define component APIs
+2. **Build** - Run `dart run syntaxify build` to generate implementations
+3. **Use** - Import from `package:your_app/syntaxify/` and use
+4. **Customize** - Edit design system tokens in `lib/syntaxify/design_system/`
+5. **Switch Styles** - Change `AppTheme(style: ...)` to try different designs
+
+### Understanding Generated Code
+
+**Important: Two types of generated code with different lifecycles:**
+
+#### Components (Regenerate Every Build)
+
+**Location:** `lib/syntaxify/generated/components/`
+**Behavior:** Regenerated on EVERY `syntaxify build`
+**Rule:** ⚠️ **DO NOT EDIT** - Your changes will be lost!
 
 ```dart
-class MyCustomStyle extends DesignStyle
-    with MaterialButtonRenderer, MaterialInputRenderer {
-  // Override tokens and rendering logic
-
-  @override
-  Widget renderButton({
-    required String label,
-    required ButtonVariant variant,
-    VoidCallback? onPressed,
-    bool isLoading = false,
-    bool isDisabled = false,
-  }) {
-    // Your custom button rendering
-    return CustomStyledButton(
-      label: label,
-      onPressed: onPressed,
-      // Your custom styling
-    );
-  }
+// lib/syntaxify/generated/components/app_button.dart
+// This file is REGENERATED on every build
+class AppButton extends StatelessWidget {
+  // Generated code - DO NOT MODIFY
 }
 ```
 
-### Build Options
+#### Screens (Generate Once)
 
-```bash
-# Build everything (auto-detects paths)
-dart run syntaxify build
+**Location:** `lib/screens/`
+**Behavior:** Generated ONCE, then YOU own it
+**Rule:** ✅ **FREELY EDIT** - Won't be overwritten
 
-# Build specific component
-dart run syntaxify build --component=AppButton
-
-# Custom paths
-dart run syntaxify build --meta=specs --output=lib/gen
-
-# Build for specific theme
-dart run syntaxify build --theme=material
+```dart
+// lib/screens/login_screen.dart
+// Generated once, then it's yours to edit
+class LoginScreen extends StatelessWidget {
+  // Edit this freely - it won't be regenerated
+}
 ```
 
-Run `dart run syntaxify build --help` for all options.
+**What happens when you rebuild?**
+
+- Components: Completely regenerated from meta files
+- Screens: Skipped (only generated if file doesn't exist)
+
+---
+
+
+## 🛠️ Advanced Usage
+
+For advanced topics, see the detailed documentation:
+
+- **[Design System Guide](docs/design-system.md)** - Creating custom design styles, renderer pattern
+- **[API Reference](docs/api-reference.md)** - Build options, CLI commands
+
+---
 
 ## 🐛 Troubleshooting
 
-### Common Errors
+Having issues? See **[Troubleshooting Guide](docs/troubleshooting.md)** for common errors and solutions.
 
-#### Error: "Member not found: 'headline'"
+**Quick fixes:**
+- `TextVariant.headline` → Use `TextVariant.headlineMedium`
+- `KeyboardType.email` → Use `TextInputType.emailAddress`
+- Component not updating? → Edit `meta/*.meta.dart`, not generated files
 
-**Cause:** Using outdated enum value from old examples.
-**Fix:** Use correct TextVariant values:
+**Need help?** [GitHub Issues](https://github.com/ihardk/syntaxify/issues)
 
-```dart
-// ❌ Wrong
-variant: TextVariant.headline
-
-// ✅ Correct
-variant: TextVariant.headlineMedium
-```
-
-#### Error: "KeyboardType.email not found"
-
-**Cause:** Using wrong enum type.
-**Fix:** Use Flutter's TextInputType:
-
-```dart
-// ❌ Wrong
-keyboardType: KeyboardType.email
-
-// ✅ Correct
-keyboardType: TextInputType.emailAddress
-```
-
-#### Error: "Could not find package syntaxify"
-
-**Cause:** Dependency not installed or wrong path.
-**Fix:** Run `dart pub get` after adding to pubspec.yaml
-
-#### Error: Changes to component not reflected
-
-**Cause:** Edited generated component file directly.
-**Fix:**
-
-1. Edit the `meta/*.meta.dart` file instead
-2. Run `dart run syntaxify build` to regenerate
-3. Remember: Components regenerate, screens don't
-
-### Getting Help
-
-- 📖 **Documentation:** [User Manual](docs/user_manual.md)
-- 🔧 **Developer Guide:** [Developer Manual](docs/developer_manual.md)
-- 🐛 **Report Issues:** [GitHub Issues](https://github.com/ihardk/syntaxify/issues)
+---
 
 ## ✨ Features
 
@@ -877,6 +568,8 @@ keyboardType: TextInputType.emailAddress
 - **Design Tokens** - Centralized styling with tokens
 - **Git-Friendly** - Clean, readable generated code
 - **Extensible** - Create custom design styles by implementing `DesignStyle`
+
+---
 
 ## 🗺️ Roadmap
 
@@ -902,6 +595,21 @@ keyboardType: TextInputType.emailAddress
 - 🔮 VS Code extension
 - 🔮 Component marketplace
 
+---
+
+## 📚 Documentation
+
+| Guide                                        | Description                      |
+| -------------------------------------------- | -------------------------------- |
+| [Getting Started](docs/getting_started.md)   | Installation & first steps       |
+| [API Reference](docs/api-reference.md)       | Component usage & options        |
+| [Design System](docs/design-system.md)       | Renderer pattern & custom styles |
+| [Troubleshooting](docs/troubleshooting.md)   | Common issues & solutions        |
+| [User Manual](docs/user_manual.md)           | Comprehensive user guide         |
+| [Developer Manual](docs/developer_manual.md) | Architecture & contributing      |
+
+---
+
 ## 🤝 Contributing
 
 See [Developer Manual](docs/developer_manual.md) for architecture details and contribution guidelines.
@@ -912,4 +620,10 @@ MIT License - See [LICENSE](LICENSE) for details
 
 ---
 
+<div align="center">
+
 **Built with ❤️ for Flutter developers who value consistency, productivity, and beautiful code**
+
+[⭐ Star us on GitHub](https://github.com/ihardk/syntaxify) • [📦 pub.dev](https://pub.dev/packages/syntaxify)
+
+</div>

@@ -1,23 +1,10 @@
-# Syntaxify Example App
+# Syntaxify Example App ⚡
 
-**Live demonstration of Syntaxify code generator**
+**Live demonstration of Syntaxify's multi-style design system**
 
-This Flutter app showcases Syntaxify's renderer pattern with real generated components.
+Experience the power of "write once, render anywhere" with live style switching!
 
-## 🎯 What This Demonstrates
-
-### Components
-- **AppButton** - Material, Cupertino, and Neo button variants
-- **AppText** - Typography with different text styles
-- **AppInput** - Text fields with validation
-
-### Design Systems
-Switch between three design styles in real-time:
-- **Material** - Google's Material Design
-- **Cupertino** - Apple's iOS design language
-- **Neo** - Modern neumorphic design
-
-## 🚀 Running the Example
+## 🎬 Quick Start
 
 ```bash
 cd example
@@ -25,59 +12,118 @@ flutter pub get
 flutter run
 ```
 
-## 📂 Structure
+## 🎯 What's Inside
+
+### 4-Tab Interactive Demo
+
+| Tab          | Description                                  |
+| ------------ | -------------------------------------------- |
+| **Overview** | Live style switcher + component showcase     |
+| **Buttons**  | All button variants with interactive counter |
+| **Inputs**   | Text fields with different keyboard types    |
+| **Screens**  | Generated screen from `.screen.dart`         |
+
+### Live Style Switching
+
+Switch between **3 design styles** in real-time:
+
+- **Material** - Google's Material Design 3
+- **Cupertino** - Apple's iOS design language
+- **Neo** - Modern neumorphic design
+
+**Same components, completely different look!**
+
+## 📂 Project Structure
 
 ```
 example/
 ├── lib/
 │   ├── main.dart              # Demo app with style switcher
-│   ├── meta/                  # Component definitions
-│   │   ├── button.meta.dart
-│   │   ├── input.meta.dart
-│   │   └── text.meta.dart
-│   └── syntaxify/                # Generated code
+│   ├── overview_tab.dart      # Overview tab content
+│   ├── screens/
+│   │   └── login_screen.dart  # Generated from login.screen.dart
+│   └── syntaxify/             # Generated design system
 │       ├── generated/         # Auto-generated components
-│       └── design_system/     # Design system files
+│       └── design_system/     # Customizable styles & tokens
+│
+├── meta/                      # Component definitions
+│   ├── button.meta.dart
+│   ├── input.meta.dart
+│   ├── text.meta.dart
+│   ├── login.screen.dart      # Screen definition
+│   └── app_icons.dart
+│
 └── pubspec.yaml
 ```
 
-## 🎨 How It Works
+## 🔄 How It Works
 
-1. **Define** - Components defined in `meta/` folder
-2. **Generate** - Run `syntaxify build` to generate code
-3. **Use** - Import and use with `AppTheme`
+### 1. Define Components
+
+```dart
+// meta/button.meta.dart
+@SyntaxComponent()
+class ButtonMeta {
+  @Required() final String label;
+  @Optional() final VoidCallback? onPressed;
+}
+```
+
+### 2. Define Screens
+
+```dart
+// meta/login.screen.dart
+final loginScreen = ScreenDefinition(
+  id: 'login',
+  layout: AstNode.column(children: [
+    AstNode.text(text: 'Welcome Back'),
+    AstNode.textField(label: 'Email'),
+    AstNode.button(label: 'Sign In', onPressed: 'handleLogin'),
+  ]),
+);
+```
+
+### 3. Generate
+
+```bash
+dart run syntaxify build
+```
+
+### 4. Use with Any Style
 
 ```dart
 AppTheme(
   style: MaterialStyle(),  // Switch to CupertinoStyle() or NeoStyle()
-  child: MaterialApp(
-    home: YourApp(),
-  ),
+  child: MaterialApp(home: YourApp()),
 )
 ```
 
-## 🔄 Regenerating Components
+## 🔧 Regenerating Components
 
-To regenerate the components:
+From the example directory:
 
 ```bash
-cd ..
-syntaxify build --meta=example/meta --output=example/lib/syntaxify
+dart run syntaxify build
 ```
 
-Or from the root:
+Or with custom paths:
+
 ```bash
-cd example
-syntaxify build
+dart run syntaxify build --meta=meta --output=lib/syntaxify
 ```
 
 ## 💡 Key Takeaways
 
-- **One Definition** - Components defined once in `meta/`
-- **Multiple Renderings** - Same component, different styles
-- **Type-Safe** - Generated code is fully type-safe
-- **Editable** - Customize design system in `lib/syntaxify/design_system/`
+| Feature             | Benefit                               |
+| ------------------- | ------------------------------------- |
+| **One Definition**  | Components defined once in `meta/`    |
+| **Multiple Styles** | Same component, 3 different designs   |
+| **Type-Safe**       | Generated code is fully type-safe     |
+| **Editable**        | Customize tokens without regenerating |
+| **Screen Gen**      | Full screens from simple definitions  |
 
 ---
 
-**This is a working example of Syntaxify v0.1.0**
+**This example demonstrates Syntaxify v0.1.0**
+
+[← Back to main README](../README.md) • [📚 Documentation](../docs/)
