@@ -8,17 +8,15 @@ Syntax generates production-ready Flutter widgets from declarative component def
 
 ### 1. Installation
 
-**Global Installation (Recommended):**
-```bash
-cd generator
-dart pub global activate --source path .
-```
+Add Syntax to your project:
 
-**Or add to your project:**
 ```yaml
 dev_dependencies:
   syntax:
-    path: ../generator  # Adjust path as needed
+    git:
+      url: https://github.com/ihardk/syntax.git
+      ref: v0.1.0
+      path: generator
 ```
 
 ### 2. Initialize Your Project
@@ -40,7 +38,7 @@ This creates:
 3. **Use** - Import and use generated components
 
 ```bash
-syntax build --meta=meta --design-system=lib/syntax/design_system --tokens=lib/syntax/design_system --output=lib/syntax
+syntax build
 ```
 
 ---

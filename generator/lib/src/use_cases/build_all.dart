@@ -299,12 +299,17 @@ class BuildAllUseCase {
     List<String> files,
   ) async {
     // Exclude part files that are already exported by design_system.dart
+    // Also exclude screens since they're navigated to, not imported
     final exports = files
         .where((f) => f.endsWith('.dart') && !f.endsWith('index.dart'))
         .where((f) {
           // Only export design_system.dart from the design_system directory
           if (f.startsWith('design_system/')) {
             return f == 'design_system/design_system.dart';
+          }
+          // Don't export screens - they're navigated to, not imported
+          if (f.startsWith('screens/')) {
+            return false;
           }
           return true;
         })

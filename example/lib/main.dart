@@ -18,6 +18,7 @@
 import 'package:flutter/material.dart';
 import 'package:example/syntax/index.dart';
 import 'package:example/syntax/design_system/design_system.dart';
+import 'package:example/screens/login_screen.dart';
 
 void main() {
   runApp(const SyntaxDemo());
@@ -211,6 +212,59 @@ class _SyntaxDemoState extends State<SyntaxDemo> {
             label: 'Text Button',
             variant: ButtonVariant.text,
             onPressed: () => _showMessage('Text button pressed!'),
+          ),
+
+          const SizedBox(height: 32),
+
+          // SYNTAX: Screen Generation Demo
+          // TRADITIONAL: Would manually create entire screen file
+          // Generated from meta/login.screen.dart definition!
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.amber.shade50,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.amber.shade200),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.auto_awesome, color: Colors.amber.shade700),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: AppText(
+                        text: 'Screen Generation Demo',
+                        variant: TextVariant.titleMedium,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                AppText(
+                  text: 'This screen was generated from meta/login.screen.dart',
+                  variant: TextVariant.bodyMedium,
+                ),
+                const SizedBox(height: 12),
+                AppButton(
+                  label: 'View Generated Login Screen',
+                  variant: ButtonVariant.primary,
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => LoginScreen(
+                          handleLogin: () {
+                            Navigator.of(context).pop();
+                            _showMessage('Login screen callback!');
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
 
           if (_inputText.isNotEmpty) ...[

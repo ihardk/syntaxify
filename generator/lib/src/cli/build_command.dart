@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
+import 'package:path/path.dart' as path;
 
 import 'package:syntax/src/generator/syntax_generator.dart';
 import 'init_command.dart';
@@ -29,13 +30,11 @@ class BuildCommand extends Command<int> {
         'tokens',
         help:
             'Path to tokens directory (auto-detects lib/syntax/design_system)',
-        defaultsTo: 'design_system',
       )
       ..addOption(
         'design-system',
         help:
             'Path to design system directory (auto-detects lib/syntax/design_system)',
-        defaultsTo: 'design_system',
       )
       ..addOption(
         'output',
@@ -80,14 +79,15 @@ Examples:
     final metaDir = argResults?['meta'] as String? ?? 'meta';
 
     // Smart defaults - prefer lib/syntax/design_system if it exists
+    // Note: Check from current working directory (where user runs command)
+    final cwd = Directory.current.path;
+    final designSystemPath = path.join(cwd, 'lib', 'syntax', 'design_system');
+    final designSystemExists = Directory(designSystemPath).existsSync();
+
     final tokensDir = argResults?['tokens'] as String? ??
-        (Directory('lib/syntax/design_system').existsSync()
-            ? 'lib/syntax/design_system'
-            : 'design_system');
+        (designSystemExists ? 'lib/syntax/design_system' : 'design_system');
     final designSystemDir = argResults?['design-system'] as String? ??
-        (Directory('lib/syntax/design_system').existsSync()
-            ? 'lib/syntax/design_system'
-            : 'design_system');
+        (designSystemExists ? 'lib/syntax/design_system' : 'design_system');
     final outputDir = argResults?['output'] as String? ?? 'lib/syntax';
 
     // Check availability

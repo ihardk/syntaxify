@@ -67,10 +67,8 @@ syntax build --meta=example/meta --output=example/lib/syntax
 
 Or from the root:
 ```bash
-dart run generator/bin/syntax.dart build \
-  --meta=example/meta \
-  --design-system=example/lib/syntax/design_system \
-  --output=example/lib/syntax
+cd example
+syntax build
 ```
 
 ## 💡 Key Takeaways
