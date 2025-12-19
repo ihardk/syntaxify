@@ -28,7 +28,7 @@ To debug the generator while running it against the example project:
           "type": "dart",
           "program": "bin/syntax.dart",
           "args": ["build", "--verbose"],
-          "cwd": "${workspaceFolder}/example"
+          "cwd": "${workspaceFolder}/../example"
         }
       ]
     }
@@ -67,7 +67,20 @@ graph TD
     *   `RegistryDefinition`: Parsed icon/token definitions.
 4.  **Infrastructure**:
     *   **Parsers (`lib/src/parser/`)**: `MetaParser` (reads Classes), `RegistryParser` (reads Annotations).
-    *   **Generators (`lib/src/generators/`)**: `ComponentGenerator` implementations (`ButtonGenerator`, `InputGenerator`).
+    *   **Generators (`lib/src/generators/`)**: `ComponentGenerator` implementations (`ButtonGenerator`, `TextGenerator`, `InputGenerator`).
+
+### The Renderer Pattern
+
+Syntax uses a **renderer pattern** to separate WHAT (component definition) from HOW (visual rendering):
+
+- **WHAT**: Components like `AppButton`, `AppText`, `AppInput` define behavior
+- **HOW**: `DesignStyle` implementations (Material, Cupertino, Neo) handle rendering
+- **Result**: Same component code works across multiple design systems
+
+**Current Components (v0.1.0):**
+- `AppButton` - Buttons with variants (primary, secondary, outlined, text)
+- `AppText` - Text with typography variants
+- `AppInput` - Text fields with validation
 
 ---
 
@@ -80,13 +93,20 @@ Decide what configuration the user provides.
 Create a template in `meta/card.meta.dart`:
 
 ```dart
+import 'package:syntax/syntax.dart';
+
 @SyntaxComponent(description: 'A container card')
 class CardMeta {
   @Required()
-  final String child;
+  final String title;
 
-  @Variant(['elevated', 'outlined'])
-  final String variant;
+  @Optional()
+  final String? variant;
+
+  const CardMeta({
+    required this.title,
+    this.variant,
+  });
 }
 ```
 
