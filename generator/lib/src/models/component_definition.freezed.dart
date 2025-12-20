@@ -16,6 +16,10 @@ T _$identity<T>(T value) => value;
 mixin _$ComponentDefinition {
   String get name;
   String get className;
+
+  /// Explicit component name from @SyntaxComponent(name: '...')
+  /// If null, falls back to className.replaceAll('Meta', '')
+  String? get explicitName;
   List<ComponentProp> get properties;
   List<String> get variants;
   String? get description;
@@ -36,6 +40,8 @@ mixin _$ComponentDefinition {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.className, className) ||
                 other.className == className) &&
+            (identical(other.explicitName, explicitName) ||
+                other.explicitName == explicitName) &&
             const DeepCollectionEquality()
                 .equals(other.properties, properties) &&
             const DeepCollectionEquality().equals(other.variants, variants) &&
@@ -48,13 +54,14 @@ mixin _$ComponentDefinition {
       runtimeType,
       name,
       className,
+      explicitName,
       const DeepCollectionEquality().hash(properties),
       const DeepCollectionEquality().hash(variants),
       description);
 
   @override
   String toString() {
-    return 'ComponentDefinition(name: $name, className: $className, properties: $properties, variants: $variants, description: $description)';
+    return 'ComponentDefinition(name: $name, className: $className, explicitName: $explicitName, properties: $properties, variants: $variants, description: $description)';
   }
 }
 
@@ -67,6 +74,7 @@ abstract mixin class $ComponentDefinitionCopyWith<$Res> {
   $Res call(
       {String name,
       String className,
+      String? explicitName,
       List<ComponentProp> properties,
       List<String> variants,
       String? description});
@@ -87,6 +95,7 @@ class _$ComponentDefinitionCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? className = null,
+    Object? explicitName = freezed,
     Object? properties = null,
     Object? variants = null,
     Object? description = freezed,
@@ -100,6 +109,10 @@ class _$ComponentDefinitionCopyWithImpl<$Res>
           ? _self.className
           : className // ignore: cast_nullable_to_non_nullable
               as String,
+      explicitName: freezed == explicitName
+          ? _self.explicitName
+          : explicitName // ignore: cast_nullable_to_non_nullable
+              as String?,
       properties: null == properties
           ? _self.properties
           : properties // ignore: cast_nullable_to_non_nullable
@@ -210,6 +223,7 @@ extension ComponentDefinitionPatterns on ComponentDefinition {
     TResult Function(
             String name,
             String className,
+            String? explicitName,
             List<ComponentProp> properties,
             List<String> variants,
             String? description)?
@@ -219,8 +233,8 @@ extension ComponentDefinitionPatterns on ComponentDefinition {
     final _that = this;
     switch (_that) {
       case _ComponentDefinition() when $default != null:
-        return $default(_that.name, _that.className, _that.properties,
-            _that.variants, _that.description);
+        return $default(_that.name, _that.className, _that.explicitName,
+            _that.properties, _that.variants, _that.description);
       case _:
         return orElse();
     }
@@ -244,6 +258,7 @@ extension ComponentDefinitionPatterns on ComponentDefinition {
     TResult Function(
             String name,
             String className,
+            String? explicitName,
             List<ComponentProp> properties,
             List<String> variants,
             String? description)
@@ -252,8 +267,8 @@ extension ComponentDefinitionPatterns on ComponentDefinition {
     final _that = this;
     switch (_that) {
       case _ComponentDefinition():
-        return $default(_that.name, _that.className, _that.properties,
-            _that.variants, _that.description);
+        return $default(_that.name, _that.className, _that.explicitName,
+            _that.properties, _that.variants, _that.description);
     }
   }
 
@@ -274,6 +289,7 @@ extension ComponentDefinitionPatterns on ComponentDefinition {
     TResult? Function(
             String name,
             String className,
+            String? explicitName,
             List<ComponentProp> properties,
             List<String> variants,
             String? description)?
@@ -282,8 +298,8 @@ extension ComponentDefinitionPatterns on ComponentDefinition {
     final _that = this;
     switch (_that) {
       case _ComponentDefinition() when $default != null:
-        return $default(_that.name, _that.className, _that.properties,
-            _that.variants, _that.description);
+        return $default(_that.name, _that.className, _that.explicitName,
+            _that.properties, _that.variants, _that.description);
       case _:
         return null;
     }
@@ -296,6 +312,7 @@ class _ComponentDefinition implements ComponentDefinition {
   const _ComponentDefinition(
       {required this.name,
       required this.className,
+      this.explicitName,
       required final List<ComponentProp> properties,
       required final List<String> variants,
       this.description})
@@ -306,6 +323,11 @@ class _ComponentDefinition implements ComponentDefinition {
   final String name;
   @override
   final String className;
+
+  /// Explicit component name from @SyntaxComponent(name: '...')
+  /// If null, falls back to className.replaceAll('Meta', '')
+  @override
+  final String? explicitName;
   final List<ComponentProp> _properties;
   @override
   List<ComponentProp> get properties {
@@ -342,6 +364,8 @@ class _ComponentDefinition implements ComponentDefinition {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.className, className) ||
                 other.className == className) &&
+            (identical(other.explicitName, explicitName) ||
+                other.explicitName == explicitName) &&
             const DeepCollectionEquality()
                 .equals(other._properties, _properties) &&
             const DeepCollectionEquality().equals(other._variants, _variants) &&
@@ -354,13 +378,14 @@ class _ComponentDefinition implements ComponentDefinition {
       runtimeType,
       name,
       className,
+      explicitName,
       const DeepCollectionEquality().hash(_properties),
       const DeepCollectionEquality().hash(_variants),
       description);
 
   @override
   String toString() {
-    return 'ComponentDefinition(name: $name, className: $className, properties: $properties, variants: $variants, description: $description)';
+    return 'ComponentDefinition(name: $name, className: $className, explicitName: $explicitName, properties: $properties, variants: $variants, description: $description)';
   }
 }
 
@@ -375,6 +400,7 @@ abstract mixin class _$ComponentDefinitionCopyWith<$Res>
   $Res call(
       {String name,
       String className,
+      String? explicitName,
       List<ComponentProp> properties,
       List<String> variants,
       String? description});
@@ -395,6 +421,7 @@ class __$ComponentDefinitionCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? className = null,
+    Object? explicitName = freezed,
     Object? properties = null,
     Object? variants = null,
     Object? description = freezed,
@@ -408,6 +435,10 @@ class __$ComponentDefinitionCopyWithImpl<$Res>
           ? _self.className
           : className // ignore: cast_nullable_to_non_nullable
               as String,
+      explicitName: freezed == explicitName
+          ? _self.explicitName
+          : explicitName // ignore: cast_nullable_to_non_nullable
+              as String?,
       properties: null == properties
           ? _self._properties
           : properties // ignore: cast_nullable_to_non_nullable

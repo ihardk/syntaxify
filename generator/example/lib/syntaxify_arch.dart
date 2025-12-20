@@ -540,7 +540,7 @@ class _PhilosophyDemoState extends State<PhilosophyDemo> {
 //    - Update rendering logic in one place
 //    - All components benefit
 //
-// 5. THIS IS WHAT SYNTAX DOES
+// 5. THIS IS WHAT SYNTAXIFY DOES
 //    - Syntaxify generates this pattern for you
 //    - You define components in meta/
 //    - Syntaxify generates the renderers
