@@ -11,6 +11,7 @@ sealed class ComponentDefinition with _$ComponentDefinition {
     required String className,
     required List<ComponentProp> properties,
     required List<String> variants,
+    String? explicitName,
     String? description,
   }) = _ComponentDefinition;
 }
