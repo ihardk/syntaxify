@@ -10,7 +10,7 @@ void main() {
       DartFormatter(languageVersion: DartFormatter.latestLanguageVersion);
   const layoutEmitter = LayoutEmitter();
 
-  String emit(AstNode node) {
+  String emit(LayoutNode node) {
     final expression = layoutEmitter.emit(node);
     // Wrap in a statement so DartFormatter can handle it
     final statement = expression.assignFinal('w').statement;
@@ -19,7 +19,7 @@ void main() {
 
   group('LayoutEmitter', () {
     test('emits Text widget', () {
-      final node = AstNode.text(
+      final node = LayoutNode.text(
         text: 'Hello World',
         variant: TextVariant.headlineMedium,
       );
@@ -32,7 +32,7 @@ void main() {
     });
 
     test('emits Button widget (Filled)', () {
-      final node = AstNode.button(
+      final node = LayoutNode.button(
         label: 'Submit',
         variant: ButtonVariant.filled,
         onPressed: 'submitData',
@@ -47,7 +47,7 @@ void main() {
     });
 
     test('emits TextField widget', () {
-      final node = AstNode.textField(
+      final node = LayoutNode.textField(
         label: 'Username',
         hint: 'Enter here',
         obscureText: true,

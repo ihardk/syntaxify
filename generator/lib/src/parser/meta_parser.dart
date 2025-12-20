@@ -7,7 +7,7 @@ import 'package:mason_logger/mason_logger.dart';
 
 import 'package:syntaxify/src/models/component_definition.dart';
 import 'package:syntaxify/src/models/ast/nodes.dart';
-import 'ast_node_parser.dart';
+import 'layout_node_parser.dart';
 
 /// Parses meta component files using the Dart analyzer
 class MetaParser {
@@ -69,7 +69,7 @@ class _AstNodeVisitor extends RecursiveAstVisitor<void> {
   final screens = <ScreenDefinition>[];
   final enums = <ComponentEnum>[];
 
-  final _nodeParser = const AstNodeParser();
+  final _nodeParser = const LayoutNodeParser();
 
   @override
   void visitEnumDeclaration(analyzer.EnumDeclaration node) {

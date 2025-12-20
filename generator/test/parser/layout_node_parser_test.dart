@@ -5,7 +5,7 @@ import 'package:syntaxify/src/parser/ast_node_parser.dart';
 import 'package:test/test.dart';
 
 void main() {
-  const parser = AstNodeParser();
+  const parser = LayoutNodeParser();
 
   Expression parseExpression(String code) {
     final result = parseString(content: 'final x = $code;');
@@ -13,10 +13,10 @@ void main() {
     return decl.variables.variables.first.initializer!;
   }
 
-  group('AstNodeParser', () {
+  group('LayoutNodeParser', () {
     test('parses ButtonNode properties', () {
       final code = '''
-        AstNode.button(
+        LayoutNode.button(
           label: 'Click Me',
           variant: ButtonVariant.outlined,
           size: ButtonSize.lg,
@@ -27,7 +27,7 @@ void main() {
       ''';
 
       final expression = parseExpression(code);
-      final node = parser.parseAstNode(expression) as ButtonNode;
+      final node = parser.parseLayoutNode(expression) as ButtonNode;
 
       expect(node.label, 'Click Me');
       expect(node.variant, ButtonVariant.outlined);
@@ -39,7 +39,7 @@ void main() {
 
     test('parses TextFieldNode properties', () {
       final code = '''
-        AstNode.textField(
+        LayoutNode.textField(
           label: 'Username',
           hint: 'Enter your username',
           obscureText: true,
@@ -48,7 +48,7 @@ void main() {
       ''';
 
       final expression = parseExpression(code);
-      final node = parser.parseAstNode(expression) as TextFieldNode;
+      final node = parser.parseLayoutNode(expression) as TextFieldNode;
 
       expect(node.label, 'Username');
       expect(node.hint, 'Enter your username');
@@ -57,9 +57,9 @@ void main() {
     });
 
     test('parses defaults correctly', () {
-      final code = "AstNode.button(label: 'Simple')";
+      final code = "LayoutNode.button(label: 'Simple')";
       final expression = parseExpression(code);
-      final node = parser.parseAstNode(expression) as ButtonNode;
+      final node = parser.parseLayoutNode(expression) as ButtonNode;
 
       expect(node.variant, ButtonVariant.filled); // Default in parser logic
       expect(node.size, null); // Default is null (unspecified)

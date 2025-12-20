@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'ast_node.dart';
+part of 'layout_node.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -11,7 +11,7 @@ part of 'ast_node.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-AstNode _$AstNodeFromJson(Map<String, dynamic> json) {
+LayoutNode _$LayoutNodeFromJson(Map<String, dynamic> json) {
   switch (json['runtimeType']) {
     case 'column':
       return ColumnNode.fromJson(json);
@@ -31,31 +31,31 @@ AstNode _$AstNodeFromJson(Map<String, dynamic> json) {
       return AppBarNode.fromJson(json);
 
     default:
-      throw CheckedFromJsonException(json, 'runtimeType', 'AstNode',
+      throw CheckedFromJsonException(json, 'runtimeType', 'LayoutNode',
           'Invalid union type "${json['runtimeType']}"!');
   }
 }
 
 /// @nodoc
-mixin _$AstNode {
+mixin _$LayoutNode {
   String? get id;
   String? get visibleWhen;
 
-  /// Create a copy of AstNode
+  /// Create a copy of LayoutNode
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $AstNodeCopyWith<AstNode> get copyWith =>
-      _$AstNodeCopyWithImpl<AstNode>(this as AstNode, _$identity);
+  $LayoutNodeCopyWith<LayoutNode> get copyWith =>
+      _$LayoutNodeCopyWithImpl<LayoutNode>(this as LayoutNode, _$identity);
 
-  /// Serializes this AstNode to a JSON map.
+  /// Serializes this LayoutNode to a JSON map.
   Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is AstNode &&
+            other is LayoutNode &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.visibleWhen, visibleWhen) ||
                 other.visibleWhen == visibleWhen));
@@ -67,26 +67,26 @@ mixin _$AstNode {
 
   @override
   String toString() {
-    return 'AstNode(id: $id, visibleWhen: $visibleWhen)';
+    return 'LayoutNode(id: $id, visibleWhen: $visibleWhen)';
   }
 }
 
 /// @nodoc
-abstract mixin class $AstNodeCopyWith<$Res> {
-  factory $AstNodeCopyWith(AstNode value, $Res Function(AstNode) _then) =
-      _$AstNodeCopyWithImpl;
+abstract mixin class $LayoutNodeCopyWith<$Res> {
+  factory $LayoutNodeCopyWith(LayoutNode value, $Res Function(LayoutNode) _then) =
+      _$LayoutNodeCopyWithImpl;
   @useResult
   $Res call({String? id, String? visibleWhen});
 }
 
 /// @nodoc
-class _$AstNodeCopyWithImpl<$Res> implements $AstNodeCopyWith<$Res> {
-  _$AstNodeCopyWithImpl(this._self, this._then);
+class _$LayoutNodeCopyWithImpl<$Res> implements $LayoutNodeCopyWith<$Res> {
+  _$LayoutNodeCopyWithImpl(this._self, this._then);
 
-  final AstNode _self;
-  final $Res Function(AstNode) _then;
+  final LayoutNode _self;
+  final $Res Function(LayoutNode) _then;
 
-  /// Create a copy of AstNode
+  /// Create a copy of LayoutNode
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -107,8 +107,8 @@ class _$AstNodeCopyWithImpl<$Res> implements $AstNodeCopyWith<$Res> {
   }
 }
 
-/// Adds pattern-matching-related methods to [AstNode].
-extension AstNodePatterns on AstNode {
+/// Adds pattern-matching-related methods to [LayoutNode].
+extension LayoutNodePatterns on LayoutNode {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -264,7 +264,7 @@ extension AstNodePatterns on AstNode {
     TResult Function(
             String? id,
             String? visibleWhen,
-            List<AstNode> children,
+            List<LayoutNode> children,
             MainAxisAlignment? mainAxisAlignment,
             CrossAxisAlignment? crossAxisAlignment,
             String? spacing)?
@@ -272,7 +272,7 @@ extension AstNodePatterns on AstNode {
     TResult Function(
             String? id,
             String? visibleWhen,
-            List<AstNode> children,
+            List<LayoutNode> children,
             MainAxisAlignment? mainAxisAlignment,
             CrossAxisAlignment? crossAxisAlignment,
             String? spacing)?
@@ -408,7 +408,7 @@ extension AstNodePatterns on AstNode {
     required TResult Function(
             String? id,
             String? visibleWhen,
-            List<AstNode> children,
+            List<LayoutNode> children,
             MainAxisAlignment? mainAxisAlignment,
             CrossAxisAlignment? crossAxisAlignment,
             String? spacing)
@@ -416,7 +416,7 @@ extension AstNodePatterns on AstNode {
     required TResult Function(
             String? id,
             String? visibleWhen,
-            List<AstNode> children,
+            List<LayoutNode> children,
             MainAxisAlignment? mainAxisAlignment,
             CrossAxisAlignment? crossAxisAlignment,
             String? spacing)
@@ -548,7 +548,7 @@ extension AstNodePatterns on AstNode {
     TResult? Function(
             String? id,
             String? visibleWhen,
-            List<AstNode> children,
+            List<LayoutNode> children,
             MainAxisAlignment? mainAxisAlignment,
             CrossAxisAlignment? crossAxisAlignment,
             String? spacing)?
@@ -556,7 +556,7 @@ extension AstNodePatterns on AstNode {
     TResult? Function(
             String? id,
             String? visibleWhen,
-            List<AstNode> children,
+            List<LayoutNode> children,
             MainAxisAlignment? mainAxisAlignment,
             CrossAxisAlignment? crossAxisAlignment,
             String? spacing)?
@@ -676,11 +676,11 @@ extension AstNodePatterns on AstNode {
 
 /// @nodoc
 @JsonSerializable()
-class ColumnNode implements AstNode {
+class ColumnNode implements LayoutNode {
   const ColumnNode(
       {this.id,
       this.visibleWhen,
-      required final List<AstNode> children,
+      required final List<LayoutNode> children,
       this.mainAxisAlignment,
       this.crossAxisAlignment,
       this.spacing,
@@ -694,8 +694,8 @@ class ColumnNode implements AstNode {
   final String? id;
   @override
   final String? visibleWhen;
-  final List<AstNode> _children;
-  List<AstNode> get children {
+  final List<LayoutNode> _children;
+  List<LayoutNode> get children {
     if (_children is EqualUnmodifiableListView) return _children;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_children);
@@ -708,7 +708,7 @@ class ColumnNode implements AstNode {
   @JsonKey(name: 'runtimeType')
   final String $type;
 
-  /// Create a copy of AstNode
+  /// Create a copy of LayoutNode
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -752,13 +752,13 @@ class ColumnNode implements AstNode {
 
   @override
   String toString() {
-    return 'AstNode.column(id: $id, visibleWhen: $visibleWhen, children: $children, mainAxisAlignment: $mainAxisAlignment, crossAxisAlignment: $crossAxisAlignment, spacing: $spacing)';
+    return 'LayoutNode.column(id: $id, visibleWhen: $visibleWhen, children: $children, mainAxisAlignment: $mainAxisAlignment, crossAxisAlignment: $crossAxisAlignment, spacing: $spacing)';
   }
 }
 
 /// @nodoc
 abstract mixin class $ColumnNodeCopyWith<$Res>
-    implements $AstNodeCopyWith<$Res> {
+    implements $LayoutNodeCopyWith<$Res> {
   factory $ColumnNodeCopyWith(
           ColumnNode value, $Res Function(ColumnNode) _then) =
       _$ColumnNodeCopyWithImpl;
@@ -767,7 +767,7 @@ abstract mixin class $ColumnNodeCopyWith<$Res>
   $Res call(
       {String? id,
       String? visibleWhen,
-      List<AstNode> children,
+      List<LayoutNode> children,
       MainAxisAlignment? mainAxisAlignment,
       CrossAxisAlignment? crossAxisAlignment,
       String? spacing});
@@ -780,7 +780,7 @@ class _$ColumnNodeCopyWithImpl<$Res> implements $ColumnNodeCopyWith<$Res> {
   final ColumnNode _self;
   final $Res Function(ColumnNode) _then;
 
-  /// Create a copy of AstNode
+  /// Create a copy of LayoutNode
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -804,7 +804,7 @@ class _$ColumnNodeCopyWithImpl<$Res> implements $ColumnNodeCopyWith<$Res> {
       children: null == children
           ? _self._children
           : children // ignore: cast_nullable_to_non_nullable
-              as List<AstNode>,
+              as List<LayoutNode>,
       mainAxisAlignment: freezed == mainAxisAlignment
           ? _self.mainAxisAlignment
           : mainAxisAlignment // ignore: cast_nullable_to_non_nullable
@@ -823,11 +823,11 @@ class _$ColumnNodeCopyWithImpl<$Res> implements $ColumnNodeCopyWith<$Res> {
 
 /// @nodoc
 @JsonSerializable()
-class RowNode implements AstNode {
+class RowNode implements LayoutNode {
   const RowNode(
       {this.id,
       this.visibleWhen,
-      required final List<AstNode> children,
+      required final List<LayoutNode> children,
       this.mainAxisAlignment,
       this.crossAxisAlignment,
       this.spacing,
@@ -841,8 +841,8 @@ class RowNode implements AstNode {
   final String? id;
   @override
   final String? visibleWhen;
-  final List<AstNode> _children;
-  List<AstNode> get children {
+  final List<LayoutNode> _children;
+  List<LayoutNode> get children {
     if (_children is EqualUnmodifiableListView) return _children;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_children);
@@ -855,7 +855,7 @@ class RowNode implements AstNode {
   @JsonKey(name: 'runtimeType')
   final String $type;
 
-  /// Create a copy of AstNode
+  /// Create a copy of LayoutNode
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -899,12 +899,12 @@ class RowNode implements AstNode {
 
   @override
   String toString() {
-    return 'AstNode.row(id: $id, visibleWhen: $visibleWhen, children: $children, mainAxisAlignment: $mainAxisAlignment, crossAxisAlignment: $crossAxisAlignment, spacing: $spacing)';
+    return 'LayoutNode.row(id: $id, visibleWhen: $visibleWhen, children: $children, mainAxisAlignment: $mainAxisAlignment, crossAxisAlignment: $crossAxisAlignment, spacing: $spacing)';
   }
 }
 
 /// @nodoc
-abstract mixin class $RowNodeCopyWith<$Res> implements $AstNodeCopyWith<$Res> {
+abstract mixin class $RowNodeCopyWith<$Res> implements $LayoutNodeCopyWith<$Res> {
   factory $RowNodeCopyWith(RowNode value, $Res Function(RowNode) _then) =
       _$RowNodeCopyWithImpl;
   @override
@@ -912,7 +912,7 @@ abstract mixin class $RowNodeCopyWith<$Res> implements $AstNodeCopyWith<$Res> {
   $Res call(
       {String? id,
       String? visibleWhen,
-      List<AstNode> children,
+      List<LayoutNode> children,
       MainAxisAlignment? mainAxisAlignment,
       CrossAxisAlignment? crossAxisAlignment,
       String? spacing});
@@ -925,7 +925,7 @@ class _$RowNodeCopyWithImpl<$Res> implements $RowNodeCopyWith<$Res> {
   final RowNode _self;
   final $Res Function(RowNode) _then;
 
-  /// Create a copy of AstNode
+  /// Create a copy of LayoutNode
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -949,7 +949,7 @@ class _$RowNodeCopyWithImpl<$Res> implements $RowNodeCopyWith<$Res> {
       children: null == children
           ? _self._children
           : children // ignore: cast_nullable_to_non_nullable
-              as List<AstNode>,
+              as List<LayoutNode>,
       mainAxisAlignment: freezed == mainAxisAlignment
           ? _self.mainAxisAlignment
           : mainAxisAlignment // ignore: cast_nullable_to_non_nullable
@@ -968,7 +968,7 @@ class _$RowNodeCopyWithImpl<$Res> implements $RowNodeCopyWith<$Res> {
 
 /// @nodoc
 @JsonSerializable()
-class TextNode implements AstNode {
+class TextNode implements LayoutNode {
   const TextNode(
       {this.id,
       this.visibleWhen,
@@ -995,7 +995,7 @@ class TextNode implements AstNode {
   @JsonKey(name: 'runtimeType')
   final String $type;
 
-  /// Create a copy of AstNode
+  /// Create a copy of LayoutNode
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1034,12 +1034,12 @@ class TextNode implements AstNode {
 
   @override
   String toString() {
-    return 'AstNode.text(id: $id, visibleWhen: $visibleWhen, text: $text, variant: $variant, align: $align, maxLines: $maxLines, overflow: $overflow)';
+    return 'LayoutNode.text(id: $id, visibleWhen: $visibleWhen, text: $text, variant: $variant, align: $align, maxLines: $maxLines, overflow: $overflow)';
   }
 }
 
 /// @nodoc
-abstract mixin class $TextNodeCopyWith<$Res> implements $AstNodeCopyWith<$Res> {
+abstract mixin class $TextNodeCopyWith<$Res> implements $LayoutNodeCopyWith<$Res> {
   factory $TextNodeCopyWith(TextNode value, $Res Function(TextNode) _then) =
       _$TextNodeCopyWithImpl;
   @override
@@ -1061,7 +1061,7 @@ class _$TextNodeCopyWithImpl<$Res> implements $TextNodeCopyWith<$Res> {
   final TextNode _self;
   final $Res Function(TextNode) _then;
 
-  /// Create a copy of AstNode
+  /// Create a copy of LayoutNode
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -1109,7 +1109,7 @@ class _$TextNodeCopyWithImpl<$Res> implements $TextNodeCopyWith<$Res> {
 
 /// @nodoc
 @JsonSerializable()
-class ButtonNode implements AstNode {
+class ButtonNode implements LayoutNode {
   const ButtonNode(
       {this.id,
       this.visibleWhen,
@@ -1144,7 +1144,7 @@ class ButtonNode implements AstNode {
   @JsonKey(name: 'runtimeType')
   final String $type;
 
-  /// Create a copy of AstNode
+  /// Create a copy of LayoutNode
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1201,13 +1201,13 @@ class ButtonNode implements AstNode {
 
   @override
   String toString() {
-    return 'AstNode.button(id: $id, visibleWhen: $visibleWhen, label: $label, onPressed: $onPressed, variant: $variant, size: $size, icon: $icon, iconPosition: $iconPosition, isLoading: $isLoading, isDisabled: $isDisabled, fullWidth: $fullWidth)';
+    return 'LayoutNode.button(id: $id, visibleWhen: $visibleWhen, label: $label, onPressed: $onPressed, variant: $variant, size: $size, icon: $icon, iconPosition: $iconPosition, isLoading: $isLoading, isDisabled: $isDisabled, fullWidth: $fullWidth)';
   }
 }
 
 /// @nodoc
 abstract mixin class $ButtonNodeCopyWith<$Res>
-    implements $AstNodeCopyWith<$Res> {
+    implements $LayoutNodeCopyWith<$Res> {
   factory $ButtonNodeCopyWith(
           ButtonNode value, $Res Function(ButtonNode) _then) =
       _$ButtonNodeCopyWithImpl;
@@ -1234,7 +1234,7 @@ class _$ButtonNodeCopyWithImpl<$Res> implements $ButtonNodeCopyWith<$Res> {
   final ButtonNode _self;
   final $Res Function(ButtonNode) _then;
 
-  /// Create a copy of AstNode
+  /// Create a copy of LayoutNode
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -1302,7 +1302,7 @@ class _$ButtonNodeCopyWithImpl<$Res> implements $ButtonNodeCopyWith<$Res> {
 
 /// @nodoc
 @JsonSerializable()
-class TextFieldNode implements AstNode {
+class TextFieldNode implements LayoutNode {
   const TextFieldNode(
       {this.id,
       this.visibleWhen,
@@ -1349,7 +1349,7 @@ class TextFieldNode implements AstNode {
   @JsonKey(name: 'runtimeType')
   final String $type;
 
-  /// Create a copy of AstNode
+  /// Create a copy of LayoutNode
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1424,13 +1424,13 @@ class TextFieldNode implements AstNode {
 
   @override
   String toString() {
-    return 'AstNode.textField(id: $id, visibleWhen: $visibleWhen, label: $label, hint: $hint, helperText: $helperText, binding: $binding, onChanged: $onChanged, onSubmitted: $onSubmitted, prefixIcon: $prefixIcon, suffixIcon: $suffixIcon, keyboardType: $keyboardType, textInputAction: $textInputAction, obscureText: $obscureText, errorText: $errorText, maxLines: $maxLines, maxLength: $maxLength, variant: $variant)';
+    return 'LayoutNode.textField(id: $id, visibleWhen: $visibleWhen, label: $label, hint: $hint, helperText: $helperText, binding: $binding, onChanged: $onChanged, onSubmitted: $onSubmitted, prefixIcon: $prefixIcon, suffixIcon: $suffixIcon, keyboardType: $keyboardType, textInputAction: $textInputAction, obscureText: $obscureText, errorText: $errorText, maxLines: $maxLines, maxLength: $maxLength, variant: $variant)';
   }
 }
 
 /// @nodoc
 abstract mixin class $TextFieldNodeCopyWith<$Res>
-    implements $AstNodeCopyWith<$Res> {
+    implements $LayoutNodeCopyWith<$Res> {
   factory $TextFieldNodeCopyWith(
           TextFieldNode value, $Res Function(TextFieldNode) _then) =
       _$TextFieldNodeCopyWithImpl;
@@ -1464,7 +1464,7 @@ class _$TextFieldNodeCopyWithImpl<$Res>
   final TextFieldNode _self;
   final $Res Function(TextFieldNode) _then;
 
-  /// Create a copy of AstNode
+  /// Create a copy of LayoutNode
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -1562,7 +1562,7 @@ class _$TextFieldNodeCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class IconNode implements AstNode {
+class IconNode implements LayoutNode {
   const IconNode(
       {this.id,
       this.visibleWhen,
@@ -1585,7 +1585,7 @@ class IconNode implements AstNode {
   @JsonKey(name: 'runtimeType')
   final String $type;
 
-  /// Create a copy of AstNode
+  /// Create a copy of LayoutNode
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1621,12 +1621,12 @@ class IconNode implements AstNode {
 
   @override
   String toString() {
-    return 'AstNode.icon(id: $id, visibleWhen: $visibleWhen, name: $name, size: $size, semantic: $semantic)';
+    return 'LayoutNode.icon(id: $id, visibleWhen: $visibleWhen, name: $name, size: $size, semantic: $semantic)';
   }
 }
 
 /// @nodoc
-abstract mixin class $IconNodeCopyWith<$Res> implements $AstNodeCopyWith<$Res> {
+abstract mixin class $IconNodeCopyWith<$Res> implements $LayoutNodeCopyWith<$Res> {
   factory $IconNodeCopyWith(IconNode value, $Res Function(IconNode) _then) =
       _$IconNodeCopyWithImpl;
   @override
@@ -1646,7 +1646,7 @@ class _$IconNodeCopyWithImpl<$Res> implements $IconNodeCopyWith<$Res> {
   final IconNode _self;
   final $Res Function(IconNode) _then;
 
-  /// Create a copy of AstNode
+  /// Create a copy of LayoutNode
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -1684,7 +1684,7 @@ class _$IconNodeCopyWithImpl<$Res> implements $IconNodeCopyWith<$Res> {
 
 /// @nodoc
 @JsonSerializable()
-class SpacerNode implements AstNode {
+class SpacerNode implements LayoutNode {
   const SpacerNode(
       {this.id, this.visibleWhen, this.size, this.flex, final String? $type})
       : $type = $type ?? 'spacer';
@@ -1701,7 +1701,7 @@ class SpacerNode implements AstNode {
   @JsonKey(name: 'runtimeType')
   final String $type;
 
-  /// Create a copy of AstNode
+  /// Create a copy of LayoutNode
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1734,13 +1734,13 @@ class SpacerNode implements AstNode {
 
   @override
   String toString() {
-    return 'AstNode.spacer(id: $id, visibleWhen: $visibleWhen, size: $size, flex: $flex)';
+    return 'LayoutNode.spacer(id: $id, visibleWhen: $visibleWhen, size: $size, flex: $flex)';
   }
 }
 
 /// @nodoc
 abstract mixin class $SpacerNodeCopyWith<$Res>
-    implements $AstNodeCopyWith<$Res> {
+    implements $LayoutNodeCopyWith<$Res> {
   factory $SpacerNodeCopyWith(
           SpacerNode value, $Res Function(SpacerNode) _then) =
       _$SpacerNodeCopyWithImpl;
@@ -1756,7 +1756,7 @@ class _$SpacerNodeCopyWithImpl<$Res> implements $SpacerNodeCopyWith<$Res> {
   final SpacerNode _self;
   final $Res Function(SpacerNode) _then;
 
-  /// Create a copy of AstNode
+  /// Create a copy of LayoutNode
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -1789,7 +1789,7 @@ class _$SpacerNodeCopyWithImpl<$Res> implements $SpacerNodeCopyWith<$Res> {
 
 /// @nodoc
 @JsonSerializable()
-class AppBarNode implements AstNode {
+class AppBarNode implements LayoutNode {
   const AppBarNode(
       {this.id,
       this.visibleWhen,
@@ -1822,7 +1822,7 @@ class AppBarNode implements AstNode {
   @JsonKey(name: 'runtimeType')
   final String $type;
 
-  /// Create a copy of AstNode
+  /// Create a copy of LayoutNode
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1866,13 +1866,13 @@ class AppBarNode implements AstNode {
 
   @override
   String toString() {
-    return 'AstNode.appBar(id: $id, visibleWhen: $visibleWhen, title: $title, leadingIcon: $leadingIcon, leadingAction: $leadingAction, actions: $actions)';
+    return 'LayoutNode.appBar(id: $id, visibleWhen: $visibleWhen, title: $title, leadingIcon: $leadingIcon, leadingAction: $leadingAction, actions: $actions)';
   }
 }
 
 /// @nodoc
 abstract mixin class $AppBarNodeCopyWith<$Res>
-    implements $AstNodeCopyWith<$Res> {
+    implements $LayoutNodeCopyWith<$Res> {
   factory $AppBarNodeCopyWith(
           AppBarNode value, $Res Function(AppBarNode) _then) =
       _$AppBarNodeCopyWithImpl;
@@ -1894,7 +1894,7 @@ class _$AppBarNodeCopyWithImpl<$Res> implements $AppBarNodeCopyWith<$Res> {
   final AppBarNode _self;
   final $Res Function(AppBarNode) _then;
 
-  /// Create a copy of AstNode
+  /// Create a copy of LayoutNode
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')

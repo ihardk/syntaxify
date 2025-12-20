@@ -3,45 +3,45 @@ import 'package:syntaxify/syntaxify.dart';
 /// Registration screen definition
 final registerScreen = ScreenDefinition(
   id: 'register',
-  appBar: AstNode.appBar(title: 'Create Account'),
-  layout: AstNode.column(
+  appBar: LayoutNode.appBar(title: 'Create Account'),
+  layout: LayoutNode.column(
     children: [
-      AstNode.text(
+      LayoutNode.text(
         text: 'Join Us Today',
         variant: TextVariant.headlineMedium,
       ),
-      AstNode.text(
+      LayoutNode.text(
         text: 'Create your account to get started',
         variant: TextVariant.bodyMedium,
       ),
-      AstNode.spacer(size: SpacerSize.lg),
-      AstNode.textField(
+      LayoutNode.spacer(size: SpacerSize.lg),
+      LayoutNode.textField(
         label: 'Full Name',
         hint: 'Enter your full name',
       ),
-      AstNode.textField(
+      LayoutNode.textField(
         label: 'Email',
         hint: 'Enter your email',
         keyboardType: KeyboardType.email,
       ),
-      AstNode.textField(
+      LayoutNode.textField(
         label: 'Password',
         hint: 'Create a password',
         obscureText: true,
       ),
-      AstNode.textField(
+      LayoutNode.textField(
         label: 'Confirm Password',
         hint: 'Confirm your password',
         obscureText: true,
       ),
-      AstNode.spacer(size: SpacerSize.lg),
-      AstNode.button(
+      LayoutNode.spacer(size: SpacerSize.lg),
+      LayoutNode.button(
         label: 'Create Account',
         variant: ButtonVariant.filled,
         onPressed: 'handleRegister',
       ),
-      AstNode.spacer(size: SpacerSize.md),
-      AstNode.button(
+      LayoutNode.spacer(size: SpacerSize.md),
+      LayoutNode.button(
         label: 'Already have an account? Sign In',
         variant: ButtonVariant.text,
         onPressed: 'navigateToLogin',

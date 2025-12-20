@@ -1,14 +1,14 @@
 import 'package:analyzer/dart/ast/ast.dart' as analyzer;
 import 'package:syntaxify/src/models/ast/nodes.dart';
 
-/// Helper class to parse Dart AST expressions into Syntaxify AST nodes.
-class AstNodeParser {
-  const AstNodeParser();
+/// Helper class to parse Dart AST expressions into Syntaxify layout nodes.
+class LayoutNodeParser {
+  const LayoutNodeParser();
 
   ScreenDefinition parseScreenFromExpression(
       analyzer.Expression expression, String varName) {
     String? id;
-    AstNode? layout;
+    LayoutNode? layout;
     AppBarNode? appBar;
 
     analyzer.ArgumentList? argumentList;
@@ -30,7 +30,7 @@ class AstNodeParser {
         if (name == 'id') {
           id = (exp as analyzer.StringLiteral).stringValue;
         } else if (name == 'layout') {
-          layout = parseAstNode(exp);
+          layout = parseLayoutNode(exp);
         } else if (name == 'appBar') {
           appBar = parseAppBar(exp);
         }
@@ -39,12 +39,12 @@ class AstNodeParser {
 
     return ScreenDefinition(
       id: id ?? varName,
-      layout: layout ?? AstNode.column(children: []),
+      layout: layout ?? LayoutNode.column(children: []),
       appBar: appBar,
     );
   }
 
-  AstNode parseAstNode(analyzer.Expression expression) {
+  LayoutNode parseLayoutNode(analyzer.Expression expression) {
     String? typeName;
     String? constructorName;
     analyzer.ArgumentList? argumentList;
@@ -62,7 +62,7 @@ class AstNodeParser {
       argumentList = expression.argumentList;
     }
 
-    if (typeName == 'AstNode' && argumentList != null) {
+    if (typeName == 'LayoutNode' && argumentList != null) {
       analyzer.Expression? getArg(String name) {
         return argumentList!.arguments
             .whereType<analyzer.NamedExpression>()
@@ -72,9 +72,9 @@ class AstNodeParser {
       }
 
       if (constructorName == 'column') {
-        return AstNode.column(children: _parseChildren(getArg('children')));
+        return LayoutNode.column(children: _parseChildren(getArg('children')));
       } else if (constructorName == 'row') {
-        return AstNode.row(children: _parseChildren(getArg('children')));
+        return LayoutNode.row(children: _parseChildren(getArg('children')));
       } else if (constructorName == 'text') {
         final textExp = getArg('text');
         final text =
@@ -83,7 +83,7 @@ class AstNodeParser {
         final variantExp = tryGetArg(argumentList, 'variant');
         final variant = _parseTextVariant(variantExp);
 
-        return AstNode.text(text: text ?? '', variant: variant);
+        return LayoutNode.text(text: text ?? '', variant: variant);
       } else if (constructorName == 'button') {
         // P0 Properties Implementation
         final labelExp = getArg('label');
@@ -111,7 +111,7 @@ class AstNodeParser {
             ? isDisabledExp.value
             : null;
 
-        return AstNode.button(
+        return LayoutNode.button(
           label: label ?? '',
           variant: variant,
           size: size,
@@ -126,7 +126,7 @@ class AstNodeParser {
         final obscureExp = tryGetArg(argumentList, 'obscureText');
         final inputTypeExp = tryGetArg(argumentList, 'keyboardType');
 
-        return AstNode.textField(
+        return LayoutNode.textField(
           label: (labelExp as analyzer.StringLiteral).stringValue ?? '',
           hint:
               (hintExp is analyzer.StringLiteral) ? hintExp.stringValue : null,
@@ -139,11 +139,11 @@ class AstNodeParser {
         final flexExp = tryGetArg(argumentList, 'flex');
         final flex =
             (flexExp is analyzer.IntegerLiteral) ? flexExp.value : null;
-        return AstNode.spacer(flex: flex);
+        return LayoutNode.spacer(flex: flex);
       }
     }
 
-    return AstNode.column(children: []);
+    return LayoutNode.column(children: []);
   }
 
   analyzer.Expression? tryGetArg(analyzer.ArgumentList args, String name) {
@@ -190,14 +190,14 @@ class AstNodeParser {
     return defaultValue;
   }
 
-  List<AstNode> _parseChildren(analyzer.Expression? expression) {
+  List<LayoutNode> _parseChildren(analyzer.Expression? expression) {
     if (expression is analyzer.ListLiteral) {
       return expression.elements
           .map((e) {
-            if (e is analyzer.Expression) return parseAstNode(e);
+            if (e is analyzer.Expression) return parseLayoutNode(e);
             return null;
           })
-          .whereType<AstNode>()
+          .whereType<LayoutNode>()
           .toList();
     }
     return [];

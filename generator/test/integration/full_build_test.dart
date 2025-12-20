@@ -116,10 +116,10 @@ void main() {
       final screens = [
         ScreenDefinition(
           id: 'login',
-          layout: AstNode.column(
+          layout: LayoutNode.column(
             children: [
-              AstNode.text(text: 'Welcome'),
-              AstNode.button(label: 'Login', onPressed: 'handleLogin'),
+              LayoutNode.text(text: 'Welcome'),
+              LayoutNode.button(label: 'Login', onPressed: 'handleLogin'),
             ],
           ),
         ),
@@ -152,9 +152,9 @@ void main() {
       final screens = [
         ScreenDefinition(
           id: 'home',
-          layout: AstNode.column(
+          layout: LayoutNode.column(
             children: [
-              AstNode.text(text: 'Home'),
+              LayoutNode.text(text: 'Home'),
             ],
           ),
         ),
@@ -235,7 +235,7 @@ void main() {
       final screens = [
         ScreenDefinition(
           id: '',  // Empty ID
-          layout: AstNode.column(children: []),
+          layout: LayoutNode.column(children: []),
         ),
       ];
 
@@ -324,9 +324,9 @@ void main() {
         5,
         (i) => ScreenDefinition(
           id: 'screen$i',
-          layout: AstNode.column(
+          layout: LayoutNode.column(
             children: [
-              AstNode.text(text: 'Screen $i'),
+              LayoutNode.text(text: 'Screen $i'),
             ],
           ),
         ),
@@ -383,7 +383,7 @@ void main() {
     test('subsequent builds preserve existing screen files', () async {
       final screen = ScreenDefinition(
         id: 'existing',
-        layout: AstNode.column(children: []),
+        layout: LayoutNode.column(children: []),
       );
 
       // Pre-create the screen file with custom content
@@ -443,20 +443,20 @@ void main() {
       final screens = [
         ScreenDefinition(
           id: 'complex',
-          layout: AstNode.column(
+          layout: LayoutNode.column(
             children: [
-              AstNode.row(
+              LayoutNode.row(
                 children: [
-                  AstNode.column(
+                  LayoutNode.column(
                     children: [
-                      AstNode.text(text: 'Deep 1'),
-                      AstNode.text(text: 'Deep 2'),
+                      LayoutNode.text(text: 'Deep 1'),
+                      LayoutNode.text(text: 'Deep 2'),
                     ],
                   ),
-                  AstNode.column(
+                  LayoutNode.column(
                     children: [
-                      AstNode.button(label: 'Action 1', onPressed: 'onAction1'),
-                      AstNode.button(label: 'Action 2', onPressed: 'onAction2'),
+                      LayoutNode.button(label: 'Action 1', onPressed: 'onAction1'),
+                      LayoutNode.button(label: 'Action 2', onPressed: 'onAction2'),
                     ],
                   ),
                 ],

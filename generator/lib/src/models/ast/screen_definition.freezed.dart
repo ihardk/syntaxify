@@ -15,8 +15,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ScreenDefinition {
   String get id;
-  AstNode get layout;
-  AstNode? get appBar;
+  LayoutNode get layout;
+  LayoutNode? get appBar;
   String? get padding;
 
   /// Create a copy of ScreenDefinition
@@ -57,10 +57,10 @@ abstract mixin class $ScreenDefinitionCopyWith<$Res> {
           ScreenDefinition value, $Res Function(ScreenDefinition) _then) =
       _$ScreenDefinitionCopyWithImpl;
   @useResult
-  $Res call({String id, AstNode layout, AstNode? appBar, String? padding});
+  $Res call({String id, LayoutNode layout, LayoutNode? appBar, String? padding});
 
-  $AstNodeCopyWith<$Res> get layout;
-  $AstNodeCopyWith<$Res>? get appBar;
+  $LayoutNodeCopyWith<$Res> get layout;
+  $LayoutNodeCopyWith<$Res>? get appBar;
 }
 
 /// @nodoc
@@ -89,11 +89,11 @@ class _$ScreenDefinitionCopyWithImpl<$Res>
       layout: null == layout
           ? _self.layout
           : layout // ignore: cast_nullable_to_non_nullable
-              as AstNode,
+              as LayoutNode,
       appBar: freezed == appBar
           ? _self.appBar
           : appBar // ignore: cast_nullable_to_non_nullable
-              as AstNode?,
+              as LayoutNode?,
       padding: freezed == padding
           ? _self.padding
           : padding // ignore: cast_nullable_to_non_nullable
@@ -105,8 +105,8 @@ class _$ScreenDefinitionCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AstNodeCopyWith<$Res> get layout {
-    return $AstNodeCopyWith<$Res>(_self.layout, (value) {
+  $LayoutNodeCopyWith<$Res> get layout {
+    return $LayoutNodeCopyWith<$Res>(_self.layout, (value) {
       return _then(_self.copyWith(layout: value));
     });
   }
@@ -115,12 +115,12 @@ class _$ScreenDefinitionCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AstNodeCopyWith<$Res>? get appBar {
+  $LayoutNodeCopyWith<$Res>? get appBar {
     if (_self.appBar == null) {
       return null;
     }
 
-    return $AstNodeCopyWith<$Res>(_self.appBar!, (value) {
+    return $LayoutNodeCopyWith<$Res>(_self.appBar!, (value) {
       return _then(_self.copyWith(appBar: value));
     });
   }
@@ -218,7 +218,7 @@ extension ScreenDefinitionPatterns on ScreenDefinition {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
-            String id, AstNode layout, AstNode? appBar, String? padding)?
+            String id, LayoutNode layout, LayoutNode? appBar, String? padding)?
         $default, {
     required TResult orElse(),
   }) {
@@ -247,7 +247,7 @@ extension ScreenDefinitionPatterns on ScreenDefinition {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
-            String id, AstNode layout, AstNode? appBar, String? padding)
+            String id, LayoutNode layout, LayoutNode? appBar, String? padding)
         $default,
   ) {
     final _that = this;
@@ -272,7 +272,7 @@ extension ScreenDefinitionPatterns on ScreenDefinition {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
-            String id, AstNode layout, AstNode? appBar, String? padding)?
+            String id, LayoutNode layout, LayoutNode? appBar, String? padding)?
         $default,
   ) {
     final _that = this;
@@ -296,9 +296,9 @@ class _ScreenDefinition implements ScreenDefinition {
   @override
   final String id;
   @override
-  final AstNode layout;
+  final LayoutNode layout;
   @override
-  final AstNode? appBar;
+  final LayoutNode? appBar;
   @override
   final String? padding;
 
@@ -346,12 +346,12 @@ abstract mixin class _$ScreenDefinitionCopyWith<$Res>
       __$ScreenDefinitionCopyWithImpl;
   @override
   @useResult
-  $Res call({String id, AstNode layout, AstNode? appBar, String? padding});
+  $Res call({String id, LayoutNode layout, LayoutNode? appBar, String? padding});
 
   @override
-  $AstNodeCopyWith<$Res> get layout;
+  $LayoutNodeCopyWith<$Res> get layout;
   @override
-  $AstNodeCopyWith<$Res>? get appBar;
+  $LayoutNodeCopyWith<$Res>? get appBar;
 }
 
 /// @nodoc
@@ -380,11 +380,11 @@ class __$ScreenDefinitionCopyWithImpl<$Res>
       layout: null == layout
           ? _self.layout
           : layout // ignore: cast_nullable_to_non_nullable
-              as AstNode,
+              as LayoutNode,
       appBar: freezed == appBar
           ? _self.appBar
           : appBar // ignore: cast_nullable_to_non_nullable
-              as AstNode?,
+              as LayoutNode?,
       padding: freezed == padding
           ? _self.padding
           : padding // ignore: cast_nullable_to_non_nullable
@@ -396,8 +396,8 @@ class __$ScreenDefinitionCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AstNodeCopyWith<$Res> get layout {
-    return $AstNodeCopyWith<$Res>(_self.layout, (value) {
+  $LayoutNodeCopyWith<$Res> get layout {
+    return $LayoutNodeCopyWith<$Res>(_self.layout, (value) {
       return _then(_self.copyWith(layout: value));
     });
   }
@@ -406,12 +406,12 @@ class __$ScreenDefinitionCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AstNodeCopyWith<$Res>? get appBar {
+  $LayoutNodeCopyWith<$Res>? get appBar {
     if (_self.appBar == null) {
       return null;
     }
 
-    return $AstNodeCopyWith<$Res>(_self.appBar!, (value) {
+    return $LayoutNodeCopyWith<$Res>(_self.appBar!, (value) {
       return _then(_self.copyWith(appBar: value));
     });
   }

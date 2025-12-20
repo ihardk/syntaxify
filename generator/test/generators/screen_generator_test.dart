@@ -12,10 +12,10 @@ void main() {
       final screen = ScreenDefinition(
         id: 'login',
         appBar: AppBarNode(title: 'Login'),
-        layout: AstNode.column(
+        layout: LayoutNode.column(
           children: [
-            AstNode.text(text: 'Welcome'),
-            AstNode.button(label: 'Sign In', variant: ButtonVariant.filled),
+            LayoutNode.text(text: 'Welcome'),
+            LayoutNode.button(label: 'Sign In', variant: ButtonVariant.filled),
           ],
         ),
       );
@@ -56,7 +56,7 @@ void main() {
     test('generates screen without AppBar', () {
       final screen = ScreenDefinition(
         id: 'splash',
-        layout: AstNode.text(text: 'Loading...'),
+        layout: LayoutNode.text(text: 'Loading...'),
       );
 
       final code = generator.generate(screen);

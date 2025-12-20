@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ast_node.dart';
+part of 'layout_node.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -10,7 +10,7 @@ ColumnNode _$ColumnNodeFromJson(Map<String, dynamic> json) => ColumnNode(
       id: json['id'] as String?,
       visibleWhen: json['visibleWhen'] as String?,
       children: (json['children'] as List<dynamic>)
-          .map((e) => AstNode.fromJson(e as Map<String, dynamic>))
+          .map((e) => LayoutNode.fromJson(e as Map<String, dynamic>))
           .toList(),
       mainAxisAlignment: $enumDecodeNullable(
           _$MainAxisAlignmentEnumMap, json['mainAxisAlignment']),
@@ -53,7 +53,7 @@ RowNode _$RowNodeFromJson(Map<String, dynamic> json) => RowNode(
       id: json['id'] as String?,
       visibleWhen: json['visibleWhen'] as String?,
       children: (json['children'] as List<dynamic>)
-          .map((e) => AstNode.fromJson(e as Map<String, dynamic>))
+          .map((e) => LayoutNode.fromJson(e as Map<String, dynamic>))
           .toList(),
       mainAxisAlignment: $enumDecodeNullable(
           _$MainAxisAlignmentEnumMap, json['mainAxisAlignment']),

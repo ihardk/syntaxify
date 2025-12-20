@@ -23,9 +23,9 @@ void main() {
         // Arrange
         final screen = ScreenDefinition(
           id: 'login',
-          layout: AstNode.column(
+          layout: LayoutNode.column(
             children: [
-              AstNode.text(text: 'Welcome'),
+              LayoutNode.text(text: 'Welcome'),
             ],
           ),
         );
@@ -44,7 +44,7 @@ void main() {
       test('generates correct file name from screen id', () async {
         final screen = ScreenDefinition(
           id: 'profile',
-          layout: AstNode.column(children: []),
+          layout: LayoutNode.column(children: []),
         );
 
         final filePath = await useCase.execute(
@@ -58,7 +58,7 @@ void main() {
       test('creates screens directory if it doesn\'t exist', () async {
         final screen = ScreenDefinition(
           id: 'home',
-          layout: AstNode.column(children: []),
+          layout: LayoutNode.column(children: []),
         );
 
         await useCase.execute(
@@ -73,10 +73,10 @@ void main() {
       test('writes valid Dart code to file', () async {
         final screen = ScreenDefinition(
           id: 'login',
-          layout: AstNode.column(
+          layout: LayoutNode.column(
             children: [
-              AstNode.text(text: 'Login'),
-              AstNode.button(label: 'Submit', onPressed: 'handleSubmit'),
+              LayoutNode.text(text: 'Login'),
+              LayoutNode.button(label: 'Submit', onPressed: 'handleSubmit'),
             ],
           ),
         );
@@ -96,10 +96,10 @@ void main() {
       test('includes callbacks from button nodes', () async {
         final screen = ScreenDefinition(
           id: 'profile',
-          layout: AstNode.column(
+          layout: LayoutNode.column(
             children: [
-              AstNode.button(label: 'Logout', onPressed: 'handleLogout'),
-              AstNode.button(label: 'Settings', onPressed: 'handleSettings'),
+              LayoutNode.button(label: 'Logout', onPressed: 'handleLogout'),
+              LayoutNode.button(label: 'Settings', onPressed: 'handleSettings'),
             ],
           ),
         );
@@ -118,11 +118,11 @@ void main() {
       test('generates screen with app bar', () async {
         final screen = ScreenDefinition(
           id: 'home',
-          appBar: AstNode.appBar(
+          appBar: LayoutNode.appBar(
             title: 'Home',
             actions: const [],
           ),
-          layout: AstNode.column(children: []),
+          layout: LayoutNode.column(children: []),
         );
 
         await useCase.execute(
@@ -138,8 +138,8 @@ void main() {
       test('generates screen without app bar', () async {
         final screen = ScreenDefinition(
           id: 'splash',
-          layout: AstNode.column(children: [
-            AstNode.text(text: 'Loading...'),
+          layout: LayoutNode.column(children: [
+            LayoutNode.text(text: 'Loading...'),
           ]),
         );
 
@@ -156,18 +156,18 @@ void main() {
       test('handles nested layout', () async {
         final screen = ScreenDefinition(
           id: 'complex',
-          layout: AstNode.column(
+          layout: LayoutNode.column(
             children: [
-              AstNode.row(
+              LayoutNode.row(
                 children: [
-                  AstNode.text(text: 'Left'),
-                  AstNode.text(text: 'Right'),
+                  LayoutNode.text(text: 'Left'),
+                  LayoutNode.text(text: 'Right'),
                 ],
               ),
-              AstNode.column(
+              LayoutNode.column(
                 children: [
-                  AstNode.button(label: 'Action1', onPressed: 'onAction1'),
-                  AstNode.button(label: 'Action2', onPressed: 'onAction2'),
+                  LayoutNode.button(label: 'Action1', onPressed: 'onAction1'),
+                  LayoutNode.button(label: 'Action2', onPressed: 'onAction2'),
                 ],
               ),
             ],
@@ -187,9 +187,9 @@ void main() {
       test('includes text field callbacks', () async {
         final screen = ScreenDefinition(
           id: 'form',
-          layout: AstNode.column(
+          layout: LayoutNode.column(
             children: [
-              AstNode.textField(
+              LayoutNode.textField(
                 label: 'Email',
                 onChanged: 'handleEmailChanged',
               ),
@@ -210,7 +210,7 @@ void main() {
       test('does not overwrite existing screen file', () async {
         final screen = ScreenDefinition(
           id: 'existing',
-          layout: AstNode.column(children: []),
+          layout: LayoutNode.column(children: []),
         );
 
         // Pre-create the file
@@ -232,12 +232,12 @@ void main() {
       test('generates multiple different screens', () async {
         final login = ScreenDefinition(
           id: 'login',
-          layout: AstNode.column(children: []),
+          layout: LayoutNode.column(children: []),
         );
 
         final profile = ScreenDefinition(
           id: 'profile',
-          layout: AstNode.column(children: []),
+          layout: LayoutNode.column(children: []),
         );
 
         await useCase.execute(screen: login, outputDir: '/output');
@@ -250,11 +250,11 @@ void main() {
       test('handles screen with spacer nodes', () async {
         final screen = ScreenDefinition(
           id: 'spaced',
-          layout: AstNode.column(
+          layout: LayoutNode.column(
             children: [
-              AstNode.text(text: 'Title'),
-              AstNode.spacer(height: 24),
-              AstNode.text(text: 'Subtitle'),
+              LayoutNode.text(text: 'Title'),
+              LayoutNode.spacer(height: 24),
+              LayoutNode.text(text: 'Subtitle'),
             ],
           ),
         );
@@ -272,9 +272,9 @@ void main() {
       test('handles screen with image nodes', () async {
         final screen = ScreenDefinition(
           id: 'gallery',
-          layout: AstNode.column(
+          layout: LayoutNode.column(
             children: [
-              AstNode.image(
+              LayoutNode.image(
                 path: 'assets/logo.png',
                 width: 200,
                 height: 200,
