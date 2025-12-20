@@ -38,7 +38,7 @@ final loginScreen = ScreenDefinition(
 
 ![Syntaxify Demo](https://raw.githubusercontent.com/ihardk/syntaxify/main/generator/assets/example.gif)
 
-**Check out the [example app](../example/)** - A working Flutter app demonstrating all features with live style switching!
+**Check out the [example app](https://github.com/ihardk/syntaxify/tree/main/generator/example)** - A working Flutter app demonstrating all features with live style switching!
 
 ```bash
 cd example && flutter run
@@ -478,7 +478,7 @@ your_project/
 
 ## 📖 API Reference
 
-For detailed API documentation, see **[API Reference](docs/api-reference.md)**.
+For detailed API documentation, see **[API Reference](https://github.com/ihardk/syntaxify/blob/main/generator/docs/api-reference.md)**.
 
 **Quick Overview:**
 
@@ -546,14 +546,14 @@ class LoginScreen extends StatelessWidget {
 
 For advanced topics, see the detailed documentation:
 
-- **[Design System Guide](docs/design-system.md)** - Creating custom design styles, renderer pattern
-- **[API Reference](docs/api-reference.md)** - Build options, CLI commands
+- **[Design System Guide](https://github.com/ihardk/syntaxify/blob/main/generator/docs/design-system.md)** - Creating custom design styles, renderer pattern
+- **[API Reference](https://github.com/ihardk/syntaxify/blob/main/generator/docs/api-reference.md)** - Build options, CLI commands
 
 ---
 
 ## 🐛 Troubleshooting
 
-Having issues? See **[Troubleshooting Guide](docs/troubleshooting.md)** for common errors and solutions.
+Having issues? See **[Troubleshooting Guide](https://github.com/ihardk/syntaxify/blob/main/generator/docs/troubleshooting.md)** for common errors and solutions.
 
 **Quick fixes:**
 - `TextVariant.headline` → Use `TextVariant.headlineMedium`
@@ -605,24 +605,24 @@ Having issues? See **[Troubleshooting Guide](docs/troubleshooting.md)** for comm
 
 ## 📚 Documentation
 
-| Guide                                        | Description                      |
-| -------------------------------------------- | -------------------------------- |
-| [Getting Started](docs/getting_started.md)   | Installation & first steps       |
-| [API Reference](docs/api-reference.md)       | Component usage & options        |
-| [Design System](docs/design-system.md)       | Renderer pattern & custom styles |
-| [Troubleshooting](docs/troubleshooting.md)   | Common issues & solutions        |
-| [User Manual](docs/user_manual.md)           | Comprehensive user guide         |
-| [Developer Manual](docs/developer_manual.md) | Architecture & contributing      |
+| Guide                                                                                                | Description                      |
+| ---------------------------------------------------------------------------------------------------- | -------------------------------- |
+| [Getting Started](https://github.com/ihardk/syntaxify/blob/main/generator/docs/getting_started.md)   | Installation & first steps       |
+| [API Reference](https://github.com/ihardk/syntaxify/blob/main/generator/docs/api-reference.md)       | Component usage & options        |
+| [Design System](https://github.com/ihardk/syntaxify/blob/main/generator/docs/design-system.md)       | Renderer pattern & custom styles |
+| [Troubleshooting](https://github.com/ihardk/syntaxify/blob/main/generator/docs/troubleshooting.md)   | Common issues & solutions        |
+| [User Manual](https://github.com/ihardk/syntaxify/blob/main/generator/docs/user_manual.md)           | Comprehensive user guide         |
+| [Developer Manual](https://github.com/ihardk/syntaxify/blob/main/generator/docs/developer_manual.md) | Architecture & contributing      |
 
 ---
 
 ## 🤝 Contributing
 
-See [Developer Manual](docs/developer_manual.md) for architecture details and contribution guidelines.
+See [Developer Manual](https://github.com/ihardk/syntaxify/blob/main/generator/docs/developer_manual.md) for architecture details and contribution guidelines.
 
 ## 📄 License
 
-MIT License - See [LICENSE](LICENSE) for details
+MIT License - See [LICENSE](https://github.com/ihardk/syntaxify/blob/main/generator/LICENSE) for details
 
 ---
 
