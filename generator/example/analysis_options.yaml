@@ -9,11 +9,26 @@ analyzer:
     implicit-dynamic: false
 
   errors:
-    # Syntaxify custom lints - treat as errors
+    # Syntaxify custom lints - Empty values
     empty_button_label: error
-    invalid_callback_name: error
     empty_text_content: error
+    empty_icon_name: error
+    empty_appbar_title: warning
+
+    # Container checks
     empty_container: warning
+
+    # Identifier validation
+    invalid_callback_name: error
+
+    # Number validation
+    negative_number_value: error
+
+    # Property conflicts
+    conflicting_properties: info
+
+    # Missing fields
+    missing_textfield_label: warning
 
 linter:
   rules:

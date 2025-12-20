@@ -10,9 +10,25 @@ PluginBase createPlugin() => _SyntaxifyLintPlugin();
 class _SyntaxifyLintPlugin extends PluginBase {
   @override
   List<LintRule> getLintRules(CustomLintConfigs configs) => [
+        // Empty value checks
         EmptyButtonLabelLint(),
-        InvalidCallbackNameLint(),
         EmptyTextContentLint(),
+        EmptyIconNameLint(),
+        EmptyAppBarTitleLint(),
+
+        // Container checks
         EmptyContainerLint(),
+
+        // Identifier validation
+        InvalidCallbackNameLint(),
+
+        // Number validation
+        NegativeNumberLint(),
+
+        // Property conflicts
+        ConflictingPropertiesLint(),
+
+        // Missing required fields
+        MissingTextFieldLabelLint(),
       ];
 }

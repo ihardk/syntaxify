@@ -189,6 +189,225 @@ bool _isLayoutNodeMethod(MethodInvocation node, String methodName) {
   return false;
 }
 
+/// Lint rule that checks for negative numbers where positive values are expected.
+///
+/// Shows an error when properties like maxLines, maxLength, or flex have negative values.
+class NegativeNumberLint extends DartLintRule {
+  const NegativeNumberLint() : super(code: _code);
+
+  static const _code = LintCode(
+    name: 'negative_number_value',
+    problemMessage: 'Value must be a positive number',
+    correctionMessage: 'Use a positive integer value',
+    errorSeverity: ErrorSeverity.ERROR,
+  );
+
+  @override
+  void run(
+    CustomLintResolver resolver,
+    ErrorReporter reporter,
+    CustomLintContext context,
+  ) {
+    context.registry.addMethodInvocation((node) {
+      // Check text nodes for maxLines
+      if (_isLayoutNodeMethod(node, 'text')) {
+        _checkPositiveArg(node, 'maxLines', reporter);
+      }
+      // Check textField for maxLines and maxLength
+      else if (_isLayoutNodeMethod(node, 'textField')) {
+        _checkPositiveArg(node, 'maxLines', reporter);
+        _checkPositiveArg(node, 'maxLength', reporter);
+      }
+      // Check spacer for flex
+      else if (_isLayoutNodeMethod(node, 'spacer')) {
+        _checkPositiveArg(node, 'flex', reporter);
+      }
+    });
+  }
+
+  void _checkPositiveArg(
+    MethodInvocation node,
+    String argName,
+    ErrorReporter reporter,
+  ) {
+    final arg = _findNamedArgument(node, argName);
+    if (arg == null) return;
+
+    if (arg is IntegerLiteral) {
+      final value = arg.value;
+      if (value != null && value <= 0) {
+        reporter.atNode(arg, code);
+      }
+    }
+  }
+}
+
+/// Lint rule that checks for conflicting properties.
+///
+/// Shows an info message when properties conflict (e.g., maxLines=1 with overflow=visible).
+class ConflictingPropertiesLint extends DartLintRule {
+  const ConflictingPropertiesLint() : super(code: _code);
+
+  static const _code = LintCode(
+    name: 'conflicting_properties',
+    problemMessage: 'These properties may conflict and cause unexpected behavior',
+    correctionMessage: 'Consider using TextOverflow.ellipsis instead of visible',
+    errorSeverity: ErrorSeverity.INFO,
+  );
+
+  @override
+  void run(
+    CustomLintResolver resolver,
+    ErrorReporter reporter,
+    CustomLintContext context,
+  ) {
+    context.registry.addMethodInvocation((node) {
+      if (!_isLayoutNodeMethod(node, 'text')) return;
+
+      final maxLinesArg = _findNamedArgument(node, 'maxLines');
+      final overflowArg = _findNamedArgument(node, 'overflow');
+
+      if (maxLinesArg == null || overflowArg == null) return;
+
+      // Check if maxLines=1 with overflow=visible
+      if (maxLinesArg is IntegerLiteral && maxLinesArg.value == 1) {
+        if (overflowArg is PrefixedIdentifier &&
+            overflowArg.identifier.name == 'visible') {
+          reporter.atNode(overflowArg, code);
+        }
+      }
+    });
+  }
+}
+
+/// Lint rule that checks for empty icon names.
+///
+/// Shows an error when icon name is empty in LayoutNode.icon() or button icons.
+class EmptyIconNameLint extends DartLintRule {
+  const EmptyIconNameLint() : super(code: _code);
+
+  static const _code = LintCode(
+    name: 'empty_icon_name',
+    problemMessage: 'Icon name cannot be empty',
+    correctionMessage: 'Provide a valid icon name like "home" or "settings"',
+    errorSeverity: ErrorSeverity.ERROR,
+  );
+
+  @override
+  void run(
+    CustomLintResolver resolver,
+    ErrorReporter reporter,
+    CustomLintContext context,
+  ) {
+    context.registry.addMethodInvocation((node) {
+      // Check icon nodes
+      if (_isLayoutNodeMethod(node, 'icon')) {
+        final nameArg = _findNamedArgument(node, 'name');
+        if (nameArg is StringLiteral && nameArg.stringValue?.trim().isEmpty == true) {
+          reporter.atNode(nameArg, code);
+        }
+      }
+      // Check button icon property
+      else if (_isLayoutNodeMethod(node, 'button')) {
+        final iconArg = _findNamedArgument(node, 'icon');
+        if (iconArg is StringLiteral && iconArg.stringValue?.trim().isEmpty == true) {
+          reporter.atNode(iconArg, code);
+        }
+      }
+    });
+  }
+}
+
+/// Lint rule that checks for textFields missing both label and hint.
+///
+/// Shows a warning when textField has neither label nor hint.
+class MissingTextFieldLabelLint extends DartLintRule {
+  const MissingTextFieldLabelLint() : super(code: _code);
+
+  static const _code = LintCode(
+    name: 'missing_textfield_label',
+    problemMessage: 'TextField should have either a label or hint',
+    correctionMessage: 'Provide a label or hint to guide the user',
+    errorSeverity: ErrorSeverity.WARNING,
+  );
+
+  @override
+  void run(
+    CustomLintResolver resolver,
+    ErrorReporter reporter,
+    CustomLintContext context,
+  ) {
+    context.registry.addMethodInvocation((node) {
+      if (!_isLayoutNodeMethod(node, 'textField')) return;
+
+      final labelArg = _findNamedArgument(node, 'label');
+      final hintArg = _findNamedArgument(node, 'hint');
+
+      // Check if both are missing or empty
+      final hasLabel = labelArg is StringLiteral &&
+          labelArg.stringValue?.trim().isNotEmpty == true;
+      final hasHint = hintArg is StringLiteral &&
+          hintArg.stringValue?.trim().isNotEmpty == true;
+
+      if (!hasLabel && !hintArg) {
+        // Neither label nor hint provided
+        reporter.atNode(node.methodName, code);
+      } else if (!hasLabel && !hasHint) {
+        // Both provided but empty
+        reporter.atNode(node.methodName, code);
+      }
+    });
+  }
+}
+
+/// Lint rule that checks for empty AppBar titles.
+///
+/// Shows a warning when AppBar has no title.
+class EmptyAppBarTitleLint extends DartLintRule {
+  const EmptyAppBarTitleLint() : super(code: _code);
+
+  static const _code = LintCode(
+    name: 'empty_appbar_title',
+    problemMessage: 'AppBar should have a title',
+    correctionMessage: 'Provide a descriptive title for the app bar',
+    errorSeverity: ErrorSeverity.WARNING,
+  );
+
+  @override
+  void run(
+    CustomLintResolver resolver,
+    ErrorReporter reporter,
+    CustomLintContext context,
+  ) {
+    context.registry.addMethodInvocation((node) {
+      if (!_isLayoutNodeMethod(node, 'appBar')) return;
+
+      final titleArg = _findNamedArgument(node, 'title');
+
+      if (titleArg == null) {
+        reporter.atNode(node.methodName, code);
+      } else if (titleArg is StringLiteral &&
+                 titleArg.stringValue?.trim().isEmpty == true) {
+        reporter.atNode(titleArg, code);
+      }
+    });
+  }
+}
+
+// Helper functions
+
+/// Checks if a method invocation is a LayoutNode factory method.
+bool _isLayoutNodeMethod(MethodInvocation node, String methodName) {
+  if (node.methodName.name != methodName) return false;
+
+  final target = node.target;
+  if (target is SimpleIdentifier && target.name == 'LayoutNode') {
+    return true;
+  }
+
+  return false;
+}
+
 /// Finds a named argument in a method invocation.
 Expression? _findNamedArgument(MethodInvocation node, String name) {
   for (final arg in node.argumentList.arguments) {
