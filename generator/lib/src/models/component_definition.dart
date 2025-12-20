@@ -9,9 +9,12 @@ sealed class ComponentDefinition with _$ComponentDefinition {
   const factory ComponentDefinition({
     required String name,
     required String className,
+
+    /// Explicit component name from @SyntaxComponent(name: '...')
+    /// If null, falls back to className.replaceAll('Meta', '')
+    String? explicitName,
     required List<ComponentProp> properties,
     required List<String> variants,
-    String? explicitName,
     String? description,
   }) = _ComponentDefinition;
 }

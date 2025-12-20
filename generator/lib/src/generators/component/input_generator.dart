@@ -21,8 +21,7 @@ class InputGenerator implements ComponentGenerator {
 
   @override
   bool canHandle(ComponentDefinition component) {
-    final componentName =
-        component.className.replaceAll('Meta', '').toLowerCase();
+    final componentName = _getComponentType(component);
     return componentName == componentType;
   }
 
