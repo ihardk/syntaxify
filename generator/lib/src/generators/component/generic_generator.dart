@@ -29,9 +29,9 @@ class GenericGenerator implements ComponentGenerator {
     required ComponentDefinition component,
     TokenDefinition? tokens,
   }) {
-    final componentName = component.className.replaceAll('Meta', '');
-    final className = 'App$componentName';
-    final tokenName = componentName.toLowerCase();
+    final componentName = component.explicitName ?? component.className.replaceAll('Meta', '');
+    final className = componentName.startsWith('App') ? componentName : 'App$componentName';
+    final tokenName = componentName.replaceAll('App', '').toLowerCase();
 
     final library = Library(
       (b) => b

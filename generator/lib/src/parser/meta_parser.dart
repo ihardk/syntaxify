@@ -87,14 +87,29 @@ class _AstNodeVisitor extends RecursiveAstVisitor<void> {
   @override
   void visitClassDeclaration(analyzer.ClassDeclaration classNode) {
     // Check for @SyntaxComponent annotation
-    final hasMetaAnnotation = classNode.metadata.any((annotation) {
+    final metaAnnotation = classNode.metadata.where((annotation) {
       final name = annotation.name.toSource();
       return name == 'SyntaxComponent' || name == 'MetaComponent';
-    });
+    }).firstOrNull;
 
-    if (hasMetaAnnotation) {
+    if (metaAnnotation != null) {
       final properties = <ComponentProp>[];
       final variants = <String>[];
+
+      // Extract explicit name from annotation
+      String? explicitName;
+      final args = metaAnnotation.arguments?.arguments;
+      if (args != null) {
+        for (final arg in args) {
+          if (arg is analyzer.NamedExpression) {
+            if (arg.name.label.name == 'name') {
+              if (arg.expression is analyzer.StringLiteral) {
+                explicitName = (arg.expression as analyzer.StringLiteral).stringValue;
+              }
+            }
+          }
+        }
+      }
 
       // Extract properties from class members
       for (final member in classNode.members) {
@@ -132,6 +147,7 @@ class _AstNodeVisitor extends RecursiveAstVisitor<void> {
       component = ComponentDefinition(
         name: _toSnakeCase(classNode.name.lexeme),
         className: classNode.name.lexeme,
+        explicitName: explicitName,
         properties: properties,
         variants: variants,
         description: _extractDocComment(classNode),

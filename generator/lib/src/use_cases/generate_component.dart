@@ -40,9 +40,9 @@ class GenerateComponentUseCase {
     await fileSystem.createDirectory(componentsDir);
 
     // Write file
-    final componentName =
-        component.className.replaceAll('Meta', '').toLowerCase();
-    final fileName = 'app_$componentName.dart';
+    final componentName = component.explicitName ?? component.className.replaceAll('Meta', '');
+    final fileBaseName = componentName.replaceAll('App', '').toLowerCase();
+    final fileName = 'app_$fileBaseName.dart';
     final filePath = path.join(componentsDir, fileName);
 
     await fileSystem.writeFile(filePath, code);

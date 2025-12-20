@@ -9,10 +9,14 @@ library syntax_annotations;
 /// The generator will create a Flutter widget from this spec.
 /// Note: Named SyntaxComponent to avoid collision with internal MetaComponent model.
 class SyntaxComponent {
+  /// Explicit name for the generated component (e.g., 'AppButton').
+  /// If not provided, defaults to className without 'Meta' suffix.
+  final String? name;
+
   /// Optional description of the component.
   final String? description;
 
-  const SyntaxComponent({this.description});
+  const SyntaxComponent({this.name, this.description});
 }
 
 /// Marks a field as required in the generated widget.
