@@ -62,4 +62,41 @@ sealed class DesignStyle {
     int? maxLines,
     TextOverflow? overflow,
   });
+
+  // --- Interactive Component Renderers ---
+
+  /// Render a checkbox widget
+  Widget renderCheckbox({
+    required bool value,
+    ValueChanged<bool?>? onChanged,
+    bool enabled = true,
+    Color? activeColor,
+  });
+
+  /// Render a switch widget
+  Widget renderSwitch({
+    required bool value,
+    ValueChanged<bool>? onChanged,
+    bool enabled = true,
+    Color? activeColor,
+  });
+
+  /// Render a slider widget
+  Widget renderSlider({
+    required double value,
+    ValueChanged<double>? onChanged,
+    double min = 0.0,
+    double max = 1.0,
+    int? divisions,
+    String? label,
+  });
+
+  /// Render a radio widget
+  Widget renderRadio<T>({
+    required T value,
+    required T? groupValue,
+    ValueChanged<T?>? onChanged,
+    bool enabled = true,
+    Color? activeColor,
+  });
 }

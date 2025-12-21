@@ -366,8 +366,8 @@ class LayoutEmitter {
       // Create condition: AppImages.x.startsWith('http://') || AppImages.x.startsWith('https://')
       final isNetworkCondition = pathRef
           .property('startsWith')
-          .call([literalString('http://')])
-          .or(pathRef.property('startsWith').call([literalString('https://')]));
+          .call([literalString('http://')]).or(
+              pathRef.property('startsWith').call([literalString('https://')]));
 
       // Generate: condition ? Image.network(...) : Image.asset(...)
       return isNetworkCondition.conditional(
@@ -407,28 +407,43 @@ class LayoutEmitter {
   // --- New Interactive Node Emitters ---
 
   Expression _emitCheckbox(CheckboxNode node) {
-    return refer('CheckboxListTile').newInstance([], {
+    // If has label, wrap in Row for label + checkbox layout
+    final checkbox = refer('AppCheckbox').newInstance([], {
       'value': refer(node.binding),
-      'onChanged': node.onChanged != null
-          ? refer(node.onChanged!)
-          : refer('(value) {}'),
-      if (node.label != null) 'title': refer('Text').newInstance([
-        literalString(node.label!),
-      ]),
-      if (node.tristate == true) 'tristate': literalTrue,
+      'onChanged':
+          node.onChanged != null ? refer(node.onChanged!) : refer('(value) {}'),
     });
+
+    if (node.label != null) {
+      return refer('Row').newInstance([], {
+        'children': literalList([
+          checkbox,
+          refer('SizedBox').newInstance([], {'width': literalNum(8)}),
+          refer('Text').newInstance([literalString(node.label!)]),
+        ]),
+      });
+    }
+    return checkbox;
   }
 
   Expression _emitSwitch(SwitchNode node) {
-    return refer('SwitchListTile').newInstance([], {
+    // If has label, wrap in Row for label + switch layout
+    final switchWidget = refer('AppSwitch').newInstance([], {
       'value': refer(node.binding),
-      'onChanged': node.onChanged != null
-          ? refer(node.onChanged!)
-          : refer('(value) {}'),
-      if (node.label != null) 'title': refer('Text').newInstance([
-        literalString(node.label!),
-      ]),
+      'onChanged':
+          node.onChanged != null ? refer(node.onChanged!) : refer('(value) {}'),
     });
+
+    if (node.label != null) {
+      return refer('Row').newInstance([], {
+        'mainAxisAlignment': refer('MainAxisAlignment.spaceBetween'),
+        'children': literalList([
+          refer('Text').newInstance([literalString(node.label!)]),
+          switchWidget,
+        ]),
+      });
+    }
+    return switchWidget;
   }
 
   Expression _emitSizedBox(SizedBoxNode node) {
@@ -448,10 +463,10 @@ class LayoutEmitter {
 
   Expression _emitIconButton(IconButtonNode node) {
     return refer('IconButton').newInstance([], {
-      'icon': refer('Icon').newInstance([refer('AppIcons').property(node.icon)]),
-      'onPressed': node.onPressed != null
-          ? refer(node.onPressed!)
-          : literalNull,
+      'icon':
+          refer('Icon').newInstance([refer('AppIcons').property(node.icon)]),
+      'onPressed':
+          node.onPressed != null ? refer(node.onPressed!) : literalNull,
       if (node.size != null) 'iconSize': literalNum(node.size!),
       if (node.color != null) 'color': _emitColorSemantic(node.color!),
     });
@@ -461,8 +476,7 @@ class LayoutEmitter {
     return refer('Stack').newInstance([], {
       'children': literalList(node.children.map(emit).toList()),
       if (node.fit != null) 'fit': refer('StackFit.${node.fit!.name}'),
-      if (node.alignment != null)
-        'alignment': _emitAlignment(node.alignment!),
+      if (node.alignment != null) 'alignment': _emitAlignment(node.alignment!),
     });
   }
 
@@ -471,9 +485,8 @@ class LayoutEmitter {
     List<Expression> children = node.children.map(emit).toList();
 
     // Calculate spacing values
-    final mainAxisSpacing = node.spacing != null
-        ? (double.tryParse(node.spacing!) ?? 16.0)
-        : 16.0;
+    final mainAxisSpacing =
+        node.spacing != null ? (double.tryParse(node.spacing!) ?? 16.0) : 16.0;
     final crossAxisSpacing = node.crossAxisSpacing != null
         ? (double.tryParse(node.crossAxisSpacing!) ?? 16.0)
         : 16.0;
@@ -505,18 +518,19 @@ class LayoutEmitter {
   Expression _emitDropdown(DropdownNode node) {
     // Generate dropdown items
     final items = literalList(
-      node.items.map((item) => refer('DropdownMenuItem').newInstance([], {
-        'value': literalString(item),
-        'child': refer('Text').newInstance([literalString(item)]),
-      })).toList(),
+      node.items
+          .map((item) => refer('DropdownMenuItem').newInstance([], {
+                'value': literalString(item),
+                'child': refer('Text').newInstance([literalString(item)]),
+              }))
+          .toList(),
     );
 
     return refer('DropdownButtonFormField').newInstance([], {
       'value': refer(node.binding),
       'items': items,
-      'onChanged': node.onChanged != null
-          ? refer(node.onChanged!)
-          : refer('(value) {}'),
+      'onChanged':
+          node.onChanged != null ? refer(node.onChanged!) : refer('(value) {}'),
       if (node.label != null)
         'decoration': refer('InputDecoration').newInstance([], {
           'labelText': literalString(node.label!),
@@ -525,39 +539,48 @@ class LayoutEmitter {
   }
 
   Expression _emitRadio(RadioNode node) {
-    return refer('RadioListTile').newInstance([], {
+    // If has label, wrap in Row for label + radio layout
+    final radio = refer('AppRadio').newInstance([], {
       'value': literalString(node.value),
       'groupValue': refer(node.binding),
-      'onChanged': node.onChanged != null
-          ? refer(node.onChanged!)
-          : refer('(value) {}'),
-      if (node.label != null)
-        'title': refer('Text').newInstance([literalString(node.label!)]),
+      'onChanged':
+          node.onChanged != null ? refer(node.onChanged!) : refer('(value) {}'),
     });
+
+    if (node.label != null) {
+      return refer('Row').newInstance([], {
+        'children': literalList([
+          radio,
+          refer('SizedBox').newInstance([], {'width': literalNum(8)}),
+          refer('Text').newInstance([literalString(node.label!)]),
+        ]),
+      });
+    }
+    return radio;
   }
 
   Expression _emitSlider(SliderNode node) {
-    final widget = refer('Slider').newInstance([], {
+    final slider = refer('AppSlider').newInstance([], {
       'value': refer(node.binding),
-      'onChanged': node.onChanged != null
-          ? refer(node.onChanged!)
-          : refer('(value) {}'),
+      'onChanged':
+          node.onChanged != null ? refer(node.onChanged!) : refer('(value) {}'),
       if (node.min != null) 'min': literalNum(node.min!),
       if (node.max != null) 'max': literalNum(node.max!),
       if (node.divisions != null) 'divisions': literalNum(node.divisions!),
       if (node.label != null) 'label': literalString(node.label!),
     });
 
-    // If no label for the widget, return just the slider
-    if (node.label == null) {
-      return widget;
+    // If label provided, wrap in Column for label + slider layout
+    if (node.label != null) {
+      return refer('Column').newInstance([], {
+        'crossAxisAlignment': refer('CrossAxisAlignment.start'),
+        'children': literalList([
+          refer('Text').newInstance([literalString(node.label!)]),
+          slider,
+        ]),
+      });
     }
-
-    // Otherwise wrap in a ListTile for better layout
-    return refer('ListTile').newInstance([], {
-      'title': refer('Text').newInstance([literalString(node.label!)]),
-      'subtitle': widget,
-    });
+    return slider;
   }
 
   // --- Helper Methods ---

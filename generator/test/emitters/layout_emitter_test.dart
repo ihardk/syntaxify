@@ -292,11 +292,10 @@ void main() {
       );
 
       final code = emit(node);
-      expect(code, contains('CheckboxListTile('));
+      expect(code, contains('AppCheckbox('));
       expect(code, contains('value: isChecked'));
       expect(code, contains('onChanged: onCheckboxChanged'));
       expect(code, contains("'Agree to terms'"));
-      expect(code, contains('tristate: true'));
     });
 
     test('emits Switch with binding and label', () {
@@ -307,7 +306,7 @@ void main() {
       );
 
       final code = emit(node);
-      expect(code, contains('SwitchListTile('));
+      expect(code, contains('AppSwitch('));
       expect(code, contains('value: isEnabled'));
       expect(code, contains('onChanged: onSwitchChanged'));
       expect(code, contains("'Enable notifications'"));
@@ -358,7 +357,7 @@ void main() {
       );
 
       final code = emit(node);
-      expect(code, contains('RadioListTile('));
+      expect(code, contains('AppRadio('));
       expect(code, contains("value: 'male'"));
       expect(code, contains('groupValue: selectedGender'));
       expect(code, contains('onChanged: onRadioChanged'));
@@ -376,7 +375,7 @@ void main() {
       );
 
       final code = emit(node);
-      expect(code, contains('Slider('));
+      expect(code, contains('AppSlider('));
       expect(code, contains('value: volume'));
       expect(code, contains('min: 0'));
       expect(code, contains('max: 100'));

@@ -10,6 +10,13 @@ part of '../design_system.dart';
 /// - Vibrant colors (gold, coral)
 /// - Uppercase text with heavy font weight
 class NeoStyle extends DesignStyle
-    with NeoButtonRenderer, NeoInputRenderer, NeoTextRenderer {
+    with
+        NeoButtonRenderer,
+        NeoInputRenderer,
+        NeoTextRenderer,
+        NeoCheckboxRenderer,
+        NeoSwitchRenderer,
+        NeoSliderRenderer,
+        NeoRadioRenderer {
   const NeoStyle();
 }

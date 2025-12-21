@@ -11,6 +11,10 @@ class CupertinoStyle extends DesignStyle
     with
         CupertinoButtonRenderer,
         CupertinoInputRenderer,
-        CupertinoTextRenderer {
+        CupertinoTextRenderer,
+        CupertinoCheckboxRenderer,
+        CupertinoSwitchRenderer,
+        CupertinoSliderRenderer,
+        CupertinoRadioRenderer {
   const CupertinoStyle();
 }
