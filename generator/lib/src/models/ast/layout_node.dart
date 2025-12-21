@@ -45,7 +45,7 @@ sealed class LayoutNode with _$LayoutNode {
   // These factories maintain backward compatibility for parsing,
   // mapping old JSON structure to the new hierarchy.
 
-  const factory LayoutNode.column({
+  factory LayoutNode.column({
     String? id,
     String? visibleWhen,
     required List<LayoutNode> children,
@@ -63,7 +63,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.row({
+  factory LayoutNode.row({
     String? id,
     String? visibleWhen,
     required List<LayoutNode> children,
@@ -81,7 +81,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.container({
+  factory LayoutNode.container({
     String? id,
     String? visibleWhen,
     LayoutNode? child,
@@ -107,7 +107,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.card({
+  factory LayoutNode.card({
     String? id,
     String? visibleWhen,
     required List<LayoutNode> children,
@@ -125,7 +125,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.listView({
+  factory LayoutNode.listView({
     String? id,
     String? visibleWhen,
     required List<LayoutNode> children,
@@ -143,7 +143,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.text({
+  factory LayoutNode.text({
     String? id,
     String? visibleWhen,
     required String text,
@@ -235,7 +235,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.icon({
+  factory LayoutNode.icon({
     String? id,
     String? visibleWhen,
     required String name,
@@ -251,7 +251,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.spacer({
+  factory LayoutNode.spacer({
     String? id,
     String? visibleWhen,
     SpacerSize? size,
@@ -265,7 +265,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.sizedBox({
+  factory LayoutNode.sizedBox({
     String? id,
     String? visibleWhen,
     double? width,
@@ -281,7 +281,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.expanded({
+  factory LayoutNode.expanded({
     String? id,
     String? visibleWhen,
     required LayoutNode child,
@@ -295,7 +295,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.image({
+  factory LayoutNode.image({
     String? id,
     String? visibleWhen,
     required String src,
@@ -317,7 +317,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.divider({
+  factory LayoutNode.divider({
     String? id,
     String? visibleWhen,
     double? thickness,
@@ -335,7 +335,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.circularProgressIndicator({
+  factory LayoutNode.circularProgressIndicator({
     String? id,
     String? visibleWhen,
     double? value,
@@ -351,7 +351,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.checkbox({
+  factory LayoutNode.checkbox({
     String? id,
     String? visibleWhen,
     required String binding,
@@ -369,7 +369,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.switchWidget({
+  factory LayoutNode.switchWidget({
     String? id,
     String? visibleWhen,
     required String binding,
@@ -385,7 +385,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.iconButton({
+  factory LayoutNode.iconButton({
     String? id,
     String? visibleWhen,
     required String icon,
@@ -403,7 +403,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.dropdown({
+  factory LayoutNode.dropdown({
     String? id,
     String? visibleWhen,
     required String binding,
@@ -421,7 +421,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.radio({
+  factory LayoutNode.radio({
     String? id,
     String? visibleWhen,
     required String binding,
@@ -439,7 +439,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.slider({
+  factory LayoutNode.slider({
     String? id,
     String? visibleWhen,
     required String binding,
@@ -461,7 +461,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.stack({
+  factory LayoutNode.stack({
     String? id,
     String? visibleWhen,
     required List<LayoutNode> children,
@@ -477,7 +477,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.gridView({
+  factory LayoutNode.gridView({
     String? id,
     String? visibleWhen,
     required List<LayoutNode> children,
@@ -499,7 +499,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.padding({
+  factory LayoutNode.padding({
     String? id,
     String? visibleWhen,
     required LayoutNode child,
@@ -513,7 +513,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.center({
+  factory LayoutNode.center({
     String? id,
     String? visibleWhen,
     required LayoutNode child,

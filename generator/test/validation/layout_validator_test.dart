@@ -742,5 +742,355 @@ void main() {
         expect(errors.length, greaterThanOrEqualTo(100));
       });
     });
+
+    // ============================================================
+    // NEW STRUCTURAL NODE VALIDATION TESTS
+    // ============================================================
+
+    group('New Structural Node Validation', () {
+      test('validates Container with child recursively', () {
+        final node = LayoutNode.container(
+          child: LayoutNode.button(label: '', onPressed: 'invalid-name'),
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors.length, greaterThanOrEqualTo(2));
+      });
+
+      test('validates Card with empty children', () {
+        final node = LayoutNode.card(children: []);
+
+        final errors = validator.validate(node);
+
+        expect(errors.length, equals(1));
+        expect(errors.first.severity, equals(ErrorSeverity.warning));
+      });
+
+      test('validates ListView with invalid children', () {
+        final node = LayoutNode.listView(
+          children: [
+            LayoutNode.text(text: ''),
+            LayoutNode.button(label: ''),
+          ],
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors.length, equals(2));
+      });
+
+      test('validates Stack with children recursively', () {
+        final node = LayoutNode.stack(
+          children: [
+            LayoutNode.text(text: 'Valid'),
+            LayoutNode.text(text: ''),
+          ],
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors.length, equals(1));
+        expect(errors.first.type, equals(ValidationErrorType.emptyValue));
+      });
+
+      test('validates GridView with zero crossAxisCount', () {
+        final node = LayoutNode.gridView(
+          children: [LayoutNode.text(text: 'Item')],
+          crossAxisCount: 0,
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors.length, equals(1));
+        expect(errors.first.type, equals(ValidationErrorType.negativeNumber));
+        expect(errors.first.fieldName, equals('crossAxisCount'));
+      });
+
+      test('validates GridView with negative crossAxisCount', () {
+        final node = LayoutNode.gridView(
+          children: [LayoutNode.text(text: 'Item')],
+          crossAxisCount: -2,
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors.length, equals(1));
+        expect(errors.first.type, equals(ValidationErrorType.negativeNumber));
+      });
+
+      test('validates Padding with empty padding value', () {
+        final node = LayoutNode.padding(
+          padding: '',
+          child: LayoutNode.text(text: 'Content'),
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors.length, equals(1));
+        expect(errors.first.type, equals(ValidationErrorType.emptyValue));
+        expect(errors.first.fieldName, equals('padding'));
+      });
+
+      test('validates Center with invalid child', () {
+        final node = LayoutNode.center(
+          child: LayoutNode.button(label: ''),
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors.length, equals(1));
+        expect(errors.first.type, equals(ValidationErrorType.emptyValue));
+      });
+
+      test('accepts valid Container', () {
+        final node = LayoutNode.container(
+          width: 100,
+          height: 50,
+          color: ColorSemantic.primary,
+          child: LayoutNode.text(text: 'Valid'),
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors, isEmpty);
+      });
+
+      test('accepts valid GridView', () {
+        final node = LayoutNode.gridView(
+          crossAxisCount: 2,
+          children: [
+            LayoutNode.text(text: 'Item 1'),
+            LayoutNode.text(text: 'Item 2'),
+          ],
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors, isEmpty);
+      });
+    });
+
+    // ============================================================
+    // NEW PRIMITIVE NODE VALIDATION TESTS
+    // ============================================================
+
+    group('New Primitive Node Validation', () {
+      test('validates Image with empty src', () {
+        final node = LayoutNode.image(src: '');
+
+        final errors = validator.validate(node);
+
+        expect(errors.length, equals(1));
+        expect(errors.first.type, equals(ValidationErrorType.emptyValue));
+        expect(errors.first.fieldName, equals('src'));
+      });
+
+      test('accepts valid Image with network URL', () {
+        final node = LayoutNode.image(
+          src: 'https://example.com/image.png',
+          width: 100,
+          height: 100,
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors, isEmpty);
+      });
+
+      test('validates SizedBox with child recursively', () {
+        final node = LayoutNode.sizedBox(
+          width: 100,
+          child: LayoutNode.text(text: ''),
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors.length, equals(1));
+      });
+
+      test('validates Expanded with invalid child', () {
+        final node = LayoutNode.expanded(
+          child: LayoutNode.button(label: ''),
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors.length, equals(1));
+      });
+
+      test('accepts valid Divider', () {
+        final node = LayoutNode.divider(
+          thickness: 1,
+          indent: 16,
+          endIndent: 16,
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors, isEmpty);
+      });
+
+      test('accepts valid CircularProgressIndicator', () {
+        final node = LayoutNode.circularProgressIndicator(
+          value: 0.5,
+          strokeWidth: 4,
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors, isEmpty);
+      });
+    });
+
+    // ============================================================
+    // NEW INTERACTIVE NODE VALIDATION TESTS
+    // ============================================================
+
+    group('New Interactive Node Validation', () {
+      test('validates Checkbox with invalid binding', () {
+        final node = LayoutNode.checkbox(
+          binding: 'invalid-binding',
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors.length, equals(1));
+        expect(
+            errors.first.type, equals(ValidationErrorType.invalidIdentifier));
+        expect(errors.first.fieldName, equals('binding'));
+      });
+
+      test('validates Switch with empty binding', () {
+        final node = LayoutNode.switchWidget(
+          binding: '',
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors.length, greaterThanOrEqualTo(1));
+      });
+
+      test('validates IconButton with empty icon', () {
+        final node = LayoutNode.iconButton(
+          icon: '',
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors.length, equals(1));
+        expect(errors.first.type, equals(ValidationErrorType.emptyValue));
+        expect(errors.first.fieldName, equals('icon'));
+      });
+
+      test('validates Dropdown with invalid binding', () {
+        final node = LayoutNode.dropdown(
+          binding: 'class', // Dart keyword
+          items: ['Option1', 'Option2'],
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors.length, equals(1));
+        expect(
+            errors.first.type, equals(ValidationErrorType.invalidIdentifier));
+      });
+
+      test('validates Radio with invalid binding', () {
+        final node = LayoutNode.radio(
+          binding: '123invalid',
+          value: 'option1',
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors.length, equals(1));
+        expect(
+            errors.first.type, equals(ValidationErrorType.invalidIdentifier));
+      });
+
+      test('validates Slider with invalid binding', () {
+        final node = LayoutNode.slider(
+          binding: 'void', // Dart keyword
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors.length, equals(1));
+        expect(
+            errors.first.type, equals(ValidationErrorType.invalidIdentifier));
+      });
+
+      test('accepts valid Checkbox', () {
+        final node = LayoutNode.checkbox(
+          binding: 'isAccepted',
+          label: 'Accept terms',
+          onChanged: 'onTermsChanged',
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors, isEmpty);
+      });
+
+      test('accepts valid Switch', () {
+        final node = LayoutNode.switchWidget(
+          binding: 'notificationsEnabled',
+          label: 'Enable notifications',
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors, isEmpty);
+      });
+
+      test('accepts valid IconButton', () {
+        final node = LayoutNode.iconButton(
+          icon: 'settings',
+          onPressed: 'openSettings',
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors, isEmpty);
+      });
+
+      test('accepts valid Dropdown', () {
+        final node = LayoutNode.dropdown(
+          binding: 'selectedCountry',
+          items: ['USA', 'Canada', 'UK'],
+          label: 'Select Country',
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors, isEmpty);
+      });
+
+      test('accepts valid Radio', () {
+        final node = LayoutNode.radio(
+          binding: 'selectedOption',
+          value: 'option1',
+          label: 'Option 1',
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors, isEmpty);
+      });
+
+      test('accepts valid Slider', () {
+        final node = LayoutNode.slider(
+          binding: 'volume',
+          min: 0,
+          max: 100,
+          divisions: 10,
+        );
+
+        final errors = validator.validate(node);
+
+        expect(errors, isEmpty);
+      });
+    });
   });
 }

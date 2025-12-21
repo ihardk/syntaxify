@@ -267,7 +267,9 @@ void main() {
         );
 
         final code = fileSystem.getFile('/output/screens/spaced_screen.dart');
-        expect(code, contains('Spacer'));
+        // SpacerSize.lg emits SizedBox with height: 24.0
+        expect(code, contains('SizedBox'));
+        expect(code, contains('height: 24'));
       });
 
       test('handles screen with icon nodes', () async {

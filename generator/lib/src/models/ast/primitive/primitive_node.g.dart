@@ -102,3 +102,97 @@ const _$SpacerSizeEnumMap = {
   SpacerSize.xl: 'xl',
   SpacerSize.flex: 'flex',
 };
+
+ImageNode _$ImageNodeFromJson(Map<String, dynamic> json) => ImageNode(
+      src: json['src'] as String,
+      width: (json['width'] as num?)?.toDouble(),
+      height: (json['height'] as num?)?.toDouble(),
+      fit: $enumDecodeNullable(_$ImageFitEnumMap, json['fit']),
+      placeholder: json['placeholder'] as String?,
+      errorWidget: json['errorWidget'] as String?,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$ImageNodeToJson(ImageNode instance) => <String, dynamic>{
+      'src': instance.src,
+      'width': instance.width,
+      'height': instance.height,
+      'fit': _$ImageFitEnumMap[instance.fit],
+      'placeholder': instance.placeholder,
+      'errorWidget': instance.errorWidget,
+      'runtimeType': instance.$type,
+    };
+
+const _$ImageFitEnumMap = {
+  ImageFit.cover: 'cover',
+  ImageFit.contain: 'contain',
+  ImageFit.fill: 'fill',
+  ImageFit.fitWidth: 'fitWidth',
+  ImageFit.fitHeight: 'fitHeight',
+  ImageFit.none: 'none',
+};
+
+DividerNode _$DividerNodeFromJson(Map<String, dynamic> json) => DividerNode(
+      thickness: (json['thickness'] as num?)?.toDouble(),
+      color: $enumDecodeNullable(_$ColorSemanticEnumMap, json['color']),
+      indent: (json['indent'] as num?)?.toDouble(),
+      endIndent: (json['endIndent'] as num?)?.toDouble(),
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$DividerNodeToJson(DividerNode instance) =>
+    <String, dynamic>{
+      'thickness': instance.thickness,
+      'color': _$ColorSemanticEnumMap[instance.color],
+      'indent': instance.indent,
+      'endIndent': instance.endIndent,
+      'runtimeType': instance.$type,
+    };
+
+CircularProgressIndicatorNode _$CircularProgressIndicatorNodeFromJson(
+        Map<String, dynamic> json) =>
+    CircularProgressIndicatorNode(
+      value: (json['value'] as num?)?.toDouble(),
+      color: $enumDecodeNullable(_$ColorSemanticEnumMap, json['color']),
+      strokeWidth: (json['strokeWidth'] as num?)?.toDouble(),
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$CircularProgressIndicatorNodeToJson(
+        CircularProgressIndicatorNode instance) =>
+    <String, dynamic>{
+      'value': instance.value,
+      'color': _$ColorSemanticEnumMap[instance.color],
+      'strokeWidth': instance.strokeWidth,
+      'runtimeType': instance.$type,
+    };
+
+SizedBoxNode _$SizedBoxNodeFromJson(Map<String, dynamic> json) => SizedBoxNode(
+      width: (json['width'] as num?)?.toDouble(),
+      height: (json['height'] as num?)?.toDouble(),
+      child: json['child'] == null
+          ? null
+          : LayoutNode.fromJson(json['child'] as Map<String, dynamic>),
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$SizedBoxNodeToJson(SizedBoxNode instance) =>
+    <String, dynamic>{
+      'width': instance.width,
+      'height': instance.height,
+      'child': instance.child?.toJson(),
+      'runtimeType': instance.$type,
+    };
+
+ExpandedNode _$ExpandedNodeFromJson(Map<String, dynamic> json) => ExpandedNode(
+      child: LayoutNode.fromJson(json['child'] as Map<String, dynamic>),
+      flex: (json['flex'] as num?)?.toInt(),
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$ExpandedNodeToJson(ExpandedNode instance) =>
+    <String, dynamic>{
+      'child': instance.child.toJson(),
+      'flex': instance.flex,
+      'runtimeType': instance.$type,
+    };

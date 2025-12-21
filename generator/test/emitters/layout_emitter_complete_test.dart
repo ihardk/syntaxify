@@ -386,7 +386,9 @@ void main() {
 
         final code = emitToString(node);
 
-        expect(code, contains('Spacer'));
+        // Note: Default SpacerNode without flex/size defaults to SpacerSize.md (16px) -> SizedBox
+        expect(code, contains('SizedBox'));
+        expect(code, contains('height: 16'));
       });
 
       test('emits Spacer with flex', () {
@@ -403,7 +405,9 @@ void main() {
 
         final code = emitToString(node);
 
-        expect(code, contains('Spacer'));
+        // lg = 24.0
+        expect(code, contains('SizedBox'));
+        expect(code, contains('height: 24'));
       });
     });
 
@@ -475,7 +479,7 @@ void main() {
         final node = LayoutNode.column(
           children: [
             LayoutNode.text(text: 'Title'),
-            LayoutNode.spacer(),
+            LayoutNode.spacer(flex: 1),
             LayoutNode.row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

@@ -42,7 +42,7 @@ void main() {
 
       // Verify AppBar
       expect(code, contains('appBar: AppBar('));
-      expect(code, contains("title: Text('Login')"));
+      expect(code, contains("title: AppText(text: 'Login')"));
 
       // Verify Body
       expect(code, contains('body: Column('));

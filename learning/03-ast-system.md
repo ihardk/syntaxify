@@ -125,11 +125,19 @@ This wrapper structure separates **metadata** (like `id` and `visibleWhen`) from
 ### The Three Pillars
 
 1.  **StructuralNode**: Containers that arrange other nodes.
-    *   `ColumnNode`, `RowNode`
+    *   `ColumnNode`, `RowNode`, `ContainerNode`, `CardNode`
+    *   `ListViewNode`, `StackNode`, `GridViewNode`
+    *   `PaddingNode`, `CenterNode`
 2.  **PrimitiveNode**: Static display elements.
     *   `TextNode`, `IconNode`, `SpacerNode`, `ImageNode`
+    *   `DividerNode`, `CircularProgressIndicatorNode`
+    *   `SizedBoxNode`, `ExpandedNode`
 3.  **InteractiveNode**: Elements that accept user input.
-    *   `ButtonNode`, `TextFieldNode`
+    *   `ButtonNode`, `TextFieldNode`, `CheckboxNode`
+    *   `SwitchNode`, `IconButtonNode`, `DropdownNode`
+    *   `RadioNode`, `SliderNode`
+4.  **CustomNode**: Plugin-defined extensible nodes.
+    *   `LayoutNode.custom(type: 'Carousel', props: {...})`
 
 > **Note:** For convenience, we provide **shim factories** that look like the old API.
 > `LayoutNode.column(...)` actually creates a `LayoutNode.structural(node: StructuralNode.column(...))` under the hood.

@@ -149,8 +149,6 @@ extension CustomNodePatterns on CustomNode {
     switch (_that) {
       case _CustomNode():
         return $default(_that);
-      case _:
-        throw StateError('Unexpected subclass');
     }
   }
 
@@ -230,8 +228,6 @@ extension CustomNodePatterns on CustomNode {
     switch (_that) {
       case _CustomNode():
         return $default(_that.type, _that.props, _that.children);
-      case _:
-        throw StateError('Unexpected subclass');
     }
   }
 

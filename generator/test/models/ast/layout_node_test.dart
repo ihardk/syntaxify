@@ -21,6 +21,13 @@ void main() {
               expect(col.mainAxisAlignment, equals(MainAxisAlignment.center));
             },
             row: (_) => fail('Expected column, got row'),
+            container: (_) => fail('Expected column, got container'),
+            card: (_) => fail('Expected column, got card'),
+            listView: (_) => fail('Expected column, got listView'),
+            stack: (_) => fail('Expected column, got stack'),
+            gridView: (_) => fail('Expected column, got gridView'),
+            padding: (_) => fail('Expected column, got padding'),
+            center: (_) => fail('Expected column, got center'),
           );
         },
         primitive: (_) => fail('Expected structural, got primitive'),
@@ -45,6 +52,12 @@ void main() {
             },
             icon: (_) => fail('Expected text, got icon'),
             spacer: (_) => fail('Expected text, got spacer'),
+            image: (_) => fail('Expected text, got image'),
+            divider: (_) => fail('Expected text, got divider'),
+            circularProgressIndicator: (_) =>
+                fail('Expected text, got circularProgressIndicator'),
+            sizedBox: (_) => fail('Expected text, got sizedBox'),
+            expanded: (_) => fail('Expected text, got expanded'),
           );
         },
         structural: (_) => fail('Expected primitive, got structural'),
@@ -70,6 +83,12 @@ void main() {
               expect(b.props?.variant, equals(ButtonVariant.filled));
             },
             textField: (_) => fail('Expected button, got textField'),
+            checkbox: (_) => fail('Expected button, got checkbox'),
+            switchNode: (_) => fail('Expected button, got switchNode'),
+            iconButton: (_) => fail('Expected button, got iconButton'),
+            dropdown: (_) => fail('Expected button, got dropdown'),
+            radio: (_) => fail('Expected button, got radio'),
+            slider: (_) => fail('Expected button, got slider'),
           );
         },
         structural: (_) => fail('Expected interactive, got structural'),
@@ -97,6 +116,13 @@ void main() {
                   equals(MainAxisAlignment.spaceBetween));
             },
             column: (_) => fail('Expected row, got column'),
+            container: (_) => fail('Expected row, got container'),
+            card: (_) => fail('Expected row, got card'),
+            listView: (_) => fail('Expected row, got listView'),
+            stack: (_) => fail('Expected row, got stack'),
+            gridView: (_) => fail('Expected row, got gridView'),
+            padding: (_) => fail('Expected row, got padding'),
+            center: (_) => fail('Expected row, got center'),
           );
         },
         primitive: (_) => fail('Expected structural, got primitive'),
@@ -123,6 +149,12 @@ void main() {
               expect(tf.props?.keyboardType, equals(KeyboardType.email));
             },
             button: (_) => fail('Expected textField, got button'),
+            checkbox: (_) => fail('Expected textField, got checkbox'),
+            switchNode: (_) => fail('Expected textField, got switchNode'),
+            iconButton: (_) => fail('Expected textField, got iconButton'),
+            dropdown: (_) => fail('Expected textField, got dropdown'),
+            radio: (_) => fail('Expected textField, got radio'),
+            slider: (_) => fail('Expected textField, got slider'),
           );
         },
         structural: (_) => fail('Expected interactive, got structural'),
@@ -147,6 +179,12 @@ void main() {
             },
             text: (_) => fail('Expected icon, got text'),
             spacer: (_) => fail('Expected icon, got spacer'),
+            image: (_) => fail('Expected icon, got image'),
+            divider: (_) => fail('Expected icon, got divider'),
+            circularProgressIndicator: (_) =>
+                fail('Expected icon, got circularProgressIndicator'),
+            sizedBox: (_) => fail('Expected icon, got sizedBox'),
+            expanded: (_) => fail('Expected icon, got expanded'),
           );
         },
         structural: (_) => fail('Expected primitive, got structural'),
@@ -169,6 +207,12 @@ void main() {
             },
             text: (_) => fail('Expected spacer, got text'),
             icon: (_) => fail('Expected spacer, got icon'),
+            image: (_) => fail('Expected spacer, got image'),
+            divider: (_) => fail('Expected spacer, got divider'),
+            circularProgressIndicator: (_) =>
+                fail('Expected spacer, got circularProgressIndicator'),
+            sizedBox: (_) => fail('Expected spacer, got sizedBox'),
+            expanded: (_) => fail('Expected spacer, got expanded'),
           );
         },
         structural: (_) => fail('Expected primitive, got structural'),
@@ -225,6 +269,13 @@ void main() {
           s.node.map(
             column: (_) {},
             row: (_) => fail('Expected column'),
+            container: (_) => fail('Expected column'),
+            card: (_) => fail('Expected column'),
+            listView: (_) => fail('Expected column'),
+            stack: (_) => fail('Expected column'),
+            gridView: (_) => fail('Expected column'),
+            padding: (_) => fail('Expected column'),
+            center: (_) => fail('Expected column'),
           );
         },
         primitive: (_) => fail('Layout root should be structural'),

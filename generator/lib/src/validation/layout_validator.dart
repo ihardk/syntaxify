@@ -43,6 +43,10 @@ class LayoutValidator {
       container: (n) => _validateContainer(n, path),
       card: (n) => _validateCard(n, path),
       listView: (n) => _validateListView(n, path),
+      stack: (n) => _validateStack(n, path),
+      gridView: (n) => _validateGridView(n, path),
+      padding: (n) => _validatePadding(n, path),
+      center: (n) => _validateCenter(n, path),
     );
   }
 
@@ -67,6 +71,10 @@ class LayoutValidator {
       textField: (n) => _validateTextField(n, path),
       checkbox: (n) => _validateCheckbox(n, path),
       switchNode: (n) => _validateSwitch(n, path),
+      iconButton: (n) => _validateIconButton(n, path),
+      dropdown: (n) => _validateDropdown(n, path),
+      radio: (n) => _validateRadio(n, path),
+      slider: (n) => _validateSlider(n, path),
     );
   }
 
@@ -406,8 +414,7 @@ class LayoutValidator {
         message: 'Container has no content or sizing',
         nodePath: nodePath,
         fieldName: 'child',
-        suggestion:
-            'Add a child widget or specify width/height/padding/margin',
+        suggestion: 'Add a child widget or specify width/height/padding/margin',
         severity: ErrorSeverity.warning,
       ));
     }
@@ -542,8 +549,7 @@ class LayoutValidator {
         message: 'Image src cannot be empty',
         nodePath: nodePath,
         fieldName: 'src',
-        suggestion:
-            'Provide an asset path, network URL, or registry name',
+        suggestion: 'Provide an asset path, network URL, or registry name',
       ));
     }
 
@@ -839,10 +845,122 @@ class LayoutValidator {
       'deferred',
       'interface'
     };
-    if (keywords.contains(s)) return false;
+    return !keywords.contains(s) &&
+        RegExp(r'^[a-zA-Z_$][a-zA-Z0-9_$]*$').hasMatch(s);
+  }
 
-    // Regex for Dart identifiers
-    final identifierRegex = RegExp(r'^[a-zA-Z_][a-zA-Z0-9_]*$');
-    return identifierRegex.hasMatch(s);
+  // --- New Structural Validators ---
+
+  List<ValidationError> _validateStack(StackNode node, String path) {
+    final errors = <ValidationError>[];
+    final nodePath = '$path.stack';
+
+    for (var i = 0; i < node.children.length; i++) {
+      errors.addAll(validate(node.children[i], '$nodePath[$i]'));
+    }
+    return errors;
+  }
+
+  List<ValidationError> _validateGridView(GridViewNode node, String path) {
+    final errors = <ValidationError>[];
+    final nodePath = '$path.gridView';
+
+    if (node.crossAxisCount < 1) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.negativeNumber,
+        message: 'crossAxisCount must be positive',
+        nodePath: nodePath,
+        fieldName: 'crossAxisCount',
+      ));
+    }
+
+    for (var i = 0; i < node.children.length; i++) {
+      errors.addAll(validate(node.children[i], '$nodePath[$i]'));
+    }
+    return errors;
+  }
+
+  List<ValidationError> _validatePadding(PaddingNode node, String path) {
+    final errors = <ValidationError>[];
+    final nodePath = '$path.padding';
+
+    if (node.padding.trim().isEmpty) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.emptyValue,
+        message: 'Padding value cannot be empty',
+        nodePath: nodePath,
+        fieldName: 'padding',
+      ));
+    }
+
+    errors.addAll(validate(node.child, '$nodePath.child'));
+    return errors;
+  }
+
+  List<ValidationError> _validateCenter(CenterNode node, String path) {
+    return validate(node.child, '$path.center.child');
+  }
+
+  // --- New Interactive Validators ---
+
+  List<ValidationError> _validateIconButton(IconButtonNode node, String path) {
+    final errors = <ValidationError>[];
+    final nodePath = '$path.iconButton';
+
+    if (node.icon.trim().isEmpty) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.emptyValue,
+        message: 'Icon name cannot be empty',
+        nodePath: nodePath,
+        fieldName: 'icon',
+      ));
+    }
+
+    return errors;
+  }
+
+  List<ValidationError> _validateDropdown(DropdownNode node, String path) {
+    final errors = <ValidationError>[];
+    final nodePath = '$path.dropdown';
+
+    if (!_isValidDartIdentifier(node.binding)) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.invalidIdentifier,
+        message: 'Dropdown binding must be valid identifier',
+        nodePath: nodePath,
+        fieldName: 'binding',
+      ));
+    }
+    return errors;
+  }
+
+  List<ValidationError> _validateRadio(RadioNode node, String path) {
+    final errors = <ValidationError>[];
+    final nodePath = '$path.radio';
+
+    if (!_isValidDartIdentifier(node.binding)) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.invalidIdentifier,
+        message: 'Radio binding must be valid identifier',
+        nodePath: nodePath,
+        fieldName: 'binding',
+      ));
+    }
+    return errors;
+  }
+
+  List<ValidationError> _validateSlider(SliderNode node, String path) {
+    final errors = <ValidationError>[];
+    final nodePath = '$path.slider';
+
+    if (!_isValidDartIdentifier(node.binding)) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.invalidIdentifier,
+        message: 'Slider binding must be valid identifier',
+        nodePath: nodePath,
+        fieldName: 'binding',
+      ));
+    }
+    return errors;
   }
 }

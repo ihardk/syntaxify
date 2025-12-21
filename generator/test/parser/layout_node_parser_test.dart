@@ -42,6 +42,12 @@ void main() {
               expect(b.props?.isDisabled, true);
             },
             textField: (_) => fail('Expected button'),
+            checkbox: (_) => fail('Expected button'),
+            switchNode: (_) => fail('Expected button'),
+            iconButton: (_) => fail('Expected button'),
+            dropdown: (_) => fail('Expected button'),
+            radio: (_) => fail('Expected button'),
+            slider: (_) => fail('Expected button'),
           );
         },
         structural: (_) => fail('Expected interactive'),
@@ -74,6 +80,12 @@ void main() {
               expect(tf.props?.keyboardType, KeyboardType.email);
             },
             button: (_) => fail('Expected textField'),
+            checkbox: (_) => fail('Expected textField'),
+            switchNode: (_) => fail('Expected textField'),
+            iconButton: (_) => fail('Expected textField'),
+            dropdown: (_) => fail('Expected textField'),
+            radio: (_) => fail('Expected textField'),
+            slider: (_) => fail('Expected textField'),
           );
         },
         structural: (_) => fail('Expected interactive'),
@@ -97,6 +109,12 @@ void main() {
               expect(b.props?.isDisabled, false);
             },
             textField: (_) => fail('Expected button'),
+            checkbox: (_) => fail('Expected button'),
+            switchNode: (_) => fail('Expected button'),
+            iconButton: (_) => fail('Expected button'),
+            dropdown: (_) => fail('Expected button'),
+            radio: (_) => fail('Expected button'),
+            slider: (_) => fail('Expected button'),
           );
         },
         structural: (_) => fail('Expected interactive'),

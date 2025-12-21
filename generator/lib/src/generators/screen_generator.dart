@@ -110,12 +110,58 @@ class ScreenGenerator {
           callbacks.addAll(_collectCallbacks(child));
         }
       },
+      container: (n) {
+        if (n.child != null) {
+          callbacks.addAll(_collectCallbacks(n.child!));
+        }
+      },
+      card: (n) {
+        for (final child in n.children) {
+          callbacks.addAll(_collectCallbacks(child));
+        }
+      },
+      listView: (n) {
+        for (final child in n.children) {
+          callbacks.addAll(_collectCallbacks(child));
+        }
+      },
+      stack: (n) {
+        for (final child in n.children) {
+          callbacks.addAll(_collectCallbacks(child));
+        }
+      },
+      gridView: (n) {
+        for (final child in n.children) {
+          callbacks.addAll(_collectCallbacks(child));
+        }
+      },
+      padding: (n) {
+        callbacks.addAll(_collectCallbacks(n.child));
+      },
+      center: (n) {
+        callbacks.addAll(_collectCallbacks(n.child));
+      },
     );
   }
 
   void _collectPrimitiveCallbacks(
       PrimitiveNode node, Map<String, Reference> callbacks) {
-    // No callbacks in primitives usually
+    node.map(
+      text: (_) {},
+      icon: (_) {},
+      spacer: (_) {},
+      image: (_) {},
+      divider: (_) {},
+      circularProgressIndicator: (_) {},
+      sizedBox: (n) {
+        if (n.child != null) {
+          callbacks.addAll(_collectCallbacks(n.child!));
+        }
+      },
+      expanded: (n) {
+        callbacks.addAll(_collectCallbacks(n.child));
+      },
+    );
   }
 
   void _collectInteractiveCallbacks(
@@ -132,6 +178,36 @@ class ScreenGenerator {
         }
         if (n.onSubmitted != null) {
           callbacks[n.onSubmitted!] = refer('ValueChanged<String>?');
+        }
+      },
+      checkbox: (n) {
+        if (n.onChanged != null) {
+          callbacks[n.onChanged!] = refer('ValueChanged<bool?>?');
+        }
+      },
+      switchNode: (n) {
+        if (n.onChanged != null) {
+          callbacks[n.onChanged!] = refer('ValueChanged<bool>?');
+        }
+      },
+      iconButton: (n) {
+        if (n.onPressed != null) {
+          callbacks[n.onPressed!] = refer('VoidCallback?');
+        }
+      },
+      dropdown: (n) {
+        if (n.onChanged != null) {
+          callbacks[n.onChanged!] = refer('ValueChanged<String?>?');
+        }
+      },
+      radio: (n) {
+        if (n.onChanged != null) {
+          callbacks[n.onChanged!] = refer('ValueChanged<String?>?');
+        }
+      },
+      slider: (n) {
+        if (n.onChanged != null) {
+          callbacks[n.onChanged!] = refer('ValueChanged<double>?');
         }
       },
     );
