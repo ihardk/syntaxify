@@ -13,6 +13,7 @@ import 'package:dart_style/dart_style.dart';
 import 'package:syntaxify/src/use_cases/generate_component.dart';
 import 'package:syntaxify/src/parser/registry_parser.dart';
 import 'package:syntaxify/src/generators/registry/icon_registry_generator.dart';
+import 'package:syntaxify/src/generators/registry/image_registry_generator.dart';
 import 'package:syntaxify/src/use_cases/generate_screen.dart';
 import 'package:syntaxify/src/models/ast/screen_definition.dart';
 import 'package:syntaxify/src/validation/layout_validator.dart';
@@ -305,9 +306,16 @@ class BuildAllUseCase {
         final registryParser = RegistryParser(logger: logger);
         final registryDefs = await registryParser.parseDirectory(metaDirectory);
 
-        if (registryDefs.isNotEmpty) {
+        // Separate icon and image registries
+        final iconRegistries =
+            registryDefs.where((r) => r.type == RegistryType.icon).toList();
+        final imageRegistries =
+            registryDefs.where((r) => r.type == RegistryType.image).toList();
+
+        // Generate AppIcons if icon registry exists
+        if (iconRegistries.isNotEmpty) {
           final iconGen = IconRegistryGenerator();
-          final lib = iconGen.build(registryDefs.first);
+          final lib = iconGen.build(iconRegistries.first);
           final emitter = DartEmitter(
               allocator: Allocator.simplePrefixing(), orderDirectives: true);
           final content = lib.accept(emitter).toString();
@@ -328,6 +336,33 @@ class BuildAllUseCase {
             await fileSystem.copyFile(srcPath, destPath);
             generatedFiles.add('design_system/app_icons.dart');
             logger.success('Copied: design_system/app_icons.dart (Fallback)');
+          }
+        }
+
+        // Generate AppImages if image registry exists
+        if (imageRegistries.isNotEmpty) {
+          final imageGen = ImageRegistryGenerator();
+          final lib = imageGen.build(imageRegistries.first);
+          final emitter = DartEmitter(
+              allocator: Allocator.simplePrefixing(), orderDirectives: true);
+          final content = lib.accept(emitter).toString();
+
+          await fileSystem.writeFile(
+            context.join(outputDir, 'design_system', 'app_images.dart'),
+            DartFormatter(languageVersion: DartFormatter.latestLanguageVersion)
+                .format(content),
+          );
+          generatedFiles.add('design_system/app_images.dart');
+          logger.success('Generated: design_system/app_images.dart');
+        } else {
+          // Fallback: Copy if exists in source
+          final srcPath = context.join(designSystemDir, 'app_images.dart');
+          if (await fileSystem.exists(srcPath)) {
+            final destPath =
+                context.join(outputDir, 'design_system', 'app_images.dart');
+            await fileSystem.copyFile(srcPath, destPath);
+            generatedFiles.add('design_system/app_images.dart');
+            logger.success('Copied: design_system/app_images.dart (Fallback)');
           }
         }
       } catch (e) {

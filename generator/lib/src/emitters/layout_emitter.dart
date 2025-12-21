@@ -253,32 +253,35 @@ class LayoutEmitter {
   // --- New Primitive Node Emitters ---
 
   Expression _emitImage(ImageNode node) {
-    // Determine image type from src
-    if (node.src.startsWith('http://') || node.src.startsWith('https://')) {
-      return refer('Image').property('network').call([
-        literalString(node.src),
-      ], {
-        if (node.width != null) 'width': literalNum(node.width!),
-        if (node.height != null) 'height': literalNum(node.height!),
-        if (node.fit != null) 'fit': refer('BoxFit.${node.fit!.name}'),
-      });
-    } else if (node.src.startsWith('assets/')) {
-      return refer('Image').property('asset').call([
-        literalString(node.src),
-      ], {
-        if (node.width != null) 'width': literalNum(node.width!),
-        if (node.height != null) 'height': literalNum(node.height!),
-        if (node.fit != null) 'fit': refer('BoxFit.${node.fit!.name}'),
-      });
+    // Determine image source type
+    final isNetworkUrl =
+        node.src.startsWith('http://') || node.src.startsWith('https://');
+    final isDirectPath = node.src.contains('/');
+    final isRegistryName = !isDirectPath && !isNetworkUrl;
+
+    // Determine image path expression
+    final Expression pathExpr;
+    if (isRegistryName) {
+      // Use AppImages registry for simple names without '/'
+      pathExpr = refer('AppImages').property(node.src);
     } else {
-      // Default to asset
-      return refer('Image').property('asset').call([
-        literalString(node.src),
-      ], {
-        if (node.width != null) 'width': literalNum(node.width!),
-        if (node.height != null) 'height': literalNum(node.height!),
-        if (node.fit != null) 'fit': refer('BoxFit.${node.fit!.name}'),
-      });
+      // Direct path (network URL or asset path)
+      pathExpr = literalString(node.src);
+    }
+
+    // Build Image widget arguments
+    final imageArgs = <String, Expression>{
+      if (node.width != null) 'width': literalNum(node.width!),
+      if (node.height != null) 'height': literalNum(node.height!),
+      if (node.fit != null) 'fit': refer('BoxFit.${node.fit!.name}'),
+    };
+
+    // Generate appropriate Image constructor
+    if (isNetworkUrl) {
+      return refer('Image').property('network').call([pathExpr], imageArgs);
+    } else {
+      // Default to Image.asset for both registry names and asset paths
+      return refer('Image').property('asset').call([pathExpr], imageArgs);
     }
   }
 

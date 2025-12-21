@@ -62,3 +62,15 @@ class IconMapping {
 
   const IconMapping(this.iconData);
 }
+
+/// Marks a class as an Image Registry.
+class ImageRegistry {
+  const ImageRegistry();
+}
+
+/// Maps a constant to a specific image path (asset or network URL).
+class ImageMapping {
+  final String path;
+
+  const ImageMapping(this.path);
+}

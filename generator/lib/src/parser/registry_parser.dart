@@ -5,12 +5,21 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:mason_logger/mason_logger.dart';
 
+enum RegistryType { icon, image }
+
 class RegistryDefinition {
   final String className;
-  // Map of FieldName -> IconDataString (e.g. 'search' -> 'Icons.search')
+  final RegistryType type;
+  // Map of FieldName -> Value
+  // For icons: 'search' -> 'Icons.search'
+  // For images: 'logo' -> 'assets/images/logo.png'
   final Map<String, String> mappings;
 
-  RegistryDefinition({required this.className, required this.mappings});
+  RegistryDefinition({
+    required this.className,
+    required this.type,
+    required this.mappings,
+  });
 }
 
 class RegistryParser {
@@ -60,19 +69,24 @@ class _RegistryVisitor extends RecursiveAstVisitor<void> {
 
   @override
   void visitClassDeclaration(ClassDeclaration node) {
-    // Check for @IconRegistry annotation
-    final hasAnnotation = node.metadata.any((annotation) {
-      return annotation.name.toSource() == 'IconRegistry';
-    });
+    // Check for @IconRegistry or @ImageRegistry annotation
+    final iconAnnotation = node.metadata
+        .where((a) => a.name.toSource() == 'IconRegistry')
+        .firstOrNull;
+    final imageAnnotation = node.metadata
+        .where((a) => a.name.toSource() == 'ImageRegistry')
+        .firstOrNull;
 
-    if (hasAnnotation) {
+    if (iconAnnotation != null || imageAnnotation != null) {
+      final isIcon = iconAnnotation != null;
+      final mappingAnnotationName = isIcon ? 'IconMapping' : 'ImageMapping';
       final mappings = <String, String>{};
 
       for (final member in node.members) {
         if (member is FieldDeclaration) {
-          // Check for @IconMapping annotation
+          // Check for @IconMapping or @ImageMapping annotation
           final mappingAnnotation = member.metadata
-              .where((a) => a.name.toSource() == 'IconMapping')
+              .where((a) => a.name.toSource() == mappingAnnotationName)
               .firstOrNull;
 
           if (mappingAnnotation != null) {
@@ -80,12 +94,12 @@ class _RegistryVisitor extends RecursiveAstVisitor<void> {
             if (args != null && args.isNotEmpty) {
               final firstArg = args.first;
               if (firstArg is StringLiteral) {
-                final iconData = firstArg.stringValue;
+                final value = firstArg.stringValue;
 
                 // Find field name
                 for (final variable in member.fields.variables) {
-                  if (iconData != null) {
-                    mappings[variable.name.lexeme] = iconData;
+                  if (value != null) {
+                    mappings[variable.name.lexeme] = value;
                   }
                 }
               }
@@ -96,6 +110,7 @@ class _RegistryVisitor extends RecursiveAstVisitor<void> {
 
       definition = RegistryDefinition(
         className: node.name.lexeme,
+        type: isIcon ? RegistryType.icon : RegistryType.image,
         mappings: mappings,
       );
     }
