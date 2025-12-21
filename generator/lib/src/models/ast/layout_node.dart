@@ -403,6 +403,64 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
+  const factory LayoutNode.dropdown({
+    String? id,
+    String? visibleWhen,
+    required String binding,
+    required List<String> items,
+    String? label,
+    String? onChanged,
+  }) =>
+      LayoutNode.interactive(
+        node: InteractiveNode.dropdown(
+          binding: binding,
+          items: items,
+          label: label,
+          onChanged: onChanged,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
+
+  const factory LayoutNode.radio({
+    String? id,
+    String? visibleWhen,
+    required String binding,
+    required String value,
+    String? label,
+    String? onChanged,
+  }) =>
+      LayoutNode.interactive(
+        node: InteractiveNode.radio(
+          binding: binding,
+          value: value,
+          label: label,
+          onChanged: onChanged,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
+
+  const factory LayoutNode.slider({
+    String? id,
+    String? visibleWhen,
+    required String binding,
+    double? min,
+    double? max,
+    int? divisions,
+    String? label,
+    String? onChanged,
+  }) =>
+      LayoutNode.interactive(
+        node: InteractiveNode.slider(
+          binding: binding,
+          min: min,
+          max: max,
+          divisions: divisions,
+          label: label,
+          onChanged: onChanged,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
+
   const factory LayoutNode.stack({
     String? id,
     String? visibleWhen,

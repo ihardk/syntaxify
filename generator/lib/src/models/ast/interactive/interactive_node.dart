@@ -43,6 +43,29 @@ sealed class InteractiveNode with _$InteractiveNode {
     ColorSemantic? color,
   }) = IconButtonNode;
 
+  const factory InteractiveNode.dropdown({
+    required String binding,
+    required List<String> items,
+    String? label,
+    String? onChanged,
+  }) = DropdownNode;
+
+  const factory InteractiveNode.radio({
+    required String binding,
+    required String value,
+    String? label,
+    String? onChanged,
+  }) = RadioNode;
+
+  const factory InteractiveNode.slider({
+    required String binding,
+    double? min,
+    double? max,
+    int? divisions,
+    String? label,
+    String? onChanged,
+  }) = SliderNode;
+
   factory InteractiveNode.fromJson(Map<String, dynamic> json) =>
       _$InteractiveNodeFromJson(json);
 }
