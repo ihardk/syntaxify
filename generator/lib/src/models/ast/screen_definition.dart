@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'ast_node.dart';
+import 'layout_node.dart';
 
 part 'screen_definition.freezed.dart';
 part 'screen_definition.g.dart';
@@ -10,9 +10,9 @@ part 'screen_definition.g.dart';
 /// ```dart
 /// final loginScreen = ScreenDefinition(
 ///   id: 'login',
-///   layout: AstNode.column(children: [
-///     AstNode.text(text: 'Welcome'),
-///     AstNode.button(label: 'Login', onPressed: 'handleLogin'),
+///   layout: LayoutNode.column(children: [
+///     LayoutNode.text(text: 'Welcome'),
+///     LayoutNode.button(label: 'Login', onPressed: 'handleLogin'),
 ///   ]),
 /// );
 /// ```
@@ -20,8 +20,8 @@ part 'screen_definition.g.dart';
 sealed class ScreenDefinition with _$ScreenDefinition {
   const factory ScreenDefinition({
     required String id,
-    required AstNode layout,
-    AstNode? appBar,
+    required LayoutNode layout,
+    LayoutNode? appBar,
     String? padding, // Token
   }) = _ScreenDefinition;
 

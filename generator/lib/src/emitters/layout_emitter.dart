@@ -1,12 +1,12 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:syntaxify/src/models/ast/nodes.dart';
 
-/// Emits Flutter code from AST nodes.
+/// Emits Flutter code from layout nodes.
 class LayoutEmitter {
   const LayoutEmitter();
 
-  /// Converts an [AstNode] into a [Spec] (Expression).
-  Expression emit(AstNode node) {
+  /// Converts a [LayoutNode] into a [Spec] (Expression).
+  Expression emit(LayoutNode node) {
     return node.map(
       // Layout
       column: _emitColumn,

@@ -5,9 +5,9 @@ part 'app_bar_action.g.dart';
 
 /// Represents an action button in an app bar.
 ///
-/// Used in [AstNode.appBar] to define action buttons:
+/// Used in [LayoutNode.appBar] to define action buttons:
 /// ```dart
-/// AstNode.appBar(
+/// LayoutNode.appBar(
 ///   title: 'My Screen',
 ///   actions: [
 ///     AppBarAction(icon: 'search', onPressed: 'handleSearch'),

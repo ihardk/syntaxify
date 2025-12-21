@@ -2,11 +2,11 @@ import 'package:test/test.dart';
 import 'package:syntaxify/src/models/ast/nodes.dart';
 
 void main() {
-  group('AstNode', () {
+  group('LayoutNode', () {
     test('instantiates ColumnNode', () {
-      final node = AstNode.column(
+      final node = LayoutNode.column(
         children: [
-          AstNode.text(text: 'Hello'),
+          LayoutNode.text(text: 'Hello'),
         ],
         mainAxisAlignment: MainAxisAlignment.center,
       );
@@ -17,7 +17,7 @@ void main() {
     });
 
     test('instantiates TextNode', () {
-      final node = AstNode.text(
+      final node = LayoutNode.text(
         text: 'Hello World',
         variant: TextVariant.headlineMedium,
       );
@@ -28,7 +28,7 @@ void main() {
     });
 
     test('instantiates ButtonNode', () {
-      final node = AstNode.button(
+      final node = LayoutNode.button(
         label: 'Click Me',
         variant: ButtonVariant.filled,
         onPressed: 'action:submit',
@@ -40,10 +40,10 @@ void main() {
     });
 
     test('instantiates RowNode', () {
-      final node = AstNode.row(
+      final node = LayoutNode.row(
         children: [
-          AstNode.text(text: 'Label'),
-          AstNode.icon(name: 'arrow_forward'),
+          LayoutNode.text(text: 'Label'),
+          LayoutNode.icon(name: 'arrow_forward'),
         ],
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
       );
@@ -54,7 +54,7 @@ void main() {
     });
 
     test('instantiates TextFieldNode', () {
-      final node = AstNode.textField(
+      final node = LayoutNode.textField(
         label: 'Username',
         hint: 'Enter your logic',
         keyboardType: KeyboardType.email,
@@ -68,7 +68,7 @@ void main() {
     });
 
     test('instantiates IconNode', () {
-      final node = AstNode.icon(
+      final node = LayoutNode.icon(
         name: 'person',
         size: IconSize.md,
         semantic: ColorSemantic.primary,
@@ -80,7 +80,7 @@ void main() {
     });
 
     test('instantiates SpacerNode', () {
-      final node = AstNode.spacer(
+      final node = LayoutNode.spacer(
         flex: 2,
         size: SpacerSize.md,
       );
@@ -91,17 +91,17 @@ void main() {
     });
 
     test('serialization works for all types', () {
-      final textNode = AstNode.text(text: 'Test');
-      expect(AstNode.fromJson(textNode.toJson()), equals(textNode));
+      final textNode = LayoutNode.text(text: 'Test');
+      expect(LayoutNode.fromJson(textNode.toJson()), equals(textNode));
 
-      final colNode = AstNode.column(children: [textNode]);
-      expect(AstNode.fromJson(colNode.toJson()), equals(colNode));
+      final colNode = LayoutNode.column(children: [textNode]);
+      expect(LayoutNode.fromJson(colNode.toJson()), equals(colNode));
 
-      final rowNode = AstNode.row(children: [textNode]);
-      expect(AstNode.fromJson(rowNode.toJson()), equals(rowNode));
+      final rowNode = LayoutNode.row(children: [textNode]);
+      expect(LayoutNode.fromJson(rowNode.toJson()), equals(rowNode));
 
-      final iconNode = AstNode.icon(name: 'check');
-      expect(AstNode.fromJson(iconNode.toJson()), equals(iconNode));
+      final iconNode = LayoutNode.icon(name: 'check');
+      expect(LayoutNode.fromJson(iconNode.toJson()), equals(iconNode));
     });
   });
 
@@ -109,8 +109,8 @@ void main() {
     test('instantiates ScreenDefinition', () {
       final screen = ScreenDefinition(
         id: 'home_screen',
-        layout: AstNode.column(children: []),
-        appBar: AstNode.appBar(title: 'Home') as AppBarNode,
+        layout: LayoutNode.column(children: []),
+        appBar: LayoutNode.appBar(title: 'Home') as AppBarNode,
       );
 
       expect(screen.id, equals('home_screen'));

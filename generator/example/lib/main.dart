@@ -582,17 +582,17 @@ class ScreensTab extends StatelessWidget {
             ),
             child: const Text('''final loginScreen = ScreenDefinition(
   id: 'login',
-  layout: AstNode.column(children: [
-    AstNode.text(text: 'Welcome Back'),
-    AstNode.textField(
+  layout: LayoutNode.column(children: [
+    LayoutNode.text(text: 'Welcome Back'),
+    LayoutNode.textField(
       label: 'Email',
       keyboardType: KeyboardType.emailAddress
     ),
-    AstNode.textField(
+    LayoutNode.textField(
       label: 'Password',
       obscureText: true
     ),
-    AstNode.button(
+    LayoutNode.button(
       label: 'Sign In',
       onPressed: 'handleLogin'
     ),

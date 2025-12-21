@@ -76,7 +76,7 @@ class ScreenGenerator {
     return scaffold.returned.statement;
   }
 
-  Set<String> _collectCallbacks(AstNode node) {
+  Set<String> _collectCallbacks(LayoutNode node) {
     final callbacks = <String>{};
 
     node.map(

@@ -68,4 +68,14 @@ class LocalFileSystem implements FileSystem {
       await file.delete();
     }
   }
+
+  @override
+  Future<FileStats> getStats(String filePath) async {
+    final file = io.File(filePath);
+    final stat = await file.stat();
+    return FileStats(
+      modified: stat.modified,
+      size: stat.size,
+    );
+  }
 }

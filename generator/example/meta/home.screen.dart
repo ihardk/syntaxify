@@ -3,59 +3,59 @@ import 'package:syntaxify/syntaxify.dart';
 /// Home screen definition - main dashboard after login
 final homeScreen = ScreenDefinition(
   id: 'home',
-  appBar: AstNode.appBar(title: 'Dashboard'),
-  layout: AstNode.column(
+  appBar: LayoutNode.appBar(title: 'Dashboard'),
+  layout: LayoutNode.column(
     children: [
-      AstNode.text(
+      LayoutNode.text(
         text: 'Welcome Back!',
         variant: TextVariant.headlineMedium,
       ),
-      AstNode.text(
+      LayoutNode.text(
         text: 'Here\'s your overview for today',
         variant: TextVariant.bodyMedium,
       ),
-      AstNode.spacer(size: SpacerSize.lg),
+      LayoutNode.spacer(size: SpacerSize.lg),
 
       // Stats Row
-      AstNode.row(
+      LayoutNode.row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          AstNode.column(
+          LayoutNode.column(
             children: [
-              AstNode.text(text: '12', variant: TextVariant.headlineMedium),
-              AstNode.text(text: 'Tasks', variant: TextVariant.labelSmall),
+              LayoutNode.text(text: '12', variant: TextVariant.headlineMedium),
+              LayoutNode.text(text: 'Tasks', variant: TextVariant.labelSmall),
             ],
           ),
-          AstNode.column(
+          LayoutNode.column(
             children: [
-              AstNode.text(text: '5', variant: TextVariant.headlineMedium),
-              AstNode.text(text: 'Completed', variant: TextVariant.labelSmall),
+              LayoutNode.text(text: '5', variant: TextVariant.headlineMedium),
+              LayoutNode.text(text: 'Completed', variant: TextVariant.labelSmall),
             ],
           ),
-          AstNode.column(
+          LayoutNode.column(
             children: [
-              AstNode.text(text: '3', variant: TextVariant.headlineMedium),
-              AstNode.text(text: 'Pending', variant: TextVariant.labelSmall),
+              LayoutNode.text(text: '3', variant: TextVariant.headlineMedium),
+              LayoutNode.text(text: 'Pending', variant: TextVariant.labelSmall),
             ],
           ),
         ],
       ),
-      AstNode.spacer(size: SpacerSize.xl),
+      LayoutNode.spacer(size: SpacerSize.xl),
 
       // Action Buttons
-      AstNode.button(
+      LayoutNode.button(
         label: 'View All Tasks',
         variant: ButtonVariant.filled,
         onPressed: 'navigateToTasks',
       ),
-      AstNode.spacer(size: SpacerSize.md),
-      AstNode.button(
+      LayoutNode.spacer(size: SpacerSize.md),
+      LayoutNode.button(
         label: 'Add New Task',
         variant: ButtonVariant.outlined,
         onPressed: 'addNewTask',
       ),
-      AstNode.spacer(size: SpacerSize.md),
-      AstNode.button(
+      LayoutNode.spacer(size: SpacerSize.md),
+      LayoutNode.button(
         label: 'Settings',
         variant: ButtonVariant.text,
         onPressed: 'openSettings',

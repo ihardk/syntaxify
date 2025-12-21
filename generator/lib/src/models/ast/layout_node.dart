@@ -2,37 +2,37 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'enums.dart';
 import 'app_bar_action.dart';
 
-part 'ast_node.freezed.dart';
-part 'ast_node.g.dart';
+part 'layout_node.freezed.dart';
+part 'layout_node.g.dart';
 
-/// Represents a node in the Syntaxify Abstract Syntax Tree.
+/// Represents a node in the Syntaxify Layout Tree.
 ///
 /// Use these factory constructors to define UI layouts in `.screen.dart` files:
-/// - [AstNode.column] - Vertical layout
-/// - [AstNode.row] - Horizontal layout
-/// - [AstNode.text] - Text display
-/// - [AstNode.button] - Button widget
-/// - [AstNode.textField] - Text input field
-/// - [AstNode.icon] - Icon widget
-/// - [AstNode.spacer] - Spacing between elements
-/// - [AstNode.appBar] - App bar for screens
+/// - [LayoutNode.column] - Vertical layout
+/// - [LayoutNode.row] - Horizontal layout
+/// - [LayoutNode.text] - Text display
+/// - [LayoutNode.button] - Button widget
+/// - [LayoutNode.textField] - Text input field
+/// - [LayoutNode.icon] - Icon widget
+/// - [LayoutNode.spacer] - Spacing between elements
+/// - [LayoutNode.appBar] - App bar for screens
 @freezed
-sealed class AstNode with _$AstNode {
+sealed class LayoutNode with _$LayoutNode {
   // --- Layout Nodes ---
 
-  const factory AstNode.column({
+  const factory LayoutNode.column({
     String? id,
     String? visibleWhen,
-    required List<AstNode> children,
+    required List<LayoutNode> children,
     MainAxisAlignment? mainAxisAlignment,
     CrossAxisAlignment? crossAxisAlignment,
     String? spacing,
   }) = ColumnNode;
 
-  const factory AstNode.row({
+  const factory LayoutNode.row({
     String? id,
     String? visibleWhen,
-    required List<AstNode> children,
+    required List<LayoutNode> children,
     MainAxisAlignment? mainAxisAlignment,
     CrossAxisAlignment? crossAxisAlignment,
     String? spacing,
@@ -40,7 +40,7 @@ sealed class AstNode with _$AstNode {
 
   // --- Primitive Nodes ---
 
-  const factory AstNode.text({
+  const factory LayoutNode.text({
     String? id,
     String? visibleWhen,
     required String text,
@@ -50,7 +50,7 @@ sealed class AstNode with _$AstNode {
     TextOverflow? overflow,
   }) = TextNode;
 
-  const factory AstNode.button({
+  const factory LayoutNode.button({
     String? id,
     String? visibleWhen,
     required String label,
@@ -64,7 +64,7 @@ sealed class AstNode with _$AstNode {
     bool? fullWidth,
   }) = ButtonNode;
 
-  const factory AstNode.textField({
+  const factory LayoutNode.textField({
     String? id,
     String? visibleWhen,
     String? label,
@@ -84,7 +84,7 @@ sealed class AstNode with _$AstNode {
     TextFieldVariant? variant,
   }) = TextFieldNode;
 
-  const factory AstNode.icon({
+  const factory LayoutNode.icon({
     String? id,
     String? visibleWhen,
     required String name,
@@ -92,7 +92,7 @@ sealed class AstNode with _$AstNode {
     ColorSemantic? semantic,
   }) = IconNode;
 
-  const factory AstNode.spacer({
+  const factory LayoutNode.spacer({
     String? id,
     String? visibleWhen,
     SpacerSize? size,
@@ -102,7 +102,7 @@ sealed class AstNode with _$AstNode {
   // --- P1 Nodes (Base Set) ---
   // Adding AppBarNode as it is referenced in ScreenDefinition
 
-  const factory AstNode.appBar({
+  const factory LayoutNode.appBar({
     String? id,
     String? visibleWhen,
     String? title,
@@ -111,6 +111,6 @@ sealed class AstNode with _$AstNode {
     List<AppBarAction>? actions,
   }) = AppBarNode;
 
-  factory AstNode.fromJson(Map<String, dynamic> json) =>
-      _$AstNodeFromJson(json);
+  factory LayoutNode.fromJson(Map<String, dynamic> json) =>
+      _$LayoutNodeFromJson(json);
 }
