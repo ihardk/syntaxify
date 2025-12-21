@@ -5,8 +5,7 @@ import 'package:syntaxify/src/models/ast/screen_definition.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('ScreenGenerator',
-      skip: 'Expected output differs from actual generator', () {
+  group('ScreenGenerator', () {
     final generator = ScreenGenerator();
 
     test('generates a simple screen with AppBar and Body', () {
@@ -48,7 +47,7 @@ void main() {
       // Verify Body
       expect(code, contains('body: Column('));
       expect(code, contains("children: ["));
-      expect(code, contains("Text('Welcome')"));
+      expect(code, contains("AppText(text: 'Welcome')"));
       // Verify AppButton emission
       expect(code, contains("AppButton("));
       expect(code, contains("label: 'Sign In'"));
@@ -65,7 +64,7 @@ void main() {
       expect(code, contains('class SplashScreen extends StatelessWidget'));
       expect(code, contains('return Scaffold('));
       expect(code, isNot(contains('appBar:')));
-      expect(code, contains("body: Text('Loading...')"));
+      expect(code, contains("body: AppText(text: 'Loading...')"));
     });
   });
 }

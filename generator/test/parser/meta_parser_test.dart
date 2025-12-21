@@ -7,7 +7,7 @@ import 'package:syntaxify/src/models/component_definition.dart';
 import 'package:mason_logger/mason_logger.dart';
 
 void main() {
-  group('MetaParser', skip: 'TODO: Fix fixture file paths for test runner', () {
+  group('MetaParser', () {
     late MetaParser parser;
     late Logger logger;
 

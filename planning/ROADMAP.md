@@ -69,13 +69,13 @@
 ### 4.1 Update Documentation
 - [x] Update 00-SUMMARY.md with implementation status
 - [x] Update ROADMAP.md (this file)
-- [ ] Write ARCHITECTURE.md
+- [x] Write ARCHITECTURE.md
 
-### 4.2 Add Watch Mode
-- [ ] `syntaxify build --watch`
+### 4.2 Add Watch Mode ✅
+- [x] `syntaxify build --watch`
 
-### 4.3 Golden Tests
-- [ ] Input spec → Generated Dart → Assert exact match
+### 4.3 Golden Tests ✅
+- [x] Input spec → Generated Dart → Assert exact match
 
 ---
 

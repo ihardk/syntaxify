@@ -4,8 +4,7 @@ import 'package:syntaxify/src/use_cases/generate_screen.dart';
 import 'package:syntaxify/src/infrastructure/memory_file_system.dart';
 
 void main() {
-  group('GenerateScreenUseCase',
-      skip: 'Screen generation use case not fully implemented', () {
+  group('GenerateScreenUseCase', () {
     late GenerateScreenUseCase useCase;
     late MemoryFileSystem fileSystem;
 

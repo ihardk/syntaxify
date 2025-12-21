@@ -25,9 +25,9 @@ class ScreenGenerator {
               'package:$packageName/syntaxify/design_system/design_system.dart'),
         ] else ...[
           // Fallback to relative imports if package name not provided
-          Directive.import('../../index.dart'), // For generated components
+          Directive.import('../index.dart'), // For generated components
           Directive.import(
-              '../../design_system/design_system.dart'), // For design system
+              '../design_system/design_system.dart'), // For design system
         ],
       ])
       ..body.add(_buildScreenClass(screen)));
@@ -44,19 +44,20 @@ class ScreenGenerator {
     return Class((c) => c
       ..name = className
       ..extend = refer('StatelessWidget')
-      ..fields.addAll(callbacks.map((name) => Field((f) => f
-        ..name = name
-        ..type = refer('VoidCallback?')
+      ..fields.addAll(callbacks.entries.map((e) => Field((f) => f
+        ..name = e.key
+        ..type = e.value
         ..modifier = FieldModifier.final$)))
       ..constructors.add(Constructor((b) => b
         ..constant = true
         ..optionalParameters.add(Parameter((p) => p
           ..name = 'super.key'
           ..named = true))
-        ..optionalParameters.addAll(callbacks.map((name) => Parameter((p) => p
-          ..name = name
-          ..named = true
-          ..toThis = true)))))
+        ..optionalParameters
+            .addAll(callbacks.keys.map((name) => Parameter((p) => p
+              ..name = name
+              ..named = true
+              ..toThis = true)))))
       ..methods.add(Method((m) => m
         ..annotations.add(refer('override'))
         ..name = 'build'
@@ -76,8 +77,8 @@ class ScreenGenerator {
     return scaffold.returned.statement;
   }
 
-  Set<String> _collectCallbacks(LayoutNode node) {
-    final callbacks = <String>{};
+  Map<String, Reference> _collectCallbacks(LayoutNode node) {
+    final callbacks = <String, Reference>{};
 
     node.map(
       column: (n) {
@@ -91,10 +92,16 @@ class ScreenGenerator {
         }
       },
       button: (n) {
-        if (n.onPressed != null) callbacks.add(n.onPressed!);
+        if (n.onPressed != null) {
+          callbacks[n.onPressed!] = refer('VoidCallback?');
+        }
       },
       text: (_) {},
-      textField: (_) {}, // TODO: Add onChanged etc if needed
+      textField: (n) {
+        if (n.onChanged != null) {
+          callbacks[n.onChanged!] = refer('ValueChanged<String>?');
+        }
+      },
       icon: (_) {},
       spacer: (_) {},
       appBar: (_) {},

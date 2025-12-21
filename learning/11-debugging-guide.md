@@ -463,6 +463,50 @@ textColor: Colors.white,  // Visible on dark background
 
 ## Testing Issues
 
+### Issue: Tests fail on Windows but pass on Mac/Linux
+
+**Symptoms:**
+- "Expected: 'lib/screens/home.dart' Actual: 'lib\screens\home.dart'"
+- Path selection logic fails.
+
+**Cause:**
+Hardcoded path separators (`/`) or assuming POSIX paths. Windows uses backslashes (`\`) by default.
+
+**Fix:**
+Always use the `path` package, especially `path.posix` if working with URIs or internal generator assertions.
+
+```dart
+import 'package:path/path.dart' as p;
+
+// ❌ WRONG
+final path = 'lib/screens/$name.dart';
+
+// ✅ CORRECT (System agnostic)
+final path = p.join('lib', 'screens', '$name.dart');
+
+// ✅ CORRECT (For internal generator logic/URIs)
+final uri = p.posix.join('lib', 'screens', '$name.dart');
+```
+
+---
+
+### Issue: Golden tests failed after generator update
+
+**Symptoms:**
+```
+Test failed. ... matchesGoldenFile ...
+```
+
+**Cause:**
+You updated the generator (e.g., changed default padding, updated a token value), which slightly altered the pixel-perfect rendering of the output widgets.
+
+**Fix:**
+This is expected!
+1.  Verify the change is intentional.
+2.  Run: `flutter test --update-goldens`
+
+---
+
 ### Error: "Test failed to load"
 
 **Full error:**

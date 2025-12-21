@@ -17,7 +17,7 @@ description: Clean up generated files and rebuild fresh
 
 ### 1. Clean Generated Code
 ```bash
-cd d:\Workspace\syntaxify\generator
+cd generator
 dart run bin/syntaxify.dart clean
 ```
 
@@ -28,19 +28,19 @@ rm -rf generator/example/lib/syntaxify/generated/
 
 ### 2. Clean Build Artifacts
 ```bash
-cd d:\Workspace\syntaxify\generator
+cd generator
 dart pub get
 ```
 
 ```bash
-cd d:\Workspace\syntaxify\generator\example
+cd generator/example
 flutter clean
 flutter pub get
 ```
 
 ### 3. Clean Test Caches
 ```bash
-cd d:\Workspace\syntaxify\generator
+cd generator
 rm -rf .dart_tool/
 ```
 
@@ -57,20 +57,20 @@ flutter analyze
 ### Remove All Transient Files
 ```bash
 # Generator
-cd d:\Workspace\syntaxify\generator
+cd generator
 rm -rf .dart_tool/ build/ pubspec.lock
 
 # Example app
-cd d:\Workspace\syntaxify\generator\example
+cd generator/example
 rm -rf .dart_tool/ build/ pubspec.lock
 ```
 
 ### Reinstall Dependencies
 ```bash
-cd d:\Workspace\syntaxify\generator
+cd generator
 dart pub get
 
-cd d:\Workspace\syntaxify\generator\example
+cd generator/example
 flutter pub get
 ```
 

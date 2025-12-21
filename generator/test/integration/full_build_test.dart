@@ -10,8 +10,7 @@ import 'package:syntaxify/src/models/token_definition.dart';
 import 'package:mason_logger/mason_logger.dart';
 
 void main() {
-  group('Full Build Integration Tests',
-      skip: 'BuildAllUseCase implementation pending', () {
+  group('Full Build Integration Tests', () {
     late BuildAllUseCase buildUseCase;
     late MemoryFileSystem fileSystem;
     late GeneratorRegistry registry;
@@ -59,6 +58,11 @@ void main() {
         outputDir: '/lib',
         metaDirectoryPath: '/meta',
       );
+
+      print('Result errors: ${result.errors}');
+      print('Generated files: ${result.generatedFiles}');
+      final allFiles = await fileSystem.listFiles('/');
+      print('All files in FS: $allFiles');
 
       // Assert
       expect(result.hasErrors, isFalse);
@@ -187,7 +191,8 @@ void main() {
       );
 
       expect(result.hasErrors, isFalse);
-      expect(result.filesGenerated, equals(0));
+      expect(
+          result.filesGenerated, equals(1)); // index.dart is always generated
     });
 
     test('creates output directories if they don\'t exist', () async {
@@ -383,8 +388,15 @@ void main() {
       final secondCode =
           fileSystem.getFile('/lib/generated/components/app_button.dart');
 
-      // Code should be the same (file was overwritten)
-      expect(firstCode, equals(secondCode));
+      // Helper to strip timestamp line
+      String removeTimestamp(String? code) {
+        if (code == null) return '';
+        return code.replaceAll(
+            RegExp(r'// Generated: .*'), '// Generated: <TIMESTAMP>');
+      }
+
+      // Code should be the same (except timestamp)
+      expect(removeTimestamp(firstCode), equals(removeTimestamp(secondCode)));
     });
 
     test('subsequent builds preserve existing screen files', () async {

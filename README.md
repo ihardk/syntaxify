@@ -613,6 +613,7 @@ Having issues? See **[Troubleshooting Guide](docs/troubleshooting.md)** for comm
 | [Troubleshooting](docs/troubleshooting.md)   | Common issues & solutions        |
 | [User Manual](docs/user_manual.md)           | Comprehensive user guide         |
 | [Developer Manual](docs/developer_manual.md) | Architecture & contributing      |
+| [Architecture Guide](ARCHITECTURE.md)        | Philosophy & system design       |
 
 ---
 

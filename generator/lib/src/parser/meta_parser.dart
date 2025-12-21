@@ -17,8 +17,23 @@ class MetaParser {
 
   /// Parse a single meta file
   Future<ComponentDefinition?> parseFile(File file) async {
-    // ... (This method only returns ComponentDefinition, ignored for now)
-    return null;
+    if (!await file.exists()) {
+      logger.warn('File does not exist: ${file.path}');
+      return null;
+    }
+
+    try {
+      final content = await file.readAsString();
+      final unitResult = parseString(content: content);
+
+      final visitor = _AstNodeVisitor();
+      unitResult.unit.visitChildren(visitor);
+
+      return visitor.component;
+    } catch (e) {
+      logger.err('Failed to parse file ${file.path}: $e');
+      return null;
+    }
   }
 
   /// Parse all meta files in a directory

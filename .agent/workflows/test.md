@@ -43,8 +43,8 @@ flutter test
 
 | Category             | Target |
 | -------------------- | ------ |
-| Generator Unit Tests | 95%    |
-| Widget Tests         | 90%    |
+| Generator Unit Tests | 100%   |
+| Widget Tests         | 100%   |
 | Token Coverage       | 100%   |
 
 ## Test Categories

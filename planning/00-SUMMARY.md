@@ -12,12 +12,12 @@ Analyzed 12 reported issues across the syntaxify codebase. Found that **5 issues
 
 ### Quick Status
 
-| Priority          | Status              | Count | Issues             |
-| ----------------- | ------------------- | ----- | ------------------ |
-| ✅ Already Fixed   | Done                | 5     | #1, #2, #3, #4, #5 |
-| ⚠️ Partially Done  | In Progress         | 2     | #7, #9             |
-| ❌ Medium Priority | Need Implementation | 2     | #8, #10            |
-| ❌ Low Priority    | Enhancement         | 3     | #6, #11, #12       |
+| Priority          | Status              | Count | Issues                  |
+| ----------------- | ------------------- | ----- | ----------------------- |
+| ✅ Already Fixed   | Done                | 6     | #1, #2, #3, #4, #5, #10 |
+| ⚠️ Partially Done  | In Progress         | 2     | #7, #9                  |
+| ❌ Medium Priority | Need Implementation | 1     | #8                      |
+| ❌ Low Priority    | Enhancement         | 3     | #6, #11, #12            |
 
 ---
 

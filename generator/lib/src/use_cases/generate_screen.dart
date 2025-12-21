@@ -1,4 +1,4 @@
-import 'package:path/path.dart' as path;
+import 'package:path/path.dart' as p;
 import 'package:syntaxify/src/core/interfaces/file_system.dart';
 import 'package:syntaxify/src/models/ast/screen_definition.dart';
 import 'package:syntaxify/src/generators/screen_generator.dart';
@@ -22,13 +22,14 @@ class GenerateScreenUseCase {
     String? packageName,
   }) async {
     final fileName = '${screen.id}_screen.dart';
+    final context = p.posix;
 
     // Screens go to lib/screens/ (editable by user)
-    // Not under outputDir - they're separate from generated code
-    final screensDir = path.join('lib', 'screens');
+    // outputDir is typically 'lib', so this becomes lib/screens
+    final screensDir = context.join(outputDir, 'screens');
     await fileSystem.createDirectory(screensDir);
 
-    final filePath = path.join(screensDir, fileName);
+    final filePath = context.join(screensDir, fileName);
 
     // Only generate if file doesn't exist (preserve user edits)
     if (await fileSystem.exists(filePath)) {

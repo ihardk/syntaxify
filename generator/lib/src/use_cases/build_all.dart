@@ -1,5 +1,5 @@
 import 'package:mason_logger/mason_logger.dart';
-import 'package:path/path.dart' as path;
+import 'package:path/path.dart' as p;
 import 'dart:io';
 
 import 'package:syntaxify/src/core/interfaces/file_system.dart';
@@ -63,10 +63,15 @@ class BuildAllUseCase {
     BuildCache cache = BuildCache.empty();
     final cacheUpdates = <String, CacheEntry>{};
 
+    // Use posix style for consistent internal paths (forward slashes)
+    // especially for imports and memory file system tests
+    final context = p.posix;
+
     if (enableCache && !forceRebuild) {
       cacheManager = BuildCacheManager(
         fileSystem: fileSystem,
-        cacheFilePath: path.join(outputDir, BuildCacheManager.defaultCacheFileName),
+        cacheFilePath:
+            context.join(outputDir, BuildCacheManager.defaultCacheFileName),
       );
       cache = await cacheManager.loadCache();
       logger.detail('Loaded build cache with ${cache.entries.length} entries');
@@ -76,7 +81,7 @@ class BuildAllUseCase {
 
     // Create output directories
     await fileSystem
-        .createDirectory(path.join(outputDir, 'generated', 'components'));
+        .createDirectory(context.join(outputDir, 'generated', 'components'));
 
     // Read package name from pubspec.yaml for screen imports
     String? packageName;
@@ -115,7 +120,8 @@ class BuildAllUseCase {
 
         // Collect validation errors and warnings
         for (final error in validationErrors) {
-          final message = '${screen.id}: ${error.message} (${error.nodePath ?? "unknown"})';
+          final message =
+              '${screen.id}: ${error.message} (${error.nodePath ?? "unknown"})';
 
           if (error.severity == ErrorSeverity.error) {
             logger.err('  ✗ $message');
@@ -138,7 +144,8 @@ class BuildAllUseCase {
         }
 
         // Only generate if no critical errors
-        final hasErrors = validationErrors.any((e) => e.severity == ErrorSeverity.error);
+        final hasErrors =
+            validationErrors.any((e) => e.severity == ErrorSeverity.error);
         if (hasErrors) {
           logger.err('Skipping screen ${screen.id} due to validation errors');
           continue;
@@ -178,7 +185,7 @@ class BuildAllUseCase {
 
         final filePath = await _generateComponent.execute(
           component: component,
-          outputDir: path.join(outputDir, 'generated'),
+          outputDir: context.join(outputDir, 'generated'),
           tokens: matchingTokens,
         );
 
@@ -193,9 +200,10 @@ class BuildAllUseCase {
     // Copy design system files (modular structure)
     if (designSystemDir != null) {
       // 1. Create design_system directory
-      await fileSystem.createDirectory(path.join(outputDir, 'design_system'));
       await fileSystem
-          .createDirectory(path.join(outputDir, 'design_system', 'styles'));
+          .createDirectory(context.join(outputDir, 'design_system'));
+      await fileSystem
+          .createDirectory(context.join(outputDir, 'design_system', 'styles'));
 
       // Core design system files (Source: design_system/ -> Dest: design_system/)
       final designSystemFiles = [
@@ -208,9 +216,9 @@ class BuildAllUseCase {
 
       for (final file in designSystemFiles) {
         try {
-          final srcPath = path.join(designSystemDir, file);
+          final srcPath = context.join(designSystemDir, file);
           if (await fileSystem.exists(srcPath)) {
-            final destPath = path.join(outputDir, 'design_system', file);
+            final destPath = context.join(outputDir, 'design_system', file);
             await fileSystem.copyFile(srcPath, destPath);
             generatedFiles.add('design_system/$file');
             logger.success('Copied: design_system/$file');
@@ -229,10 +237,10 @@ class BuildAllUseCase {
 
       for (final file in styleFiles) {
         try {
-          final srcPath = path.join(designSystemDir, 'styles', file);
+          final srcPath = context.join(designSystemDir, 'styles', file);
           if (await fileSystem.exists(srcPath)) {
             final destPath =
-                path.join(outputDir, 'design_system', 'styles', file);
+                context.join(outputDir, 'design_system', 'styles', file);
             await fileSystem.copyFile(srcPath, destPath);
             generatedFiles.add('design_system/styles/$file');
             logger.success('Copied: design_system/styles/$file');
@@ -243,7 +251,6 @@ class BuildAllUseCase {
       }
 
       // Mixin Renderers (Source: design_system/styles/<style>/ -> Dest: design_system/styles/<style>/)
-      // TODO: Implement recursive copy or glob finding to avoid hardcoding
       final rendererFiles = [
         'material/button_renderer.dart',
         'cupertino/button_renderer.dart',
@@ -258,15 +265,15 @@ class BuildAllUseCase {
 
       for (final file in rendererFiles) {
         try {
-          final srcPath = path.join(designSystemDir, 'styles', file);
+          final srcPath = context.join(designSystemDir, 'styles', file);
           if (await fileSystem.exists(srcPath)) {
             // Create sub-directory (e.g., styles/material/)
-            final subDir = path.dirname(file);
+            final subDir = context.dirname(file);
             await fileSystem.createDirectory(
-                path.join(outputDir, 'design_system', 'styles', subDir));
+                context.join(outputDir, 'design_system', 'styles', subDir));
 
             final destPath =
-                path.join(outputDir, 'design_system', 'styles', file);
+                context.join(outputDir, 'design_system', 'styles', file);
             await fileSystem.copyFile(srcPath, destPath);
             generatedFiles.add('design_system/styles/$file');
             logger.success('Copied: design_system/styles/$file');
@@ -284,13 +291,12 @@ class BuildAllUseCase {
         if (registryDefs.isNotEmpty) {
           final iconGen = IconRegistryGenerator();
           final lib = iconGen.build(registryDefs.first);
-          // Use DartEmitter with orderDirectives? Or manual.
           final emitter = DartEmitter(
               allocator: Allocator.simplePrefixing(), orderDirectives: true);
           final content = lib.accept(emitter).toString();
 
           await fileSystem.writeFile(
-            path.join(outputDir, 'design_system', 'app_icons.dart'),
+            context.join(outputDir, 'design_system', 'app_icons.dart'),
             DartFormatter(languageVersion: DartFormatter.latestLanguageVersion)
                 .format(content),
           );
@@ -298,10 +304,10 @@ class BuildAllUseCase {
           logger.success('Generated: design_system/app_icons.dart');
         } else {
           // Fallback: Copy if exists in source
-          final srcPath = path.join(designSystemDir, 'app_icons.dart');
+          final srcPath = context.join(designSystemDir, 'app_icons.dart');
           if (await fileSystem.exists(srcPath)) {
             final destPath =
-                path.join(outputDir, 'design_system', 'app_icons.dart');
+                context.join(outputDir, 'design_system', 'app_icons.dart');
             await fileSystem.copyFile(srcPath, destPath);
             generatedFiles.add('design_system/app_icons.dart');
             logger.success('Copied: design_system/app_icons.dart (Fallback)');
@@ -313,14 +319,14 @@ class BuildAllUseCase {
 
       // Copy token files (Source: design_system/tokens/ -> Dest: design_system/tokens/)
       await fileSystem
-          .createDirectory(path.join(outputDir, 'design_system', 'tokens'));
+          .createDirectory(context.join(outputDir, 'design_system', 'tokens'));
 
       // Explicitly copy shared tokens
       try {
         final iconTokenPath =
-            path.join(designSystemDir, 'tokens', 'icon_token.dart');
+            context.join(designSystemDir, 'tokens', 'icon_token.dart');
         if (await fileSystem.exists(iconTokenPath)) {
-          final destPath = path.join(
+          final destPath = context.join(
               outputDir, 'design_system', 'tokens', 'icon_token.dart');
           await fileSystem.copyFile(iconTokenPath, destPath);
           generatedFiles.add('design_system/tokens/icon_token.dart');
@@ -333,9 +339,9 @@ class BuildAllUseCase {
       for (final token in tokens) {
         try {
           final componentName = token.componentName.toLowerCase();
-          final srcPath = path.join(
+          final srcPath = context.join(
               designSystemDir, 'tokens', '${componentName}_tokens.dart');
-          final destPath = path.join(
+          final destPath = context.join(
             outputDir,
             'design_system',
             'tokens',
@@ -401,7 +407,7 @@ class BuildAllUseCase {
 
     final content = '''
 // ============================================
-// GENERATED BY SYNTAXIFY v0.1.0
+// GENERATED BY SYNTAXIFY v0.1.0-alpha.10
 // DO NOT MODIFY - Regenerated on build
 // Barrel file exporting all generated code
 // ============================================
@@ -410,7 +416,7 @@ $exports
 ''';
 
     await fileSystem.writeFile(
-      path.join(outputDir, 'index.dart'),
+      p.posix.join(outputDir, 'index.dart'),
       content,
     );
   }

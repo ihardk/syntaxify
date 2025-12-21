@@ -27,21 +27,19 @@ Generated code MUST be:
 
 ### Commands
 
-| Command                            | Description                     |
-| ---------------------------------- | ------------------------------- |
-| `syntaxify build`                  | Generate from all AST files     |
-| `syntaxify build --target=flutter` | Generate for specific target    |
-| `syntaxify validate`               | Validate AST without generating |
-| `syntaxify clean`                  | Remove all generated files      |
-| `syntaxify list`                   | List all defined screens        |
+| Command                            | Description                   |
+| ---------------------------------- | ----------------------------- |
+| `dart run syntaxify build`         | Generate from all AST files   |
+| `dart run syntaxify build --watch` | Watch for changes and rebuild |
+| `dart run syntaxify clean`         | Remove all generated files    |
+| `dart run syntaxify init`          | Initialize project structure  |
 
 ### Flags
 
-| Flag        | Description              |
-| ----------- | ------------------------ |
-| `--force`   | Overwrite modified files |
-| `--verbose` | Detailed output          |
-| `--dry-run` | Preview without writing  |
+| Flag        | Description       |
+| ----------- | ----------------- |
+| `--watch`   | Watch input files |
+| `--verbose` | Detailed output   |
 
 ---
 
@@ -50,14 +48,14 @@ Generated code MUST be:
 ### AST Input Format
 
 ```dart
-// screens/login.dart
+// meta/login.screen.dart
 final loginScreen = ScreenDefinition(
   id: 'login',
-  layout: ColumnNode(
+  layout: AstNode.column(
     children: [
-      TextNode(text: 'Welcome Back', style: 'heading'),
-      InputNode(label: 'Email', hint: 'you@example.com'),
-      ButtonNode(label: 'Login', onPressed: 'login'),
+      AstNode.text(text: 'Welcome Back', variant: TextVariant.headlineMedium),
+      AstNode.textField(label: 'Email'),
+      AstNode.button(label: 'Login', onPressed: 'login'),
     ],
   ),
 );
