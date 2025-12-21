@@ -265,6 +265,36 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
+  factory LayoutNode.sizedBox({
+    String? id,
+    String? visibleWhen,
+    double? width,
+    double? height,
+    LayoutNode? child,
+  }) =>
+      LayoutNode.primitive(
+        node: PrimitiveNode.sizedBox(
+          width: width,
+          height: height,
+          child: child,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
+
+  factory LayoutNode.expanded({
+    String? id,
+    String? visibleWhen,
+    required LayoutNode child,
+    int? flex,
+  }) =>
+      LayoutNode.primitive(
+        node: PrimitiveNode.expanded(
+          child: child,
+          flex: flex,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
+
   factory LayoutNode.image({
     String? id,
     String? visibleWhen,

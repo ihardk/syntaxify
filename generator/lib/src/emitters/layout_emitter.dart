@@ -41,6 +41,8 @@ class LayoutEmitter {
       image: _emitImage,
       divider: _emitDivider,
       circularProgressIndicator: _emitCircularProgressIndicator,
+      sizedBox: _emitSizedBox,
+      expanded: _emitExpanded,
     );
   }
 
@@ -164,9 +166,37 @@ class LayoutEmitter {
   }
 
   Expression _emitSpacer(SpacerNode node) {
-    return refer('Spacer').newInstance([], {
-      if (node.flex != null) 'flex': literalNum(node.flex!),
+    // If flex is specified or size is SpacerSize.flex, use Spacer widget
+    if (node.flex != null || node.size == SpacerSize.flex) {
+      return refer('Spacer').newInstance([], {
+        if (node.flex != null) 'flex': literalNum(node.flex!),
+      });
+    }
+
+    // Otherwise, use SizedBox with semantic spacing
+    final height = _getSpacingValue(node.size);
+    return refer('SizedBox').newInstance([], {
+      'height': literalNum(height),
     });
+  }
+
+  // Helper to convert SpacerSize to pixel values
+  double _getSpacingValue(SpacerSize? size) {
+    switch (size) {
+      case SpacerSize.xs:
+        return 4.0;
+      case SpacerSize.sm:
+        return 8.0;
+      case SpacerSize.md:
+      case null:
+        return 16.0; // Default
+      case SpacerSize.lg:
+        return 24.0;
+      case SpacerSize.xl:
+        return 32.0;
+      case SpacerSize.flex:
+        return 16.0; // Fallback, shouldn't reach here
+    }
   }
 
   Expression _emitAppBar(AppBarNode node) {
@@ -293,6 +323,21 @@ class LayoutEmitter {
       if (node.label != null) 'title': refer('Text').newInstance([
         literalString(node.label!),
       ]),
+    });
+  }
+
+  Expression _emitSizedBox(SizedBoxNode node) {
+    return refer('SizedBox').newInstance([], {
+      if (node.width != null) 'width': literalNum(node.width!),
+      if (node.height != null) 'height': literalNum(node.height!),
+      if (node.child != null) 'child': emit(node.child!),
+    });
+  }
+
+  Expression _emitExpanded(ExpandedNode node) {
+    return refer('Expanded').newInstance([], {
+      'child': emit(node.child),
+      if (node.flex != null) 'flex': literalNum(node.flex!),
     });
   }
 }

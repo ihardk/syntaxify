@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../enums.dart';
+import '../layout_node.dart';
 
 part 'primitive_node.freezed.dart';
 part 'primitive_node.g.dart';
@@ -47,6 +48,17 @@ sealed class PrimitiveNode with _$PrimitiveNode {
     ColorSemantic? color,
     double? strokeWidth,
   }) = CircularProgressIndicatorNode;
+
+  const factory PrimitiveNode.sizedBox({
+    double? width,
+    double? height,
+    LayoutNode? child,
+  }) = SizedBoxNode;
+
+  const factory PrimitiveNode.expanded({
+    required LayoutNode child,
+    int? flex,
+  }) = ExpandedNode;
 
   factory PrimitiveNode.fromJson(Map<String, dynamic> json) =>
       _$PrimitiveNodeFromJson(json);
