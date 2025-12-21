@@ -1,16 +1,16 @@
-# Syntaxify Architecture: The UI Meta-Framework
+# Syntaxify Architecture: The UI Compiler
 
-Syntaxify is not just a code generator. It is a **Meta-Framework** for Flutter UI development, acting as an operating system for your design system.
+Syntaxify is not just a code generator. It is a **UI Compiler** for Flutter development, acting as an intelligent transformation engine for your design system.
 
-## 🏗️ The Meta-Framework Concept
+## 🏗️ The UI Compiler Concept
 
 Traditional development often maps 1:1 (One Code → One Outcome). Syntaxify maps **1:N** (One Definition → Many Outcomes).
 
-| Layer              | Technology    | Role                                                                        |
-| :----------------- | :------------ | :-------------------------------------------------------------------------- |
-| **Meta-Framework** | **Syntaxify** | **The Compiler.** Defines *intent* (What), architecture, and build process. |
-| **Framework**      | Flutter       | **The Runtime.** Renders pixels (How) using Widgets and RenderObjects.      |
-| **Language**       | Dart          | **The Syntax.** The raw material.                                           |
+| Layer        | Technology    | Role                                                                                        |
+| :----------- | :------------ | :------------------------------------------------------------------------------------------ |
+| **Compiler** | **Syntaxify** | **The Transformation Engine.** Compiles *intent* (What) into highly optimized Flutter code. |
+| **Runtime**  | Flutter       | **The Rendering Engine.** Renders pixels (How) using Widgets and RenderObjects.             |
+| **Source**   | Dart          | **The Input Language.** The raw syntax used for definitions.                                |
 
 ---
 

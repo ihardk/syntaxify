@@ -1,13 +1,13 @@
 # Syntaxify ⚡
 
-**AST-based Flutter UI Code Generator with Multi-Style Design System**
+**The Flutter UI Compiler. Define once, compile to any design system.**
 
 > Stop writing repetitive UI code. Define components once, render in any design system.
 
 [![pub package](https://img.shields.io/pub/v/syntaxify.svg)](https://pub.dev/packages/syntaxify)
 [![GitHub stars](https://img.shields.io/github/stars/ihardk/syntaxify?style=social)](https://github.com/ihardk/syntaxify)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support-yellow.svg)](https://buymeacoffee.com/ihardik)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support-green.svg)](https://buymeacoffee.com/ihardik)
 
 ---
 
