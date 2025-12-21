@@ -81,6 +81,68 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
+  factory LayoutNode.container({
+    String? id,
+    String? visibleWhen,
+    LayoutNode? child,
+    double? width,
+    double? height,
+    String? padding,
+    String? margin,
+    ColorSemantic? color,
+    double? borderRadius,
+    ContainerSemantic? semantic,
+  }) =>
+      LayoutNode.structural(
+        node: StructuralNode.container(
+          child: child,
+          width: width,
+          height: height,
+          padding: padding,
+          margin: margin,
+          color: color,
+          borderRadius: borderRadius,
+          semantic: semantic,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
+
+  factory LayoutNode.card({
+    String? id,
+    String? visibleWhen,
+    required List<LayoutNode> children,
+    CardVariant? variant,
+    String? padding,
+    double? elevation,
+  }) =>
+      LayoutNode.structural(
+        node: StructuralNode.card(
+          children: children,
+          variant: variant,
+          padding: padding,
+          elevation: elevation,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
+
+  factory LayoutNode.listView({
+    String? id,
+    String? visibleWhen,
+    required List<LayoutNode> children,
+    Axis? scrollDirection,
+    String? spacing,
+    bool? shrinkWrap,
+  }) =>
+      LayoutNode.structural(
+        node: StructuralNode.listView(
+          children: children,
+          scrollDirection: scrollDirection,
+          spacing: spacing,
+          shrinkWrap: shrinkWrap,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
+
   factory LayoutNode.text({
     String? id,
     String? visibleWhen,
@@ -199,6 +261,96 @@ sealed class LayoutNode with _$LayoutNode {
         node: PrimitiveNode.spacer(
           size: size,
           flex: flex,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
+
+  factory LayoutNode.image({
+    String? id,
+    String? visibleWhen,
+    required String src,
+    double? width,
+    double? height,
+    ImageFit? fit,
+    String? placeholder,
+    String? errorWidget,
+  }) =>
+      LayoutNode.primitive(
+        node: PrimitiveNode.image(
+          src: src,
+          width: width,
+          height: height,
+          fit: fit,
+          placeholder: placeholder,
+          errorWidget: errorWidget,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
+
+  factory LayoutNode.divider({
+    String? id,
+    String? visibleWhen,
+    double? thickness,
+    ColorSemantic? color,
+    double? indent,
+    double? endIndent,
+  }) =>
+      LayoutNode.primitive(
+        node: PrimitiveNode.divider(
+          thickness: thickness,
+          color: color,
+          indent: indent,
+          endIndent: endIndent,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
+
+  factory LayoutNode.circularProgressIndicator({
+    String? id,
+    String? visibleWhen,
+    double? value,
+    ColorSemantic? color,
+    double? strokeWidth,
+  }) =>
+      LayoutNode.primitive(
+        node: PrimitiveNode.circularProgressIndicator(
+          value: value,
+          color: color,
+          strokeWidth: strokeWidth,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
+
+  factory LayoutNode.checkbox({
+    String? id,
+    String? visibleWhen,
+    required String binding,
+    String? label,
+    String? onChanged,
+    bool? tristate,
+  }) =>
+      LayoutNode.interactive(
+        node: InteractiveNode.checkbox(
+          binding: binding,
+          label: label,
+          onChanged: onChanged,
+          tristate: tristate,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
+
+  factory LayoutNode.switchWidget({
+    String? id,
+    String? visibleWhen,
+    required String binding,
+    String? label,
+    String? onChanged,
+  }) =>
+      LayoutNode.interactive(
+        node: InteractiveNode.switchNode(
+          binding: binding,
+          label: label,
+          onChanged: onChanged,
         ),
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );

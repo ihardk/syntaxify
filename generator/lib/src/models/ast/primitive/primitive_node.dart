@@ -26,6 +26,28 @@ sealed class PrimitiveNode with _$PrimitiveNode {
     int? flex,
   }) = SpacerNode;
 
+  const factory PrimitiveNode.image({
+    required String src,
+    double? width,
+    double? height,
+    ImageFit? fit,
+    String? placeholder,
+    String? errorWidget,
+  }) = ImageNode;
+
+  const factory PrimitiveNode.divider({
+    double? thickness,
+    ColorSemantic? color,
+    double? indent,
+    double? endIndent,
+  }) = DividerNode;
+
+  const factory PrimitiveNode.circularProgressIndicator({
+    double? value,
+    ColorSemantic? color,
+    double? strokeWidth,
+  }) = CircularProgressIndicatorNode;
+
   factory PrimitiveNode.fromJson(Map<String, dynamic> json) =>
       _$PrimitiveNodeFromJson(json);
 }

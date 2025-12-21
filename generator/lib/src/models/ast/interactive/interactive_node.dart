@@ -22,6 +22,19 @@ sealed class InteractiveNode with _$InteractiveNode {
     TextFieldProps? props,
   }) = TextFieldNode;
 
+  const factory InteractiveNode.checkbox({
+    required String binding,
+    String? label,
+    String? onChanged,
+    bool? tristate,
+  }) = CheckboxNode;
+
+  const factory InteractiveNode.switchNode({
+    required String binding,
+    String? label,
+    String? onChanged,
+  }) = SwitchNode;
+
   factory InteractiveNode.fromJson(Map<String, dynamic> json) =>
       _$InteractiveNodeFromJson(json);
 }
