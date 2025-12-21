@@ -57,6 +57,9 @@ class LayoutEmitter {
       checkbox: _emitCheckbox,
       switchNode: _emitSwitch,
       iconButton: _emitIconButton,
+      dropdown: _emitDropdown,
+      radio: _emitRadio,
+      slider: _emitSlider,
     );
   }
 
@@ -496,6 +499,64 @@ class LayoutEmitter {
   Expression _emitCenter(CenterNode node) {
     return refer('Center').newInstance([], {
       'child': emit(node.child),
+    });
+  }
+
+  Expression _emitDropdown(DropdownNode node) {
+    // Generate dropdown items
+    final items = literalList(
+      node.items.map((item) => refer('DropdownMenuItem').newInstance([], {
+        'value': literalString(item),
+        'child': refer('Text').newInstance([literalString(item)]),
+      })).toList(),
+    );
+
+    return refer('DropdownButtonFormField').newInstance([], {
+      'value': refer(node.binding),
+      'items': items,
+      'onChanged': node.onChanged != null
+          ? refer(node.onChanged!)
+          : refer('(value) {}'),
+      if (node.label != null)
+        'decoration': refer('InputDecoration').newInstance([], {
+          'labelText': literalString(node.label!),
+        }),
+    });
+  }
+
+  Expression _emitRadio(RadioNode node) {
+    return refer('RadioListTile').newInstance([], {
+      'value': literalString(node.value),
+      'groupValue': refer(node.binding),
+      'onChanged': node.onChanged != null
+          ? refer(node.onChanged!)
+          : refer('(value) {}'),
+      if (node.label != null)
+        'title': refer('Text').newInstance([literalString(node.label!)]),
+    });
+  }
+
+  Expression _emitSlider(SliderNode node) {
+    final widget = refer('Slider').newInstance([], {
+      'value': refer(node.binding),
+      'onChanged': node.onChanged != null
+          ? refer(node.onChanged!)
+          : refer('(value) {}'),
+      if (node.min != null) 'min': literalNum(node.min!),
+      if (node.max != null) 'max': literalNum(node.max!),
+      if (node.divisions != null) 'divisions': literalNum(node.divisions!),
+      if (node.label != null) 'label': literalString(node.label!),
+    });
+
+    // If no label for the widget, return just the slider
+    if (node.label == null) {
+      return widget;
+    }
+
+    // Otherwise wrap in a ListTile for better layout
+    return refer('ListTile').newInstance([], {
+      'title': refer('Text').newInstance([literalString(node.label!)]),
+      'subtitle': widget,
     });
   }
 
