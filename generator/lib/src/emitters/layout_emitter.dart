@@ -30,6 +30,10 @@ class LayoutEmitter {
       container: _emitContainer,
       card: _emitCard,
       listView: _emitListView,
+      stack: _emitStack,
+      gridView: _emitGridView,
+      padding: _emitPadding,
+      center: _emitCenter,
     );
   }
 
@@ -52,6 +56,7 @@ class LayoutEmitter {
       textField: _emitTextField,
       checkbox: _emitCheckbox,
       switchNode: _emitSwitch,
+      iconButton: _emitIconButton,
     );
   }
 
@@ -438,6 +443,62 @@ class LayoutEmitter {
     });
   }
 
+  Expression _emitIconButton(IconButtonNode node) {
+    return refer('IconButton').newInstance([], {
+      'icon': refer('Icon').newInstance([refer('AppIcons').property(node.icon)]),
+      'onPressed': node.onPressed != null
+          ? refer(node.onPressed!)
+          : literalNull,
+      if (node.size != null) 'iconSize': literalNum(node.size!),
+      if (node.color != null) 'color': _emitColorSemantic(node.color!),
+    });
+  }
+
+  Expression _emitStack(StackNode node) {
+    return refer('Stack').newInstance([], {
+      'children': literalList(node.children.map(emit).toList()),
+      if (node.fit != null) 'fit': refer('StackFit.${node.fit!.name}'),
+      if (node.alignment != null)
+        'alignment': _emitAlignment(node.alignment!),
+    });
+  }
+
+  Expression _emitGridView(GridViewNode node) {
+    // Generate children list
+    List<Expression> children = node.children.map(emit).toList();
+
+    // Calculate spacing values
+    final mainAxisSpacing = node.spacing != null
+        ? (double.tryParse(node.spacing!) ?? 16.0)
+        : 16.0;
+    final crossAxisSpacing = node.crossAxisSpacing != null
+        ? (double.tryParse(node.crossAxisSpacing!) ?? 16.0)
+        : 16.0;
+
+    return refer('GridView').property('count').call([], {
+      'crossAxisCount': literalNum(node.crossAxisCount),
+      'children': literalList(children),
+      'mainAxisSpacing': literalNum(mainAxisSpacing),
+      'crossAxisSpacing': literalNum(crossAxisSpacing),
+      if (node.childAspectRatio != null)
+        'childAspectRatio': literalNum(node.childAspectRatio!),
+      if (node.shrinkWrap == true) 'shrinkWrap': literalTrue,
+    });
+  }
+
+  Expression _emitPadding(PaddingNode node) {
+    return refer('Padding').newInstance([], {
+      'padding': _parseEdgeInsets(node.padding),
+      'child': emit(node.child),
+    });
+  }
+
+  Expression _emitCenter(CenterNode node) {
+    return refer('Center').newInstance([], {
+      'child': emit(node.child),
+    });
+  }
+
   // --- Helper Methods ---
 
   /// Emits a ColorSemantic enum as an AppColors reference.
@@ -445,6 +506,22 @@ class LayoutEmitter {
   /// Maps semantic color names to the generated AppColors class.
   Expression _emitColorSemantic(ColorSemantic semantic) {
     return refer('AppColors').property(semantic.name);
+  }
+
+  /// Emits an AlignmentEnum as a Flutter Alignment reference.
+  Expression _emitAlignment(AlignmentEnum alignment) {
+    final alignmentMap = {
+      AlignmentEnum.topLeft: 'topLeft',
+      AlignmentEnum.topCenter: 'topCenter',
+      AlignmentEnum.topRight: 'topRight',
+      AlignmentEnum.centerLeft: 'centerLeft',
+      AlignmentEnum.center: 'center',
+      AlignmentEnum.centerRight: 'centerRight',
+      AlignmentEnum.bottomLeft: 'bottomLeft',
+      AlignmentEnum.bottomCenter: 'bottomCenter',
+      AlignmentEnum.bottomRight: 'bottomRight',
+    };
+    return refer('Alignment').property(alignmentMap[alignment]!);
   }
 
   /// Parses an EdgeInsets string into the appropriate EdgeInsets constructor call.
