@@ -259,16 +259,6 @@ class LayoutEmitter {
     final isDirectPath = node.src.contains('/');
     final isRegistryName = !isDirectPath && !isNetworkUrl;
 
-    // Determine image path expression
-    final Expression pathExpr;
-    if (isRegistryName) {
-      // Use AppImages registry for simple names without '/'
-      pathExpr = refer('AppImages').property(node.src);
-    } else {
-      // Direct path (network URL or asset path)
-      pathExpr = literalString(node.src);
-    }
-
     // Build Image widget arguments
     final imageArgs = <String, Expression>{
       if (node.width != null) 'width': literalNum(node.width!),
@@ -276,12 +266,31 @@ class LayoutEmitter {
       if (node.fit != null) 'fit': refer('BoxFit.${node.fit!.name}'),
     };
 
-    // Generate appropriate Image constructor
-    if (isNetworkUrl) {
-      return refer('Image').property('network').call([pathExpr], imageArgs);
+    if (isRegistryName) {
+      // Registry image - generate runtime check for network vs asset
+      final pathRef = refer('AppImages').property(node.src);
+
+      // Create condition: AppImages.x.startsWith('http://') || AppImages.x.startsWith('https://')
+      final isNetworkCondition = pathRef
+          .property('startsWith')
+          .call([literalString('http://')])
+          .or(pathRef.property('startsWith').call([literalString('https://')]));
+
+      // Generate: condition ? Image.network(...) : Image.asset(...)
+      return isNetworkCondition.conditional(
+        refer('Image').property('network').call([pathRef], imageArgs),
+        refer('Image').property('asset').call([pathRef], imageArgs),
+      );
+    } else if (isNetworkUrl) {
+      // Direct network URL
+      return refer('Image')
+          .property('network')
+          .call([literalString(node.src)], imageArgs);
     } else {
-      // Default to Image.asset for both registry names and asset paths
-      return refer('Image').property('asset').call([pathExpr], imageArgs);
+      // Direct asset path
+      return refer('Image')
+          .property('asset')
+          .call([literalString(node.src)], imageArgs);
     }
   }
 
