@@ -385,6 +385,88 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
+  const factory LayoutNode.iconButton({
+    String? id,
+    String? visibleWhen,
+    required String icon,
+    String? onPressed,
+    double? size,
+    ColorSemantic? color,
+  }) =>
+      LayoutNode.interactive(
+        node: InteractiveNode.iconButton(
+          icon: icon,
+          onPressed: onPressed,
+          size: size,
+          color: color,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
+
+  const factory LayoutNode.stack({
+    String? id,
+    String? visibleWhen,
+    required List<LayoutNode> children,
+    StackFit? fit,
+    AlignmentEnum? alignment,
+  }) =>
+      LayoutNode.structural(
+        node: StructuralNode.stack(
+          children: children,
+          fit: fit,
+          alignment: alignment,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
+
+  const factory LayoutNode.gridView({
+    String? id,
+    String? visibleWhen,
+    required List<LayoutNode> children,
+    required int crossAxisCount,
+    String? spacing,
+    String? crossAxisSpacing,
+    double? childAspectRatio,
+    bool? shrinkWrap,
+  }) =>
+      LayoutNode.structural(
+        node: StructuralNode.gridView(
+          children: children,
+          crossAxisCount: crossAxisCount,
+          spacing: spacing,
+          crossAxisSpacing: crossAxisSpacing,
+          childAspectRatio: childAspectRatio,
+          shrinkWrap: shrinkWrap,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
+
+  const factory LayoutNode.padding({
+    String? id,
+    String? visibleWhen,
+    required LayoutNode child,
+    required String padding,
+  }) =>
+      LayoutNode.structural(
+        node: StructuralNode.padding(
+          child: child,
+          padding: padding,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
+
+  const factory LayoutNode.center({
+    String? id,
+    String? visibleWhen,
+    required LayoutNode child,
+  }) =>
+      LayoutNode.structural(
+        node: StructuralNode.center(
+          child: child,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
+
   const factory LayoutNode.appBar({
     String? title,
     List<AppBarAction>? actions,

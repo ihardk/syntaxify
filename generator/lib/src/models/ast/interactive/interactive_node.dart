@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../common/node_props.dart';
+import '../enums.dart';
 
 part 'interactive_node.freezed.dart';
 part 'interactive_node.g.dart';
@@ -34,6 +35,13 @@ sealed class InteractiveNode with _$InteractiveNode {
     String? label,
     String? onChanged,
   }) = SwitchNode;
+
+  const factory InteractiveNode.iconButton({
+    required String icon,
+    String? onPressed,
+    double? size,
+    ColorSemantic? color,
+  }) = IconButtonNode;
 
   factory InteractiveNode.fromJson(Map<String, dynamic> json) =>
       _$InteractiveNodeFromJson(json);

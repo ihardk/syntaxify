@@ -335,3 +335,45 @@ enum ContainerSemantic {
   /// Secondary container background.
   secondaryContainer
 }
+
+/// How to size children in a Stack.
+enum StackFit {
+  /// Children are loose (can be smaller than stack).
+  loose,
+
+  /// Children are expanded to fill the stack.
+  expand,
+
+  /// Children maintain their size regardless of stack.
+  passthrough
+}
+
+/// General alignment enum (for Center, Align, etc.).
+enum AlignmentEnum {
+  /// Top-left corner.
+  topLeft,
+
+  /// Top-center.
+  topCenter,
+
+  /// Top-right corner.
+  topRight,
+
+  /// Center-left.
+  centerLeft,
+
+  /// Center.
+  center,
+
+  /// Center-right.
+  centerRight,
+
+  /// Bottom-left corner.
+  bottomLeft,
+
+  /// Bottom-center.
+  bottomCenter,
+
+  /// Bottom-right corner.
+  bottomRight
+}

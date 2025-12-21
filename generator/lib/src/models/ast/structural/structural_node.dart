@@ -47,6 +47,30 @@ sealed class StructuralNode with _$StructuralNode {
     bool? shrinkWrap,
   }) = ListViewNode;
 
+  const factory StructuralNode.stack({
+    required List<LayoutNode> children,
+    StackFit? fit,
+    AlignmentEnum? alignment,
+  }) = StackNode;
+
+  const factory StructuralNode.gridView({
+    required List<LayoutNode> children,
+    required int crossAxisCount,
+    String? spacing,
+    String? crossAxisSpacing,
+    double? childAspectRatio,
+    bool? shrinkWrap,
+  }) = GridViewNode;
+
+  const factory StructuralNode.padding({
+    required LayoutNode child,
+    required String padding,
+  }) = PaddingNode;
+
+  const factory StructuralNode.center({
+    required LayoutNode child,
+  }) = CenterNode;
+
   factory StructuralNode.fromJson(Map<String, dynamic> json) =>
       _$StructuralNodeFromJson(json);
 }
