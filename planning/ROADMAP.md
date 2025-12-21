@@ -79,31 +79,46 @@
 
 ---
 
-## Stage 4: Make It Legible
+### 4.4 Update README
+- [x] Update README with implementation status
+- [x] Update ROADMAP.md (this file)
+- [x] Write ARCHITECTURE.md
 
-### 4.1 Add Golden Test
-- [ ] Input spec → Generated Dart → Assert exact match
+## Stage 5: Productization (High-End Product)
+> Focus: Extensibility, Developer Experience, and Stability.
 
-### 4.2 Write ARCHITECTURE.md
-- [ ] Why compile-time
-- [ ] Why annotations
-- [ ] Why no runtime engine
-- [ ] Where system intentionally breaks
+### 5.1 Core Architecture Refactor (Stability)
+- [x] **AST Structural Split** (Issue #13)
+  - [x] Define `LayoutNode`, `PrimitiveNode`, `InteractiveNode` sealed classes
+  - [x] Implement `NodeMetadata` mixin (id, visibleWhen)
+  - [x] Migrate `LayoutEmitter` to Visitor pattern
+- [ ] **Validation Engine 2.0**
+  - [ ] Implement hierarchical validation (Parent-Child rules)
+  - [ ] Add "Suggestion" engine for common errors
 
----
+### 5.2 Extensibility System (Growth)
+- [ ] **Plugin Architecture** (Issue #8)
+  - [ ] Define `SyntaxifyPlugin` interface (Generator + Validator contract)
+  - [ ] Implement dynamic plugin loader (`Isolate` or `mirrors` based)
+- [ ] **Standard Library**
+  - [ ] Move core components (Button, Text) to `syntaxify_material`, `syntaxify_cupertino` default plugins
+  - [ ] Create `syntaxify_neo` as example 3rd party plugin
 
-## Stage 5: Decide Path (Pick One)
+### 5.3 Developer Experience (Polish)
+- [ ] **Configuration Engine** (Issue #11)
+  - [ ] Implement `syntaxify.yaml` parser
+  - [ ] Add schema validation for config file
+- [ ] **Advanced CLI Features** (Issue #12)
+  - [ ] `init` command: Interactive wizard
+  - [ ] `build` command: `--dry-run` and `--preview` modes
+  - [ ] `doctor` command: Environment and plugin health check
 
-### Path A: Career Leverage
-- Polish docs
-- Share on GitHub/LinkedIn
-- Use in interviews
-- Target Platform/DX/Design Systems roles
+### 5.4 Monetization Prep
+- [ ] **"Pro" Kit Architecture**
+  - [ ] Design "Dashboard" template (Sidebar, Charts, Tables)
+  - [ ] Design "Marketing" template (Hero, Features, Pricing)
+- [ ] **Distribution Strategy**
+  - [ ] Private pub server support
+  - [ ] License key validation Stub
 
-### Path B: Monetization
-- Extract generator as product
-- Add paid templates/screen kits
-- shadcn-style positioning
-
-> **Rule**: Do not attempt both at once.
 

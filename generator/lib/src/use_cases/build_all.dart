@@ -38,10 +38,27 @@ class BuildAllUseCase {
   );
   late final _generateScreen = GenerateScreenUseCase(
     fileSystem: fileSystem,
+    registry: registry,
   );
   final _validator = const LayoutValidator();
 
-  /// Execute the full build.
+  /// Execute the full build process.
+  ///
+  /// This orchestrates the entire build pipeline:
+  /// 1. Validates all screen definitions.
+  /// 2. Checks build cache to skip unchanged files (incremental build).
+  /// 3. Generates component code.
+  /// 4. Generates screen code.
+  /// 5. Updates the registry and build cache.
+  ///
+  /// [components] List of parsed component definitions.
+  /// [screens] List of parsed screen definitions.
+  /// [tokens] List of design tokens.
+  /// [outputDir] Directory to write generated files to.
+  /// [metaDirectoryPath] Source directory for meta definitions.
+  /// [designSystemDir] Directory containing design system implementations.
+  /// [enableCache] Whether to use incremental build caching (default: true).
+  /// [forceRebuild] Whether to ignore cache and force rebuild (default: false).
   Future<BuildResult> execute({
     required List<ComponentDefinition> components,
     required List<ScreenDefinition> screens,

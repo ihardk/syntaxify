@@ -391,10 +391,11 @@ void main() {
         expect(errors.first.severity, equals(ErrorSeverity.warning));
       });
 
-      test('validates appBar with invalid leadingAction', () {
+      test('validates appBar with invalid onLeadingPressed', () {
         final node = LayoutNode.appBar(
           title: 'Home',
-          leadingAction: 'handle-back',
+          leadingIcon: 'arrow_back',
+          onLeadingPressed: 'handle-back',
         );
 
         final errors = validator.validate(node);
@@ -402,13 +403,14 @@ void main() {
         expect(errors.length, equals(1));
         expect(
             errors.first.type, equals(ValidationErrorType.invalidIdentifier));
-        expect(errors.first.fieldName, equals('leadingAction'));
+        expect(errors.first.fieldName, equals('onLeadingPressed'));
       });
 
-      test('accepts appBar with valid title and leadingAction', () {
+      test('accepts appBar with valid title and onLeadingPressed', () {
         final node = LayoutNode.appBar(
           title: 'Home',
-          leadingAction: 'handleBack',
+          leadingIcon: 'arrow_back', // Added dependency
+          onLeadingPressed: 'handleBack',
         );
 
         final errors = validator.validate(node);

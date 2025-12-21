@@ -1,4 +1,4 @@
-# Issue #13: Refactor Bloated AstNode Class
+# Issue #13: Refactor Bloated LayoutNode Class
 
 ## Status: ❌ NEEDS REFACTORING (Medium-High Priority)
 
@@ -17,15 +17,15 @@
 All node types in one sealed class:
 ```dart
 @freezed
-sealed class AstNode with _$AstNode {
-  const factory AstNode.column(...) = ColumnNode;      // 6 params
-  const factory AstNode.row(...) = RowNode;            // 6 params
-  const factory AstNode.text(...) = TextNode;          // 7 params
-  const factory AstNode.button(...) = ButtonNode;      // 11 params
-  const factory AstNode.textField(...) = TextFieldNode; // 15 params
-  const factory AstNode.icon(...) = IconNode;          // 5 params
-  const factory AstNode.spacer(...) = SpacerNode;      // 4 params
-  const factory AstNode.appBar(...) = AppBarNode;      // 6 params
+sealed class LayoutNode with _$LayoutNode {
+  const factory LayoutNode.column(...) = ColumnNode;      // 6 params
+  const factory LayoutNode.row(...) = RowNode;            // 6 params
+  const factory LayoutNode.text(...) = TextNode;          // 7 params
+  const factory LayoutNode.button(...) = ButtonNode;      // 11 params
+  const factory LayoutNode.textField(...) = TextFieldNode; // 15 params
+  const factory LayoutNode.icon(...) = IconNode;          // 5 params
+  const factory LayoutNode.spacer(...) = SpacerNode;      // 4 params
+  const factory LayoutNode.appBar(...) = AppBarNode;      // 6 params
 }
 ```
 
@@ -49,7 +49,7 @@ String? visibleWhen,  // Repeated 8 times
 
 **TextField has 15 parameters!**
 ```dart
-const factory AstNode.textField({
+const factory LayoutNode.textField({
   String? id,
   String? visibleWhen,
   String? label,
@@ -86,10 +86,10 @@ const factory AstNode.textField({
 
 **Projected growth:**
 | Widgets | Freezed Lines | Parameters |
-|---------|---------------|------------|
-| 8 (now) | 1,938 | 50+ |
-| 20 | ~5,000 | 150+ |
-| 50 | ~12,000 | 400+ |
+| ------- | ------------- | ---------- |
+| 8 (now) | 1,938         | 50+        |
+| 20      | ~5,000        | 150+       |
+| 50      | ~12,000       | 400+       |
 
 ### 5. No Semantic Grouping
 
@@ -113,23 +113,23 @@ Split into focused, smaller classes:
 ```dart
 // Base node with common properties
 @freezed
-sealed class AstNode with _$AstNode {
-  const factory AstNode.layout(LayoutNode node) = LayoutAstNode;
-  const factory AstNode.primitive(PrimitiveNode node) = PrimitiveAstNode;
-  const factory AstNode.interactive(InteractiveNode node) = InteractiveAstNode;
+sealed class LayoutNode with _$LayoutNode {
+  const factory LayoutNode.layout(LayoutNode node) = LayoutLayoutNode;
+  const factory LayoutNode.primitive(PrimitiveNode node) = PrimitiveLayoutNode;
+  const factory LayoutNode.interactive(InteractiveNode node) = InteractiveLayoutNode;
 }
 
 // Layout nodes (separate file)
 @freezed
 sealed class LayoutNode with _$LayoutNode {
   const factory LayoutNode.column({
-    required List<AstNode> children,
+    required List<LayoutNode> children,
     MainAxisAlignment? mainAxisAlignment,
     CrossAxisAlignment? crossAxisAlignment,
   }) = ColumnLayout;
 
   const factory LayoutNode.row({
-    required List<AstNode> children,
+    required List<LayoutNode> children,
     MainAxisAlignment? mainAxisAlignment,
     CrossAxisAlignment? crossAxisAlignment,
   }) = RowLayout;
@@ -206,8 +206,8 @@ class ButtonProps with _$ButtonProps {
 }
 
 @freezed
-sealed class AstNode with _$AstNode {
-  const factory AstNode.button({
+sealed class LayoutNode with _$LayoutNode {
+  const factory LayoutNode.button({
     String? id,
     String? visibleWhen,
     required String label,
@@ -224,7 +224,7 @@ sealed class AstNode with _$AstNode {
 - ✅ Partial breaking change (can keep old constructors)
 
 **Drawbacks:**
-- ❌ More verbose: `AstNode.button(label: 'X', props: ButtonProps(variant: ...))`
+- ❌ More verbose: `LayoutNode.button(label: 'X', props: ButtonProps(variant: ...))`
 - ❌ Adds indirection
 
 ---
@@ -235,10 +235,10 @@ Fluent API for complex nodes:
 
 ```dart
 // Simple nodes - direct construction
-AstNode.text(text: 'Hello');
+LayoutNode.text(text: 'Hello');
 
 // Complex nodes - builder
-AstNode.button('Click Me')
+LayoutNode.button('Click Me')
   .onPressed('handleClick')
   .variant(ButtonVariant.primary)
   .icon('arrow_forward')
@@ -279,8 +279,8 @@ class ButtonBuilder {
   }
 }
 
-// Extension on AstNode
-extension AstNodeBuilders on AstNode {
+// Extension on LayoutNode
+extension LayoutNodeBuilders on LayoutNode {
   static ButtonBuilder button(String label) => ButtonBuilder(label);
 }
 ```
@@ -581,14 +581,14 @@ Remove deprecated constructors in next major version.
 
 ## Comparison: Before vs After
 
-| Metric | Before | After | Improvement |
-|--------|--------|-------|-------------|
-| Lines (freezed) | 1,938 | ~600 | 69% reduction |
-| Files | 1 | 6 | Better organization |
-| Largest union | 8 variants | 3 variants | 62% smaller |
-| Max params | 15 | 5 + props | 67% fewer |
-| Add new widget | Touch 1 file | Touch 1 file | Same |
-| Generated code | 1,938 lines | ~600 lines | 69% less |
+| Metric          | Before       | After        | Improvement         |
+| --------------- | ------------ | ------------ | ------------------- |
+| Lines (freezed) | 1,938        | ~600         | 69% reduction       |
+| Files           | 1            | 6            | Better organization |
+| Largest union   | 8 variants   | 3 variants   | 62% smaller         |
+| Max params      | 15           | 5 + props    | 67% fewer           |
+| Add new widget  | Touch 1 file | Touch 1 file | Same                |
+| Generated code  | 1,938 lines  | ~600 lines   | 69% less            |
 
 ---
 

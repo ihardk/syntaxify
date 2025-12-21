@@ -9,7 +9,13 @@ import 'package:syntaxify/src/config/package_config.dart' as config;
 import 'package:syntaxify/src/generator/syntax_generator.dart';
 import 'init_command.dart';
 
-/// Build command - generates Flutter widgets from meta definitions
+/// Build command - generates Flutter widgets from meta definitions.
+///
+/// This command is the primary entry point for code generation. It supports:
+/// - One-time build (`dart run syntaxify build`)
+/// - Watch mode (`--watch`) for continuous rebuilding
+/// - Component filtering (`--component`, `--theme`)
+/// - Custom paths (`--meta`, `--output`)
 class BuildCommand extends Command<int> {
   BuildCommand({required this.logger}) {
     argParser

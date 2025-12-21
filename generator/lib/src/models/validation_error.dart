@@ -37,6 +37,12 @@ enum ValidationErrorType {
   /// Invalid Dart identifier name (e.g., contains hyphens or spaces)
   invalidIdentifier,
 
+  /// Invalid value for a property (e.g., negative flex)
+  invalidValue,
+
+  /// Missing dependency for a property (e.g., onLeadingPressed without leadingIcon)
+  missingDependency,
+
   /// Container node with no children (e.g., empty Column)
   emptyChildren,
 
@@ -51,6 +57,9 @@ enum ValidationErrorType {
 
   /// Value is outside the allowed range
   outOfRange,
+
+  /// Unknown error type
+  unknown,
 }
 
 /// Severity levels for validation errors.

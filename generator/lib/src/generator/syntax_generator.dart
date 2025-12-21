@@ -6,6 +6,7 @@ import 'package:syntaxify/src/core/interfaces/file_system.dart';
 import 'package:syntaxify/src/generators/generator_registry.dart';
 import 'package:syntaxify/src/infrastructure/local_file_system.dart';
 import 'package:syntaxify/src/models/build_result.dart';
+import 'package:syntaxify/src/plugins/default_plugin.dart';
 import 'package:syntaxify/src/parser/meta_parser.dart';
 import 'package:syntaxify/src/parser/token_parser.dart';
 import 'package:syntaxify/src/use_cases/build_all.dart';
@@ -29,7 +30,8 @@ class SyntaxGenerator {
     FileSystem? fileSystem,
     GeneratorRegistry? registry,
   })  : fileSystem = fileSystem ?? LocalFileSystem(),
-        registry = registry ?? GeneratorRegistry();
+        registry =
+            registry ?? (GeneratorRegistry()..registerPlugin(DefaultPlugin()));
 
   final String metaDirectory;
   final String tokensDirectory;

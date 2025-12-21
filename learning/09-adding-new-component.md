@@ -96,17 +96,17 @@ If you want this component usable in screen definitions, add it to the AST.
 ### Update AstNode
 
 ```dart
-// generator/lib/src/models/ast_node.dart
+// generator/lib/src/models/ast/layout_node.dart
 
 @freezed
-sealed class AstNode with _$AstNode {
+sealed class LayoutNode with _$LayoutNode {
   // ... existing nodes
 
   /// Card component node
-  const factory AstNode.card({
+  const factory LayoutNode.card({
     String? title,
     String? subtitle,
-    @Default([]) List<AstNode> children,
+    @Default([]) List<LayoutNode> children,
   }) = CardNode;
 }
 ```
@@ -733,14 +733,14 @@ Now you can use it in screen definitions:
 // meta/profile.screen.dart
 final profileScreen = ScreenDefinition(
   id: 'profile',
-  layout: AstNode.column(
+  layout: LayoutNode.column(
     children: [
-      AstNode.card(
+      LayoutNode.card(
         title: 'Profile',
         subtitle: 'User information',
         children: [
-          AstNode.text(text: 'John Doe'),
-          AstNode.text(text: 'john@example.com'),
+          LayoutNode.text(text: 'John Doe'),
+          LayoutNode.text(text: 'john@example.com'),
         ],
       ),
     ],

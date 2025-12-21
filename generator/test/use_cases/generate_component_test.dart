@@ -3,6 +3,7 @@ import 'package:syntaxify/src/use_cases/generate_component.dart';
 import 'package:syntaxify/src/infrastructure/memory_file_system.dart';
 import 'package:syntaxify/src/generators/generator_registry.dart';
 import 'package:syntaxify/src/models/component_definition.dart';
+import 'package:syntaxify/src/plugins/default_plugin.dart';
 
 void main() {
   group('GenerateComponentUseCase', () {
@@ -12,7 +13,7 @@ void main() {
 
     setUp(() {
       fileSystem = MemoryFileSystem();
-      registry = GeneratorRegistry();
+      registry = GeneratorRegistry()..registerPlugin(DefaultPlugin());
       useCase = GenerateComponentUseCase(
         fileSystem: fileSystem,
         registry: registry,

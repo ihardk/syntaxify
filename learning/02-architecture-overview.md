@@ -178,7 +178,7 @@ class ButtonGenerator {
 **5. Emitter Layer** (`lib/src/emitters/`)
 - Converts AST nodes to code
 - Handles layout generation
-- Produces Flutter widgets from AstNode definitions
+- Produces Flutter widgets from LayoutNode definitions
 
 ```dart
 // Example: layout_emitter.dart
@@ -573,14 +573,14 @@ class MaterialStyle extends DesignStyle
 }
 ```
 
-### 5. Factory Pattern (AstNode Creation)
+### 5. Factory Pattern (LayoutNode Creation)
 
-Static factory methods for creating AST nodes.
+Static factory methods for creating layout nodes.
 
 ```dart
-AstNode.button(label: 'Submit', onPressed: 'handleSubmit')
-AstNode.text(text: 'Hello')
-AstNode.column(children: [...])
+LayoutNode.button(label: 'Submit', onPressed: 'handleSubmit')
+LayoutNode.text(text: 'Hello')
+LayoutNode.column(children: [...])
 ```
 
 ---
@@ -637,22 +637,22 @@ AstNode.column(children: [...])
 
 ## Important Files Reference
 
-| File | Layer | Purpose |
-|------|-------|---------|
-| `lib/cli.dart` | CLI | Entry point, command registration |
-| `lib/src/commands/build_command.dart` | CLI | Build command implementation |
-| `lib/src/use_cases/generate_component.dart` | Use Case | Component generation orchestration |
-| `lib/src/use_cases/generate_screen.dart` | Use Case | Screen generation orchestration |
-| `lib/src/parser/meta_parser.dart` | Parser | Parse component meta files |
-| `lib/src/parser/screen_parser.dart` | Parser | Parse screen definitions |
-| `lib/src/generators/component/button_generator.dart` | Generator | Generate button components |
-| `lib/src/generators/screen_generator.dart` | Generator | Generate screens |
-| `lib/src/emitters/layout_emitter.dart` | Emitter | Convert AST to layout code |
-| `lib/src/models/component_definition.dart` | Model | Component data model |
-| `lib/src/models/ast_node.dart` | Model | AST node definitions |
-| `design_system/app_theme.dart` | Runtime | Theme provider |
-| `design_system/design_style.dart` | Runtime | Style base class |
-| `design_system/styles/material/material_style.dart` | Runtime | Material implementation |
+| File                                                 | Layer     | Purpose                            |
+| ---------------------------------------------------- | --------- | ---------------------------------- |
+| `lib/cli.dart`                                       | CLI       | Entry point, command registration  |
+| `lib/src/commands/build_command.dart`                | CLI       | Build command implementation       |
+| `lib/src/use_cases/generate_component.dart`          | Use Case  | Component generation orchestration |
+| `lib/src/use_cases/generate_screen.dart`             | Use Case  | Screen generation orchestration    |
+| `lib/src/parser/meta_parser.dart`                    | Parser    | Parse component meta files         |
+| `lib/src/parser/screen_parser.dart`                  | Parser    | Parse screen definitions           |
+| `lib/src/generators/component/button_generator.dart` | Generator | Generate button components         |
+| `lib/src/generators/screen_generator.dart`           | Generator | Generate screens                   |
+| `lib/src/emitters/layout_emitter.dart`               | Emitter   | Convert AST to layout code         |
+| `lib/src/models/component_definition.dart`           | Model     | Component data model               |
+| `lib/src/models/ast_node.dart`                       | Model     | AST node definitions               |
+| `design_system/app_theme.dart`                       | Runtime   | Theme provider                     |
+| `design_system/design_style.dart`                    | Runtime   | Style base class                   |
+| `design_system/styles/material/material_style.dart`  | Runtime   | Material implementation            |
 
 ---
 

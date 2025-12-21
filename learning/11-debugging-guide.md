@@ -278,7 +278,7 @@ AstNode.button(
 )
 
 // ✅ CORRECT
-AstNode.button(
+LayoutNode.button(
   label: 'Submit',
   onPressed: 'handleSubmit',  // String name
 )

@@ -1,9 +1,8 @@
 import 'package:syntaxify/src/core/interfaces/component_generator.dart';
-import 'package:syntaxify/src/generators/component/button_generator.dart';
-import 'package:syntaxify/src/generators/component/input_generator.dart';
-import 'package:syntaxify/src/generators/component/text_generator.dart';
 import 'package:syntaxify/src/generators/component/generic_generator.dart';
 import 'package:syntaxify/src/models/component_definition.dart';
+import 'package:syntaxify/src/plugins/syntaxify_plugin.dart';
+import 'package:syntaxify/src/plugins/custom_emitter_handler.dart';
 
 /// Registry of component generators.
 ///
@@ -21,19 +20,26 @@ import 'package:syntaxify/src/models/component_definition.dart';
 /// final code = generator.generate(component: meta, tokens: tokens);
 /// ```
 class GeneratorRegistry {
-  GeneratorRegistry() {
-    // Register default generators
-    register(ButtonGenerator());
-    register(InputGenerator());
-    register(TextGenerator());
-  }
+  GeneratorRegistry();
 
   final List<ComponentGenerator> _generators = [];
+  final Map<String, CustomEmitterHandler> _customEmitters = {};
   final GenericGenerator _fallback = GenericGenerator();
 
   /// Register a component generator.
   void register(ComponentGenerator generator) {
     _generators.add(generator);
+  }
+
+  /// Register a plugin.
+  void registerPlugin(SyntaxifyPlugin plugin) {
+    // Register component generators
+    plugin.componentGenerators.forEach((type, generator) {
+      register(generator);
+    });
+
+    // Register layout emitters
+    _customEmitters.addAll(plugin.layoutEmitters);
   }
 
   /// Get the appropriate generator for a component.
@@ -57,5 +63,10 @@ class GeneratorRegistry {
   /// Check if a specific component type has a dedicated generator.
   bool hasGenerator(String componentType) {
     return _generators.any((g) => g.componentType == componentType);
+  }
+
+  /// Get the appropriate custom emitter handler for a custom node type.
+  CustomEmitterHandler? getCustomEmitter(String type) {
+    return _customEmitters[type];
   }
 }

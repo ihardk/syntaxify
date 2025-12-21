@@ -91,27 +91,49 @@ final layout = LayoutNode.column(
 
 ## LayoutNode Types
 
-Syntaxify has these layout node types:
+Syntaxify now uses a **hierarchical** model to organize nodes by their behavior:
 
 ```dart
-// lib/src/models/layout_node.dart
+// lib/src/models/ast/layout_node.dart
 @freezed
 sealed class LayoutNode with _$LayoutNode {
-  // Layout nodes
-  const factory LayoutNode.column({...}) = ColumnNode;
-  const factory LayoutNode.row({...}) = RowNode;
+  // 1. Structural Layer (Layouts)
+  const factory LayoutNode.structural({
+    required StructuralNode node,
+    NodeMetadata? meta,
+  }) = StructuralLayoutNode;
 
-  // UI component nodes
-  const factory LayoutNode.text({...}) = TextNode;
-  const factory LayoutNode.button({...}) = ButtonNode;
-  const factory LayoutNode.textField({...}) = TextFieldNode;
-  const factory LayoutNode.appBar({...}) = AppBarNode;
-  const factory LayoutNode.image({...}) = ImageNode;
-  const factory LayoutNode.spacer({...}) = SpacerNode;
+  // 2. Primitive Layer (Static Content)
+  const factory LayoutNode.primitive({
+    required PrimitiveNode node,
+    NodeMetadata? meta,
+  }) = PrimitiveLayoutNode;
 
-  // More node types can be added...
+  // 3. Interactive Layer (User Input)
+  const factory LayoutNode.interactive({
+    required InteractiveNode node,
+    NodeMetadata? meta,
+  }) = InteractiveLayoutNode;
+
+  // 4. Special Nodes
+  const factory LayoutNode.appBar({...}) = AppBarLayoutNode;
 }
 ```
+
+This wrapper structure separates **metadata** (like `id` and `visibleWhen`) from the **content**.
+
+### The Three Pillars
+
+1.  **StructuralNode**: Containers that arrange other nodes.
+    *   `ColumnNode`, `RowNode`
+2.  **PrimitiveNode**: Static display elements.
+    *   `TextNode`, `IconNode`, `SpacerNode`, `ImageNode`
+3.  **InteractiveNode**: Elements that accept user input.
+    *   `ButtonNode`, `TextFieldNode`
+
+> **Note:** For convenience, we provide **shim factories** that look like the old API.
+> `LayoutNode.column(...)` actually creates a `LayoutNode.structural(node: StructuralNode.column(...))` under the hood.
+
 
 Each node type has specific properties.
 

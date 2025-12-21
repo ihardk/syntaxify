@@ -7,7 +7,7 @@
 The critique stated that the layout emitter uses string concatenation:
 
 ```dart
-String emit(AstNode node) {
+String emit(LayoutNode node) {
   return node.when(
     column: (...) => '''
 Column(
@@ -89,7 +89,7 @@ refer('Column').newInstance([], {
 })
 
 // Returns Expression, not String
-Expression emit(AstNode node) { ... }
+Expression emit(LayoutNode node) { ... }
 
 // Library/Class builders for full files
 Library((b) => b

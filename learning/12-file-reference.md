@@ -319,7 +319,7 @@ class ScreenGenerator {
 **Key method:**
 ```dart
 class LayoutEmitter {
-  Expression emit(AstNode node) {
+  Expression emit(LayoutNode node) {
     return node.map(
       column: (n) => _emitColumn(n),
       row: (n) => _emitRow(n),
@@ -350,8 +350,8 @@ class LayoutEmitter {
 **Pattern:**
 ```dart
 @freezed
-sealed class AstNode with _$AstNode {
-  const factory AstNode.button({
+sealed class LayoutNode with _$LayoutNode {
+  const factory LayoutNode.button({
     required String label,
     String? onPressed,
     ButtonVariant? variant,
@@ -407,7 +407,7 @@ class ComponentDefinition with _$ComponentDefinition {
 ```dart
 class ScreenDefinition {
   final String id;
-  final AstNode layout;
+  final LayoutNode layout;
   final AppBarNode? appBar;
 }
 ```
@@ -727,10 +727,10 @@ class ButtonMeta {
 // login.screen.dart
 final loginScreen = ScreenDefinition(
   id: 'login',
-  layout: AstNode.column(
+  layout: LayoutNode.column(
     children: [
-      AstNode.text(text: 'Welcome'),
-      AstNode.button(label: 'Login', onPressed: 'handleLogin'),
+      LayoutNode.text(text: 'Welcome'),
+      LayoutNode.button(label: 'Login', onPressed: 'handleLogin'),
     ],
   ),
 );
@@ -820,22 +820,22 @@ dart run syntaxify build
 
 ## Quick Reference Table
 
-| File | Modify When | Regenerate |
-|------|-------------|------------|
-| `cli.dart` | Adding CLI commands | No |
-| `*_command.dart` | Adding command logic | No |
-| `*_parser.dart` | Changing parsing logic | No |
-| `*_generator.dart` | Changing code generation | No |
-| `layout_emitter.dart` | Adding AST nodes | No |
-| `ast_node.dart` | Adding component types | Yes (build_runner) |
-| `*_definition.dart` | Adding metadata | Yes (build_runner) |
-| `design_style.dart` | Adding components | No |
-| `*_style.dart` | Adding renderers | No |
-| `*_tokens.dart` | Adding token properties | No |
-| `*_renderer.dart` | Changing rendering | No |
-| `*.meta.dart` | Defining components | Yes (syntaxify build) |
-| `*.screen.dart` | Defining screens | Yes (syntaxify build) |
-| `generated/**` | NEVER | Auto-generated |
+| File                  | Modify When              | Regenerate            |
+| --------------------- | ------------------------ | --------------------- |
+| `cli.dart`            | Adding CLI commands      | No                    |
+| `*_command.dart`      | Adding command logic     | No                    |
+| `*_parser.dart`       | Changing parsing logic   | No                    |
+| `*_generator.dart`    | Changing code generation | No                    |
+| `layout_emitter.dart` | Adding AST nodes         | No                    |
+| `ast_node.dart`       | Adding component types   | Yes (build_runner)    |
+| `*_definition.dart`   | Adding metadata          | Yes (build_runner)    |
+| `design_style.dart`   | Adding components        | No                    |
+| `*_style.dart`        | Adding renderers         | No                    |
+| `*_tokens.dart`       | Adding token properties  | No                    |
+| `*_renderer.dart`     | Changing rendering       | No                    |
+| `*.meta.dart`         | Defining components      | Yes (syntaxify build) |
+| `*.screen.dart`       | Defining screens         | Yes (syntaxify build) |
+| `generated/**`        | NEVER                    | Auto-generated        |
 
 ---
 

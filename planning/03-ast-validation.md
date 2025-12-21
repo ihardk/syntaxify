@@ -14,7 +14,7 @@ Currently, there's NO validation of AST nodes before code generation. This allow
 
 **Example 1: Empty Button Label**
 ```dart
-AstNode.button(
+LayoutNode.button(
   label: '',  // Empty string - useless button!
   onPressed: 'handleClick',
 )
@@ -25,7 +25,7 @@ AstNode.button(
 
 **Example 2: Invalid Dart Identifier**
 ```dart
-AstNode.button(
+LayoutNode.button(
   label: 'Click Me',
   onPressed: 'this-is-not-valid',  // Hyphens not allowed in Dart!
 )
@@ -40,7 +40,7 @@ final VoidCallback? this-is-not-valid;  // SYNTAXIFY ERROR!
 
 **Example 3: Empty Column**
 ```dart
-AstNode.column(
+LayoutNode.column(
   children: [],  // No children - meaningless widget
 )
 ```
@@ -50,7 +50,7 @@ AstNode.column(
 
 **Example 4: Conflicting Properties**
 ```dart
-AstNode.text(
+LayoutNode.text(
   text: 'Hello',
   maxLines: 1,
   overflow: TextOverflow.visible,  // Conflicts with maxLines!
@@ -62,10 +62,10 @@ AstNode.text(
 
 **Example 5: Nested Invalid Data**
 ```dart
-AstNode.column(
+LayoutNode.column(
   children: [
-    AstNode.button(label: '', onPressed: 'bad-name'),  // Both invalid!
-    AstNode.text(text: ''),  // Empty text
+    LayoutNode.button(label: '', onPressed: 'bad-name'),  // Both invalid!
+    LayoutNode.text(text: ''),  // Empty text
   ],
 )
 ```
@@ -76,7 +76,7 @@ AstNode.column(
 ```
 User defines AST in .screen.dart
          ↓
-AstNodeParser.parseScreenFromExpression()
+LayoutNodeParser.parseScreenFromExpression()
          ↓
 ScreenGenerator.generate()
          ↓
@@ -96,7 +96,7 @@ User runs app → BOOM 💥
 ```
 User defines AST in .screen.dart
          ↓
-AstNodeParser.parseScreenFromExpression()
+LayoutNodeParser.parseScreenFromExpression()
          ↓
 ✨ NEW: AstValidator.validate() ✨  ← Catch errors early!
          ↓
@@ -175,7 +175,7 @@ class AstValidator {
 
   /// Validates an AST node and all its children
   /// Returns list of validation errors (empty if valid)
-  List<ValidationError> validate(AstNode node, [String path = 'root']) {
+  List<ValidationError> validate(LayoutNode node, [String path = 'root']) {
     return node.map(
       column: (n) => _validateColumn(n, path),
       row: (n) => _validateRow(n, path),
@@ -237,7 +237,7 @@ class AstValidator {
         message: 'Column must have at least one child',
         nodePath: nodePath,
         fieldName: 'children',
-        suggestion: 'Add child widgets like AstNode.text() or AstNode.button()',
+        suggestion: 'Add child widgets like LayoutNode.text() or LayoutNode.button()',
         severity: ErrorSeverity.warning, // Warning, not error (could be intentional)
       ));
     }
@@ -263,7 +263,7 @@ class AstValidator {
         message: 'Row must have at least one child',
         nodePath: nodePath,
         fieldName: 'children',
-        suggestion: 'Add child widgets like AstNode.text() or AstNode.button()',
+        suggestion: 'Add child widgets like LayoutNode.text() or LayoutNode.button()',
         severity: ErrorSeverity.warning,
       ));
     }

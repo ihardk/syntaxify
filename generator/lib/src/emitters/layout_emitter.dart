@@ -2,27 +2,62 @@ import 'package:code_builder/code_builder.dart';
 import 'package:syntaxify/src/models/ast/nodes.dart';
 
 /// Emits Flutter code from layout nodes.
+import 'package:syntaxify/src/generators/generator_registry.dart';
+
+/// Emits Flutter code from layout nodes.
 class LayoutEmitter {
-  const LayoutEmitter();
+  const LayoutEmitter({this.registry});
+
+  final GeneratorRegistry? registry;
 
   /// Converts a [LayoutNode] into a [Spec] (Expression).
   Expression emit(LayoutNode node) {
     return node.map(
-      // Layout
-      column: _emitColumn,
-      row: _emitRow,
-
-      // Primitives
-      text: _emitText,
-      button: _emitButton,
-      textField: _emitTextField,
-      icon: _emitIcon,
-      spacer: _emitSpacer,
-
-      // Base
-      appBar: _emitAppBar,
+      structural: (n) => _emitStructural(n.node),
+      primitive: (n) => _emitPrimitive(n.node),
+      interactive: (n) => _emitInteractive(n.node),
+      custom: (n) => _emitCustom(n.node),
+      appBar: (n) => _emitAppBar(n),
     );
   }
+
+  // --- Sub-Emitters ---
+
+  Expression _emitStructural(StructuralNode node) {
+    return node.map(
+      column: _emitColumn,
+      row: _emitRow,
+    );
+  }
+
+  Expression _emitPrimitive(PrimitiveNode node) {
+    return node.map(
+      text: _emitText,
+      icon: _emitIcon,
+      spacer: _emitSpacer,
+    );
+  }
+
+  Expression _emitInteractive(InteractiveNode node) {
+    return node.map(
+      button: _emitButton,
+      textField: _emitTextField,
+    );
+  }
+
+  Expression _emitCustom(CustomNode node) {
+    final handler = registry?.getCustomEmitter(node.type);
+    if (handler != null) {
+      return handler.emit(node);
+    }
+    // Placeholder if no handler found
+    return refer('Placeholder').newInstance([], {
+      'child':
+          literalString('Custom Component (Missing Handler): ${node.type}'),
+    });
+  }
+
+  // --- Specific Emitters ---
 
   Expression _emitColumn(ColumnNode node) {
     return refer('Column').newInstance([], {
@@ -61,24 +96,27 @@ class LayoutEmitter {
   }
 
   Expression _emitButton(ButtonNode node) {
+    final props = node.props;
     return refer('AppButton').newInstance([], {
       'label': literalString(node.label),
       'onPressed':
           node.onPressed != null ? refer(node.onPressed!) : literalNull,
-      if (node.variant != null && node.variant != ButtonVariant.filled)
-        'variant': refer('ButtonVariant.${node.variant!.name}'),
-      if (node.size != null) 'size': refer('ButtonSize.${node.size!.name}'),
-      if (node.icon != null) 'icon': refer('Icons.${node.icon!}'),
-      if (node.isDisabled == true) 'isDisabled': literalTrue,
-      if (node.fullWidth == true) 'fullWidth': literalTrue,
+      if (props?.variant != null && props?.variant != ButtonVariant.filled)
+        'variant': refer('ButtonVariant.${props!.variant!.name}'),
+      if (props?.size != null) 'size': refer('ButtonSize.${props!.size!.name}'),
+      if (props?.icon != null) 'icon': refer('Icons.${props!.icon!}'),
+      if (props?.isDisabled == true) 'isDisabled': literalTrue,
+      if (props?.fullWidth == true) 'fullWidth': literalTrue,
+      if (props?.isLoading == true) 'isLoading': literalTrue,
     });
   }
 
   Expression _emitTextField(TextFieldNode node) {
+    final props = node.props;
     // Map KeyboardType enum to Flutter's TextInputType
     String? keyboardTypeValue;
-    if (node.keyboardType != null) {
-      switch (node.keyboardType!) {
+    if (props?.keyboardType != null) {
+      switch (props!.keyboardType!) {
         case KeyboardType.email:
           keyboardTypeValue = 'emailAddress';
           break;
@@ -102,8 +140,8 @@ class LayoutEmitter {
 
     return refer('AppInput').newInstance([], {
       'label': literalString(node.label ?? ''),
-      if (node.hint != null) 'hint': literalString(node.hint!),
-      if (node.obscureText == true) 'obscureText': literalTrue,
+      if (props?.hint != null) 'hint': literalString(props!.hint!),
+      if (props?.obscureText == true) 'obscureText': literalTrue,
       if (keyboardTypeValue != null)
         'keyboardType': refer('TextInputType.$keyboardTypeValue'),
     });
@@ -113,8 +151,7 @@ class LayoutEmitter {
     return refer('Icon').newInstance([
       refer('Icons.${node.name}'),
     ], {
-      if (node.size != null)
-        'size': literalNum(24), // TODO: Map size enum to values
+      if (node.size != null) 'size': literalNum(24),
     });
   }
 
@@ -128,7 +165,8 @@ class LayoutEmitter {
     // AppBar is typically a PreferredSizeWidget, but for AST purposes it maps to AppBar
     return refer('AppBar').newInstance([], {
       if (node.title != null)
-        'title': refer('Text').newInstance([literalString(node.title!)])
+        'title': refer('AppText')
+            .newInstance([], {'text': literalString(node.title!)})
     });
   }
 }

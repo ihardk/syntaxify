@@ -2,15 +2,20 @@ import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:syntaxify/src/emitters/layout_emitter.dart';
 import 'package:syntaxify/src/models/ast/nodes.dart';
+import 'package:syntaxify/src/models/ast/custom/custom_node.dart';
 
 /// Generates a full Screen widget from a [ScreenDefinition].
 class ScreenGenerator {
-  const ScreenGenerator({
+  ScreenGenerator({
     this.layoutEmitter = const LayoutEmitter(),
   });
 
   final LayoutEmitter layoutEmitter;
 
+  /// Generates Dart code for a screen.
+  ///
+  /// [screen] The screen definition to generate code for.
+  /// [packageName] Optional package name for import resolution.
   String generate(ScreenDefinition screen, {String? packageName}) {
     final library = Library((b) => b
       ..comments.addAll([
@@ -77,9 +82,23 @@ class ScreenGenerator {
     return scaffold.returned.statement;
   }
 
+  // Rewrite using AST Visitor pattern
   Map<String, Reference> _collectCallbacks(LayoutNode node) {
     final callbacks = <String, Reference>{};
 
+    node.map(
+      structural: (n) => _collectStructuralCallbacks(n.node, callbacks),
+      primitive: (n) => _collectPrimitiveCallbacks(n.node, callbacks),
+      interactive: (n) => _collectInteractiveCallbacks(n.node, callbacks),
+      custom: (n) => _collectCustomCallbacks(n.node, callbacks),
+      appBar: (n) => _collectAppBarCallbacks(n, callbacks),
+    );
+
+    return callbacks;
+  }
+
+  void _collectStructuralCallbacks(
+      StructuralNode node, Map<String, Reference> callbacks) {
     node.map(
       column: (n) {
         for (final child in n.children) {
@@ -91,23 +110,44 @@ class ScreenGenerator {
           callbacks.addAll(_collectCallbacks(child));
         }
       },
+    );
+  }
+
+  void _collectPrimitiveCallbacks(
+      PrimitiveNode node, Map<String, Reference> callbacks) {
+    // No callbacks in primitives usually
+  }
+
+  void _collectInteractiveCallbacks(
+      InteractiveNode node, Map<String, Reference> callbacks) {
+    node.map(
       button: (n) {
         if (n.onPressed != null) {
           callbacks[n.onPressed!] = refer('VoidCallback?');
         }
       },
-      text: (_) {},
       textField: (n) {
         if (n.onChanged != null) {
           callbacks[n.onChanged!] = refer('ValueChanged<String>?');
         }
+        if (n.onSubmitted != null) {
+          callbacks[n.onSubmitted!] = refer('ValueChanged<String>?');
+        }
       },
-      icon: (_) {},
-      spacer: (_) {},
-      appBar: (_) {},
     );
+  }
 
-    return callbacks;
+  void _collectAppBarCallbacks(
+      AppBarNode node, Map<String, Reference> callbacks) {
+    if (node.onLeadingPressed != null) {
+      callbacks[node.onLeadingPressed!] = refer('VoidCallback?');
+    }
+  }
+
+  void _collectCustomCallbacks(
+      CustomNode node, Map<String, Reference> callbacks) {
+    // TODO: Implement callback collection for custom nodes
+    // Plugins should probably provide this meta-info
   }
 
   String _toPascalCase(String input) {

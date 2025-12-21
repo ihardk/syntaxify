@@ -1,0 +1,51 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// Analyzed by Syntaxify
+
+import 'package:flutter/material.dart';
+import '../index.dart';
+import '../design_system/design_system.dart';
+
+class KitchenSinkScreen extends StatelessWidget {
+  const KitchenSinkScreen({super.key, this.onSubmit, this.onEmailChanged});
+
+  final VoidCallback? onSubmit;
+
+  final ValueChanged<String>? onEmailChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: AppText(text: 'Phase 1 verification')),
+      body: Column(
+        children: [
+          AppText(
+            text: 'Hello World',
+            variant: TextVariant.headlineMedium,
+            align: TextAlign.center,
+          ),
+          Row(
+            children: [
+              Icon(Icons.star, size: 24),
+              AppText(text: 'Rating: 5.0'),
+            ],
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          ),
+          Spacer(flex: 1),
+          AppButton(
+            label: 'Submit',
+            onPressed: onSubmit,
+            icon: Icons.send,
+            isLoading: true,
+          ),
+          AppInput(
+            label: 'Email',
+            hint: 'Enter email',
+            keyboardType: TextInputType.emailAddress,
+          ),
+        ],
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+      ),
+    );
+  }
+}

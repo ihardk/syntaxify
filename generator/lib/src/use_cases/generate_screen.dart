@@ -2,6 +2,8 @@ import 'package:path/path.dart' as p;
 import 'package:syntaxify/src/core/interfaces/file_system.dart';
 import 'package:syntaxify/src/models/ast/screen_definition.dart';
 import 'package:syntaxify/src/generators/screen_generator.dart';
+import 'package:syntaxify/src/generators/generator_registry.dart';
+import 'package:syntaxify/src/emitters/layout_emitter.dart';
 
 /// Use case for generating a Flutter screen from a ScreenDefinition.
 ///
@@ -10,10 +12,13 @@ import 'package:syntaxify/src/generators/screen_generator.dart';
 class GenerateScreenUseCase {
   GenerateScreenUseCase({
     required this.fileSystem,
-    this.screenGenerator = const ScreenGenerator(),
-  });
+    required this.registry,
+    ScreenGenerator? screenGenerator,
+  }) : screenGenerator = screenGenerator ??
+            ScreenGenerator(layoutEmitter: LayoutEmitter(registry: registry));
 
   final FileSystem fileSystem;
+  final GeneratorRegistry registry;
   final ScreenGenerator screenGenerator;
 
   Future<String?> execute({

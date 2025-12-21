@@ -28,14 +28,27 @@ void main() {
       ''';
 
       final expression = parseExpression(code);
-      final node = parser.parseLayoutNode(expression) as ButtonNode;
+      final node = parser.parseLayoutNode(expression);
 
-      expect(node.label, 'Click Me');
-      expect(node.variant, ButtonVariant.outlined);
-      expect(node.size, ButtonSize.lg);
-      expect(node.icon, 'add');
-      expect(node.onPressed, 'onSubmit');
-      expect(node.isDisabled, true);
+      node.map(
+        interactive: (i) {
+          i.node.map(
+            button: (b) {
+              expect(b.label, 'Click Me');
+              expect(b.props?.variant, ButtonVariant.outlined);
+              expect(b.props?.size, ButtonSize.lg);
+              expect(b.props?.icon, 'add');
+              expect(b.onPressed, 'onSubmit');
+              expect(b.props?.isDisabled, true);
+            },
+            textField: (_) => fail('Expected button'),
+          );
+        },
+        structural: (_) => fail('Expected interactive'),
+        primitive: (_) => fail('Expected interactive'),
+        custom: (_) => fail('Expected interactive'),
+        appBar: (_) => fail('Expected interactive'),
+      );
     });
 
     test('parses TextFieldNode properties', () {
@@ -49,22 +62,48 @@ void main() {
       ''';
 
       final expression = parseExpression(code);
-      final node = parser.parseLayoutNode(expression) as TextFieldNode;
+      final node = parser.parseLayoutNode(expression);
 
-      expect(node.label, 'Username');
-      expect(node.hint, 'Enter your username');
-      expect(node.obscureText, true);
-      expect(node.keyboardType, KeyboardType.email);
+      node.map(
+        interactive: (i) {
+          i.node.map(
+            textField: (tf) {
+              expect(tf.label, 'Username');
+              expect(tf.props?.hint, 'Enter your username');
+              expect(tf.props?.obscureText, true);
+              expect(tf.props?.keyboardType, KeyboardType.email);
+            },
+            button: (_) => fail('Expected textField'),
+          );
+        },
+        structural: (_) => fail('Expected interactive'),
+        primitive: (_) => fail('Expected interactive'),
+        custom: (_) => fail('Expected interactive'),
+        appBar: (_) => fail('Expected interactive'),
+      );
     });
 
     test('parses defaults correctly', () {
       final code = "LayoutNode.button(label: 'Simple')";
       final expression = parseExpression(code);
-      final node = parser.parseLayoutNode(expression) as ButtonNode;
+      final node = parser.parseLayoutNode(expression);
 
-      expect(node.variant, ButtonVariant.filled); // Default in parser logic
-      expect(node.size, null); // Default is null (unspecified)
-      expect(node.isDisabled, null);
+      node.map(
+        interactive: (i) {
+          i.node.map(
+            button: (b) {
+              expect(b.props?.variant, ButtonVariant.filled); // Default
+              expect(b.props?.size, null);
+              expect(b.props?.isDisabled, false);
+            },
+            textField: (_) => fail('Expected button'),
+          );
+        },
+        structural: (_) => fail('Expected interactive'),
+        primitive: (_) => fail('Expected interactive'),
+        custom: (_) => fail('Expected interactive'),
+        appBar: (_) => fail('Expected interactive'),
+      );
     });
   });
 }

@@ -148,11 +148,11 @@ Syntaxify separates **WHAT you want** from **HOW it looks**.
 // meta/login.screen.dart
 final loginScreen = ScreenDefinition(
   id: 'login',
-  layout: AstNode.column(children: [
-    AstNode.text(text: 'Welcome Back'),
-    AstNode.textField(label: 'Email'),
-    AstNode.textField(label: 'Password', obscureText: true),
-    AstNode.button(label: 'Sign In', onPressed: 'handleLogin'),
+  layout: LayoutNode.column(children: [
+    LayoutNode.text(text: 'Welcome Back'),
+    LayoutNode.textField(label: 'Email'),
+    LayoutNode.textField(label: 'Password', obscureText: true),
+    LayoutNode.button(label: 'Sign In', onPressed: 'handleLogin'),
   ]),
 );
 ```
@@ -181,11 +181,11 @@ class LoginScreen extends StatelessWidget {
 
 **Then HOW it renders depends on style:**
 
-| Style | Email Input | Button |
-|-------|-------------|--------|
-| Material | `TextField` with underline | `ElevatedButton` rounded |
-| Cupertino | `CupertinoTextField` | `CupertinoButton.filled` pill shape |
-| Neo | Custom gradient border | Custom gradient button |
+| Style     | Email Input                | Button                              |
+| --------- | -------------------------- | ----------------------------------- |
+| Material  | `TextField` with underline | `ElevatedButton` rounded            |
+| Cupertino | `CupertinoTextField`       | `CupertinoButton.filled` pill shape |
+| Neo       | Custom gradient border     | Custom gradient button              |
 
 **Same screen, three looks!**
 
@@ -552,13 +552,13 @@ dart run syntaxify build --component=AppButton
 
 ### Key Files
 
-| File | Purpose |
-|------|---------|
-| `meta/*.meta.dart` | Component definitions |
-| `meta/*.screen.dart` | Screen definitions |
-| `lib/generated/components/` | Generated components |
-| `lib/screens/` | Generated screens (editable) |
-| `lib/syntaxify/design_system/` | Styles and tokens |
+| File                           | Purpose                      |
+| ------------------------------ | ---------------------------- |
+| `meta/*.meta.dart`             | Component definitions        |
+| `meta/*.screen.dart`           | Screen definitions           |
+| `lib/generated/components/`    | Generated components         |
+| `lib/screens/`                 | Generated screens (editable) |
+| `lib/syntaxify/design_system/` | Styles and tokens            |
 
 ---
 

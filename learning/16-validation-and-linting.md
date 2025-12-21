@@ -47,23 +47,23 @@ LayoutNode.button(
 
 ## The LayoutNode Naming
 
-We renamed `AstNode` to `LayoutNode` to make the API more approachable for developers who aren't familiar with compiler terminology.
+We renamed `LayoutNode` to `LayoutNode` to make the API more approachable for developers who aren't familiar with compiler terminology.
 
 ### Why the Change?
 
-- **Before**: `AstNode.button()` - "AST" is technical jargon (Abstract Syntax Tree)
+- **Before**: `LayoutNode.button()` - "AST" is technical jargon (Abstract Syntax Tree)
 - **After**: `LayoutNode.button()` - Clear and descriptive
 
 ### Migration Guide
 
-If you have existing code using `AstNode`, simply replace all occurrences with `LayoutNode`:
+If you have existing code using `LayoutNode`, simply replace all occurrences with `LayoutNode`:
 
 ```dart
 // Old code (before v0.1.0-alpha.8)
-final node = AstNode.column(
+final node = LayoutNode.column(
   children: [
-    AstNode.text(text: 'Hello'),
-    AstNode.button(label: 'Click me'),
+    LayoutNode.text(text: 'Hello'),
+    LayoutNode.button(label: 'Click me'),
   ],
 );
 

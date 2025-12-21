@@ -10,7 +10,10 @@ void main() {
 
     setUp(() {
       fileSystem = MemoryFileSystem();
-      useCase = GenerateScreenUseCase(fileSystem: fileSystem);
+      useCase = GenerateScreenUseCase(
+        fileSystem: fileSystem,
+        registry: GeneratorRegistry(),
+      );
     });
 
     tearDown(() {
