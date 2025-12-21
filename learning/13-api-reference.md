@@ -77,7 +77,7 @@ const factory LayoutNode.column({
 ```
 
 **Parameters:**
-- `children` (List\<AstNode\>) - Child nodes. Default: `[]`
+- `children` (List\<LayoutNode\>) - Child nodes. Default: `[]`
 - `mainAxisAlignment` (MainAxisAlignment?) - Vertical alignment. Default: `MainAxisAlignment.start`
 - `crossAxisAlignment` (CrossAxisAlignment?) - Horizontal alignment. Default: `CrossAxisAlignment.center`
 
