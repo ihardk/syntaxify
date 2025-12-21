@@ -70,8 +70,29 @@ class LayoutEmitter {
   // --- Specific Emitters ---
 
   Expression _emitColumn(ColumnNode node) {
+    // Generate children list
+    List<Expression> children = node.children.map(emit).toList();
+
+    // Add spacing between children if spacing is specified
+    if (node.spacing != null) {
+      final spacingValue = double.tryParse(node.spacing!) ?? 16.0;
+      final spacedChildren = <Expression>[];
+      for (var i = 0; i < children.length; i++) {
+        spacedChildren.add(children[i]);
+        // Add vertical spacing after each child except the last one
+        if (i < children.length - 1) {
+          spacedChildren.add(
+            refer('SizedBox').newInstance([], {
+              'height': literalNum(spacingValue),
+            }),
+          );
+        }
+      }
+      children = spacedChildren;
+    }
+
     return refer('Column').newInstance([], {
-      'children': literalList(node.children.map(emit).toList()),
+      'children': literalList(children),
       if (node.mainAxisAlignment != null)
         'mainAxisAlignment':
             refer('MainAxisAlignment.${node.mainAxisAlignment!.name}'),
@@ -82,8 +103,29 @@ class LayoutEmitter {
   }
 
   Expression _emitRow(RowNode node) {
+    // Generate children list
+    List<Expression> children = node.children.map(emit).toList();
+
+    // Add spacing between children if spacing is specified
+    if (node.spacing != null) {
+      final spacingValue = double.tryParse(node.spacing!) ?? 16.0;
+      final spacedChildren = <Expression>[];
+      for (var i = 0; i < children.length; i++) {
+        spacedChildren.add(children[i]);
+        // Add horizontal spacing after each child except the last one
+        if (i < children.length - 1) {
+          spacedChildren.add(
+            refer('SizedBox').newInstance([], {
+              'width': literalNum(spacingValue),
+            }),
+          );
+        }
+      }
+      children = spacedChildren;
+    }
+
     return refer('Row').newInstance([], {
-      'children': literalList(node.children.map(emit).toList()),
+      'children': literalList(children),
       if (node.mainAxisAlignment != null)
         'mainAxisAlignment':
             refer('MainAxisAlignment.${node.mainAxisAlignment!.name}'),
@@ -243,8 +285,34 @@ class LayoutEmitter {
   }
 
   Expression _emitListView(ListViewNode node) {
+    // Generate children list
+    List<Expression> children = node.children.map(emit).toList();
+
+    // Add spacing between children if spacing is specified
+    if (node.spacing != null) {
+      final spacingValue = double.tryParse(node.spacing!) ?? 16.0;
+      final isHorizontal = node.scrollDirection == Axis.horizontal;
+
+      final spacedChildren = <Expression>[];
+      for (var i = 0; i < children.length; i++) {
+        spacedChildren.add(children[i]);
+        // Add spacing after each child except the last one
+        if (i < children.length - 1) {
+          spacedChildren.add(
+            refer('SizedBox').newInstance([], {
+              if (isHorizontal)
+                'width': literalNum(spacingValue)
+              else
+                'height': literalNum(spacingValue),
+            }),
+          );
+        }
+      }
+      children = spacedChildren;
+    }
+
     return refer('ListView').newInstance([], {
-      'children': literalList(node.children.map(emit).toList()),
+      'children': literalList(children),
       if (node.scrollDirection != null && node.scrollDirection != Axis.vertical)
         'scrollDirection': refer('Axis.${node.scrollDirection!.name}'),
       if (node.shrinkWrap == true) 'shrinkWrap': literalTrue,
