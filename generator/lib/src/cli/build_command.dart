@@ -6,6 +6,7 @@ import 'package:path/path.dart' as path;
 import 'package:watcher/watcher.dart';
 
 import 'package:syntaxify/src/config/package_config.dart' as config;
+import 'package:syntaxify/src/config/config_loader.dart';
 import 'package:syntaxify/src/generator/syntax_generator.dart';
 import 'init_command.dart';
 
@@ -57,6 +58,12 @@ class BuildCommand extends Command<int> {
         abbr: 'o',
         help: 'Output directory for generated files',
         defaultsTo: config.defaultOutputDir,
+      )
+      ..addFlag(
+        'dry-run',
+        help: 'Show what files would be generated without writing them',
+        negatable: false,
+        defaultsTo: false,
       );
   }
 
@@ -91,22 +98,32 @@ Examples:
   @override
   Future<int> run() async {
     final watch = argResults?['watch'] as bool? ?? false;
+    final dryRun = argResults?['dry-run'] as bool? ?? false;
     final component = argResults?['component'] as String?;
     final theme = argResults?['theme'] as String?;
-    final metaDir = argResults?['meta'] as String? ?? 'meta';
 
-    // Smart defaults - prefer design_system in output dir if it exists
-    // Note: Check from current working directory (where user runs command)
-    final cwd = Directory.current.path;
-    final designSystemPath = path.join(cwd, config.defaultDesignSystemDir);
-    final designSystemExists = Directory(designSystemPath).existsSync();
+    // Load config from syntaxify.yaml (if exists)
+    const configLoader = ConfigLoader();
+    final fileConfig = configLoader.load();
 
-    final tokensDir = argResults?['tokens'] as String? ??
-        (designSystemExists ? config.defaultDesignSystemDir : 'design_system');
-    final designSystemDir = argResults?['design-system'] as String? ??
-        (designSystemExists ? config.defaultDesignSystemDir : 'design_system');
-    final outputDir =
-        argResults?['output'] as String? ?? config.defaultOutputDir;
+    // CLI args override config file
+    final cliMetaDir = argResults?['meta'] as String?;
+    final cliOutputDir = argResults?['output'] as String?;
+    final cliTokensDir = argResults?['tokens'] as String?;
+    final cliDesignSystemDir = argResults?['design-system'] as String?;
+
+    final mergedConfig = configLoader.merge(
+      fileConfig,
+      metaDir: cliMetaDir,
+      outputDir: cliOutputDir,
+      tokensDir: cliTokensDir,
+      designSystemDir: cliDesignSystemDir,
+    );
+
+    final metaDir = mergedConfig.metaDir;
+    final outputDir = mergedConfig.outputDir;
+    final tokensDir = mergedConfig.tokensDir;
+    final designSystemDir = mergedConfig.designSystemDir;
 
     // Check availability
     final metaExists = Directory(metaDir).existsSync();

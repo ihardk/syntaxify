@@ -82,6 +82,11 @@ Syntaxify uses a **renderer pattern** to separate WHAT (component definition) fr
 - `AppText` - Text with typography variants
 - `AppInput` - Text fields with validation
 
+**AST Node Types (18+):**
+- **Structural**: Column, Row, Container, Card, ListView, Stack, GridView, Padding, Center
+- **Primitive**: Text, Icon, Spacer, Image, Divider, CircularProgressIndicator, SizedBox, Expanded
+- **Interactive**: Button, TextField, Checkbox, Switch, IconButton, Dropdown, Radio, Slider
+
 ---
 
 ## 🛠️ How to Add a New Component
@@ -155,9 +160,17 @@ If your component supports styling (Themes):
 dart test
 ```
 
+**Current Coverage:** 298 tests covering:
+- Parsers and generators
+- AST node validation
+- Layout emission
+- ConfigLoader and DryRunFileSystem
+- Integration (full build pipeline)
+
 ### Writing Tests
-*   **Unit Tests**: Test Parsers and Generators in isolation.
-*   **Integration Tests**: `test/build_test.dart` runs the full build against sample inputs.
+*   **Unit Tests**: Test Parsers, Generators, Validators in isolation.
+*   **Integration Tests**: `test/integration/` runs the full build against sample inputs.
+*   **Config Tests**: `test/config/` tests configuration loading.
 
 ---
 

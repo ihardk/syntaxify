@@ -1,6 +1,5 @@
+import 'package:syntaxify/syntaxify.dart';
 import 'package:test/test.dart';
-import 'package:syntaxify/src/models/ast/nodes.dart';
-import 'package:syntaxify/src/models/ast/custom/custom_node.dart';
 
 void main() {
   group('LayoutNode', () {

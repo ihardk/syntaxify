@@ -1,12 +1,5 @@
-import 'dart:io';
 import 'package:syntaxify/syntaxify.dart';
 import 'package:test/test.dart';
-import 'package:syntaxify/src/use_cases/build_all.dart';
-import 'package:syntaxify/src/infrastructure/memory_file_system.dart';
-import 'package:syntaxify/src/generators/generator_registry.dart';
-import 'package:syntaxify/src/models/component_definition.dart';
-import 'package:syntaxify/src/models/ast/screen_definition.dart';
-import 'package:syntaxify/src/models/token_definition.dart';
 import 'package:mason_logger/mason_logger.dart';
 
 void main() {

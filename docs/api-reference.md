@@ -272,19 +272,61 @@ import 'package:your_app/screens/home_screen.dart';
 
 ## Build Options
 
+### Configuration File
+
+Syntaxify supports a `syntaxify.yaml` config file in your project root:
+
+```yaml
+# syntaxify.yaml
+meta: meta                           # Source directory
+output: lib/syntaxify                # Output directory
+design_system: lib/syntaxify/design_system
+tokens: lib/syntaxify/design_system
+
+generate:
+  screens: true
+  components: true
+```
+
+Run `syntaxify init` to create this file automatically.
+
+### CLI Commands
+
 ```bash
-# Build everything (auto-detects paths)
+# Initialize project (creates syntaxify.yaml)
+dart run syntaxify init
+
+# Build everything (uses syntaxify.yaml if present)
 dart run syntaxify build
+
+# Watch mode - rebuild on file changes
+dart run syntaxify build --watch
+
+# Dry run - preview what would be generated
+dart run syntaxify build --dry-run
 
 # Build specific component
 dart run syntaxify build --component=AppButton
 
-# Custom paths
+# Custom paths (override config file)
 dart run syntaxify build --meta=specs --output=lib/gen
 
 # Build for specific theme
 dart run syntaxify build --theme=material
 ```
+
+### CLI Options
+
+| Flag              | Short | Description                                 |
+| ----------------- | ----- | ------------------------------------------- |
+| `--watch`         | `-w`  | Watch for changes and rebuild automatically |
+| `--dry-run`       |       | Preview files without writing               |
+| `--component`     | `-c`  | Build specific component only               |
+| `--theme`         | `-t`  | Build for specific theme only               |
+| `--meta`          | `-m`  | Meta directory (default: `meta`)            |
+| `--output`        | `-o`  | Output directory (default: `lib/syntaxify`) |
+| `--design-system` |       | Design system directory                     |
+| `--tokens`        |       | Tokens directory                            |
 
 Run `dart run syntaxify build --help` for all options.
 

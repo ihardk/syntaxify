@@ -1,7 +1,7 @@
 import 'package:syntaxify/syntaxify.dart';
+import 'package:syntaxify/src/emitters/layout_emitter.dart';
 import 'package:test/test.dart';
 import 'package:code_builder/code_builder.dart';
-import 'package:syntaxify/src/emitters/layout_emitter.dart';
 
 void main() {
   group('LayoutEmitter - Complete Coverage', () {

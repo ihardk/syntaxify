@@ -114,6 +114,25 @@ Specify custom output path:
 dart run syntaxify build --output=lib/custom_path
 ```
 
+### Config file not being read
+
+Ensure `syntaxify.yaml` is in your project root (same level as `pubspec.yaml`):
+
+```yaml
+# syntaxify.yaml
+meta: meta
+output: lib/syntaxify
+```
+
+### Dry run shows no output
+
+Make sure you have meta files to build:
+
+```bash
+dart run syntaxify build --dry-run
+# Should show: "Files to write: ..."
+```
+
 ---
 
 ## Runtime Issues

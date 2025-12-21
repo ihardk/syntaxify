@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:test/test.dart';
 
 import 'package:syntaxify/src/parser/meta_parser.dart';
-import 'package:syntaxify/src/models/component_definition.dart';
 import 'package:mason_logger/mason_logger.dart';
 
 void main() {

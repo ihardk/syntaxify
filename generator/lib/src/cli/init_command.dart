@@ -4,6 +4,29 @@ import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as path;
 
+/// Default syntaxify.yaml content for new projects.
+const String _defaultConfigYaml = '''
+# Syntaxify Configuration
+# Customize paths for your project structure
+
+# Source meta files (.meta.dart, .screen.dart)
+meta: meta
+
+# Output directory for generated code
+output: lib/syntaxify
+
+# Design system directory
+design_system: lib/syntaxify/design_system
+
+# Tokens directory (typically same as design_system)
+tokens: lib/syntaxify/design_system
+
+# Generation options
+generate:
+  screens: true
+  components: true
+''';
+
 /// Init command - scaffolds a new Syntaxify project
 class InitCommand extends Command<int> {
   InitCommand({required this.logger}) {
@@ -70,13 +93,21 @@ class InitCommand extends Command<int> {
         logger: logger,
       );
 
+      // 3. Create syntaxify.yaml config file
+      final configFile = File(path.join(cwd, 'syntaxify.yaml'));
+      if (!configFile.existsSync() || force) {
+        configFile.writeAsStringSync(_defaultConfigYaml);
+        logger.detail('Created syntaxify.yaml');
+      }
+
       progress.complete('Project initialized successfully! 🚀');
       logger.info('');
       logger.info('Next steps:');
       logger.info('  1. Edit component definitions in meta/');
       logger
           .info('  2. Customize design system in lib/syntaxify/design_system/');
-      logger.info('  3. Run: syntaxify build');
+      logger.info('  3. (Optional) Edit syntaxify.yaml to customize paths');
+      logger.info('  4. Run: syntaxify build');
 
       return ExitCode.success.code;
     } catch (e) {

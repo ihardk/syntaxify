@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
-import 'package:path/path.dart' as path;
 import 'package:syntaxify/src/core/interfaces/file_system.dart';
 import 'package:syntaxify/src/models/build_cache.dart';
 

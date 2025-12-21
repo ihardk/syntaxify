@@ -1,8 +1,5 @@
 import 'package:syntaxify/syntaxify.dart';
 import 'package:test/test.dart';
-import 'package:syntaxify/src/validation/layout_validator.dart';
-import 'package:syntaxify/src/models/validation_error.dart';
-import 'package:syntaxify/src/models/ast/layout_node.dart';
 
 void main() {
   group('LayoutValidator', () {

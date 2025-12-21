@@ -8,27 +8,9 @@ analyzer:
     implicit-casts: false
     implicit-dynamic: false
 
-  errors:
-    # Syntaxify custom lints - Empty values
-    empty_button_label: error
-    empty_text_content: error
-    empty_icon_name: error
-    empty_appbar_title: warning
-
-    # Container checks
-    empty_container: warning
-
-    # Identifier validation
-    invalid_callback_name: error
-
-    # Number validation
-    negative_number_value: error
-
-    # Property conflicts
-    conflicting_properties: info
-
-    # Missing fields
-    missing_textfield_label: warning
+  # Note: Custom lint codes are handled by custom_lint plugin, not analyzer
+  # The following codes are defined in lib/src/lints/: empty_button_label, 
+  # empty_text_content, empty_icon_name, etc.
 
 linter:
   rules:

@@ -5,6 +5,8 @@ library syntaxify;
 
 // Package Configuration (Single Source of Truth)
 export 'src/config/package_config.dart';
+export 'src/config/syntaxify_config.dart';
+export 'src/config/config_loader.dart';
 
 // Core Interfaces (Dependency Inversion)
 export 'src/core/interfaces/component_generator.dart';
@@ -38,6 +40,7 @@ export 'src/infrastructure/local_file_system.dart';
 export 'src/infrastructure/memory_file_system.dart';
 export 'src/infrastructure/dart_code_formatter.dart';
 export 'src/infrastructure/build_cache_manager.dart';
+export 'src/infrastructure/dry_run_file_system.dart';
 
 // Validation
 export 'src/validation/layout_validator.dart';

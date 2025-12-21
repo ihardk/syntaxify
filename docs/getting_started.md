@@ -55,6 +55,7 @@ This creates:
 
 - `meta/` - Where you define component APIs
 - `lib/syntaxify/design_system/` - Customizable design system
+- `syntaxify.yaml` - Configuration file for build paths
 
 ## Define Your First Component
 

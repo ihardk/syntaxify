@@ -1,7 +1,6 @@
 import 'package:syntaxify/syntaxify.dart';
-import 'package:test/test.dart';
 import 'package:syntaxify/src/use_cases/generate_screen.dart';
-import 'package:syntaxify/src/infrastructure/memory_file_system.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('GenerateScreenUseCase', () {

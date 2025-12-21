@@ -310,17 +310,22 @@ syntaxify build
 # Build everything (auto-detects paths)
 syntaxify build
 
+# Watch mode - auto-rebuild on changes
+syntaxify build --watch
+
+# Dry run - preview without writing
+syntaxify build --dry-run
+
 # Build specific component
 syntaxify build --component=AppButton
 
 # Custom paths
 syntaxify build --meta=specs --output=lib/gen
-
-# Build for specific theme
-syntaxify build --theme=material
 ```
 
 **All Options:**
+- `-w, --watch` - Watch for file changes and rebuild
+- `--dry-run` - Preview files without writing
 - `-m, --meta` - Meta directory (default: `meta`)
 - `-o, --output` - Output directory (default: `lib/syntaxify`)
 - `--design-system` - Design system directory (auto-detects `lib/syntaxify/design_system`)
