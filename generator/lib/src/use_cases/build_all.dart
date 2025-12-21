@@ -15,6 +15,8 @@ import 'package:syntaxify/src/parser/registry_parser.dart';
 import 'package:syntaxify/src/generators/registry/icon_registry_generator.dart';
 import 'package:syntaxify/src/use_cases/generate_screen.dart';
 import 'package:syntaxify/src/models/ast/screen_definition.dart';
+import 'package:syntaxify/src/validation/layout_validator.dart';
+import 'package:syntaxify/src/models/validation_error.dart';
 
 /// Use case for building all components.
 class BuildAllUseCase {
@@ -35,6 +37,7 @@ class BuildAllUseCase {
   late final _generateScreen = GenerateScreenUseCase(
     fileSystem: fileSystem,
   );
+  final _validator = const LayoutValidator();
 
   /// Execute the full build.
   Future<BuildResult> execute({
@@ -74,6 +77,53 @@ class BuildAllUseCase {
     // Generate screens to lib/screens/ (editable)
     for (final screen in screens) {
       try {
+        logger.info('Validating Screen: ${screen.id}');
+
+        // Validate screen layout
+        final validationErrors = _validator.validate(
+          screen.layout,
+          'screens/${screen.id}',
+        );
+
+        // Also validate appBar if present
+        if (screen.appBar != null) {
+          validationErrors.addAll(_validator.validate(
+            screen.appBar!,
+            'screens/${screen.id}.appBar',
+          ));
+        }
+
+        // Collect validation errors and warnings
+        for (final error in validationErrors) {
+          final message = '${screen.id}: ${error.message} (${error.nodePath ?? "unknown"})';
+
+          if (error.severity == ErrorSeverity.error) {
+            logger.err('  ✗ $message');
+            if (error.suggestion != null) {
+              logger.detail('    💡 ${error.suggestion}');
+            }
+            errors.add(message);
+          } else if (error.severity == ErrorSeverity.warning) {
+            logger.warn('  ⚠ $message');
+            if (error.suggestion != null) {
+              logger.detail('    💡 ${error.suggestion}');
+            }
+            warnings.add(message);
+          } else {
+            logger.info('  ℹ $message');
+            if (error.suggestion != null) {
+              logger.detail('    💡 ${error.suggestion}');
+            }
+          }
+        }
+
+        // Only generate if no critical errors
+        final hasErrors = validationErrors.any((e) => e.severity == ErrorSeverity.error);
+        if (hasErrors) {
+          logger.err('Skipping screen ${screen.id} due to validation errors');
+          continue;
+        }
+
         logger.info('Generating Screen: ${screen.id}');
         final filePath = await _generateScreen.execute(
           screen: screen,
