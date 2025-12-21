@@ -445,6 +445,19 @@ class LayoutValidator {
       ));
     }
 
+    // Rule: Having both color and semantic might be confusing (warning)
+    if (node.color != null && node.semantic != null) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.conflictingProperties,
+        message: 'Container has both color and semantic specified',
+        nodePath: nodePath,
+        fieldName: 'color',
+        suggestion:
+            'Use either color for explicit colors or semantic for theme-based colors',
+        severity: ErrorSeverity.info,
+      ));
+    }
+
     // Recursively validate child
     if (node.child != null) {
       final childErrors = validate(node.child!, '$nodePath.child');
