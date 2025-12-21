@@ -16,6 +16,8 @@ export 'src/models/component_definition.dart';
 export 'src/models/token_definition.dart';
 export 'src/models/ast/nodes.dart';
 export 'src/models/build_result.dart';
+export 'src/models/build_cache.dart';
+export 'src/models/validation_error.dart';
 
 // Annotations
 export 'src/annotations/syntax_annotations.dart';
@@ -35,6 +37,10 @@ export 'src/generator/syntax_generator.dart';
 export 'src/infrastructure/local_file_system.dart';
 export 'src/infrastructure/memory_file_system.dart';
 export 'src/infrastructure/dart_code_formatter.dart';
+export 'src/infrastructure/build_cache_manager.dart';
+
+// Validation
+export 'src/validation/layout_validator.dart';
 
 // Use Cases (Clean Architecture)
 export 'src/use_cases/generate_component.dart';

@@ -24,4 +24,18 @@ abstract class FileSystem {
 
   /// Delete file.
   Future<void> deleteFile(String path);
+
+  /// Get file statistics (modification time, size, etc.)
+  Future<FileStats> getStats(String path);
+}
+
+/// File statistics.
+class FileStats {
+  FileStats({
+    required this.modified,
+    required this.size,
+  });
+
+  final DateTime modified;
+  final int size;
 }

@@ -28,6 +28,9 @@ dependencies:
   path: ^1.9.0
   file: ^7.0.0
 
+  # Caching
+  crypto: ^3.0.3
+
   # Linting
   custom_lint_builder: ^0.6.4
 

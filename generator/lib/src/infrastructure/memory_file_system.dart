@@ -5,6 +5,7 @@ import 'package:syntaxify/src/core/interfaces/file_system.dart';
 /// No actual file I/O - useful for unit tests.
 class MemoryFileSystem implements FileSystem {
   final Map<String, String> _files = {};
+  final Map<String, DateTime> _modificationTimes = {};
   final Set<String> _directories = {};
 
   @override
@@ -18,6 +19,7 @@ class MemoryFileSystem implements FileSystem {
   @override
   Future<void> writeFile(String path, String content) async {
     _files[path] = content;
+    _modificationTimes[path] = DateTime.now();
   }
 
   @override
@@ -44,16 +46,29 @@ class MemoryFileSystem implements FileSystem {
       throw Exception('Source file not found: $source');
     }
     _files[destination] = _files[source]!;
+    _modificationTimes[destination] = DateTime.now();
   }
 
   @override
   Future<void> deleteFile(String path) async {
     _files.remove(path);
+    _modificationTimes.remove(path);
+  }
+
+  @override
+  Future<FileStats> getStats(String path) async {
+    if (!_files.containsKey(path)) {
+      throw Exception('File not found: $path');
+    }
+    final modified = _modificationTimes[path] ?? DateTime.now();
+    final size = _files[path]!.length;
+    return FileStats(modified: modified, size: size);
   }
 
   /// Clear all files (for test cleanup)
   void clear() {
     _files.clear();
+    _modificationTimes.clear();
     _directories.clear();
   }
 
