@@ -253,19 +253,35 @@ class LayoutEmitter {
   // --- New Structural Node Emitters ---
 
   Expression _emitContainer(ContainerNode node) {
-    return refer('Container').newInstance([], {
+    // Determine if we need BoxDecoration (for color + borderRadius combination)
+    final hasColor = node.color != null;
+    final hasBorderRadius = node.borderRadius != null;
+    final needsDecoration = hasColor || hasBorderRadius;
+
+    final containerArgs = <String, Expression>{
       if (node.child != null) 'child': emit(node.child!),
       if (node.width != null) 'width': literalNum(node.width!),
       if (node.height != null) 'height': literalNum(node.height!),
       if (node.padding != null) 'padding': _parseEdgeInsets(node.padding!),
       if (node.margin != null) 'margin': _parseEdgeInsets(node.margin!),
-      if (node.borderRadius != null)
-        'decoration': refer('BoxDecoration').newInstance([], {
-          'borderRadius': refer('BorderRadius')
-              .property('circular')
-              .call([literalNum(node.borderRadius!)])
-        }),
-    });
+    };
+
+    // Add color/decoration
+    if (needsDecoration) {
+      final decorationArgs = <String, Expression>{};
+      if (hasColor) {
+        decorationArgs['color'] = _emitColorSemantic(node.color!);
+      }
+      if (hasBorderRadius) {
+        decorationArgs['borderRadius'] = refer('BorderRadius')
+            .property('circular')
+            .call([literalNum(node.borderRadius!)]);
+      }
+      containerArgs['decoration'] =
+          refer('BoxDecoration').newInstance([], decorationArgs);
+    }
+
+    return refer('Container').newInstance([], containerArgs);
   }
 
   Expression _emitCard(CardNode node) {
@@ -423,6 +439,13 @@ class LayoutEmitter {
   }
 
   // --- Helper Methods ---
+
+  /// Emits a ColorSemantic enum as an AppColors reference.
+  ///
+  /// Maps semantic color names to the generated AppColors class.
+  Expression _emitColorSemantic(ColorSemantic semantic) {
+    return refer('AppColors').property(semantic.name);
+  }
 
   /// Parses an EdgeInsets string into the appropriate EdgeInsets constructor call.
   ///
