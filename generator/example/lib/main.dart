@@ -23,6 +23,7 @@ import 'package:example/screens/login_screen.dart';
 
 // Tabs
 import 'package:example/overview_tab.dart';
+import 'package:example/controls_tab.dart';
 
 void main() {
   runApp(const MyApp()); // Native Flutter
@@ -88,7 +89,7 @@ class _SyntaxifyDemoScreenState extends State<SyntaxifyDemoScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
   }
 
   @override
@@ -109,6 +110,7 @@ class _SyntaxifyDemoScreenState extends State<SyntaxifyDemoScreen>
             Tab(icon: Icon(Icons.home), text: 'Overview'),
             Tab(icon: Icon(Icons.smart_button), text: 'Buttons'),
             Tab(icon: Icon(Icons.text_fields), text: 'Inputs'),
+            Tab(icon: Icon(Icons.tune), text: 'Controls'),
             Tab(icon: Icon(Icons.screen_share), text: 'Screens'),
           ],
         ),
@@ -122,6 +124,7 @@ class _SyntaxifyDemoScreenState extends State<SyntaxifyDemoScreen>
           ),
           const ButtonsTab(),
           const InputsTab(),
+          const ControlsTab(),
           const ScreensTab(),
         ],
       ),

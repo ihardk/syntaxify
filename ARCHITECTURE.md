@@ -1,85 +1,94 @@
-# Architecture & Design Philosophy
+# Syntaxify Architecture: The UI Meta-Framework
 
-**Syntaxify** is a statically-typed, compile-time UI generator for Flutter. It automates valid, lint-free Flutter code creation from strongly-typed specifications.
+Syntaxify is not just a code generator. It is a **Meta-Framework** for Flutter UI development, acting as an operating system for your design system.
 
-## 1. Core Philosophy
+## 🏗️ The Meta-Framework Concept
 
-### 1.1 Compile-Time > Runtime
-Syntaxify intentionally avoids a "runtime engine" (like `ServerDrivenUI` iterating over JSON maps).
-- **Zero Runtime Cost**: Generated code is just standard Flutter widgets (`Column`, `Row`, `Text`).
-- **Tree Shaking**: Unused components are stripped by the Dart compiler.
-- **Debugging**: You debug real Dart code, not a black-box engine.
+Traditional development often maps 1:1 (One Code → One Outcome). Syntaxify maps **1:N** (One Definition → Many Outcomes).
 
-### 1.2 Annotations as Source of Truth
-We use standard Dart classes annotated with `@SyntaxComponent` as standard-bearers for specifications.
-- **Why?** It leverages the Dart Analyzer for free. We don't write a custom parser for a `.yaml` or `.json` DSL.
-- **Type Safety**: If your spec doesn't compile (e.g., `variant: 'primary'` text instead of enum), the generator never runs.
-
-### 1.3 `build_runner` Independence
-Syntaxify is a standalone CLI tool, not a `build_runner` plugin.
-- **Performance**: `build_runner` is notoriously slow for large projects as it rebuilds the entire graph.
-- **Flexibility**: We can run `syntaxify build --watch` on just the input files we care about, with sub-second incremental rebuilds using our custom `BuildCacheManager`.
+| Layer              | Technology    | Role                                                                        |
+| :----------------- | :------------ | :-------------------------------------------------------------------------- |
+| **Meta-Framework** | **Syntaxify** | **The Compiler.** Defines *intent* (What), architecture, and build process. |
+| **Framework**      | Flutter       | **The Runtime.** Renders pixels (How) using Widgets and RenderObjects.      |
+| **Language**       | Dart          | **The Syntax.** The raw material.                                           |
 
 ---
 
-## 2. System Overview
+## 🧩 Core Architecture
 
-The data flow is linear and unidirectional:
+### 1. The Compiler Pipeline
+
+Syntaxify functions like a compiler for your UI:
 
 ```mermaid
-graph LR
-    A[Input Meta File] -->|Parser| B(Component Model)
-    B -->|Generator| C{Generator Registry}
-    C -->|ButtonGenerator| D[Dart Code]
-    C -->|ScreenGenerator| E[Dart Code]
-    D -->|Formatter| F[Final Output]
+flowchart LR
+    A[Meta Files\n(.meta.dart)] --> B(AST Parser)
+    B --> C{Layout Compiler}
+    C --> D[Flutter Widgets]
+    C --> E[Design System\nDelegates]
+    D --> F[Final App Code]
     E --> F
 ```
 
-### 2.1 The Parser (`MetaParser`)
-- Reads `.meta.dart` files using `package:analyzer`.
-- Extracts:
-  - Class name & fields (Inputs)
-  - Documentation comments
-  - `@Variant` annotations
-- **Output**: `ComponentDefinition` (agnostic of UI implementation).
+1.  **Source Parsing**: Reads `.screen.dart` files to understand *intent* (e.g., "I need a primary button").
+2.  **AST Transformation**: Converts raw definitions into a structured Abstract Syntax Tree (`LayoutNode`).
+3.  **Code Emission**: The `LayoutEmitter` walks the AST and emits valid Dart code using `package:code_builder`.
 
-### 2.2 The Model (`LayoutNode`)
-For Screens, we parse a recursive AST representing the UI layout.
-- `ColumnNode` / `RowNode`: Layout containers.
-- `TextNode` / `ButtonNode`: Leaf widgets.
-- `TextFieldNode`: Interactive inputs.
-- **Validation**: All nodes pass through `LayoutValidator` before generation (detects invalid nesting, bad constraints).
+### 2. The Renderer Pattern (Separation of Concerns)
 
-### 2.3 The Generators (`ComponentGenerator`)
-Each component type (Button, Screen, etc.) has a dedicated generator.
-- **Renderer Pattern**: Components like `AppButton` delegate their *look* to a `DesignStyle` typically found in `design_system.dart`.
-- **Logic**: `ScreenGenerator` wires up `void function` fields in the spec to `VoidCallback` parameters in the implementation.
+This is the architectural heart of Syntaxify. It separates the **Component Definition** from its **Visual Implementation**.
 
-### 2.4 The Emitter (`DartEmitter` + `code_builder`)
-We generates ASTs, not string templates.
-- **Correctness**: Impossible to generate unbalanced braces or missing imports.
-- **Formatting**: All output passes through `dart_style` (the engine behind `dart format`).
+#### The Contract (`DesignStyle`)
+An abstract interface that every design style must implement. It forces strict adherence to the design system.
+
+```dart
+sealed class DesignStyle {
+  Widget renderButton({...});
+  Widget renderInput({...});
+  Widget renderCheckbox({...});
+  // ...
+}
+```
+
+#### The Implementation (Runtime Injection)
+Styles are injected at the root of the app, allowing global, instant re-theming.
+
+```dart
+// The generated component just delegates:
+class AppButton extends StatelessWidget {
+  build(context) {
+    // "Hey current style, please render a button for me"
+    return AppTheme.of(context).style.renderButton(...);
+  }
+}
+```
 
 ---
 
-## 3. Key Decisions & Trade-offs
+## 📦 System Components
 
-| Decision               | Benefit                              | Drawback                              |
-| :--------------------- | :----------------------------------- | :------------------------------------ |
-| **No Runtime Library** | Max performance, simple debugging    | Larger binary size (boilerplate code) |
-| **Dart AST for Input** | Type-safe inputs, IDE autocompletion | Users must write valid Dart classes   |
-| **Custom CLI**         | Fast incremental builds              | One more tool to install/run          |
-| **Renderer Pattern**   | Centralized styling                  | Indirection in generated code         |
+### 1. The Generator (`package:syntaxify`)
+The CLI tool that runs during development.
+- **Commands**: `init`, `build`, `watch`, `clean`.
+- **Responsibility**: Scaffolding, Parsing, AST processing, File writing.
 
-## 4. Directory Structure
+### 2. The Runtime (`lib/syntaxify/`)
+The code that lives in your app.
+- **`components/`**: The public API (e.g., `AppButton`).
+- **`design_system/`**: The style implementations (Material, Cupertino, Neo).
+- **`tokens/`**: Constant values (Colors, Spacing, Typography).
 
-```text
-lib/
-├── syntaxify/          # Generated Code Root
-│   ├── components/     # Generated atomic components (AppButton)
-│   ├── screens/        # Generated screens (LoginScreen)
-│   ├── design_system/  # (User-managed) Theming & Styles
-│   └── index.dart      # Barrel file for imports
-└── meta/               # (Input) Your Component Specs
-```
+---
+
+## 🚀 Key Innovations
+
+### Compile-Time Safety, Runtime Flexibility
+Most generators enforce decisions at compile time. Syntaxify enforces **structure** at compile time but allows **styling** decisions at runtime.
+
+### The "UI Operating System"
+Syntaxify dictates:
+- **Project Structure**: Where files live (`meta/` vs `lib/`).
+- **Data Flow**: How properties map to widgets.
+- **Conventions**: Naming, file organization, export structures.
+
+This standardization solves the "Blank Canvas Paralysis" and ensures scaling teams maintain consistency.

@@ -1,13 +1,37 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:syntaxify/src/models/ast/nodes.dart';
-
-/// Emits Flutter code from layout nodes.
 import 'package:syntaxify/src/generators/generator_registry.dart';
 
-/// Emits Flutter code from layout nodes.
+/// Emits Flutter widget code from AST layout nodes.
+///
+/// The [LayoutEmitter] is the core transformation engine that converts
+/// Syntaxify's declarative AST nodes into Flutter widget expressions using
+/// `package:code_builder`.
+///
+/// ## Supported Node Types
+///
+/// - **Structural**: Column, Row, Container, Card, ListView, Stack, etc.
+/// - **Primitive**: Text, Icon, Image, Divider, Spacer, etc.
+/// - **Interactive**: Button, TextField, Checkbox, Switch, Slider, etc.
+/// - **Custom**: Plugin-provided nodes via [GeneratorRegistry]
+///
+/// ## Design System Integration
+///
+/// Interactive nodes emit App wrapper components (`AppCheckbox`, `AppSwitch`,
+/// etc.) that delegate rendering to the active design style (Material,
+/// Cupertino, or Neo).
+///
+/// ## Usage
+///
+/// ```dart
+/// final emitter = LayoutEmitter();
+/// final expression = emitter.emit(layoutNode);
+/// final dartCode = expression.accept(DartEmitter()).toString();
+/// ```
 class LayoutEmitter {
   const LayoutEmitter({this.registry});
 
+  /// Optional generator registry for custom node handling.
   final GeneratorRegistry? registry;
 
   /// Converts a [LayoutNode] into a [Spec] (Expression).

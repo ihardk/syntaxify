@@ -18,11 +18,19 @@
 final loginScreen = ScreenDefinition(
   id: 'login',
   appBar: AstNode.appBar(title: 'Login'),
-  layout: AstNode.column(children: [
-    AstNode.text(text: 'Welcome', variant: TextVariant.headlineLarge),
-    AstNode.textField(label: 'Email', keyboardType: KeyboardType.email),
-    AstNode.textField(label: 'Password', obscureText: true),
-    AstNode.button(label: 'Login', onPressed: 'handleLogin'),
+  layout: LayoutNode.column(children: [
+    LayoutNode.text(text: 'Welcome', variant: TextVariant.headlineLarge),
+    LayoutNode.textField(label: 'Email', keyboardType: KeyboardType.email),
+    LayoutNode.textField(label: 'Password', obscureText: true),
+    
+    // New Interactive Components
+    LayoutNode.row(children: [
+        LayoutNode.checkbox(label: 'Remember me', binding: 'rememberMe'),
+        LayoutNode.switchNode(label: 'Dark Mode', binding: 'isDarkMode'),
+    ]),
+    LayoutNode.slider(min: 0, max: 100, binding: 'volume'),
+    
+    LayoutNode.button(label: 'Login', onPressed: 'handleLogin'),
   ]),
 );
 ```
@@ -183,10 +191,10 @@ AppTheme(
 // meta/login.screen.dart
 final loginScreen = ScreenDefinition(
   id: 'login',
-  layout: AstNode.column(children: [
-    AstNode.text(text: 'Welcome Back'),
-    AstNode.textField(label: 'Email'),
-    AstNode.button(label: 'Sign In', onPressed: 'handleLogin'),
+  layout: LayoutNode.column(children: [
+    LayoutNode.text(text: 'Welcome Back'),
+    LayoutNode.textField(label: 'Email'),
+    LayoutNode.button(label: 'Sign In', onPressed: 'handleLogin'),
   ]),
 );
 ```
@@ -199,15 +207,37 @@ final loginScreen = ScreenDefinition(
 - ✅ Proper structure and scaffolding
 - ✅ No boilerplate, no repetition
 
-### ✅ Components with Full Renderer Pattern
+### ✅ Supported Components
 
-These components work with Material, Cupertino, and Neo styles:
+Syntaxify's component system is categorized into three types:
 
-- **AppButton** - Buttons with variants (primary, secondary, outlined)
-- **AppText** - Text with typography variants (display, headline, title, body, label)
-- **AppInput** - Text fields with validation and keyboard types
+#### 1. Interactive Nodes (Design System Wrappers)
+These nodes render using the active `DesignStyle` (Material/Cupertino/Neo).
+- **AppButton** (`LayoutNode.button`) - With variants (primary, secondary, etc.)
+- **AppInput** (`LayoutNode.textField`) - Text fields with validation
+- **AppCheckbox** (`LayoutNode.checkbox`) - Tri-state checkboxes
+- **AppSwitch** (`LayoutNode.switchWidget`) - Toggle switches
+- **AppSlider** (`LayoutNode.slider`) - Range sliders
+- **AppRadio** (`LayoutNode.radio`) - Radio groups
 
-### 🚧 Custom Components (Basic Support)
+#### 2. Structural Nodes (Layout)
+These define the layout structure of your screen.
+- **Column/Row** (`LayoutNode.column`, `LayoutNode.row`)
+- **Container** (`LayoutNode.container`)
+- **Card** (`LayoutNode.card`)
+- **ListView/GridView** (`LayoutNode.listView`, `LayoutNode.gridView`)
+- **Stack** (`LayoutNode.stack`)
+
+#### 3. Primitive Nodes (Display)
+Basic display elements without complex interaction.
+- **Text** (`LayoutNode.text`)
+- **Icon** (`LayoutNode.icon`)
+- **Image** (`LayoutNode.image`)
+- **Divider** (`LayoutNode.divider`)
+
+**7 interactive components × 3 styles = 21 styled variants!**
+
+### 🛠️ Custom Components (Plugin Support)
 
 You can define custom components (e.g., Card, Badge, Avatar), and Syntaxify will:
 
@@ -356,11 +386,11 @@ import 'package:syntaxify/syntaxify.dart';
 
 final loginScreen = ScreenDefinition(
   id: 'login',
-  layout: AstNode.column(children: [
-    AstNode.text(text: 'Welcome Back'),
-    AstNode.textField(label: 'Email', keyboardType: KeyboardType.emailAddress),
-    AstNode.textField(label: 'Password', obscureText: true),
-    AstNode.button(label: 'Sign In', onPressed: 'handleLogin'),
+  layout: LayoutNode.column(children: [
+    LayoutNode.text(text: 'Welcome Back'),
+    LayoutNode.textField(label: 'Email', keyboardType: KeyboardType.emailAddress),
+    LayoutNode.textField(label: 'Password', obscureText: true),
+    LayoutNode.button(label: 'Sign In', onPressed: 'handleLogin'),
   ]),
 );
 ```
@@ -482,11 +512,15 @@ For detailed API documentation, see **[API Reference](https://github.com/ihardk/
 
 **Quick Overview:**
 
-| Component   | Description                                  |
-| ----------- | -------------------------------------------- |
-| `AppButton` | Primary, secondary, outlined button variants |
-| `AppText`   | Typography with 6 text style variants        |
-| `AppInput`  | Text fields with keyboard types & validation |
+| Component     | Description                                  |
+| ------------- | -------------------------------------------- |
+| `AppButton`   | Primary, secondary, outlined button variants |
+| `AppText`     | Typography with 6 text style variants        |
+| `AppInput`    | Text fields with keyboard types & validation |
+| `AppCheckbox` | Checkboxes with design-aware styling         |
+| `AppSwitch`   | Toggle switches                              |
+| `AppSlider`   | Range sliders with custom themes             |
+| `AppRadio`    | Radio buttons                                |
 
 **Design Styles:** `MaterialStyle()`, `CupertinoStyle()`, `NeoStyle()`
 
@@ -582,17 +616,19 @@ Having issues? See **[Troubleshooting Guide](https://github.com/ihardk/syntaxify
 **v0.1.0 (Current)**
 
 - ✅ Core architecture with renderer pattern
-- ✅ 3 components (Button, Text, Input)
+- ✅ 7 components (Button, Text, Input, Checkbox, Switch, Slider, Radio)
 - ✅ 3 design styles (Material, Cupertino, Neo)
 - ✅ Screen generation
-- ✅ Smart build defaults
+- ✅ Configuration file (`syntaxify.yaml`)
+- ✅ Watch mode (`--watch`)
+- ✅ Dry run mode (`--dry-run`)
+- ✅ 303 tests passing
 
 **v0.2.0 (Next)**
 
-- 🔄 More components with full renderer pattern:
-  - Card, Badge, Avatar, Chip, Switch, Checkbox, Radio
+- 🔄 More components: Card, Badge, Avatar, Chip
 - 🔄 Golden tests for visual regression
-- 🔄 Better error messages
+- 🔄 Improved error messages
 
 **v1.0.0 (Future)**
 

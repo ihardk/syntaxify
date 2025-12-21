@@ -39,3 +39,20 @@ part 'styles/neo/input_renderer.dart';
 part 'styles/material/text_renderer.dart';
 part 'styles/cupertino/text_renderer.dart';
 part 'styles/neo/text_renderer.dart';
+
+// Interactive renderers
+part 'styles/material/checkbox_renderer.dart';
+part 'styles/cupertino/checkbox_renderer.dart';
+part 'styles/neo/checkbox_renderer.dart';
+
+part 'styles/material/switch_renderer.dart';
+part 'styles/cupertino/switch_renderer.dart';
+part 'styles/neo/switch_renderer.dart';
+
+part 'styles/material/slider_renderer.dart';
+part 'styles/cupertino/slider_renderer.dart';
+part 'styles/neo/slider_renderer.dart';
+
+part 'styles/material/radio_renderer.dart';
+part 'styles/cupertino/radio_renderer.dart';
+part 'styles/neo/radio_renderer.dart';

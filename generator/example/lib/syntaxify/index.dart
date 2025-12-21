@@ -8,3 +8,7 @@ export 'generated/components/app_button.dart';
 export 'generated/components/app_input.dart';
 export 'generated/components/app_text.dart';
 export 'design_system/design_system.dart';
+export 'design_system/components/app_checkbox.dart';
+export 'design_system/components/app_switch.dart';
+export 'design_system/components/app_slider.dart';
+export 'design_system/components/app_radio.dart';

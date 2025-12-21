@@ -27,7 +27,7 @@ class OverviewTab extends StatelessWidget {
 
           AppText(
             text:
-                'A multi-style design system for Flutter. One component API, multiple visual styles.',
+                'A multi-style design system for Flutter. One component API, multiple visual styles. Now with 7 interactive components!',
             variant: TextVariant.bodyLarge,
           ),
           const SizedBox(height: 24),
@@ -149,7 +149,8 @@ class OverviewTab extends StatelessWidget {
           AppText(text: 'Quick Start', variant: TextVariant.headlineMedium),
           const SizedBox(height: 16),
           _buildQuickStartStep('1', 'Choose a design style above'),
-          _buildQuickStartStep('2', 'Explore the component tabs'),
+          _buildQuickStartStep(
+              '2', 'Explore Buttons, Inputs, and Controls tabs'),
           _buildQuickStartStep('3', 'Check the generated screen demo'),
           const SizedBox(height: 32),
 

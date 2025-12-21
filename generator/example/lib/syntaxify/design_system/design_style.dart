@@ -3,15 +3,32 @@ part of 'design_system.dart';
 
 /// Base sealed class for all design styles.
 ///
-/// Each style implementation provides:
-/// - Token values for each component × variant
-/// - Render methods for each component (HOW it looks)
+/// Each style implementation provides render methods that define HOW
+/// components look in that style. The Syntaxify design system supports
+/// three built-in styles:
+/// - [MaterialStyle] - Google Material Design
+/// - [CupertinoStyle] - Apple Human Interface Guidelines
+/// - [NeoStyle] - Neo-brutalism with sharp corners and bold colors
 ///
-/// To add a new style:
+/// ## Supported Components (7)
+///
+/// | Component | Render Method |
+/// |-----------|---------------|
+/// | Button | [renderButton] |
+/// | Input | [renderInput] |
+/// | Text | [renderText] |
+/// | Checkbox | [renderCheckbox] |
+/// | Switch | [renderSwitch] |
+/// | Slider | [renderSlider] |
+/// | Radio | [renderRadio] |
+///
+/// ## Adding a New Style
+///
 /// 1. Create a new file in `styles/` folder
 /// 2. Add `part of 'design_system.dart';` at top
-/// 3. Extend `DesignStyle`
-/// 4. Add the part file to `design_system.dart`
+/// 3. Create mixins for each component renderer
+/// 4. Create a style class that extends `DesignStyle` with all mixins
+/// 5. Add the part file to `design_system.dart`
 sealed class DesignStyle {
   const DesignStyle();
 
@@ -61,5 +78,42 @@ sealed class DesignStyle {
     TextAlign? align,
     int? maxLines,
     TextOverflow? overflow,
+  });
+
+  // --- Interactive Component Renderers ---
+
+  /// Render a checkbox widget
+  Widget renderCheckbox({
+    required bool value,
+    ValueChanged<bool?>? onChanged,
+    bool enabled = true,
+    Color? activeColor,
+  });
+
+  /// Render a switch widget
+  Widget renderSwitch({
+    required bool value,
+    ValueChanged<bool>? onChanged,
+    bool enabled = true,
+    Color? activeColor,
+  });
+
+  /// Render a slider widget
+  Widget renderSlider({
+    required double value,
+    ValueChanged<double>? onChanged,
+    double min = 0.0,
+    double max = 1.0,
+    int? divisions,
+    String? label,
+  });
+
+  /// Render a radio widget
+  Widget renderRadio<T>({
+    required T value,
+    required T? groupValue,
+    ValueChanged<T?>? onChanged,
+    bool enabled = true,
+    Color? activeColor,
   });
 }

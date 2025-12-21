@@ -161,42 +161,26 @@ Defines what every style MUST implement.
 
 ```dart
 // generator/design_system/design_style.dart
-abstract class DesignStyle {
+sealed class DesignStyle {
   // Token getters (colors, spacing, etc.)
-  ButtonTokens get buttonTokens;
-  TextTokens get textTokens;
+  ButtonTokens buttonTokens(ButtonVariant variant);
   InputTokens get inputTokens;
+  TextTokens get textTokens;
 
-  // Render methods (how to build widgets)
-  Widget renderButton({
-    required String label,
-    ButtonVariant? variant,
-    VoidCallback? onPressed,
-  });
-
-  Widget renderText({
-    required String text,
-    TextVariant? variant,
-    TextAlign? align,
-    int? maxLines,
-    TextOverflow? overflow,
-  });
-
-  Widget renderInput({
-    required String label,
-    String? placeholder,
-    bool obscureText,
-    KeyboardType? keyboardType,
-    ValueChanged<String>? onChanged,
-  });
-
-  // ... more render methods
+  // Render methods (7 components)
+  Widget renderButton({...});     // Buttons with variants
+  Widget renderInput({...});      // Text fields
+  Widget renderText({...});       // Typography
+  Widget renderCheckbox({...});   // Checkboxes
+  Widget renderSwitch({...});     // Toggles
+  Widget renderSlider({...});     // Range sliders
+  Widget renderRadio<T>({...});   // Radio buttons
 }
 ```
 
 **This is the contract:**
 - Every style MUST provide these tokens
-- Every style MUST implement these render methods
+- Every style MUST implement all 7 render methods
 
 ### 4. Concrete Styles (HOW)
 
@@ -801,17 +785,17 @@ Widget renderButton({...}) {
 
 ## Key Files
 
-| File | Purpose |
-|------|---------|
-| `design_system/app_theme.dart` | InheritedWidget providing style |
-| `design_system/design_style.dart` | Abstract base class for styles |
-| `design_system/material_style.dart` | Material Design implementation |
-| `design_system/cupertino_style.dart` | iOS Design implementation |
-| `design_system/neo_style.dart` | Custom Design implementation |
-| `design_system/tokens/*.dart` | Token definitions |
-| `design_system/styles/material/*.dart` | Material renderers |
-| `design_system/styles/cupertino/*.dart` | Cupertino renderers |
-| `design_system/styles/neo/*.dart` | Neo renderers |
+| File                                    | Purpose                         |
+| --------------------------------------- | ------------------------------- |
+| `design_system/app_theme.dart`          | InheritedWidget providing style |
+| `design_system/design_style.dart`       | Abstract base class for styles  |
+| `design_system/material_style.dart`     | Material Design implementation  |
+| `design_system/cupertino_style.dart`    | iOS Design implementation       |
+| `design_system/neo_style.dart`          | Custom Design implementation    |
+| `design_system/tokens/*.dart`           | Token definitions               |
+| `design_system/styles/material/*.dart`  | Material renderers              |
+| `design_system/styles/cupertino/*.dart` | Cupertino renderers             |
+| `design_system/styles/neo/*.dart`       | Neo renderers                   |
 
 ---
 
