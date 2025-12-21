@@ -26,9 +26,9 @@ void main() {
 
       final code = emit(node);
       expect(code, contains("'Hello World'"));
-      // Updated expectation for Design System usage
-      expect(
-          code, contains("DesignSystem.of(context).typography.headlineMedium"));
+      // Emitter uses AppText with TextVariant
+      expect(code, contains('AppText'));
+      expect(code, contains('TextVariant.headlineMedium'));
     });
 
     test('emits Button widget (Filled)', () {

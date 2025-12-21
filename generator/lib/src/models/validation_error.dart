@@ -7,7 +7,7 @@ part 'validation_error.freezed.dart';
 /// Used by the LayoutValidator to report issues with layout definitions
 /// before code generation, allowing early detection of errors.
 @freezed
-class ValidationError with _$ValidationError {
+sealed class ValidationError with _$ValidationError {
   const factory ValidationError({
     /// The type of validation error
     required ValidationErrorType type,

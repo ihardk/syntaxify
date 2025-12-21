@@ -57,7 +57,8 @@ abstract mixin class $ScreenDefinitionCopyWith<$Res> {
           ScreenDefinition value, $Res Function(ScreenDefinition) _then) =
       _$ScreenDefinitionCopyWithImpl;
   @useResult
-  $Res call({String id, LayoutNode layout, LayoutNode? appBar, String? padding});
+  $Res call(
+      {String id, LayoutNode layout, LayoutNode? appBar, String? padding});
 
   $LayoutNodeCopyWith<$Res> get layout;
   $LayoutNodeCopyWith<$Res>? get appBar;
@@ -346,7 +347,8 @@ abstract mixin class _$ScreenDefinitionCopyWith<$Res>
       __$ScreenDefinitionCopyWithImpl;
   @override
   @useResult
-  $Res call({String id, LayoutNode layout, LayoutNode? appBar, String? padding});
+  $Res call(
+      {String id, LayoutNode layout, LayoutNode? appBar, String? padding});
 
   @override
   $LayoutNodeCopyWith<$Res> get layout;

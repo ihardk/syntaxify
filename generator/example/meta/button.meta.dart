@@ -2,6 +2,7 @@
 ///
 /// Defines the API surface for the AppButton widget.
 /// This file is read by the Syntaxify generator.
+/// Modified again at 13:15 to test watch mode rebuild
 
 // This is a SPECIFICATION file, not runtime code.
 // The generator parses these annotations to create the widget.

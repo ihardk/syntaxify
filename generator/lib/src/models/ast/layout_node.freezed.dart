@@ -73,7 +73,8 @@ mixin _$LayoutNode {
 
 /// @nodoc
 abstract mixin class $LayoutNodeCopyWith<$Res> {
-  factory $LayoutNodeCopyWith(LayoutNode value, $Res Function(LayoutNode) _then) =
+  factory $LayoutNodeCopyWith(
+          LayoutNode value, $Res Function(LayoutNode) _then) =
       _$LayoutNodeCopyWithImpl;
   @useResult
   $Res call({String? id, String? visibleWhen});
@@ -904,7 +905,8 @@ class RowNode implements LayoutNode {
 }
 
 /// @nodoc
-abstract mixin class $RowNodeCopyWith<$Res> implements $LayoutNodeCopyWith<$Res> {
+abstract mixin class $RowNodeCopyWith<$Res>
+    implements $LayoutNodeCopyWith<$Res> {
   factory $RowNodeCopyWith(RowNode value, $Res Function(RowNode) _then) =
       _$RowNodeCopyWithImpl;
   @override
@@ -1039,7 +1041,8 @@ class TextNode implements LayoutNode {
 }
 
 /// @nodoc
-abstract mixin class $TextNodeCopyWith<$Res> implements $LayoutNodeCopyWith<$Res> {
+abstract mixin class $TextNodeCopyWith<$Res>
+    implements $LayoutNodeCopyWith<$Res> {
   factory $TextNodeCopyWith(TextNode value, $Res Function(TextNode) _then) =
       _$TextNodeCopyWithImpl;
   @override
@@ -1626,7 +1629,8 @@ class IconNode implements LayoutNode {
 }
 
 /// @nodoc
-abstract mixin class $IconNodeCopyWith<$Res> implements $LayoutNodeCopyWith<$Res> {
+abstract mixin class $IconNodeCopyWith<$Res>
+    implements $LayoutNodeCopyWith<$Res> {
   factory $IconNodeCopyWith(IconNode value, $Res Function(IconNode) _then) =
       _$IconNodeCopyWithImpl;
   @override

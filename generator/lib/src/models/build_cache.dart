@@ -8,7 +8,7 @@ part 'build_cache.g.dart';
 /// Tracks file modification times and content hashes to determine
 /// which files need to be regenerated.
 @freezed
-class BuildCache with _$BuildCache {
+sealed class BuildCache with _$BuildCache {
   const factory BuildCache({
     /// Cache format version for future compatibility
     @Default('1.0.0') String version,
@@ -31,7 +31,7 @@ class BuildCache with _$BuildCache {
 
 /// Represents a cached entry for a single file.
 @freezed
-class CacheEntry with _$CacheEntry {
+sealed class CacheEntry with _$CacheEntry {
   const factory CacheEntry({
     /// File path relative to project root
     required String filePath,

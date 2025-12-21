@@ -1,5 +1,5 @@
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:analyzer/error/error.dart';
+import 'package:analyzer/error/error.dart' hide LintCode;
 import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
 
@@ -31,7 +31,8 @@ class EmptyButtonLabelLint extends DartLintRule {
       if (labelArg == null) return;
 
       // Check if it's an empty string
-      if (labelArg is StringLiteral && labelArg.stringValue?.trim().isEmpty == true) {
+      if (labelArg is StringLiteral &&
+          labelArg.stringValue?.trim().isEmpty == true) {
         reporter.atNode(labelArg, code);
       }
     });
@@ -48,21 +49,77 @@ class InvalidCallbackNameLint extends DartLintRule {
   static const _code = LintCode(
     name: 'invalid_callback_name',
     problemMessage: 'Callback name must be a valid Dart identifier',
-    correctionMessage: 'Use camelCase names like "handleSubmit" instead of names with hyphens or spaces',
+    correctionMessage:
+        'Use camelCase names like "handleSubmit" instead of names with hyphens or spaces',
     errorSeverity: ErrorSeverity.ERROR,
   );
 
   static final _identifierPattern = RegExp(r'^[a-zA-Z_][a-zA-Z0-9_]*$');
 
   static const _dartKeywords = {
-    'abstract', 'as', 'assert', 'async', 'await', 'break', 'case', 'catch',
-    'class', 'const', 'continue', 'covariant', 'default', 'deferred', 'do',
-    'dynamic', 'else', 'enum', 'export', 'extends', 'extension', 'external',
-    'factory', 'false', 'final', 'finally', 'for', 'Function', 'get', 'hide',
-    'if', 'implements', 'import', 'in', 'interface', 'is', 'late', 'library',
-    'mixin', 'new', 'null', 'on', 'operator', 'part', 'required', 'rethrow',
-    'return', 'set', 'show', 'static', 'super', 'switch', 'sync', 'this',
-    'throw', 'true', 'try', 'typedef', 'var', 'void', 'while', 'with', 'yield',
+    'abstract',
+    'as',
+    'assert',
+    'async',
+    'await',
+    'break',
+    'case',
+    'catch',
+    'class',
+    'const',
+    'continue',
+    'covariant',
+    'default',
+    'deferred',
+    'do',
+    'dynamic',
+    'else',
+    'enum',
+    'export',
+    'extends',
+    'extension',
+    'external',
+    'factory',
+    'false',
+    'final',
+    'finally',
+    'for',
+    'Function',
+    'get',
+    'hide',
+    'if',
+    'implements',
+    'import',
+    'in',
+    'interface',
+    'is',
+    'late',
+    'library',
+    'mixin',
+    'new',
+    'null',
+    'on',
+    'operator',
+    'part',
+    'required',
+    'rethrow',
+    'return',
+    'set',
+    'show',
+    'static',
+    'super',
+    'switch',
+    'sync',
+    'this',
+    'throw',
+    'true',
+    'try',
+    'typedef',
+    'var',
+    'void',
+    'while',
+    'with',
+    'yield',
   };
 
   @override
@@ -132,7 +189,8 @@ class EmptyTextContentLint extends DartLintRule {
       final textArg = _findNamedArgument(node, 'text');
       if (textArg == null) return;
 
-      if (textArg is StringLiteral && textArg.stringValue?.trim().isEmpty == true) {
+      if (textArg is StringLiteral &&
+          textArg.stringValue?.trim().isEmpty == true) {
         reporter.atNode(textArg, code);
       }
     });
@@ -148,7 +206,8 @@ class EmptyContainerLint extends DartLintRule {
   static const _code = LintCode(
     name: 'empty_container',
     problemMessage: 'Container has no children',
-    correctionMessage: 'Add child widgets like LayoutNode.text() or LayoutNode.button()',
+    correctionMessage:
+        'Add child widgets like LayoutNode.text() or LayoutNode.button()',
     errorSeverity: ErrorSeverity.WARNING,
   );
 
@@ -250,8 +309,10 @@ class ConflictingPropertiesLint extends DartLintRule {
 
   static const _code = LintCode(
     name: 'conflicting_properties',
-    problemMessage: 'These properties may conflict and cause unexpected behavior',
-    correctionMessage: 'Consider using TextOverflow.ellipsis instead of visible',
+    problemMessage:
+        'These properties may conflict and cause unexpected behavior',
+    correctionMessage:
+        'Consider using TextOverflow.ellipsis instead of visible',
     errorSeverity: ErrorSeverity.INFO,
   );
 
@@ -303,14 +364,16 @@ class EmptyIconNameLint extends DartLintRule {
       // Check icon nodes
       if (_isLayoutNodeMethod(node, 'icon')) {
         final nameArg = _findNamedArgument(node, 'name');
-        if (nameArg is StringLiteral && nameArg.stringValue?.trim().isEmpty == true) {
+        if (nameArg is StringLiteral &&
+            nameArg.stringValue?.trim().isEmpty == true) {
           reporter.atNode(nameArg, code);
         }
       }
       // Check button icon property
       else if (_isLayoutNodeMethod(node, 'button')) {
         final iconArg = _findNamedArgument(node, 'icon');
-        if (iconArg is StringLiteral && iconArg.stringValue?.trim().isEmpty == true) {
+        if (iconArg is StringLiteral &&
+            iconArg.stringValue?.trim().isEmpty == true) {
           reporter.atNode(iconArg, code);
         }
       }
@@ -349,7 +412,7 @@ class MissingTextFieldLabelLint extends DartLintRule {
       final hasHint = hintArg is StringLiteral &&
           hintArg.stringValue?.trim().isNotEmpty == true;
 
-      if (!hasLabel && !hintArg) {
+      if (!hasLabel && hintArg == null) {
         // Neither label nor hint provided
         reporter.atNode(node.methodName, code);
       } else if (!hasLabel && !hasHint) {
@@ -387,25 +450,11 @@ class EmptyAppBarTitleLint extends DartLintRule {
       if (titleArg == null) {
         reporter.atNode(node.methodName, code);
       } else if (titleArg is StringLiteral &&
-                 titleArg.stringValue?.trim().isEmpty == true) {
+          titleArg.stringValue?.trim().isEmpty == true) {
         reporter.atNode(titleArg, code);
       }
     });
   }
-}
-
-// Helper functions
-
-/// Checks if a method invocation is a LayoutNode factory method.
-bool _isLayoutNodeMethod(MethodInvocation node, String methodName) {
-  if (node.methodName.name != methodName) return false;
-
-  final target = node.target;
-  if (target is SimpleIdentifier && target.name == 'LayoutNode') {
-    return true;
-  }
-
-  return false;
 }
 
 /// Finds a named argument in a method invocation.

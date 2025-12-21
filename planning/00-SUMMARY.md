@@ -12,14 +12,12 @@ Analyzed 12 reported issues across the syntaxify codebase. Found that **5 issues
 
 ### Quick Status
 
-| Priority | Status | Count | Issues |
-|----------|--------|-------|--------|
-| ✅ Already Fixed | Done | 2 | #1, #2 |
-| ⚠️ Partially Done | In Progress | 2 | #4, #7 |
-| ❌ Critical | Need Implementation | 1 | #3 |
-| ❌ High Priority | Need Implementation | 1 | #5 |
-| ❌ Medium Priority | Need Implementation | 3 | #7, #8, #9 |
-| ❌ Low Priority | Enhancement | 4 | #6, #10, #11, #12 |
+| Priority          | Status              | Count | Issues             |
+| ----------------- | ------------------- | ----- | ------------------ |
+| ✅ Already Fixed   | Done                | 5     | #1, #2, #3, #4, #5 |
+| ⚠️ Partially Done  | In Progress         | 2     | #7, #9             |
+| ❌ Medium Priority | Need Implementation | 2     | #8, #10            |
+| ❌ Low Priority    | Enhancement         | 3     | #6, #11, #12       |
 
 ---
 
@@ -79,46 +77,30 @@ Analyzed 12 reported issues across the syntaxify codebase. Found that **5 issues
 
 ---
 
-### ❌ CRITICAL ISSUES (Must Implement)
+### ✅ NOW IMPLEMENTED
 
-#### #3: No AST Validation ❌
-**Status:** NOT IMPLEMENTED
-- **Problem:** Invalid AST passes through, causes confusing errors later
-- **Examples:**
-  - Empty button labels → useless buttons
-  - Invalid identifiers → syntax errors in generated code
-  - Empty columns → meaningless widgets
-- **Impact:** HIGH - Users get confusing errors at wrong time
-- **Solution:** Build-time validation with helpful error messages
-- **Effort:** 12-15 hours
-- **Priority:** HIGH
-- **Components:**
-  - Create `ValidationError` model
-  - Create `AstValidator` class
-  - Integrate with screen generator
-  - Add comprehensive tests
-- **File:** `planning/03-ast-validation.md`
+#### #3: AST Validation ✅
+**Status:** IMPLEMENTED (Dec 2024)
+- **Implementation:**
+  - ✅ `LayoutValidator` class (484 lines)
+  - ✅ `ValidationError` model with `ErrorSeverity` enum
+  - ✅ Validates: Button, Text, TextField, Icon, Spacer, AppBar, Column, Row
+  - ✅ IDE linting via `layout_node_lints.dart` (10 lint rules)
+  - ✅ 172+ tests passing
+- **File:** `lib/src/validation/layout_validator.dart`
 
 ---
 
-### ❌ HIGH PRIORITY (Should Implement)
-
-#### #5: No Incremental Build ❌
-**Status:** NOT IMPLEMENTED
-- **Problem:** Regenerates everything every time (slow at scale)
-- **Performance Impact:**
-  - Small project (5 components): 2-3s → could be 0.5s
-  - Large project (50+ components): 20-30s → could be 2-5s
-- **Solution:** Hybrid timestamp + content-hash caching
-- **Effort:** 9-11 hours
-- **Priority:** Medium-High (quality of life, critical at scale)
-- **Components:**
-  - Create `BuildCache` model
-  - Timestamp checking (fast path)
-  - Content hashing (accurate path)
-  - CLI options: `--no-cache`, `--clean-cache`
-  - Cache statistics
-- **File:** `planning/05-incremental-build.md`
+#### #5: Incremental Build ✅
+**Status:** IMPLEMENTED (Dec 2024)
+- **Implementation:**
+  - ✅ `BuildCacheManager` class (208 lines)
+  - ✅ `BuildCache` and `CacheEntry` models (freezed)
+  - ✅ SHA-256 content hashing + timestamp checking
+  - ✅ `shouldRegenerate()`, `getFilesToRegenerate()` methods
+  - ✅ Integrated with `BuildAllUseCase`
+- **CLI options:** `enableCache`, `forceRebuild` flags
+- **File:** `lib/src/infrastructure/build_cache_manager.dart`
 
 ---
 
@@ -216,13 +198,13 @@ Analyzed 12 reported issues across the syntaxify codebase. Found that **5 issues
 
 ## Total Effort Estimates
 
-| Phase | Hours | Priority |
-|-------|-------|----------|
-| Phase 1: Critical | 21-26 | Must Do |
-| Phase 2: Completion | 7-9 | Should Do |
-| Phase 3: QoL | 18-19 | Nice to Have |
-| Phase 4: Advanced | 19-25 | Future |
-| **TOTAL** | **65-79** | |
+| Phase               | Hours     | Priority     |
+| ------------------- | --------- | ------------ |
+| Phase 1: Critical   | 21-26     | Must Do      |
+| Phase 2: Completion | 7-9       | Should Do    |
+| Phase 3: QoL        | 18-19     | Nice to Have |
+| Phase 4: Advanced   | 19-25     | Future       |
+| **TOTAL**           | **65-79** |              |
 
 ---
 

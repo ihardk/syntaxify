@@ -73,7 +73,8 @@ class LayoutValidator {
     }
 
     // Rule: Icon name should be provided if iconPosition is set
-    if (node.iconPosition != null && (node.icon == null || node.icon!.isEmpty)) {
+    if (node.iconPosition != null &&
+        (node.icon == null || node.icon!.isEmpty)) {
       errors.add(ValidationError(
         type: ValidationErrorType.emptyValue,
         message: 'Icon name must be provided when iconPosition is set',
@@ -99,7 +100,8 @@ class LayoutValidator {
         message: 'Column has no children',
         nodePath: nodePath,
         fieldName: 'children',
-        suggestion: 'Add child widgets like LayoutNode.text() or LayoutNode.button()',
+        suggestion:
+            'Add child widgets like LayoutNode.text() or LayoutNode.button()',
         severity: ErrorSeverity.warning,
       ));
     }
@@ -125,7 +127,8 @@ class LayoutValidator {
         message: 'Row has no children',
         nodePath: nodePath,
         fieldName: 'children',
-        suggestion: 'Add child widgets like LayoutNode.text() or LayoutNode.button()',
+        suggestion:
+            'Add child widgets like LayoutNode.text() or LayoutNode.button()',
         severity: ErrorSeverity.warning,
       ));
     }
@@ -166,11 +169,11 @@ class LayoutValidator {
       ));
     }
 
-    // Rule: maxLines = 1 with overflow = visible might cause issues (info)
-    if (node.maxLines == 1 && node.overflow == TextOverflow.visible) {
+    // Rule: maxLines = 1 with overflow = clip might cause cut-off text (info)
+    if (node.maxLines == 1 && node.overflow == TextOverflow.clip) {
       errors.add(ValidationError(
         type: ValidationErrorType.conflictingProperties,
-        message: 'maxLines=1 with overflow=visible may cause layout issues',
+        message: 'maxLines=1 with overflow=clip may cut off text unexpectedly',
         nodePath: nodePath,
         suggestion: 'Consider using TextOverflow.ellipsis instead',
         severity: ErrorSeverity.info,
@@ -287,7 +290,8 @@ class LayoutValidator {
         message: 'Icon name should be a valid identifier',
         nodePath: nodePath,
         fieldName: 'name',
-        suggestion: 'Use snake_case like "arrow_forward" or camelCase like "arrowForward"',
+        suggestion:
+            'Use snake_case like "arrow_forward" or camelCase like "arrowForward"',
         severity: ErrorSeverity.warning,
       ));
     }
@@ -363,7 +367,8 @@ class LayoutValidator {
         }
 
         // Rule: Action onPressed must be valid Dart identifier
-        if (action.onPressed.isEmpty || !_isValidDartIdentifier(action.onPressed)) {
+        if (action.onPressed.isEmpty ||
+            !_isValidDartIdentifier(action.onPressed)) {
           errors.add(ValidationError(
             type: ValidationErrorType.invalidIdentifier,
             message: 'AppBar action onPressed must be a valid Dart identifier',

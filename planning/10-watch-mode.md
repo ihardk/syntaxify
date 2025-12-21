@@ -1,6 +1,6 @@
-# Issue #10: No Watch Mode
+# Issue #10: Watch Mode
 
-## Status: ❌ NOT IMPLEMENTED (Low Priority - QoL)
+## Status: ✅ IMPLEMENTED (Dec 2024)
 
 ## Problem
 

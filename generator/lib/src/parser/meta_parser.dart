@@ -89,7 +89,7 @@ class _AstNodeVisitor extends RecursiveAstVisitor<void> {
     // Check for @SyntaxComponent annotation
     final metaAnnotation = classNode.metadata.where((annotation) {
       final name = annotation.name.toSource();
-      return name == 'SyntaxComponent' || name == 'MetaComponent';
+      return name == 'SyntaxComponent';
     }).firstOrNull;
 
     if (metaAnnotation != null) {
@@ -104,7 +104,8 @@ class _AstNodeVisitor extends RecursiveAstVisitor<void> {
           if (arg is analyzer.NamedExpression) {
             if (arg.name.label.name == 'name') {
               if (arg.expression is analyzer.StringLiteral) {
-                explicitName = (arg.expression as analyzer.StringLiteral).stringValue;
+                explicitName =
+                    (arg.expression as analyzer.StringLiteral).stringValue;
               }
             }
           }

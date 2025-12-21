@@ -1,7 +1,8 @@
 import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:syntaxify/src/models/ast/nodes.dart';
-import 'package:syntaxify/src/parser/ast_node_parser.dart';
+import 'package:syntaxify/src/parser/layout_node_parser.dart';
+
 import 'package:test/test.dart';
 
 void main() {

@@ -1,6 +1,6 @@
 # Syntaxify Development Roadmap
 
-## Current Position: Stage 3 of 5
+## Current Position: Stage 4 of 5
 
 ---
 
@@ -38,7 +38,7 @@
 
 ---
 
-## Stage 3: Prove Power ⬅️ NOW
+## Stage 3: Prove Power ✅ DONE
 
 ### 3.1 Implement Layout Compiler ✅
 - [x] `ColumnNode` (vertical layout)
@@ -51,10 +51,31 @@
 - [x] Register screen with validation
 - [x] Home dashboard with stats
 
-### 3.3 Remaining Work
-- [ ] Add more screen examples (Settings, Profile)
-- [ ] Implement navigation between screens
-- [ ] Add form validation callbacks
+### 3.3 Validation System ✅ (Dec 2024)
+- [x] `LayoutValidator` (484 lines, validates all node types)
+- [x] `ValidationError` model with severity levels
+- [x] IDE linting (10 custom lint rules)
+- [x] 172+ tests passing
+
+### 3.4 Incremental Build ✅ (Dec 2024)
+- [x] `BuildCacheManager` with SHA-256 hashing
+- [x] Timestamp + content hash checking
+- [x] Integrated with build pipeline
+
+---
+
+## Stage 4: Make It Legible ⬅️ NOW
+
+### 4.1 Update Documentation
+- [x] Update 00-SUMMARY.md with implementation status
+- [x] Update ROADMAP.md (this file)
+- [ ] Write ARCHITECTURE.md
+
+### 4.2 Add Watch Mode
+- [ ] `syntaxify build --watch`
+
+### 4.3 Golden Tests
+- [ ] Input spec → Generated Dart → Assert exact match
 
 ---
 

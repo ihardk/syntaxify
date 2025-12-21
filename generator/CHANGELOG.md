@@ -1,5 +1,59 @@
 # Changelog
 
+## 0.1.0-alpha.10 - 2025-12-21
+
+### 🎯 Major Features
+
+**Watch Mode (Issue #10)** 🆕
+- **`syntaxify build --watch`**: Auto-rebuild on file changes
+  - DirectoryWatcher monitors `meta/` directory
+  - Detects `.meta.dart` and `.screen.dart` file changes
+  - 300ms debouncing to prevent duplicate rebuilds
+  - Shows timestamp: `[HH:MM:SS] Watching for changes...`
+  - Clean exit with Ctrl+C
+- **Usage**: Run `syntaxify build --watch` and edit meta files
+- **DX Impact**: No more manual rebuild commands
+
+### 🔧 Bug Fixes
+
+**Cross-Platform Path Handling**
+- Fixed `path.join` → `path.posix.join` in `GenerateComponentUseCase`
+- Consistent forward slash paths on Windows/Mac/Linux
+- Fixed test failures related to path comparison
+
+**Test Fixes**
+- Fixed `generate_component_test.dart` expectations to match actual generator output
+- Updated `InputGenerator` test assertions
+- Fixed timestamp comparison in "overwrites existing file" test
+- 172 tests passing, 61 skipped
+
+### 📦 Dependencies
+
+**Added:**
+- `watcher: ^1.1.0` - File system watching for watch mode
+
+### 📚 Documentation
+
+**Updated:**
+- `planning/00-SUMMARY.md` - Marked #3, #5, #10 as implemented
+- `planning/ROADMAP.md` - Advanced to Stage 4
+- `planning/10-watch-mode.md` - Marked as implemented
+- Comprehensive gap analysis completed
+
+### 🏗️ Infrastructure
+
+**Modified:**
+- `lib/src/cli/build_command.dart` - Added `--watch` flag, `_runWatch()` method
+- `lib/src/use_cases/generate_component.dart` - Fixed path.posix.join
+
+### 📊 Statistics
+
+- **+100 lines** for watch mode implementation
+- **172 tests** passing
+- **Stage 4** of roadmap reached
+
+---
+
 ## 0.1.0-alpha.9 - 2025-12-21
 
 ### 🎯 Major Features

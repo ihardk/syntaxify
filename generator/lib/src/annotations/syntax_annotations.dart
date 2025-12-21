@@ -7,7 +7,7 @@ library syntax_annotations;
 /// Marks a class as a Syntaxify component specification.
 ///
 /// The generator will create a Flutter widget from this spec.
-/// Note: Named SyntaxComponent to avoid collision with internal MetaComponent model.
+/// Marks a class as a Syntaxify component specification.
 class SyntaxComponent {
   /// Explicit name for the generated component (e.g., 'AppButton').
   /// If not provided, defaults to className without 'Meta' suffix.

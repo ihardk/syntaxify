@@ -142,7 +142,15 @@ Welcome! This learning guide will help you understand Syntaxify from the ground 
    - Look at `example/lib/screens/login_screen.dart` (OUTPUT)
    - See how a simple definition became a full Flutter screen!
 
-4. **Switch styles:**
+4. **Enable Watch Mode:** 🆕
+   ```bash
+   dart run syntaxify build --watch
+   ```
+   - Edit any `.meta.dart` file
+   - Syntaxify auto-rebuilds on save!
+   - Press Ctrl+C to stop
+
+5. **Switch styles:**
    - Open `example/lib/main.dart`
    - Change `MaterialStyle()` to `CupertinoStyle()`
    - Hot reload

@@ -37,7 +37,10 @@ enum CrossAxisAlignment {
   end,
 
   /// Stretch children to fill the cross axis.
-  stretch
+  stretch,
+
+  /// Align children at the baseline of the cross axis.
+  baseline
 }
 
 /// Alignment within a Stack widget.
@@ -117,6 +120,8 @@ enum TextAlign {
 
 /// Text overflow behavior.
 enum TextOverflow {
+  visible,
+
   /// Clip overflowing text.
   clip,
 
