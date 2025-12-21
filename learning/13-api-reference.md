@@ -57,18 +57,20 @@ class ButtonMeta {
 
 ---
 
-## AST Nodes
+## LayoutNode
 
-All AST nodes are created using `AstNode` factory constructors.
+All layout nodes are created using `LayoutNode` factory constructors.
 
-### AstNode.column
+> **Note:** `LayoutNode` was previously called `AstNode` (Abstract Syntax Tree Node). We renamed it in v0.1.0-alpha.8 to make the API more approachable.
+
+### LayoutNode.column
 
 Creates a vertical layout.
 
 **Signature:**
 ```dart
-const factory AstNode.column({
-  @Default([]) List<AstNode> children,
+const factory LayoutNode.column({
+  @Default([]) List<LayoutNode> children,
   MainAxisAlignment? mainAxisAlignment,
   CrossAxisAlignment? crossAxisAlignment,
 }) = ColumnNode;
@@ -81,12 +83,12 @@ const factory AstNode.column({
 
 **Example:**
 ```dart
-AstNode.column(
+LayoutNode.column(
   mainAxisAlignment: MainAxisAlignment.center,
   crossAxisAlignment: CrossAxisAlignment.start,
   children: [
-    AstNode.text(text: 'Title'),
-    AstNode.text(text: 'Subtitle'),
+    LayoutNode.text(text: 'Title'),
+    LayoutNode.text(text: 'Subtitle'),
   ],
 )
 ```
@@ -105,44 +107,44 @@ Column(
 
 ---
 
-### AstNode.row
+### LayoutNode.row
 
 Creates a horizontal layout.
 
 **Signature:**
 ```dart
-const factory AstNode.row({
-  @Default([]) List<AstNode> children,
+const factory LayoutNode.row({
+  @Default([]) List<LayoutNode> children,
   MainAxisAlignment? mainAxisAlignment,
   CrossAxisAlignment? crossAxisAlignment,
 }) = RowNode;
 ```
 
 **Parameters:**
-- `children` (List\<AstNode\>) - Child nodes. Default: `[]`
+- `children` (List\<LayoutNode\>) - Child nodes. Default: `[]`
 - `mainAxisAlignment` (MainAxisAlignment?) - Horizontal alignment. Default: `MainAxisAlignment.start`
 - `crossAxisAlignment` (CrossAxisAlignment?) - Vertical alignment. Default: `CrossAxisAlignment.center`
 
 **Example:**
 ```dart
-AstNode.row(
+LayoutNode.row(
   mainAxisAlignment: MainAxisAlignment.spaceBetween,
   children: [
-    AstNode.text(text: 'Left'),
-    AstNode.text(text: 'Right'),
+    LayoutNode.text(text: 'Left'),
+    LayoutNode.text(text: 'Right'),
   ],
 )
 ```
 
 ---
 
-### AstNode.text
+### LayoutNode.text
 
 Creates a text display.
 
 **Signature:**
 ```dart
-const factory AstNode.text({
+const factory LayoutNode.text({
   required String text,
   TextVariant? variant,
   TextAlign? align,
@@ -160,7 +162,7 @@ const factory AstNode.text({
 
 **Example:**
 ```dart
-AstNode.text(
+LayoutNode.text(
   text: 'Welcome Back!',
   variant: TextVariant.headlineMedium,
   align: TextAlign.center,
@@ -182,13 +184,13 @@ AppText(
 
 ---
 
-### AstNode.button
+### LayoutNode.button
 
 Creates a button.
 
 **Signature:**
 ```dart
-const factory AstNode.button({
+const factory LayoutNode.button({
   required String label,
   String? onPressed,
   ButtonVariant? variant,
@@ -202,7 +204,7 @@ const factory AstNode.button({
 
 **Example:**
 ```dart
-AstNode.button(
+LayoutNode.button(
   label: 'Sign In',
   onPressed: 'handleLogin',
   variant: ButtonVariant.primary,
@@ -222,13 +224,13 @@ AppButton(
 
 ---
 
-### AstNode.textField
+### LayoutNode.textField
 
 Creates a text input field.
 
 **Signature:**
 ```dart
-const factory AstNode.textField({
+const factory LayoutNode.textField({
   required String label,
   String? placeholder,
   @Default(false) bool obscureText,
@@ -246,7 +248,7 @@ const factory AstNode.textField({
 
 **Example:**
 ```dart
-AstNode.textField(
+LayoutNode.textField(
   label: 'Email',
   placeholder: 'you@example.com',
   keyboardType: KeyboardType.email,
@@ -256,13 +258,13 @@ AstNode.textField(
 
 ---
 
-### AstNode.appBar
+### LayoutNode.appBar
 
 Creates an app bar.
 
 **Signature:**
 ```dart
-const factory AstNode.appBar({
+const factory LayoutNode.appBar({
   required String title,
   List<AppBarAction>? actions,
 }) = AppBarNode;
@@ -274,7 +276,7 @@ const factory AstNode.appBar({
 
 **Example:**
 ```dart
-AstNode.appBar(
+LayoutNode.appBar(
   title: 'Profile',
   actions: [
     AppBarAction(icon: 'settings', onPressed: 'handleSettings'),
@@ -285,13 +287,13 @@ AstNode.appBar(
 
 ---
 
-### AstNode.image
+### LayoutNode.image
 
 Creates an image display.
 
 **Signature:**
 ```dart
-const factory AstNode.image({
+const factory LayoutNode.image({
   required String path,
   double? width,
   double? height,
@@ -307,7 +309,7 @@ const factory AstNode.image({
 
 **Example:**
 ```dart
-AstNode.image(
+LayoutNode.image(
   path: 'assets/logo.png',
   width: 200,
   height: 200,
@@ -317,13 +319,13 @@ AstNode.image(
 
 ---
 
-### AstNode.spacer
+### LayoutNode.spacer
 
 Creates spacing.
 
 **Signature:**
 ```dart
-const factory AstNode.spacer({
+const factory LayoutNode.spacer({
   double? height,
   double? width,
 }) = SpacerNode;
@@ -335,8 +337,8 @@ const factory AstNode.spacer({
 
 **Example:**
 ```dart
-AstNode.spacer(height: 24)  // Vertical spacing
-AstNode.spacer(width: 16)   // Horizontal spacing
+LayoutNode.spacer(height: 24)  // Vertical spacing
+LayoutNode.spacer(width: 16)   // Horizontal spacing
 ```
 
 **Generates:**
@@ -363,25 +365,25 @@ class ScreenDefinition {
   });
 
   final String id;
-  final AstNode layout;
+  final LayoutNode layout;
   final AppBarNode? appBar;
 }
 ```
 
 **Parameters:**
 - `id` (String, required) - Screen identifier (used for file name)
-- `layout` (AstNode, required) - Root layout node
+- `layout` (LayoutNode, required) - Root layout node
 - `appBar` (AppBarNode?) - Optional app bar. Default: `null`
 
 **Example:**
 ```dart
 final loginScreen = ScreenDefinition(
   id: 'login',
-  appBar: AstNode.appBar(title: 'Login'),
-  layout: AstNode.column(
+  appBar: LayoutNode.appBar(title: 'Login'),
+  layout: LayoutNode.column(
     children: [
-      AstNode.text(text: 'Welcome'),
-      AstNode.button(label: 'Sign In', onPressed: 'handleLogin'),
+      LayoutNode.text(text: 'Welcome'),
+      LayoutNode.button(label: 'Sign In', onPressed: 'handleLogin'),
     ],
   ),
 );
@@ -895,7 +897,7 @@ AppInput(
 ```dart
 final myScreen = ScreenDefinition(
   id: 'my_screen',
-  layout: AstNode.column(
+  layout: LayoutNode.column(
     children: [/* nodes */],
   ),
 );
