@@ -215,14 +215,8 @@ class LayoutEmitter {
       if (node.child != null) 'child': emit(node.child!),
       if (node.width != null) 'width': literalNum(node.width!),
       if (node.height != null) 'height': literalNum(node.height!),
-      if (node.padding != null)
-        'padding': refer('EdgeInsets').property('all').call([
-          literalNum(16), // Parse padding string later
-        ]),
-      if (node.margin != null)
-        'margin': refer('EdgeInsets').property('all').call([
-          literalNum(16), // Parse margin string later
-        ]),
+      if (node.padding != null) 'padding': _parseEdgeInsets(node.padding!),
+      if (node.margin != null) 'margin': _parseEdgeInsets(node.margin!),
       if (node.borderRadius != null)
         'decoration': refer('BoxDecoration').newInstance([], {
           'borderRadius': refer('BorderRadius')
@@ -233,10 +227,17 @@ class LayoutEmitter {
   }
 
   Expression _emitCard(CardNode node) {
+    final columnChild = refer('Column').newInstance([], {
+      'children': literalList(node.children.map(emit).toList()),
+    });
+
     return refer('Card').newInstance([], {
-      'child': refer('Column').newInstance([], {
-        'children': literalList(node.children.map(emit).toList()),
-      }),
+      'child': node.padding != null
+          ? refer('Padding').newInstance([], {
+              'padding': _parseEdgeInsets(node.padding!),
+              'child': columnChild,
+            })
+          : columnChild,
       if (node.elevation != null) 'elevation': literalNum(node.elevation!),
     });
   }
@@ -351,5 +352,46 @@ class LayoutEmitter {
       'child': emit(node.child),
       if (node.flex != null) 'flex': literalNum(node.flex!),
     });
+  }
+
+  // --- Helper Methods ---
+
+  /// Parses an EdgeInsets string into the appropriate EdgeInsets constructor call.
+  ///
+  /// Supported formats:
+  /// - Single value: "16" -> EdgeInsets.all(16)
+  /// - Two values: "16,8" -> EdgeInsets.symmetric(horizontal: 16, vertical: 8)
+  /// - Four values: "16,8,16,8" -> EdgeInsets.fromLTRB(16, 8, 16, 8)
+  Expression _parseEdgeInsets(String value) {
+    final parts = value.split(',').map((s) => s.trim()).toList();
+
+    if (parts.length == 1) {
+      // Single value: EdgeInsets.all(value)
+      final num = double.tryParse(parts[0]) ?? 0.0;
+      return refer('EdgeInsets').property('all').call([literalNum(num)]);
+    } else if (parts.length == 2) {
+      // Two values: EdgeInsets.symmetric(horizontal: h, vertical: v)
+      final horizontal = double.tryParse(parts[0]) ?? 0.0;
+      final vertical = double.tryParse(parts[1]) ?? 0.0;
+      return refer('EdgeInsets').property('symmetric').call([], {
+        'horizontal': literalNum(horizontal),
+        'vertical': literalNum(vertical),
+      });
+    } else if (parts.length == 4) {
+      // Four values: EdgeInsets.fromLTRB(left, top, right, bottom)
+      final left = double.tryParse(parts[0]) ?? 0.0;
+      final top = double.tryParse(parts[1]) ?? 0.0;
+      final right = double.tryParse(parts[2]) ?? 0.0;
+      final bottom = double.tryParse(parts[3]) ?? 0.0;
+      return refer('EdgeInsets').property('fromLTRB').call([
+        literalNum(left),
+        literalNum(top),
+        literalNum(right),
+        literalNum(bottom),
+      ]);
+    } else {
+      // Invalid format, default to all(16)
+      return refer('EdgeInsets').property('all').call([literalNum(16.0)]);
+    }
   }
 }
