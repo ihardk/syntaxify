@@ -40,6 +40,9 @@ class LayoutValidator {
     return node.map(
       column: (n) => _validateColumn(n, path),
       row: (n) => _validateRow(n, path),
+      container: (n) => _validateContainer(n, path),
+      card: (n) => _validateCard(n, path),
+      listView: (n) => _validateListView(n, path),
     );
   }
 
@@ -48,6 +51,12 @@ class LayoutValidator {
       text: (n) => _validateText(n, path),
       icon: (n) => _validateIcon(n, path),
       spacer: (n) => _validateSpacer(n, path),
+      image: (n) => _validateImage(n, path),
+      divider: (n) => _validateDivider(n, path),
+      circularProgressIndicator: (n) =>
+          _validateCircularProgressIndicator(n, path),
+      sizedBox: (n) => _validateSizedBox(n, path),
+      expanded: (n) => _validateExpanded(n, path),
     );
   }
 
@@ -56,6 +65,8 @@ class LayoutValidator {
     return node.map(
       button: (n) => _validateButton(n, path),
       textField: (n) => _validateTextField(n, path),
+      checkbox: (n) => _validateCheckbox(n, path),
+      switchNode: (n) => _validateSwitch(n, path),
     );
   }
 
@@ -373,6 +384,370 @@ class LayoutValidator {
         message: 'onLeadingPressed must be a valid Dart identifier',
         nodePath: nodePath,
         fieldName: 'onLeadingPressed',
+      ));
+    }
+
+    return errors;
+  }
+
+  /// Validates a container node.
+  List<ValidationError> _validateContainer(ContainerNode node, String path) {
+    final errors = <ValidationError>[];
+    final nodePath = '$path.container';
+
+    // Rule: Container should have either a child or sizing (warning)
+    if (node.child == null &&
+        node.width == null &&
+        node.height == null &&
+        node.padding == null &&
+        node.margin == null) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.emptyChildren,
+        message: 'Container has no content or sizing',
+        nodePath: nodePath,
+        fieldName: 'child',
+        suggestion:
+            'Add a child widget or specify width/height/padding/margin',
+        severity: ErrorSeverity.warning,
+      ));
+    }
+
+    // Rule: Width must be non-negative
+    if (node.width != null && node.width! < 0) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.negativeNumber,
+        message: 'Container width must be non-negative',
+        nodePath: nodePath,
+        fieldName: 'width',
+        suggestion: 'Set width to 0 or higher',
+      ));
+    }
+
+    // Rule: Height must be non-negative
+    if (node.height != null && node.height! < 0) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.negativeNumber,
+        message: 'Container height must be non-negative',
+        nodePath: nodePath,
+        fieldName: 'height',
+        suggestion: 'Set height to 0 or higher',
+      ));
+    }
+
+    // Rule: Border radius must be non-negative
+    if (node.borderRadius != null && node.borderRadius! < 0) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.negativeNumber,
+        message: 'Container borderRadius must be non-negative',
+        nodePath: nodePath,
+        fieldName: 'borderRadius',
+        suggestion: 'Set borderRadius to 0 or higher',
+      ));
+    }
+
+    // Recursively validate child
+    if (node.child != null) {
+      final childErrors = validate(node.child!, '$nodePath.child');
+      errors.addAll(childErrors);
+    }
+
+    return errors;
+  }
+
+  /// Validates a card node.
+  List<ValidationError> _validateCard(CardNode node, String path) {
+    final errors = <ValidationError>[];
+    final nodePath = '$path.card';
+
+    // Rule: Card should have at least one child (warning)
+    if (node.children.isEmpty) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.emptyChildren,
+        message: 'Card has no children',
+        nodePath: nodePath,
+        fieldName: 'children',
+        suggestion: 'Add at least one child widget to the card',
+        severity: ErrorSeverity.warning,
+      ));
+    }
+
+    // Rule: Elevation must be non-negative
+    if (node.elevation != null && node.elevation! < 0) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.negativeNumber,
+        message: 'Card elevation must be non-negative',
+        nodePath: nodePath,
+        fieldName: 'elevation',
+        suggestion: 'Set elevation to 0 or higher',
+      ));
+    }
+
+    // Recursively validate children
+    for (var i = 0; i < node.children.length; i++) {
+      final childErrors = validate(node.children[i], '$nodePath[$i]');
+      errors.addAll(childErrors);
+    }
+
+    return errors;
+  }
+
+  /// Validates a list view node.
+  List<ValidationError> _validateListView(ListViewNode node, String path) {
+    final errors = <ValidationError>[];
+    final nodePath = '$path.listView';
+
+    // Rule: ListView should have at least one child (warning)
+    if (node.children.isEmpty) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.emptyChildren,
+        message: 'ListView has no children',
+        nodePath: nodePath,
+        fieldName: 'children',
+        suggestion: 'Add at least one child widget to the list view',
+        severity: ErrorSeverity.warning,
+      ));
+    }
+
+    // Recursively validate children
+    for (var i = 0; i < node.children.length; i++) {
+      final childErrors = validate(node.children[i], '$nodePath[$i]');
+      errors.addAll(childErrors);
+    }
+
+    return errors;
+  }
+
+  /// Validates an image node.
+  List<ValidationError> _validateImage(ImageNode node, String path) {
+    final errors = <ValidationError>[];
+    final nodePath = '$path.image';
+
+    // Rule: Image src cannot be empty or whitespace
+    if (node.src.trim().isEmpty) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.emptyValue,
+        message: 'Image src cannot be empty',
+        nodePath: nodePath,
+        fieldName: 'src',
+        suggestion:
+            'Provide an asset path, network URL, or registry name',
+      ));
+    }
+
+    // Rule: Width must be non-negative
+    if (node.width != null && node.width! < 0) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.negativeNumber,
+        message: 'Image width must be non-negative',
+        nodePath: nodePath,
+        fieldName: 'width',
+        suggestion: 'Set width to 0 or higher',
+      ));
+    }
+
+    // Rule: Height must be non-negative
+    if (node.height != null && node.height! < 0) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.negativeNumber,
+        message: 'Image height must be non-negative',
+        nodePath: nodePath,
+        fieldName: 'height',
+        suggestion: 'Set height to 0 or higher',
+      ));
+    }
+
+    return errors;
+  }
+
+  /// Validates a divider node.
+  List<ValidationError> _validateDivider(DividerNode node, String path) {
+    final errors = <ValidationError>[];
+    final nodePath = '$path.divider';
+
+    // Rule: Thickness must be non-negative
+    if (node.thickness != null && node.thickness! < 0) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.negativeNumber,
+        message: 'Divider thickness must be non-negative',
+        nodePath: nodePath,
+        fieldName: 'thickness',
+        suggestion: 'Set thickness to 0 or higher',
+      ));
+    }
+
+    // Rule: Indent must be non-negative
+    if (node.indent != null && node.indent! < 0) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.negativeNumber,
+        message: 'Divider indent must be non-negative',
+        nodePath: nodePath,
+        fieldName: 'indent',
+        suggestion: 'Set indent to 0 or higher',
+      ));
+    }
+
+    // Rule: End indent must be non-negative
+    if (node.endIndent != null && node.endIndent! < 0) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.negativeNumber,
+        message: 'Divider endIndent must be non-negative',
+        nodePath: nodePath,
+        fieldName: 'endIndent',
+        suggestion: 'Set endIndent to 0 or higher',
+      ));
+    }
+
+    return errors;
+  }
+
+  /// Validates a circular progress indicator node.
+  List<ValidationError> _validateCircularProgressIndicator(
+      CircularProgressIndicatorNode node, String path) {
+    final errors = <ValidationError>[];
+    final nodePath = '$path.circularProgressIndicator';
+
+    // Rule: Value must be between 0 and 1 if provided
+    if (node.value != null && (node.value! < 0 || node.value! > 1)) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.outOfRange,
+        message: 'CircularProgressIndicator value must be between 0 and 1',
+        nodePath: nodePath,
+        fieldName: 'value',
+        suggestion: 'Set value to a number between 0.0 and 1.0',
+      ));
+    }
+
+    // Rule: Stroke width must be positive
+    if (node.strokeWidth != null && node.strokeWidth! <= 0) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.negativeNumber,
+        message: 'CircularProgressIndicator strokeWidth must be positive',
+        nodePath: nodePath,
+        fieldName: 'strokeWidth',
+        suggestion: 'Set strokeWidth to a value greater than 0',
+      ));
+    }
+
+    return errors;
+  }
+
+  /// Validates a sized box node.
+  List<ValidationError> _validateSizedBox(SizedBoxNode node, String path) {
+    final errors = <ValidationError>[];
+    final nodePath = '$path.sizedBox';
+
+    // Rule: Width must be non-negative
+    if (node.width != null && node.width! < 0) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.negativeNumber,
+        message: 'SizedBox width must be non-negative',
+        nodePath: nodePath,
+        fieldName: 'width',
+        suggestion: 'Set width to 0 or higher',
+      ));
+    }
+
+    // Rule: Height must be non-negative
+    if (node.height != null && node.height! < 0) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.negativeNumber,
+        message: 'SizedBox height must be non-negative',
+        nodePath: nodePath,
+        fieldName: 'height',
+        suggestion: 'Set height to 0 or higher',
+      ));
+    }
+
+    // Recursively validate child
+    if (node.child != null) {
+      final childErrors = validate(node.child!, '$nodePath.child');
+      errors.addAll(childErrors);
+    }
+
+    return errors;
+  }
+
+  /// Validates an expanded node.
+  List<ValidationError> _validateExpanded(ExpandedNode node, String path) {
+    final errors = <ValidationError>[];
+    final nodePath = '$path.expanded';
+
+    // Rule: Flex must be positive
+    if (node.flex != null && node.flex! < 1) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.negativeNumber,
+        message: 'Expanded flex must be a positive number',
+        nodePath: nodePath,
+        fieldName: 'flex',
+        suggestion: 'Set flex to 1 or higher',
+      ));
+    }
+
+    // Recursively validate child
+    final childErrors = validate(node.child, '$nodePath.child');
+    errors.addAll(childErrors);
+
+    return errors;
+  }
+
+  /// Validates a checkbox node.
+  List<ValidationError> _validateCheckbox(CheckboxNode node, String path) {
+    final errors = <ValidationError>[];
+    final nodePath = '$path.checkbox';
+
+    // Rule: binding must be valid identifier
+    if (!_isValidDartIdentifier(node.binding)) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.invalidIdentifier,
+        message: 'Checkbox binding must be a valid Dart identifier',
+        nodePath: nodePath,
+        fieldName: 'binding',
+        suggestion:
+            'Use camelCase names like "isChecked" instead of "${node.binding}"',
+      ));
+    }
+
+    // Rule: onChanged must be valid identifier if provided
+    if (node.onChanged != null && !_isValidDartIdentifier(node.onChanged!)) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.invalidIdentifier,
+        message: 'Checkbox onChanged must be a valid Dart identifier',
+        nodePath: nodePath,
+        fieldName: 'onChanged',
+        suggestion:
+            'Use camelCase names like "handleCheckboxChange" instead of "${node.onChanged}"',
+      ));
+    }
+
+    return errors;
+  }
+
+  /// Validates a switch node.
+  List<ValidationError> _validateSwitch(SwitchNode node, String path) {
+    final errors = <ValidationError>[];
+    final nodePath = '$path.switch';
+
+    // Rule: binding must be valid identifier
+    if (!_isValidDartIdentifier(node.binding)) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.invalidIdentifier,
+        message: 'Switch binding must be a valid Dart identifier',
+        nodePath: nodePath,
+        fieldName: 'binding',
+        suggestion:
+            'Use camelCase names like "isEnabled" instead of "${node.binding}"',
+      ));
+    }
+
+    // Rule: onChanged must be valid identifier if provided
+    if (node.onChanged != null && !_isValidDartIdentifier(node.onChanged!)) {
+      errors.add(ValidationError(
+        type: ValidationErrorType.invalidIdentifier,
+        message: 'Switch onChanged must be a valid Dart identifier',
+        nodePath: nodePath,
+        fieldName: 'onChanged',
+        suggestion:
+            'Use camelCase names like "handleSwitchChange" instead of "${node.onChanged}"',
       ));
     }
 
