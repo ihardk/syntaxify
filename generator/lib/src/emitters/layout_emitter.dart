@@ -27,6 +27,9 @@ class LayoutEmitter {
     return node.map(
       column: _emitColumn,
       row: _emitRow,
+      container: _emitContainer,
+      card: _emitCard,
+      listView: _emitListView,
     );
   }
 
@@ -35,6 +38,9 @@ class LayoutEmitter {
       text: _emitText,
       icon: _emitIcon,
       spacer: _emitSpacer,
+      image: _emitImage,
+      divider: _emitDivider,
+      circularProgressIndicator: _emitCircularProgressIndicator,
     );
   }
 
@@ -42,6 +48,8 @@ class LayoutEmitter {
     return node.map(
       button: _emitButton,
       textField: _emitTextField,
+      checkbox: _emitCheckbox,
+      switchNode: _emitSwitch,
     );
   }
 
@@ -167,6 +175,124 @@ class LayoutEmitter {
       if (node.title != null)
         'title': refer('AppText')
             .newInstance([], {'text': literalString(node.title!)})
+    });
+  }
+
+  // --- New Structural Node Emitters ---
+
+  Expression _emitContainer(ContainerNode node) {
+    return refer('Container').newInstance([], {
+      if (node.child != null) 'child': emit(node.child!),
+      if (node.width != null) 'width': literalNum(node.width!),
+      if (node.height != null) 'height': literalNum(node.height!),
+      if (node.padding != null)
+        'padding': refer('EdgeInsets').property('all').call([
+          literalNum(16), // Parse padding string later
+        ]),
+      if (node.margin != null)
+        'margin': refer('EdgeInsets').property('all').call([
+          literalNum(16), // Parse margin string later
+        ]),
+      if (node.borderRadius != null)
+        'decoration': refer('BoxDecoration').newInstance([], {
+          'borderRadius': refer('BorderRadius')
+              .property('circular')
+              .call([literalNum(node.borderRadius!)])
+        }),
+    });
+  }
+
+  Expression _emitCard(CardNode node) {
+    return refer('Card').newInstance([], {
+      'child': refer('Column').newInstance([], {
+        'children': literalList(node.children.map(emit).toList()),
+      }),
+      if (node.elevation != null) 'elevation': literalNum(node.elevation!),
+    });
+  }
+
+  Expression _emitListView(ListViewNode node) {
+    return refer('ListView').newInstance([], {
+      'children': literalList(node.children.map(emit).toList()),
+      if (node.scrollDirection != null && node.scrollDirection != Axis.vertical)
+        'scrollDirection': refer('Axis.${node.scrollDirection!.name}'),
+      if (node.shrinkWrap == true) 'shrinkWrap': literalTrue,
+    });
+  }
+
+  // --- New Primitive Node Emitters ---
+
+  Expression _emitImage(ImageNode node) {
+    // Determine image type from src
+    if (node.src.startsWith('http://') || node.src.startsWith('https://')) {
+      return refer('Image').property('network').call([
+        literalString(node.src),
+      ], {
+        if (node.width != null) 'width': literalNum(node.width!),
+        if (node.height != null) 'height': literalNum(node.height!),
+        if (node.fit != null) 'fit': refer('BoxFit.${node.fit!.name}'),
+      });
+    } else if (node.src.startsWith('assets/')) {
+      return refer('Image').property('asset').call([
+        literalString(node.src),
+      ], {
+        if (node.width != null) 'width': literalNum(node.width!),
+        if (node.height != null) 'height': literalNum(node.height!),
+        if (node.fit != null) 'fit': refer('BoxFit.${node.fit!.name}'),
+      });
+    } else {
+      // Default to asset
+      return refer('Image').property('asset').call([
+        literalString(node.src),
+      ], {
+        if (node.width != null) 'width': literalNum(node.width!),
+        if (node.height != null) 'height': literalNum(node.height!),
+        if (node.fit != null) 'fit': refer('BoxFit.${node.fit!.name}'),
+      });
+    }
+  }
+
+  Expression _emitDivider(DividerNode node) {
+    return refer('Divider').newInstance([], {
+      if (node.thickness != null) 'thickness': literalNum(node.thickness!),
+      if (node.indent != null) 'indent': literalNum(node.indent!),
+      if (node.endIndent != null) 'endIndent': literalNum(node.endIndent!),
+    });
+  }
+
+  Expression _emitCircularProgressIndicator(
+      CircularProgressIndicatorNode node) {
+    return refer('CircularProgressIndicator').newInstance([], {
+      if (node.value != null) 'value': literalNum(node.value!),
+      if (node.strokeWidth != null)
+        'strokeWidth': literalNum(node.strokeWidth!),
+    });
+  }
+
+  // --- New Interactive Node Emitters ---
+
+  Expression _emitCheckbox(CheckboxNode node) {
+    return refer('CheckboxListTile').newInstance([], {
+      'value': refer(node.binding),
+      'onChanged': node.onChanged != null
+          ? refer(node.onChanged!)
+          : refer('(value) {}'),
+      if (node.label != null) 'title': refer('Text').newInstance([
+        literalString(node.label!),
+      ]),
+      if (node.tristate == true) 'tristate': literalTrue,
+    });
+  }
+
+  Expression _emitSwitch(SwitchNode node) {
+    return refer('SwitchListTile').newInstance([], {
+      'value': refer(node.binding),
+      'onChanged': node.onChanged != null
+          ? refer(node.onChanged!)
+          : refer('(value) {}'),
+      if (node.label != null) 'title': refer('Text').newInstance([
+        literalString(node.label!),
+      ]),
     });
   }
 }
