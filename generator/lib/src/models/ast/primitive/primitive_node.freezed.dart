@@ -221,8 +221,8 @@ extension PrimitiveNodePatterns on PrimitiveNode {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String text, TextVariant? variant, TextAlign? align,
-            int? maxLines, TextOverflow? overflow)?
+    TResult Function(String text, TextVariant? variant, SyntaxTextAlign? align,
+            int? maxLines, SyntaxTextOverflow? overflow)?
         text,
     TResult Function(String name, IconSize? size, ColorSemantic? semantic)?
         icon,
@@ -284,7 +284,7 @@ extension PrimitiveNodePatterns on PrimitiveNode {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String text, TextVariant? variant,
-            TextAlign? align, int? maxLines, TextOverflow? overflow)
+            SyntaxTextAlign? align, int? maxLines, SyntaxTextOverflow? overflow)
         text,
     required TResult Function(
             String name, IconSize? size, ColorSemantic? semantic)
@@ -342,8 +342,8 @@ extension PrimitiveNodePatterns on PrimitiveNode {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String text, TextVariant? variant, TextAlign? align,
-            int? maxLines, TextOverflow? overflow)?
+    TResult? Function(String text, TextVariant? variant, SyntaxTextAlign? align,
+            int? maxLines, SyntaxTextOverflow? overflow)?
         text,
     TResult? Function(String name, IconSize? size, ColorSemantic? semantic)?
         icon,
@@ -405,9 +405,9 @@ class TextNode implements PrimitiveNode {
 
   final String text;
   final TextVariant? variant;
-  final TextAlign? align;
+  final SyntaxTextAlign? align;
   final int? maxLines;
-  final TextOverflow? overflow;
+  final SyntaxTextOverflow? overflow;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
@@ -460,9 +460,9 @@ abstract mixin class $TextNodeCopyWith<$Res>
   $Res call(
       {String text,
       TextVariant? variant,
-      TextAlign? align,
+      SyntaxTextAlign? align,
       int? maxLines,
-      TextOverflow? overflow});
+      SyntaxTextOverflow? overflow});
 }
 
 /// @nodoc
@@ -494,7 +494,7 @@ class _$TextNodeCopyWithImpl<$Res> implements $TextNodeCopyWith<$Res> {
       align: freezed == align
           ? _self.align
           : align // ignore: cast_nullable_to_non_nullable
-              as TextAlign?,
+              as SyntaxTextAlign?,
       maxLines: freezed == maxLines
           ? _self.maxLines
           : maxLines // ignore: cast_nullable_to_non_nullable
@@ -502,7 +502,7 @@ class _$TextNodeCopyWithImpl<$Res> implements $TextNodeCopyWith<$Res> {
       overflow: freezed == overflow
           ? _self.overflow
           : overflow // ignore: cast_nullable_to_non_nullable
-              as TextOverflow?,
+              as SyntaxTextOverflow?,
     ));
   }
 }

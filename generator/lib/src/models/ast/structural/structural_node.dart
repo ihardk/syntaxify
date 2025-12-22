@@ -10,15 +10,15 @@ part 'structural_node.g.dart';
 sealed class StructuralNode with _$StructuralNode {
   const factory StructuralNode.column({
     required List<LayoutNode> children,
-    MainAxisAlignment? mainAxisAlignment,
-    CrossAxisAlignment? crossAxisAlignment,
+    SyntaxMainAxisAlignment? mainAxisAlignment,
+    SyntaxCrossAxisAlignment? crossAxisAlignment,
     String? spacing,
   }) = ColumnNode;
 
   const factory StructuralNode.row({
     required List<LayoutNode> children,
-    MainAxisAlignment? mainAxisAlignment,
-    CrossAxisAlignment? crossAxisAlignment,
+    SyntaxMainAxisAlignment? mainAxisAlignment,
+    SyntaxCrossAxisAlignment? crossAxisAlignment,
     String? spacing,
   }) = RowNode;
 
@@ -35,14 +35,14 @@ sealed class StructuralNode with _$StructuralNode {
 
   const factory StructuralNode.card({
     required List<LayoutNode> children,
-    CardVariant? variant,
+    String? variant,
     String? padding,
     double? elevation,
   }) = CardNode;
 
   const factory StructuralNode.listView({
     required List<LayoutNode> children,
-    Axis? scrollDirection,
+    SyntaxAxis? scrollDirection,
     String? spacing,
     bool? shrinkWrap,
   }) = ListViewNode;

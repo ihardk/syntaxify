@@ -35,7 +35,7 @@ void main() {
           i.node.map(
             button: (b) {
               expect(b.label, 'Click Me');
-              expect(b.props?.variant, ButtonVariant.outlined);
+              expect(b.props?.variant, 'outlined');
               expect(b.props?.size, ButtonSize.lg);
               expect(b.props?.icon, 'add');
               expect(b.onPressed, 'onSubmit');
@@ -104,7 +104,7 @@ void main() {
         interactive: (i) {
           i.node.map(
             button: (b) {
-              expect(b.props?.variant, ButtonVariant.filled); // Default
+              expect(b.props?.variant, 'filled'); // Default
               expect(b.props?.size, null);
               expect(b.props?.isDisabled, false);
             },

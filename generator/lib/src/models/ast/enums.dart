@@ -5,7 +5,8 @@
 library enums;
 
 /// Alignment of children along the main axis in Row/Column.
-enum MainAxisAlignment {
+/// Alignment of children along the main axis in Row/Column.
+enum SyntaxMainAxisAlignment {
   /// Align children at the start.
   start,
 
@@ -26,7 +27,8 @@ enum MainAxisAlignment {
 }
 
 /// Alignment of children along the cross axis in Row/Column.
-enum CrossAxisAlignment {
+/// Alignment of children along the cross axis in Row/Column.
+enum SyntaxCrossAxisAlignment {
   /// Align children at the start of the cross axis.
   start,
 
@@ -74,7 +76,8 @@ enum StackAlignment {
 }
 
 /// Orientation axis.
-enum Axis {
+/// Orientation axis.
+enum SyntaxAxis {
   /// Horizontal orientation.
   horizontal,
 
@@ -104,7 +107,8 @@ enum TextVariant {
 }
 
 /// Text horizontal alignment.
-enum TextAlign {
+/// Text horizontal alignment.
+enum SyntaxTextAlign {
   /// Align text to the left.
   left,
 
@@ -119,7 +123,8 @@ enum TextAlign {
 }
 
 /// Text overflow behavior.
-enum TextOverflow {
+/// Text overflow behavior.
+enum SyntaxTextOverflow {
   visible,
 
   /// Clip overflowing text.
@@ -130,24 +135,6 @@ enum TextOverflow {
 
   /// Fade out overflowing text.
   fade
-}
-
-/// Button style variants.
-enum ButtonVariant {
-  /// Filled primary button.
-  filled,
-
-  /// Outlined button with border.
-  outlined,
-
-  /// Text-only button.
-  text,
-
-  /// Elevated button with shadow.
-  elevated,
-
-  /// Filled tonal button.
-  filledTonal
 }
 
 /// Button size variants.

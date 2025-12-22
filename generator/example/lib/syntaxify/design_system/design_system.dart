@@ -6,6 +6,7 @@ library design_system;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:syntaxify/syntaxify.dart'; // For @Variant annotation
 
 import 'tokens/button_tokens.dart';
 import 'tokens/input_tokens.dart';
@@ -21,38 +22,37 @@ export 'app_icons.dart';
 // Part files - same library as sealed class
 part 'app_theme.dart';
 part 'design_style.dart';
-part 'button_variant.dart';
-part 'enums.dart';
+part 'variants.dart';
 part 'styles/material_style.dart';
 part 'styles/cupertino_style.dart';
 part 'styles/neo_style.dart';
 
 // Renderers (Mixins)
-part 'styles/material/button_renderer.dart';
-part 'styles/cupertino/button_renderer.dart';
-part 'styles/neo/button_renderer.dart';
+part 'components/button/material_renderer.dart';
+part 'components/button/cupertino_renderer.dart';
+part 'components/button/neo_renderer.dart';
 
-part 'styles/material/input_renderer.dart';
-part 'styles/cupertino/input_renderer.dart';
-part 'styles/neo/input_renderer.dart';
+part 'components/input/material_renderer.dart';
+part 'components/input/cupertino_renderer.dart';
+part 'components/input/neo_renderer.dart';
 
-part 'styles/material/text_renderer.dart';
-part 'styles/cupertino/text_renderer.dart';
-part 'styles/neo/text_renderer.dart';
+part 'components/text/material_renderer.dart';
+part 'components/text/cupertino_renderer.dart';
+part 'components/text/neo_renderer.dart';
 
 // Interactive renderers
-part 'styles/material/checkbox_renderer.dart';
-part 'styles/cupertino/checkbox_renderer.dart';
-part 'styles/neo/checkbox_renderer.dart';
+part 'components/checkbox/material_renderer.dart';
+part 'components/checkbox/cupertino_renderer.dart';
+part 'components/checkbox/neo_renderer.dart';
 
-part 'styles/material/switch_renderer.dart';
-part 'styles/cupertino/switch_renderer.dart';
-part 'styles/neo/switch_renderer.dart';
+part 'components/switch/material_renderer.dart';
+part 'components/switch/cupertino_renderer.dart';
+part 'components/switch/neo_renderer.dart';
 
-part 'styles/material/slider_renderer.dart';
-part 'styles/cupertino/slider_renderer.dart';
-part 'styles/neo/slider_renderer.dart';
+part 'components/slider/material_renderer.dart';
+part 'components/slider/cupertino_renderer.dart';
+part 'components/slider/neo_renderer.dart';
 
-part 'styles/material/radio_renderer.dart';
-part 'styles/cupertino/radio_renderer.dart';
-part 'styles/neo/radio_renderer.dart';
+part 'components/radio/material_renderer.dart';
+part 'components/radio/cupertino_renderer.dart';
+part 'components/radio/neo_renderer.dart';

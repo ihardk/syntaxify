@@ -5,12 +5,31 @@ import 'package:flutter/material.dart';
 import '../index.dart';
 import '../design_system/design_system.dart';
 
-class KitchenSinkScreen extends StatelessWidget {
+class KitchenSinkScreen extends StatefulWidget {
   const KitchenSinkScreen({super.key, this.onSubmit, this.onEmailChanged});
 
   final VoidCallback? onSubmit;
 
   final ValueChanged<String>? onEmailChanged;
+
+  @override
+  State<KitchenSinkScreen> createState() => _KitchenSinkScreenState();
+}
+
+class _KitchenSinkScreenState extends State<KitchenSinkScreen> {
+  late final TextEditingController _emailController;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +55,18 @@ class KitchenSinkScreen extends StatelessWidget {
           SizedBox(height: 16.0),
           AppButton(
             label: 'Submit',
-            onPressed: onSubmit,
+            onPressed: widget.onSubmit,
+            variant: ButtonVariant.filled,
             icon: Icons.send,
             isLoading: true,
           ),
           SizedBox(height: 16.0),
           AppInput(
             label: 'Email',
+            controller: _emailController,
             hint: 'Enter email',
             keyboardType: TextInputType.emailAddress,
+            onChanged: widget.onEmailChanged,
           ),
         ],
         mainAxisAlignment: MainAxisAlignment.center,

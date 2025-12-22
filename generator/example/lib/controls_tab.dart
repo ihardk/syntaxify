@@ -32,12 +32,12 @@ class _ControlsTabState extends State<ControlsTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AppText(
+          const AppText(
             text: 'Control Components',
             variant: TextVariant.headlineMedium,
           ),
           const SizedBox(height: 8),
-          AppText(
+          const AppText(
             text:
                 'Interactive elements that adapt to the selected design style.',
             variant: TextVariant.bodyLarge,

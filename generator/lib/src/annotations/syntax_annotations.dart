@@ -74,3 +74,18 @@ class ImageMapping {
 
   const ImageMapping(this.path);
 }
+
+/// Marks an enum as a Variant type.
+///
+/// Enums marked with @Variant will have helper constructors generated
+/// for each value. For example:
+///
+/// ```dart
+/// @Variant()
+/// enum ButtonVariant { primary, secondary, outlined, text }
+/// ```
+///
+/// Will generate: `AppButton.primary()`, `AppButton.secondary()`, etc.
+class Variant {
+  const Variant();
+}

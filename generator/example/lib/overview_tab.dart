@@ -19,13 +19,13 @@ class OverviewTab extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // 📝 SYNTAXIFY: AppText component
-          AppText(
+          const AppText(
             text: 'Welcome to Syntaxify!',
             variant: TextVariant.displayLarge,
           ),
           const SizedBox(height: 16),
 
-          AppText(
+          const AppText(
             text:
                 'A multi-style design system for Flutter. One component API, multiple visual styles. Now with 7 interactive components!',
             variant: TextVariant.bodyLarge,
@@ -59,14 +59,14 @@ class OverviewTab extends StatelessWidget {
                       size: 28,
                     ),
                     const SizedBox(width: 12),
-                    AppText(
+                    const AppText(
                       text: 'Choose Your Design Style',
                       variant: TextVariant.titleMedium,
                     ),
                   ],
                 ),
                 const SizedBox(height: 8),
-                AppText(
+                const AppText(
                   text: 'Watch all components transform instantly!',
                   variant: TextVariant.bodyMedium,
                 ),
@@ -83,7 +83,7 @@ class OverviewTab extends StatelessWidget {
                         color: Colors.green,
                         isSelected: currentStyleName == 'Material',
                         onTap: () =>
-                            onStyleChanged(MaterialStyle(), 'Material'),
+                            onStyleChanged(const MaterialStyle(), 'Material'),
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -95,7 +95,7 @@ class OverviewTab extends StatelessWidget {
                         color: Colors.grey,
                         isSelected: currentStyleName == 'Cupertino',
                         onTap: () =>
-                            onStyleChanged(CupertinoStyle(), 'Cupertino'),
+                            onStyleChanged(const CupertinoStyle(), 'Cupertino'),
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -106,7 +106,7 @@ class OverviewTab extends StatelessWidget {
                         icon: Icons.auto_awesome,
                         color: Colors.purple,
                         isSelected: currentStyleName == 'Neo',
-                        onTap: () => onStyleChanged(NeoStyle(), 'Neo'),
+                        onTap: () => onStyleChanged(const NeoStyle(), 'Neo'),
                       ),
                     ),
                   ],
@@ -117,13 +117,13 @@ class OverviewTab extends StatelessWidget {
           const SizedBox(height: 32),
 
           // Feature Cards
-          AppText(
+          const AppText(
             text: 'Key Features',
             variant: TextVariant.headlineMedium,
           ),
           const SizedBox(height: 16),
 
-          _FeatureCard(
+          const _FeatureCard(
             icon: Icons.auto_awesome,
             title: 'Screen Generation from .screen.dart',
             description:
@@ -131,14 +131,14 @@ class OverviewTab extends StatelessWidget {
             highlighted: true,
           ),
           const SizedBox(height: 16),
-          _FeatureCard(
+          const _FeatureCard(
             icon: Icons.palette,
             title: 'Multi-Style Design System',
             description:
                 'One component API, three visual styles. Switch between Material, Cupertino, and Neo instantly!',
           ),
           const SizedBox(height: 16),
-          _FeatureCard(
+          const _FeatureCard(
             icon: Icons.code,
             title: 'Type-Safe Code Generation',
             description:
@@ -146,7 +146,7 @@ class OverviewTab extends StatelessWidget {
           ),
           const SizedBox(height: 32),
 
-          AppText(text: 'Quick Start', variant: TextVariant.headlineMedium),
+          const AppText(text: 'Quick Start', variant: TextVariant.headlineMedium),
           const SizedBox(height: 16),
           _buildQuickStartStep('1', 'Choose a design style above'),
           _buildQuickStartStep(

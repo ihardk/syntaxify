@@ -92,7 +92,12 @@ class LayoutNodeParser {
 
         // Added parsing for new properties
         final variantExp = tryGetArg(argumentList, 'variant');
-        final variant = _parseButtonVariant(variantExp);
+        String? variant;
+        if (variantExp is analyzer.PrefixedIdentifier) {
+          variant = variantExp.identifier.name;
+        } else if (variantExp is analyzer.SimpleIdentifier) {
+          variant = variantExp.name;
+        }
 
         final sizeExp = tryGetArg(argumentList, 'size');
         final size = _parseButtonSize(sizeExp);
@@ -126,6 +131,17 @@ class LayoutNodeParser {
         final obscureExp = tryGetArg(argumentList, 'obscureText');
         final inputTypeExp = tryGetArg(argumentList, 'keyboardType');
 
+        // Added parsing for variant
+        final variantExp = tryGetArg(argumentList, 'variant');
+        String? variant;
+        if (variantExp is analyzer.PrefixedIdentifier) {
+          variant = variantExp.identifier.name;
+        } else if (variantExp is analyzer.SimpleIdentifier) {
+          variant = variantExp.name;
+        } else if (variantExp is analyzer.StringLiteral) {
+          variant = variantExp.stringValue;
+        }
+
         return LayoutNode.textField(
           label: (labelExp as analyzer.StringLiteral).stringValue ?? '',
           hint:
@@ -133,6 +149,36 @@ class LayoutNodeParser {
           obscureText:
               (obscureExp is analyzer.BooleanLiteral) ? obscureExp.value : null,
           keyboardType: _parseKeyboardType(inputTypeExp),
+          variant: variant,
+        );
+      } else if (constructorName == 'card') {
+        final variantExp = tryGetArg(argumentList, 'variant');
+        String? variant;
+        if (variantExp is analyzer.PrefixedIdentifier) {
+          variant = variantExp.identifier.name;
+        } else if (variantExp is analyzer.SimpleIdentifier) {
+          variant = variantExp.name;
+        } else if (variantExp is analyzer.StringLiteral) {
+          variant = variantExp.stringValue;
+        }
+
+        final paddingExp = tryGetArg(argumentList, 'padding');
+        final padding = (paddingExp is analyzer.StringLiteral)
+            ? paddingExp.stringValue
+            : null;
+
+        final elevationExp = tryGetArg(argumentList, 'elevation');
+        final elevation = (elevationExp is analyzer.DoubleLiteral)
+            ? elevationExp.value
+            : (elevationExp is analyzer.IntegerLiteral)
+                ? elevationExp.value?.toDouble()
+                : null;
+
+        return LayoutNode.card(
+          children: _parseChildren(getArg('children')),
+          variant: variant,
+          padding: padding,
+          elevation: elevation,
         );
       } else if (constructorName == 'spacer') {
         // Added parsing for flex
@@ -159,11 +205,6 @@ class LayoutNodeParser {
   TextVariant _parseTextVariant(analyzer.Expression? exp) {
     return _parseEnum(
         exp, 'TextVariant', TextVariant.values, TextVariant.bodyMedium);
-  }
-
-  ButtonVariant _parseButtonVariant(analyzer.Expression? exp) {
-    return _parseEnum(
-        exp, 'ButtonVariant', ButtonVariant.values, ButtonVariant.filled);
   }
 
   ButtonSize? _parseButtonSize(analyzer.Expression? exp) {

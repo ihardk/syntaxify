@@ -1,14 +1,17 @@
-/// Neo-Brutalism Style (Modern/Bold)
+/// Neo Brutalist Design Style
 part of '../design_system.dart';
 
-/// Neo-brutalism style (modern/bold)
+// =============================================================================
+// NEO STYLE CLASS
+// =============================================================================
+
+/// Neo Brutalist Design style
 ///
-/// Implements neo-brutalism design language with:
-/// - No border radius (sharp corners)
-/// - Bold 3px black borders
-/// - Hard drop shadows (4px offset)
+/// Implements neo-brutalism aesthetic with:
+/// - Sharp corners (0 radius)
+/// - Bold black borders (3px)
+/// - Hard drop shadows
 /// - Vibrant colors (gold, coral)
-/// - Uppercase text with heavy font weight
 class NeoStyle extends DesignStyle
     with
         NeoButtonRenderer,

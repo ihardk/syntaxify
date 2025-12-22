@@ -1,47 +1,49 @@
 /// Button component specification
 ///
 /// Defines the API surface for the AppButton widget.
-/// This file is read by the Syntaxify generator.
-/// Modified again at 13:15 to test watch mode rebuild
+/// Properties must match DesignStyle.renderButton() signature.
+library;
 
-// This is a SPECIFICATION file, not runtime code.
-// The generator parses these annotations to create the widget.
+import 'dart:ui';
 
+import 'package:example/syntaxify/design_system/design_system.dart';
 import 'package:syntaxify/syntaxify.dart';
 
 @SyntaxComponent(description: 'A customizable button component')
 class ButtonMeta {
   /// The button label text
+  /// Maps to: LayoutNode.button(label: ...)
   @Required()
   final String label;
 
-  /// The action to trigger (e.g. 'action:login')
+  /// Button variant - references ButtonVariant enum from design_system
+  /// (primary, secondary, outlined, text)
+  /// Maps to: LayoutNode.button(variant: ...)
   @Optional()
-  final String? onPressed;
+  @Default('primary')
+  final ButtonVariant variant;
 
-  /// Button variant (filled, outlined, etc)
+  /// Callback when button is pressed
+  /// Maps to: LayoutNode.button(onPressed: ...)
   @Optional()
-  final String? variant;
-
-  /// Button size (sm, md, lg)
-  @Optional()
-  final String? size;
+  final VoidCallback? onPressed;
 
   /// Whether the button shows loading state
+  /// Maps to: LayoutNode.button(isLoading: ...)
   @Optional()
   @Default('false')
   final bool isLoading;
 
   /// Whether the button is disabled
+  /// Maps to: LayoutNode.button(isDisabled: ...)
   @Optional()
   @Default('false')
   final bool isDisabled;
 
   const ButtonMeta({
     required this.label,
+    this.variant = ButtonVariant.primary,
     this.onPressed,
-    this.variant,
-    this.size,
     this.isLoading = false,
     this.isDisabled = false,
   });

@@ -49,8 +49,8 @@ sealed class LayoutNode with _$LayoutNode {
     String? id,
     String? visibleWhen,
     required List<LayoutNode> children,
-    MainAxisAlignment? mainAxisAlignment,
-    CrossAxisAlignment? crossAxisAlignment,
+    SyntaxMainAxisAlignment? mainAxisAlignment,
+    SyntaxCrossAxisAlignment? crossAxisAlignment,
     String? spacing,
   }) =>
       LayoutNode.structural(
@@ -67,8 +67,8 @@ sealed class LayoutNode with _$LayoutNode {
     String? id,
     String? visibleWhen,
     required List<LayoutNode> children,
-    MainAxisAlignment? mainAxisAlignment,
-    CrossAxisAlignment? crossAxisAlignment,
+    SyntaxMainAxisAlignment? mainAxisAlignment,
+    SyntaxCrossAxisAlignment? crossAxisAlignment,
     String? spacing,
   }) =>
       LayoutNode.structural(
@@ -111,25 +111,34 @@ sealed class LayoutNode with _$LayoutNode {
     String? id,
     String? visibleWhen,
     required List<LayoutNode> children,
-    CardVariant? variant,
+    dynamic variant,
     String? padding,
     double? elevation,
-  }) =>
-      LayoutNode.structural(
-        node: StructuralNode.card(
-          children: children,
-          variant: variant,
-          padding: padding,
-          elevation: elevation,
-        ),
-        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
-      );
+  }) {
+    // Handle Enum or String for variant
+    String? variantName;
+    if (variant is Enum) {
+      variantName = variant.name;
+    } else if (variant is String) {
+      variantName = variant;
+    }
+
+    return LayoutNode.structural(
+      node: StructuralNode.card(
+        children: children,
+        variant: variantName,
+        padding: padding,
+        elevation: elevation,
+      ),
+      meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+    );
+  }
 
   factory LayoutNode.listView({
     String? id,
     String? visibleWhen,
     required List<LayoutNode> children,
-    Axis? scrollDirection,
+    SyntaxAxis? scrollDirection,
     String? spacing,
     bool? shrinkWrap,
   }) =>
@@ -147,51 +156,72 @@ sealed class LayoutNode with _$LayoutNode {
     String? id,
     String? visibleWhen,
     required String text,
-    TextVariant? variant,
-    TextAlign? align,
+    dynamic variant,
+    SyntaxTextAlign? align,
     int? maxLines,
-    TextOverflow? overflow,
-  }) =>
-      LayoutNode.primitive(
-        node: PrimitiveNode.text(
-          text: text,
-          variant: variant,
-          align: align,
-          maxLines: maxLines,
-          overflow: overflow,
-        ),
-        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
-      );
+    SyntaxTextOverflow? overflow,
+  }) {
+    // Handle Enum or String for variant
+    String? variantName;
+    if (variant is Enum) {
+      variantName = variant.name;
+    } else if (variant is String) {
+      variantName = variant;
+    }
+
+    return LayoutNode.primitive(
+      node: PrimitiveNode.text(
+        text: text,
+        variant: variantName != null
+            ? TextVariant.values.firstWhere((e) => e.name == variantName,
+                orElse: () => TextVariant.bodyMedium)
+            : null,
+        align: align,
+        maxLines: maxLines,
+        overflow: overflow,
+      ),
+      meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+    );
+  }
 
   factory LayoutNode.button({
     String? id,
     String? visibleWhen,
     required String label,
     String? onPressed,
-    ButtonVariant? variant,
+    dynamic variant,
     ButtonSize? size,
     String? icon,
     IconPosition? iconPosition,
     bool? isLoading,
     bool? isDisabled,
     bool? fullWidth,
-  }) =>
-      LayoutNode.interactive(
-        node: InteractiveNode.button(
-          label: label,
-          onPressed: onPressed,
-          props: ButtonProps(
-            variant: variant,
-            size: size,
-            icon: icon,
-            iconPosition: iconPosition,
-            isLoading: isLoading ?? false,
-            isDisabled: isDisabled ?? false,
-            fullWidth: fullWidth ?? false,
-          ),
+  }) {
+    // Handle Enum or String for variant
+    String? variantName;
+    if (variant is Enum) {
+      variantName = variant.name;
+    } else if (variant is String) {
+      variantName = variant;
+    }
+
+    return LayoutNode.interactive(
+      node: InteractiveNode.button(
+        label: label,
+        onPressed: onPressed,
+        props: ButtonProps(
+          variant: variantName,
+          size: size,
+          icon: icon,
+          iconPosition: iconPosition,
+          isLoading: isLoading ?? false,
+          isDisabled: isDisabled ?? false,
+          fullWidth: fullWidth ?? false,
         ),
-        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
-      );
+      ),
+      meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+    );
+  }
 
   factory LayoutNode.textField({
     String? id,
@@ -210,30 +240,39 @@ sealed class LayoutNode with _$LayoutNode {
     String? errorText,
     int? maxLines,
     int? maxLength,
-    TextFieldVariant? variant,
-  }) =>
-      LayoutNode.interactive(
-        node: InteractiveNode.textField(
-          label: label,
-          binding: binding,
-          onChanged: onChanged,
-          onSubmitted: onSubmitted,
-          props: TextFieldProps(
-            hint: hint,
-            helperText: helperText,
-            prefixIcon: prefixIcon,
-            suffixIcon: suffixIcon,
-            keyboardType: keyboardType,
-            textInputAction: textInputAction,
-            obscureText: obscureText ?? false,
-            errorText: errorText,
-            maxLines: maxLines,
-            maxLength: maxLength,
-            variant: variant,
-          ),
+    dynamic variant,
+  }) {
+    // Handle Enum or String for variant
+    String? variantName;
+    if (variant is Enum) {
+      variantName = variant.name;
+    } else if (variant is String) {
+      variantName = variant;
+    }
+
+    return LayoutNode.interactive(
+      node: InteractiveNode.textField(
+        label: label,
+        binding: binding,
+        onChanged: onChanged,
+        onSubmitted: onSubmitted,
+        props: TextFieldProps(
+          hint: hint,
+          helperText: helperText,
+          prefixIcon: prefixIcon,
+          suffixIcon: suffixIcon,
+          keyboardType: keyboardType,
+          textInputAction: textInputAction,
+          obscureText: obscureText ?? false,
+          errorText: errorText,
+          maxLines: maxLines,
+          maxLength: maxLength,
+          variant: variantName,
         ),
-        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
-      );
+      ),
+      meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+    );
+  }
 
   factory LayoutNode.icon({
     String? id,

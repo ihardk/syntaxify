@@ -229,14 +229,14 @@ extension StructuralNodePatterns on StructuralNode {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
             List<LayoutNode> children,
-            MainAxisAlignment? mainAxisAlignment,
-            CrossAxisAlignment? crossAxisAlignment,
+            SyntaxMainAxisAlignment? mainAxisAlignment,
+            SyntaxCrossAxisAlignment? crossAxisAlignment,
             String? spacing)?
         column,
     TResult Function(
             List<LayoutNode> children,
-            MainAxisAlignment? mainAxisAlignment,
-            CrossAxisAlignment? crossAxisAlignment,
+            SyntaxMainAxisAlignment? mainAxisAlignment,
+            SyntaxCrossAxisAlignment? crossAxisAlignment,
             String? spacing)?
         row,
     TResult Function(
@@ -249,10 +249,10 @@ extension StructuralNodePatterns on StructuralNode {
             double? borderRadius,
             ContainerSemantic? semantic)?
         container,
-    TResult Function(List<LayoutNode> children, CardVariant? variant,
+    TResult Function(List<LayoutNode> children, String? variant,
             String? padding, double? elevation)?
         card,
-    TResult Function(List<LayoutNode> children, Axis? scrollDirection,
+    TResult Function(List<LayoutNode> children, SyntaxAxis? scrollDirection,
             String? spacing, bool? shrinkWrap)?
         listView,
     TResult Function(
@@ -318,14 +318,14 @@ extension StructuralNodePatterns on StructuralNode {
   TResult when<TResult extends Object?>({
     required TResult Function(
             List<LayoutNode> children,
-            MainAxisAlignment? mainAxisAlignment,
-            CrossAxisAlignment? crossAxisAlignment,
+            SyntaxMainAxisAlignment? mainAxisAlignment,
+            SyntaxCrossAxisAlignment? crossAxisAlignment,
             String? spacing)
         column,
     required TResult Function(
             List<LayoutNode> children,
-            MainAxisAlignment? mainAxisAlignment,
-            CrossAxisAlignment? crossAxisAlignment,
+            SyntaxMainAxisAlignment? mainAxisAlignment,
+            SyntaxCrossAxisAlignment? crossAxisAlignment,
             String? spacing)
         row,
     required TResult Function(
@@ -338,11 +338,11 @@ extension StructuralNodePatterns on StructuralNode {
             double? borderRadius,
             ContainerSemantic? semantic)
         container,
-    required TResult Function(List<LayoutNode> children, CardVariant? variant,
+    required TResult Function(List<LayoutNode> children, String? variant,
             String? padding, double? elevation)
         card,
-    required TResult Function(List<LayoutNode> children, Axis? scrollDirection,
-            String? spacing, bool? shrinkWrap)
+    required TResult Function(List<LayoutNode> children,
+            SyntaxAxis? scrollDirection, String? spacing, bool? shrinkWrap)
         listView,
     required TResult Function(
             List<LayoutNode> children, StackFit? fit, AlignmentEnum? alignment)
@@ -403,14 +403,14 @@ extension StructuralNodePatterns on StructuralNode {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
             List<LayoutNode> children,
-            MainAxisAlignment? mainAxisAlignment,
-            CrossAxisAlignment? crossAxisAlignment,
+            SyntaxMainAxisAlignment? mainAxisAlignment,
+            SyntaxCrossAxisAlignment? crossAxisAlignment,
             String? spacing)?
         column,
     TResult? Function(
             List<LayoutNode> children,
-            MainAxisAlignment? mainAxisAlignment,
-            CrossAxisAlignment? crossAxisAlignment,
+            SyntaxMainAxisAlignment? mainAxisAlignment,
+            SyntaxCrossAxisAlignment? crossAxisAlignment,
             String? spacing)?
         row,
     TResult? Function(
@@ -423,10 +423,10 @@ extension StructuralNodePatterns on StructuralNode {
             double? borderRadius,
             ContainerSemantic? semantic)?
         container,
-    TResult? Function(List<LayoutNode> children, CardVariant? variant,
+    TResult? Function(List<LayoutNode> children, String? variant,
             String? padding, double? elevation)?
         card,
-    TResult? Function(List<LayoutNode> children, Axis? scrollDirection,
+    TResult? Function(List<LayoutNode> children, SyntaxAxis? scrollDirection,
             String? spacing, bool? shrinkWrap)?
         listView,
     TResult? Function(
@@ -496,8 +496,8 @@ class ColumnNode implements StructuralNode {
     return EqualUnmodifiableListView(_children);
   }
 
-  final MainAxisAlignment? mainAxisAlignment;
-  final CrossAxisAlignment? crossAxisAlignment;
+  final SyntaxMainAxisAlignment? mainAxisAlignment;
+  final SyntaxCrossAxisAlignment? crossAxisAlignment;
   final String? spacing;
 
   @JsonKey(name: 'runtimeType')
@@ -554,8 +554,8 @@ abstract mixin class $ColumnNodeCopyWith<$Res>
   @useResult
   $Res call(
       {List<LayoutNode> children,
-      MainAxisAlignment? mainAxisAlignment,
-      CrossAxisAlignment? crossAxisAlignment,
+      SyntaxMainAxisAlignment? mainAxisAlignment,
+      SyntaxCrossAxisAlignment? crossAxisAlignment,
       String? spacing});
 }
 
@@ -583,11 +583,11 @@ class _$ColumnNodeCopyWithImpl<$Res> implements $ColumnNodeCopyWith<$Res> {
       mainAxisAlignment: freezed == mainAxisAlignment
           ? _self.mainAxisAlignment
           : mainAxisAlignment // ignore: cast_nullable_to_non_nullable
-              as MainAxisAlignment?,
+              as SyntaxMainAxisAlignment?,
       crossAxisAlignment: freezed == crossAxisAlignment
           ? _self.crossAxisAlignment
           : crossAxisAlignment // ignore: cast_nullable_to_non_nullable
-              as CrossAxisAlignment?,
+              as SyntaxCrossAxisAlignment?,
       spacing: freezed == spacing
           ? _self.spacing
           : spacing // ignore: cast_nullable_to_non_nullable
@@ -617,8 +617,8 @@ class RowNode implements StructuralNode {
     return EqualUnmodifiableListView(_children);
   }
 
-  final MainAxisAlignment? mainAxisAlignment;
-  final CrossAxisAlignment? crossAxisAlignment;
+  final SyntaxMainAxisAlignment? mainAxisAlignment;
+  final SyntaxCrossAxisAlignment? crossAxisAlignment;
   final String? spacing;
 
   @JsonKey(name: 'runtimeType')
@@ -674,8 +674,8 @@ abstract mixin class $RowNodeCopyWith<$Res>
   @useResult
   $Res call(
       {List<LayoutNode> children,
-      MainAxisAlignment? mainAxisAlignment,
-      CrossAxisAlignment? crossAxisAlignment,
+      SyntaxMainAxisAlignment? mainAxisAlignment,
+      SyntaxCrossAxisAlignment? crossAxisAlignment,
       String? spacing});
 }
 
@@ -703,11 +703,11 @@ class _$RowNodeCopyWithImpl<$Res> implements $RowNodeCopyWith<$Res> {
       mainAxisAlignment: freezed == mainAxisAlignment
           ? _self.mainAxisAlignment
           : mainAxisAlignment // ignore: cast_nullable_to_non_nullable
-              as MainAxisAlignment?,
+              as SyntaxMainAxisAlignment?,
       crossAxisAlignment: freezed == crossAxisAlignment
           ? _self.crossAxisAlignment
           : crossAxisAlignment // ignore: cast_nullable_to_non_nullable
-              as CrossAxisAlignment?,
+              as SyntaxCrossAxisAlignment?,
       spacing: freezed == spacing
           ? _self.spacing
           : spacing // ignore: cast_nullable_to_non_nullable
@@ -900,7 +900,7 @@ class CardNode implements StructuralNode {
     return EqualUnmodifiableListView(_children);
   }
 
-  final CardVariant? variant;
+  final String? variant;
   final String? padding;
   final double? elevation;
 
@@ -956,7 +956,7 @@ abstract mixin class $CardNodeCopyWith<$Res>
   @useResult
   $Res call(
       {List<LayoutNode> children,
-      CardVariant? variant,
+      String? variant,
       String? padding,
       double? elevation});
 }
@@ -985,7 +985,7 @@ class _$CardNodeCopyWithImpl<$Res> implements $CardNodeCopyWith<$Res> {
       variant: freezed == variant
           ? _self.variant
           : variant // ignore: cast_nullable_to_non_nullable
-              as CardVariant?,
+              as String?,
       padding: freezed == padding
           ? _self.padding
           : padding // ignore: cast_nullable_to_non_nullable
@@ -1019,7 +1019,7 @@ class ListViewNode implements StructuralNode {
     return EqualUnmodifiableListView(_children);
   }
 
-  final Axis? scrollDirection;
+  final SyntaxAxis? scrollDirection;
   final String? spacing;
   final bool? shrinkWrap;
 
@@ -1077,7 +1077,7 @@ abstract mixin class $ListViewNodeCopyWith<$Res>
   @useResult
   $Res call(
       {List<LayoutNode> children,
-      Axis? scrollDirection,
+      SyntaxAxis? scrollDirection,
       String? spacing,
       bool? shrinkWrap});
 }
@@ -1106,7 +1106,7 @@ class _$ListViewNodeCopyWithImpl<$Res> implements $ListViewNodeCopyWith<$Res> {
       scrollDirection: freezed == scrollDirection
           ? _self.scrollDirection
           : scrollDirection // ignore: cast_nullable_to_non_nullable
-              as Axis?,
+              as SyntaxAxis?,
       spacing: freezed == spacing
           ? _self.spacing
           : spacing // ignore: cast_nullable_to_non_nullable

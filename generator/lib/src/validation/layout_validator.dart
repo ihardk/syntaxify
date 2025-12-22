@@ -209,7 +209,7 @@ class LayoutValidator {
     // Rule: Conflicting properties (clip overflow with specific maxLines)
     // Example rule: If maxLines is 1, overflow should usually be ellipsis or fade, not clip?
     // The test says "validates text with conflicting overflow and maxLines" -> maxLines: 1 + clip
-    if (node.maxLines == 1 && node.overflow == TextOverflow.clip) {
+    if (node.maxLines == 1 && node.overflow == SyntaxTextOverflow.clip) {
       errors.add(ValidationError(
         type: ValidationErrorType.conflictingProperties,
         message:

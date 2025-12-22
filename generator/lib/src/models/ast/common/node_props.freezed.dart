@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$ButtonProps {
-  ButtonVariant? get variant;
+  String? get variant;
   ButtonSize? get size;
   String? get icon;
   IconPosition? get iconPosition;
@@ -68,7 +68,7 @@ abstract mixin class $ButtonPropsCopyWith<$Res> {
       _$ButtonPropsCopyWithImpl;
   @useResult
   $Res call(
-      {ButtonVariant? variant,
+      {String? variant,
       ButtonSize? size,
       String? icon,
       IconPosition? iconPosition,
@@ -101,7 +101,7 @@ class _$ButtonPropsCopyWithImpl<$Res> implements $ButtonPropsCopyWith<$Res> {
       variant: freezed == variant
           ? _self.variant
           : variant // ignore: cast_nullable_to_non_nullable
-              as ButtonVariant?,
+              as String?,
       size: freezed == size
           ? _self.size
           : size // ignore: cast_nullable_to_non_nullable
@@ -222,7 +222,7 @@ extension ButtonPropsPatterns on ButtonProps {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
-            ButtonVariant? variant,
+            String? variant,
             ButtonSize? size,
             String? icon,
             IconPosition? iconPosition,
@@ -264,7 +264,7 @@ extension ButtonPropsPatterns on ButtonProps {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
-            ButtonVariant? variant,
+            String? variant,
             ButtonSize? size,
             String? icon,
             IconPosition? iconPosition,
@@ -302,7 +302,7 @@ extension ButtonPropsPatterns on ButtonProps {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
-            ButtonVariant? variant,
+            String? variant,
             ButtonSize? size,
             String? icon,
             IconPosition? iconPosition,
@@ -343,7 +343,7 @@ class _ButtonProps implements ButtonProps {
       _$ButtonPropsFromJson(json);
 
   @override
-  final ButtonVariant? variant;
+  final String? variant;
   @override
   final ButtonSize? size;
   @override
@@ -413,7 +413,7 @@ abstract mixin class _$ButtonPropsCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {ButtonVariant? variant,
+      {String? variant,
       ButtonSize? size,
       String? icon,
       IconPosition? iconPosition,
@@ -446,7 +446,7 @@ class __$ButtonPropsCopyWithImpl<$Res> implements _$ButtonPropsCopyWith<$Res> {
       variant: freezed == variant
           ? _self.variant
           : variant // ignore: cast_nullable_to_non_nullable
-              as ButtonVariant?,
+              as String?,
       size: freezed == size
           ? _self.size
           : size // ignore: cast_nullable_to_non_nullable
@@ -487,7 +487,7 @@ mixin _$TextFieldProps {
   String? get errorText;
   int? get maxLines;
   int? get maxLength;
-  TextFieldVariant? get variant;
+  String? get variant;
 
   /// Create a copy of TextFieldProps
   /// with the given fields replaced by the non-null parameter values.
@@ -566,7 +566,7 @@ abstract mixin class $TextFieldPropsCopyWith<$Res> {
       String? errorText,
       int? maxLines,
       int? maxLength,
-      TextFieldVariant? variant});
+      String? variant});
 }
 
 /// @nodoc
@@ -638,7 +638,7 @@ class _$TextFieldPropsCopyWithImpl<$Res>
       variant: freezed == variant
           ? _self.variant
           : variant // ignore: cast_nullable_to_non_nullable
-              as TextFieldVariant?,
+              as String?,
     ));
   }
 }
@@ -745,7 +745,7 @@ extension TextFieldPropsPatterns on TextFieldProps {
             String? errorText,
             int? maxLines,
             int? maxLength,
-            TextFieldVariant? variant)?
+            String? variant)?
         $default, {
     required TResult orElse(),
   }) {
@@ -795,7 +795,7 @@ extension TextFieldPropsPatterns on TextFieldProps {
             String? errorText,
             int? maxLines,
             int? maxLength,
-            TextFieldVariant? variant)
+            String? variant)
         $default,
   ) {
     final _that = this;
@@ -841,7 +841,7 @@ extension TextFieldPropsPatterns on TextFieldProps {
             String? errorText,
             int? maxLines,
             int? maxLength,
-            TextFieldVariant? variant)?
+            String? variant)?
         $default,
   ) {
     final _that = this;
@@ -905,7 +905,7 @@ class _TextFieldProps implements TextFieldProps {
   @override
   final int? maxLength;
   @override
-  final TextFieldVariant? variant;
+  final String? variant;
 
   /// Create a copy of TextFieldProps
   /// with the given fields replaced by the non-null parameter values.
@@ -990,7 +990,7 @@ abstract mixin class _$TextFieldPropsCopyWith<$Res>
       String? errorText,
       int? maxLines,
       int? maxLength,
-      TextFieldVariant? variant});
+      String? variant});
 }
 
 /// @nodoc
@@ -1062,7 +1062,7 @@ class __$TextFieldPropsCopyWithImpl<$Res>
       variant: freezed == variant
           ? _self.variant
           : variant // ignore: cast_nullable_to_non_nullable
-              as TextFieldVariant?,
+              as String?,
     ));
   }
 }

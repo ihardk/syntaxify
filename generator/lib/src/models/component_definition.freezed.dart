@@ -24,6 +24,9 @@ mixin _$ComponentDefinition {
   List<String> get variants;
   String? get description;
 
+  /// Type parameters for generic classes (e.g., ['T'] for RadioMeta<T>)
+  List<String> get typeParameters;
+
   /// Create a copy of ComponentDefinition
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -46,7 +49,9 @@ mixin _$ComponentDefinition {
                 .equals(other.properties, properties) &&
             const DeepCollectionEquality().equals(other.variants, variants) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            const DeepCollectionEquality()
+                .equals(other.typeParameters, typeParameters));
   }
 
   @override
@@ -57,11 +62,12 @@ mixin _$ComponentDefinition {
       explicitName,
       const DeepCollectionEquality().hash(properties),
       const DeepCollectionEquality().hash(variants),
-      description);
+      description,
+      const DeepCollectionEquality().hash(typeParameters));
 
   @override
   String toString() {
-    return 'ComponentDefinition(name: $name, className: $className, explicitName: $explicitName, properties: $properties, variants: $variants, description: $description)';
+    return 'ComponentDefinition(name: $name, className: $className, explicitName: $explicitName, properties: $properties, variants: $variants, description: $description, typeParameters: $typeParameters)';
   }
 }
 
@@ -77,7 +83,8 @@ abstract mixin class $ComponentDefinitionCopyWith<$Res> {
       String? explicitName,
       List<ComponentProp> properties,
       List<String> variants,
-      String? description});
+      String? description,
+      List<String> typeParameters});
 }
 
 /// @nodoc
@@ -99,6 +106,7 @@ class _$ComponentDefinitionCopyWithImpl<$Res>
     Object? properties = null,
     Object? variants = null,
     Object? description = freezed,
+    Object? typeParameters = null,
   }) {
     return _then(_self.copyWith(
       name: null == name
@@ -125,6 +133,10 @@ class _$ComponentDefinitionCopyWithImpl<$Res>
           ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      typeParameters: null == typeParameters
+          ? _self.typeParameters
+          : typeParameters // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -226,15 +238,22 @@ extension ComponentDefinitionPatterns on ComponentDefinition {
             String? explicitName,
             List<ComponentProp> properties,
             List<String> variants,
-            String? description)?
+            String? description,
+            List<String> typeParameters)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _ComponentDefinition() when $default != null:
-        return $default(_that.name, _that.className, _that.explicitName,
-            _that.properties, _that.variants, _that.description);
+        return $default(
+            _that.name,
+            _that.className,
+            _that.explicitName,
+            _that.properties,
+            _that.variants,
+            _that.description,
+            _that.typeParameters);
       case _:
         return orElse();
     }
@@ -261,14 +280,21 @@ extension ComponentDefinitionPatterns on ComponentDefinition {
             String? explicitName,
             List<ComponentProp> properties,
             List<String> variants,
-            String? description)
+            String? description,
+            List<String> typeParameters)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ComponentDefinition():
-        return $default(_that.name, _that.className, _that.explicitName,
-            _that.properties, _that.variants, _that.description);
+        return $default(
+            _that.name,
+            _that.className,
+            _that.explicitName,
+            _that.properties,
+            _that.variants,
+            _that.description,
+            _that.typeParameters);
     }
   }
 
@@ -292,14 +318,21 @@ extension ComponentDefinitionPatterns on ComponentDefinition {
             String? explicitName,
             List<ComponentProp> properties,
             List<String> variants,
-            String? description)?
+            String? description,
+            List<String> typeParameters)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ComponentDefinition() when $default != null:
-        return $default(_that.name, _that.className, _that.explicitName,
-            _that.properties, _that.variants, _that.description);
+        return $default(
+            _that.name,
+            _that.className,
+            _that.explicitName,
+            _that.properties,
+            _that.variants,
+            _that.description,
+            _that.typeParameters);
       case _:
         return null;
     }
@@ -315,9 +348,11 @@ class _ComponentDefinition implements ComponentDefinition {
       this.explicitName,
       required final List<ComponentProp> properties,
       required final List<String> variants,
-      this.description})
+      this.description,
+      final List<String> typeParameters = const []})
       : _properties = properties,
-        _variants = variants;
+        _variants = variants,
+        _typeParameters = typeParameters;
 
   @override
   final String name;
@@ -347,6 +382,18 @@ class _ComponentDefinition implements ComponentDefinition {
   @override
   final String? description;
 
+  /// Type parameters for generic classes (e.g., ['T'] for RadioMeta<T>)
+  final List<String> _typeParameters;
+
+  /// Type parameters for generic classes (e.g., ['T'] for RadioMeta<T>)
+  @override
+  @JsonKey()
+  List<String> get typeParameters {
+    if (_typeParameters is EqualUnmodifiableListView) return _typeParameters;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_typeParameters);
+  }
+
   /// Create a copy of ComponentDefinition
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -370,7 +417,9 @@ class _ComponentDefinition implements ComponentDefinition {
                 .equals(other._properties, _properties) &&
             const DeepCollectionEquality().equals(other._variants, _variants) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            const DeepCollectionEquality()
+                .equals(other._typeParameters, _typeParameters));
   }
 
   @override
@@ -381,11 +430,12 @@ class _ComponentDefinition implements ComponentDefinition {
       explicitName,
       const DeepCollectionEquality().hash(_properties),
       const DeepCollectionEquality().hash(_variants),
-      description);
+      description,
+      const DeepCollectionEquality().hash(_typeParameters));
 
   @override
   String toString() {
-    return 'ComponentDefinition(name: $name, className: $className, explicitName: $explicitName, properties: $properties, variants: $variants, description: $description)';
+    return 'ComponentDefinition(name: $name, className: $className, explicitName: $explicitName, properties: $properties, variants: $variants, description: $description, typeParameters: $typeParameters)';
   }
 }
 
@@ -403,7 +453,8 @@ abstract mixin class _$ComponentDefinitionCopyWith<$Res>
       String? explicitName,
       List<ComponentProp> properties,
       List<String> variants,
-      String? description});
+      String? description,
+      List<String> typeParameters});
 }
 
 /// @nodoc
@@ -425,6 +476,7 @@ class __$ComponentDefinitionCopyWithImpl<$Res>
     Object? properties = null,
     Object? variants = null,
     Object? description = freezed,
+    Object? typeParameters = null,
   }) {
     return _then(_ComponentDefinition(
       name: null == name
@@ -451,6 +503,10 @@ class __$ComponentDefinitionCopyWithImpl<$Res>
           ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      typeParameters: null == typeParameters
+          ? _self._typeParameters
+          : typeParameters // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }

@@ -17,6 +17,11 @@ class ScreenGenerator {
   /// [screen] The screen definition to generate code for.
   /// [packageName] Optional package name for import resolution.
   String generate(ScreenDefinition screen, {String? packageName}) {
+    // Collect callbacks and controllers
+    final callbacks = _collectCallbacks(screen.layout);
+    final controllers = _collectControllers(screen.layout);
+    final needsStateful = controllers.isNotEmpty;
+
     final library = Library((b) => b
       ..comments.addAll([
         'GENERATED CODE - DO NOT MODIFY BY HAND',
@@ -35,16 +40,19 @@ class ScreenGenerator {
               '../design_system/design_system.dart'), // For design system
         ],
       ])
-      ..body.add(_buildScreenClass(screen)));
+      ..body.addAll(needsStateful
+          ? _buildStatefulScreen(screen, callbacks, controllers)
+          : [_buildStatelessScreen(screen, callbacks)]));
 
     final emitter = DartEmitter(useNullSafetySyntax: true);
     return DartFormatter(languageVersion: DartFormatter.latestLanguageVersion)
         .format('${library.accept(emitter)}');
   }
 
-  Class _buildScreenClass(ScreenDefinition screen) {
+  /// Build StatelessWidget screen (no controllers needed)
+  Class _buildStatelessScreen(
+      ScreenDefinition screen, Map<String, Reference> callbacks) {
     final className = '${_toPascalCase(screen.id)}Screen';
-    final callbacks = _collectCallbacks(screen.layout);
 
     return Class((c) => c
       ..name = className
@@ -73,6 +81,85 @@ class ScreenGenerator {
         ..body = _buildBuildMethodBody(screen))));
   }
 
+  /// Build StatefulWidget screen (controllers needed)
+  List<Spec> _buildStatefulScreen(
+    ScreenDefinition screen,
+    Map<String, Reference> callbacks,
+    List<ControllerInfo> controllers,
+  ) {
+    final className = '${_toPascalCase(screen.id)}Screen';
+    final stateClassName = '_${className}State';
+
+    // The StatefulWidget class
+    final widgetClass = Class((c) => c
+      ..name = className
+      ..extend = refer('StatefulWidget')
+      ..fields.addAll(callbacks.entries.map((e) => Field((f) => f
+        ..name = e.key
+        ..type = e.value
+        ..modifier = FieldModifier.final$)))
+      ..constructors.add(Constructor((b) => b
+        ..constant = true
+        ..optionalParameters.add(Parameter((p) => p
+          ..name = 'super.key'
+          ..named = true))
+        ..optionalParameters
+            .addAll(callbacks.keys.map((name) => Parameter((p) => p
+              ..name = name
+              ..named = true
+              ..toThis = true)))))
+      ..methods.add(Method((m) => m
+        ..annotations.add(refer('override'))
+        ..name = 'createState'
+        ..returns = refer('State<$className>')
+        ..lambda = true
+        ..body = Code('$stateClassName()'))));
+
+    // The State class
+    final stateClass = Class((c) => c
+      ..name = stateClassName
+      ..extend = refer('State<$className>')
+      // Controller fields
+      ..fields.addAll(controllers.map((ctrl) => Field((f) => f
+        ..name = ctrl.fieldName
+        ..late = true
+        ..modifier = FieldModifier.final$
+        ..type = refer('TextEditingController'))))
+      // initState
+      ..methods.add(Method((m) => m
+        ..annotations.add(refer('override'))
+        ..name = 'initState'
+        ..returns = refer('void')
+        ..body = Block.of([
+          refer('super').property('initState').call([]).statement,
+          ...controllers.map((ctrl) => refer(ctrl.fieldName)
+              .assign(refer('TextEditingController').call([]))
+              .statement),
+        ])))
+      // dispose
+      ..methods.add(Method((m) => m
+        ..annotations.add(refer('override'))
+        ..name = 'dispose'
+        ..returns = refer('void')
+        ..body = Block.of([
+          ...controllers.map((ctrl) =>
+              refer(ctrl.fieldName).property('dispose').call([]).statement),
+          refer('super').property('dispose').call([]).statement,
+        ])))
+      // build
+      ..methods.add(Method((m) => m
+        ..annotations.add(refer('override'))
+        ..name = 'build'
+        ..requiredParameters.add(Parameter((p) => p
+          ..name = 'context'
+          ..type = refer('BuildContext')))
+        ..returns = refer('Widget')
+        ..body =
+            _buildStatefulBuildMethodBody(screen, controllers, callbacks))));
+
+    return [widgetClass, stateClass];
+  }
+
   Code _buildBuildMethodBody(ScreenDefinition screen) {
     final scaffold = refer('Scaffold').newInstance([], {
       if (screen.appBar != null) 'appBar': layoutEmitter.emit(screen.appBar!),
@@ -80,6 +167,145 @@ class ScreenGenerator {
     });
 
     return scaffold.returned.statement;
+  }
+
+  Code _buildStatefulBuildMethodBody(
+    ScreenDefinition screen,
+    List<ControllerInfo> controllers,
+    Map<String, Reference> callbacks,
+  ) {
+    // Map callbacks to widget properties (e.g. 'onSubmit' -> 'widget.onSubmit')
+    final variableMap = {
+      for (final cb in callbacks.keys) cb: 'widget.$cb',
+    };
+
+    // Create a modified layout emitter that injects controller references
+    final emitterWithControllers = LayoutEmitter(
+      controllerMap: _buildControllerMap(controllers),
+      variableMap: variableMap,
+    );
+
+    final scaffold = refer('Scaffold').newInstance([], {
+      if (screen.appBar != null)
+        'appBar': emitterWithControllers.emit(screen.appBar!),
+      'body': emitterWithControllers.emit(screen.layout),
+    });
+
+    return scaffold.returned.statement;
+  }
+
+  Map<String, String> _buildControllerMap(List<ControllerInfo> controllers) {
+    return {
+      for (final ctrl in controllers) ctrl.inputLabel: ctrl.fieldName,
+    };
+  }
+
+  // Collect controllers from input nodes
+  List<ControllerInfo> _collectControllers(LayoutNode node) {
+    final controllers = <ControllerInfo>[];
+    _traverseForControllers(node, controllers);
+    return controllers;
+  }
+
+  void _traverseForControllers(
+      LayoutNode node, List<ControllerInfo> controllers) {
+    node.map(
+      structural: (n) => _traverseStructuralForControllers(n.node, controllers),
+      primitive: (n) => _traversePrimitiveForControllers(n.node, controllers),
+      interactive: (n) =>
+          _traverseInteractiveForControllers(n.node, controllers),
+      custom: (_) {},
+      appBar: (_) {},
+    );
+  }
+
+  void _traverseStructuralForControllers(
+      StructuralNode node, List<ControllerInfo> controllers) {
+    node.map(
+      column: (n) {
+        for (final child in n.children) {
+          _traverseForControllers(child, controllers);
+        }
+      },
+      row: (n) {
+        for (final child in n.children) {
+          _traverseForControllers(child, controllers);
+        }
+      },
+      container: (n) {
+        if (n.child != null) {
+          _traverseForControllers(n.child!, controllers);
+        }
+      },
+      card: (n) {
+        for (final child in n.children) {
+          _traverseForControllers(child, controllers);
+        }
+      },
+      listView: (n) {
+        for (final child in n.children) {
+          _traverseForControllers(child, controllers);
+        }
+      },
+      stack: (n) {
+        for (final child in n.children) {
+          _traverseForControllers(child, controllers);
+        }
+      },
+      gridView: (n) {
+        for (final child in n.children) {
+          _traverseForControllers(child, controllers);
+        }
+      },
+      padding: (n) {
+        _traverseForControllers(n.child, controllers);
+      },
+      center: (n) {
+        _traverseForControllers(n.child, controllers);
+      },
+    );
+  }
+
+  void _traversePrimitiveForControllers(
+      PrimitiveNode node, List<ControllerInfo> controllers) {
+    node.map(
+      text: (_) {},
+      icon: (_) {},
+      spacer: (_) {},
+      image: (_) {},
+      divider: (_) {},
+      circularProgressIndicator: (_) {},
+      sizedBox: (n) {
+        if (n.child != null) {
+          _traverseForControllers(n.child!, controllers);
+        }
+      },
+      expanded: (n) {
+        _traverseForControllers(n.child, controllers);
+      },
+    );
+  }
+
+  void _traverseInteractiveForControllers(
+      InteractiveNode node, List<ControllerInfo> controllers) {
+    node.map(
+      button: (_) {},
+      textField: (n) {
+        // Generate controller field name from label
+        final label = n.label ?? 'input${controllers.length}';
+        final fieldName = '_${_toCamelCase(label)}Controller';
+        controllers.add(ControllerInfo(
+          inputLabel: label,
+          fieldName: fieldName,
+        ));
+      },
+      checkbox: (_) {},
+      switchNode: (_) {},
+      iconButton: (_) {},
+      dropdown: (_) {},
+      radio: (_) {},
+      slider: (_) {},
+    );
   }
 
   // Rewrite using AST Visitor pattern
@@ -235,4 +461,26 @@ class ScreenGenerator {
             : '')
         .join('');
   }
+
+  String _toCamelCase(String input) {
+    if (input.isEmpty) return '';
+    // Remove non-alphanumeric and convert to camelCase
+    final parts = input.replaceAll(RegExp(r'[^a-zA-Z0-9]'), ' ').split(' ');
+    if (parts.isEmpty) return 'input';
+    return parts.first.toLowerCase() +
+        parts
+            .skip(1)
+            .map((s) => s.isNotEmpty
+                ? '${s[0].toUpperCase()}${s.substring(1).toLowerCase()}'
+                : '')
+            .join('');
+  }
+}
+
+/// Info about a controller to be generated
+class ControllerInfo {
+  final String inputLabel;
+  final String fieldName;
+
+  ControllerInfo({required this.inputLabel, required this.fieldName});
 }

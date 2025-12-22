@@ -7,8 +7,8 @@ import 'package:syntaxify/syntaxify.dart';
 final loginScreen = ScreenDefinition(
   id: 'login',
   layout: LayoutNode.column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.stretch,
+    mainAxisAlignment: SyntaxMainAxisAlignment.center,
+    crossAxisAlignment: SyntaxCrossAxisAlignment.stretch,
     children: [
       LayoutNode.text(
         text: 'Welcome Back',

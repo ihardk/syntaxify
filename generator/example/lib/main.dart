@@ -37,7 +37,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  DesignStyle _currentStyle = MaterialStyle();
+  DesignStyle _currentStyle = const MaterialStyle();
   String _currentStyleName = 'Material';
 
   void _switchStyle(DesignStyle style, String name) {
@@ -151,44 +151,48 @@ class _ButtonsTabState extends State<ButtonsTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AppText(
+          const AppText(
             text: 'Button Components',
             variant: TextVariant.headlineMedium,
           ),
           const SizedBox(height: 8),
-          AppText(
+          const AppText(
             text: 'Syntaxify buttons adapt to the selected design style.',
             variant: TextVariant.bodyLarge,
           ),
           const SizedBox(height: 32),
 
           // Button Variants
-          AppText(
+          const AppText(
             text: 'Variants',
             variant: TextVariant.titleMedium,
           ), // 📝 SYNTAXIFY
           const SizedBox(height: 16), // Native Flutter
           // 🎯 SYNTAXIFY: Primary button - renders as ElevatedButton (Material),
           // CupertinoButton.filled (Cupertino), or custom Neo style
-          AppButton.primary(
+          AppButton(
+            variant: ButtonVariant.primary,
             label: 'Primary Button',
             onPressed: () => _showSnackBar(context, 'Primary button pressed'),
           ),
           const SizedBox(height: 12), // Native Flutter
           // 🎯 SYNTAXIFY: Secondary button variant
-          AppButton.secondary(
+          AppButton(
+            variant: ButtonVariant.secondary,
             label: 'Secondary Button',
             onPressed: () => _showSnackBar(context, 'Secondary button pressed'),
           ),
           const SizedBox(height: 12), // Native Flutter
           // 🎯 SYNTAXIFY: Outlined button variant
-          AppButton.outlined(
+          AppButton(
+            variant: ButtonVariant.outlined,
             label: 'Outlined Button',
             onPressed: () => _showSnackBar(context, 'Outlined button pressed'),
           ),
           const SizedBox(height: 12), // Native Flutter
           // 🎯 SYNTAXIFY: Disabled state
-          AppButton.primary(
+          const AppButton(
+            variant: ButtonVariant.primary,
             label: 'Disabled Button',
             onPressed: null,
             isDisabled: true,
@@ -196,7 +200,7 @@ class _ButtonsTabState extends State<ButtonsTab> {
           const SizedBox(height: 32),
 
           // Interactive Demo
-          AppText(text: 'Interactive Demo', variant: TextVariant.titleMedium),
+          const AppText(text: 'Interactive Demo', variant: TextVariant.titleMedium),
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(24),
@@ -216,12 +220,14 @@ class _ButtonsTabState extends State<ButtonsTab> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    AppButton.outlined(
+                    AppButton(
+                      variant: ButtonVariant.outlined,
                       label: 'Reset',
                       onPressed: () => setState(() => _counter = 0),
                     ),
                     const SizedBox(width: 16),
-                    AppButton.primary(
+                    AppButton(
+                      variant: ButtonVariant.primary,
                       label: 'Increment',
                       onPressed: () => setState(() => _counter++),
                     ),
@@ -233,22 +239,22 @@ class _ButtonsTabState extends State<ButtonsTab> {
           const SizedBox(height: 32),
 
           // Typography Scale - Same component, different variants!
-          AppText(text: 'Typography Scale', variant: TextVariant.titleMedium),
+          const AppText(text: 'Typography Scale', variant: TextVariant.titleMedium),
           const SizedBox(height: 16),
 
           // 📝 SYNTAXIFY: All use AppText, just different variants
           // Each adapts to the current design style (Material/Cupertino/Neo)
-          AppText(text: 'Display Large', variant: TextVariant.displayLarge),
+          const AppText(text: 'Display Large', variant: TextVariant.displayLarge),
           const SizedBox(height: 8),
-          AppText(text: 'Headline Medium', variant: TextVariant.headlineMedium),
+          const AppText(text: 'Headline Medium', variant: TextVariant.headlineMedium),
           const SizedBox(height: 8),
-          AppText(text: 'Title Medium', variant: TextVariant.titleMedium),
+          const AppText(text: 'Title Medium', variant: TextVariant.titleMedium),
           const SizedBox(height: 8),
-          AppText(text: 'Body Large', variant: TextVariant.bodyLarge),
+          const AppText(text: 'Body Large', variant: TextVariant.bodyLarge),
           const SizedBox(height: 8),
-          AppText(text: 'Body Medium', variant: TextVariant.bodyMedium),
+          const AppText(text: 'Body Medium', variant: TextVariant.bodyMedium),
           const SizedBox(height: 8),
-          AppText(text: 'Label Small', variant: TextVariant.labelSmall),
+          const AppText(text: 'Label Small', variant: TextVariant.labelSmall),
         ],
       ),
     );
@@ -291,19 +297,19 @@ class _InputsTabState extends State<InputsTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AppText(
+          const AppText(
             text: 'Input Components',
             variant: TextVariant.headlineMedium,
           ),
           const SizedBox(height: 8),
-          AppText(
+          const AppText(
             text:
                 'Text input fields with different keyboard types and configurations.',
             variant: TextVariant.bodyLarge,
           ),
           const SizedBox(height: 32),
 
-          AppText(
+          const AppText(
             text: 'Standard Inputs',
             variant: TextVariant.titleMedium,
           ), // 📝 SYNTAXIFY
@@ -335,7 +341,7 @@ class _InputsTabState extends State<InputsTab> {
           const SizedBox(height: 32),
 
           // Form Demo
-          AppText(text: 'Form Example', variant: TextVariant.titleMedium),
+          const AppText(text: 'Form Example', variant: TextVariant.titleMedium),
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(20),
@@ -348,23 +354,31 @@ class _InputsTabState extends State<InputsTab> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                AppText(text: 'Contact Form', variant: TextVariant.titleMedium),
+                const AppText(text: 'Contact Form', variant: TextVariant.titleMedium),
                 const SizedBox(height: 16),
-                AppInput(label: 'Name', hint: 'John Doe'),
+                AppInput(
+                    label: 'Name',
+                    hint: 'John Doe',
+                    controller: TextEditingController()),
                 const SizedBox(height: 12),
                 AppInput(
                   label: 'Email',
                   keyboardType: TextInputType.emailAddress,
                   hint: 'john@example.com',
+                  controller: TextEditingController(),
                 ),
                 const SizedBox(height: 12),
-                AppInput(label: 'Message', hint: 'Type your message here...'),
+                AppInput(
+                    label: 'Message',
+                    hint: 'Type your message here...',
+                    controller: TextEditingController()),
                 const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
-                      child: AppButton.outlined(
+                      child: AppButton(
                         label: 'Clear',
+                        variant: ButtonVariant.outlined,
                         onPressed: () {
                           _emailController.clear();
                           _passwordController.clear();
@@ -374,7 +388,8 @@ class _InputsTabState extends State<InputsTab> {
                     ),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: AppButton.primary(
+                      child: AppButton(
+                        variant: ButtonVariant.primary,
                         label: 'Submit',
                         onPressed: () {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -442,14 +457,14 @@ class ScreensTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AppText(text: 'Screen Generation', variant: TextVariant.displayLarge),
+          const AppText(text: 'Screen Generation', variant: TextVariant.displayLarge),
           const SizedBox(height: 8),
-          AppText(
+          const AppText(
             text: 'The Power of .screen.dart Files',
             variant: TextVariant.headlineMedium,
           ),
           const SizedBox(height: 16),
-          AppText(
+          const AppText(
             text:
                 'Create entire Flutter screens with just a simple definition file. No boilerplate, no repetition - just describe your UI structure.',
             variant: TextVariant.bodyLarge,
@@ -472,10 +487,10 @@ class ScreensTab extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
+                const Row(
                   children: [
                     Icon(Icons.auto_awesome, color: Colors.blue, size: 32),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12),
                     AppText(
                       text: 'How It Works',
                       variant: TextVariant.headlineMedium,
@@ -492,7 +507,7 @@ class ScreensTab extends StatelessWidget {
           ),
           const SizedBox(height: 32),
 
-          AppText(text: 'Live Example', variant: TextVariant.headlineMedium),
+          const AppText(text: 'Live Example', variant: TextVariant.headlineMedium),
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(16),
@@ -535,7 +550,8 @@ class ScreensTab extends StatelessWidget {
 
           Center(
             // Native Flutter
-            child: AppButton.primary(
+            child: AppButton(
+              variant: ButtonVariant.primary,
               // 🎯 SYNTAXIFY component
               label: 'View Generated Login Screen',
               onPressed: () {
@@ -565,12 +581,12 @@ class ScreensTab extends StatelessWidget {
           const SizedBox(height: 32),
 
           // Code Preview
-          AppText(
+          const AppText(
             text: 'What\'s Inside login.screen.dart?',
             variant: TextVariant.headlineMedium,
           ),
           const SizedBox(height: 8),
-          AppText(
+          const AppText(
             text:
                 'Just a simple, declarative structure - Syntaxify handles the rest!',
             variant: TextVariant.bodyMedium,

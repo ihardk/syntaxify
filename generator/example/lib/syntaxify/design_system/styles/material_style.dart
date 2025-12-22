@@ -1,6 +1,10 @@
 /// Material Design Style (Google)
 part of '../design_system.dart';
 
+// =============================================================================
+// MATERIAL STYLE CLASS
+// =============================================================================
+
 /// Material Design style (Google)
 ///
 /// Implements Google's Material Design language with:

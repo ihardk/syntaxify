@@ -20,6 +20,7 @@
 /// This file shows the CONCEPT that powers those generated components.
 ///
 /// ============================================================================
+library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';

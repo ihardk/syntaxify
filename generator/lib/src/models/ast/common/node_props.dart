@@ -8,7 +8,7 @@ part 'node_props.g.dart';
 @freezed
 sealed class ButtonProps with _$ButtonProps {
   const factory ButtonProps({
-    ButtonVariant? variant,
+    String? variant,
     ButtonSize? size,
     String? icon,
     IconPosition? iconPosition,
@@ -35,7 +35,7 @@ sealed class TextFieldProps with _$TextFieldProps {
     String? errorText,
     int? maxLines,
     int? maxLength,
-    TextFieldVariant? variant,
+    String? variant,
   }) = _TextFieldProps;
 
   factory TextFieldProps.fromJson(Map<String, dynamic> json) =>

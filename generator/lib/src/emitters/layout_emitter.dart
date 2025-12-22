@@ -29,10 +29,20 @@ import 'package:syntaxify/src/generators/generator_registry.dart';
 /// final dartCode = expression.accept(DartEmitter()).toString();
 /// ```
 class LayoutEmitter {
-  const LayoutEmitter({this.registry});
+  const LayoutEmitter({
+    this.registry,
+    this.controllerMap = const {},
+    this.variableMap = const {},
+  });
 
   /// Optional generator registry for custom node handling.
   final GeneratorRegistry? registry;
+
+  /// Map of input labels to controller field names for StatefulWidget screens.
+  final Map<String, String> controllerMap;
+
+  /// Map of variable names to their scoped reference (e.g. 'handleLogin' -> 'widget.handleLogin').
+  final Map<String, String> variableMap;
 
   /// Converts a [LayoutNode] into a [Spec] (Expression).
   Expression emit(LayoutNode node) {
@@ -183,10 +193,11 @@ class LayoutEmitter {
     final props = node.props;
     return refer('AppButton').newInstance([], {
       'label': literalString(node.label),
-      'onPressed':
-          node.onPressed != null ? refer(node.onPressed!) : literalNull,
-      if (props?.variant != null && props?.variant != ButtonVariant.filled)
-        'variant': refer('ButtonVariant.${props!.variant!.name}'),
+      'onPressed': node.onPressed != null
+          ? refer(variableMap[node.onPressed!] ?? node.onPressed!)
+          : literalNull,
+      if (props?.variant != null)
+        'variant': refer('ButtonVariant.${props!.variant}'),
       if (props?.size != null) 'size': refer('ButtonSize.${props!.size!.name}'),
       if (props?.icon != null) 'icon': refer('Icons.${props!.icon!}'),
       if (props?.isDisabled == true) 'isDisabled': literalTrue,
@@ -222,12 +233,28 @@ class LayoutEmitter {
       }
     }
 
+    // Check if we have a controller for this input
+    final label = node.label ?? '';
+    final controllerFieldName = controllerMap[label];
+
     return refer('AppInput').newInstance([], {
-      'label': literalString(node.label ?? ''),
+      'label': literalString(label),
+      // Inject controller reference if available from the StatefulWidget's State
+      if (controllerFieldName != null) 'controller': refer(controllerFieldName),
       if (props?.hint != null) 'hint': literalString(props!.hint!),
       if (props?.obscureText == true) 'obscureText': literalTrue,
       if (keyboardTypeValue != null)
         'keyboardType': refer('TextInputType.$keyboardTypeValue'),
+      if (node.onChanged != null)
+        'onChanged': refer(variableMap[node.onChanged!] ?? node.onChanged!),
+      if (node.onSubmitted != null)
+        'onSubmitted':
+            refer(variableMap[node.onSubmitted!] ?? node.onSubmitted!),
+      if (node.onChanged != null)
+        'onChanged': refer(variableMap[node.onChanged!] ?? node.onChanged!),
+      if (node.onSubmitted != null)
+        'onSubmitted':
+            refer(variableMap[node.onSubmitted!] ?? node.onSubmitted!),
     });
   }
 
@@ -339,7 +366,7 @@ class LayoutEmitter {
     // Add spacing between children if spacing is specified
     if (node.spacing != null) {
       final spacingValue = double.tryParse(node.spacing!) ?? 16.0;
-      final isHorizontal = node.scrollDirection == Axis.horizontal;
+      final isHorizontal = node.scrollDirection == SyntaxAxis.horizontal;
 
       final spacedChildren = <Expression>[];
       for (var i = 0; i < children.length; i++) {
@@ -361,7 +388,8 @@ class LayoutEmitter {
 
     return refer('ListView').newInstance([], {
       'children': literalList(children),
-      if (node.scrollDirection != null && node.scrollDirection != Axis.vertical)
+      if (node.scrollDirection != null &&
+          node.scrollDirection != SyntaxAxis.vertical)
         'scrollDirection': refer('Axis.${node.scrollDirection!.name}'),
       if (node.shrinkWrap == true) 'shrinkWrap': literalTrue,
     });
@@ -434,8 +462,9 @@ class LayoutEmitter {
     // If has label, wrap in Row for label + checkbox layout
     final checkbox = refer('AppCheckbox').newInstance([], {
       'value': refer(node.binding),
-      'onChanged':
-          node.onChanged != null ? refer(node.onChanged!) : refer('(value) {}'),
+      'onChanged': node.onChanged != null
+          ? refer(variableMap[node.onChanged!] ?? node.onChanged!)
+          : refer('(value) {}'),
     });
 
     if (node.label != null) {
@@ -454,8 +483,9 @@ class LayoutEmitter {
     // If has label, wrap in Row for label + switch layout
     final switchWidget = refer('AppSwitch').newInstance([], {
       'value': refer(node.binding),
-      'onChanged':
-          node.onChanged != null ? refer(node.onChanged!) : refer('(value) {}'),
+      'onChanged': node.onChanged != null
+          ? refer(variableMap[node.onChanged!] ?? node.onChanged!)
+          : refer('(value) {}'),
     });
 
     if (node.label != null) {
@@ -489,8 +519,9 @@ class LayoutEmitter {
     return refer('IconButton').newInstance([], {
       'icon':
           refer('Icon').newInstance([refer('AppIcons').property(node.icon)]),
-      'onPressed':
-          node.onPressed != null ? refer(node.onPressed!) : literalNull,
+      'onPressed': node.onPressed != null
+          ? refer(variableMap[node.onPressed!] ?? node.onPressed!)
+          : literalNull,
       if (node.size != null) 'iconSize': literalNum(node.size!),
       if (node.color != null) 'color': _emitColorSemantic(node.color!),
     });
@@ -553,8 +584,9 @@ class LayoutEmitter {
     return refer('DropdownButtonFormField').newInstance([], {
       'value': refer(node.binding),
       'items': items,
-      'onChanged':
-          node.onChanged != null ? refer(node.onChanged!) : refer('(value) {}'),
+      'onChanged': node.onChanged != null
+          ? refer(variableMap[node.onChanged!] ?? node.onChanged!)
+          : refer('(value) {}'),
       if (node.label != null)
         'decoration': refer('InputDecoration').newInstance([], {
           'labelText': literalString(node.label!),
@@ -567,8 +599,9 @@ class LayoutEmitter {
     final radio = refer('AppRadio').newInstance([], {
       'value': literalString(node.value),
       'groupValue': refer(node.binding),
-      'onChanged':
-          node.onChanged != null ? refer(node.onChanged!) : refer('(value) {}'),
+      'onChanged': node.onChanged != null
+          ? refer(variableMap[node.onChanged!] ?? node.onChanged!)
+          : refer('(value) {}'),
     });
 
     if (node.label != null) {
@@ -586,8 +619,9 @@ class LayoutEmitter {
   Expression _emitSlider(SliderNode node) {
     final slider = refer('AppSlider').newInstance([], {
       'value': refer(node.binding),
-      'onChanged':
-          node.onChanged != null ? refer(node.onChanged!) : refer('(value) {}'),
+      'onChanged': node.onChanged != null
+          ? refer(variableMap[node.onChanged!] ?? node.onChanged!)
+          : refer('(value) {}'),
       if (node.min != null) 'min': literalNum(node.min!),
       if (node.max != null) 'max': literalNum(node.max!),
       if (node.divisions != null) 'divisions': literalNum(node.divisions!),

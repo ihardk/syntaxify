@@ -16,6 +16,9 @@ sealed class ComponentDefinition with _$ComponentDefinition {
     required List<ComponentProp> properties,
     required List<String> variants,
     String? description,
+
+    /// Type parameters for generic classes (e.g., ['T'] for RadioMeta<T>)
+    @Default([]) List<String> typeParameters,
   }) = _ComponentDefinition;
 }
 

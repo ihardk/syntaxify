@@ -30,8 +30,13 @@ class GenerateScreenUseCase {
     final context = p.posix;
 
     // Screens go to lib/screens/ (editable by user)
-    // outputDir is typically 'lib', so this becomes lib/screens
-    final screensDir = context.join(outputDir, 'screens');
+    // outputDir is typically 'lib/syntaxify', so we go up one level to 'lib'
+    // then create 'lib/screens'
+    final libDir =
+        outputDir.endsWith('/syntaxify') || outputDir.endsWith('\\syntaxify')
+            ? context.dirname(outputDir)
+            : outputDir;
+    final screensDir = context.join(libDir, 'screens');
     await fileSystem.createDirectory(screensDir);
 
     final filePath = context.join(screensDir, fileName);

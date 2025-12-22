@@ -1,12 +1,16 @@
-/// Cupertino Style (Apple iOS/macOS)
+/// Cupertino Design Style (Apple)
 part of '../design_system.dart';
 
-/// Cupertino style (Apple iOS/macOS)
+// =============================================================================
+// CUPERTINO STYLE CLASS
+// =============================================================================
+
+/// Cupertino Design style (Apple)
 ///
-/// Implements Apple's Human Interface Guidelines with:
-/// - Pill-shaped buttons (100dp radius)
-/// - iOS blue accent color (#007AFF)
-/// - Native Cupertino widgets (CupertinoButton)
+/// Implements Apple Human Interface Guidelines with:
+/// - Pill-shaped buttons (full radius)
+/// - iOS-native widgets (CupertinoButton, CupertinoTextField)
+/// - System colors (CupertinoColors)
 class CupertinoStyle extends DesignStyle
     with
         CupertinoButtonRenderer,

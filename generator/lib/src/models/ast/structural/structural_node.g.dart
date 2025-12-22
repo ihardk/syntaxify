@@ -11,9 +11,9 @@ ColumnNode _$ColumnNodeFromJson(Map<String, dynamic> json) => ColumnNode(
           .map((e) => LayoutNode.fromJson(e as Map<String, dynamic>))
           .toList(),
       mainAxisAlignment: $enumDecodeNullable(
-          _$MainAxisAlignmentEnumMap, json['mainAxisAlignment']),
+          _$SyntaxMainAxisAlignmentEnumMap, json['mainAxisAlignment']),
       crossAxisAlignment: $enumDecodeNullable(
-          _$CrossAxisAlignmentEnumMap, json['crossAxisAlignment']),
+          _$SyntaxCrossAxisAlignmentEnumMap, json['crossAxisAlignment']),
       spacing: json['spacing'] as String?,
       $type: json['runtimeType'] as String?,
     );
@@ -22,28 +22,28 @@ Map<String, dynamic> _$ColumnNodeToJson(ColumnNode instance) =>
     <String, dynamic>{
       'children': instance.children.map((e) => e.toJson()).toList(),
       'mainAxisAlignment':
-          _$MainAxisAlignmentEnumMap[instance.mainAxisAlignment],
+          _$SyntaxMainAxisAlignmentEnumMap[instance.mainAxisAlignment],
       'crossAxisAlignment':
-          _$CrossAxisAlignmentEnumMap[instance.crossAxisAlignment],
+          _$SyntaxCrossAxisAlignmentEnumMap[instance.crossAxisAlignment],
       'spacing': instance.spacing,
       'runtimeType': instance.$type,
     };
 
-const _$MainAxisAlignmentEnumMap = {
-  MainAxisAlignment.start: 'start',
-  MainAxisAlignment.center: 'center',
-  MainAxisAlignment.end: 'end',
-  MainAxisAlignment.spaceBetween: 'spaceBetween',
-  MainAxisAlignment.spaceAround: 'spaceAround',
-  MainAxisAlignment.spaceEvenly: 'spaceEvenly',
+const _$SyntaxMainAxisAlignmentEnumMap = {
+  SyntaxMainAxisAlignment.start: 'start',
+  SyntaxMainAxisAlignment.center: 'center',
+  SyntaxMainAxisAlignment.end: 'end',
+  SyntaxMainAxisAlignment.spaceBetween: 'spaceBetween',
+  SyntaxMainAxisAlignment.spaceAround: 'spaceAround',
+  SyntaxMainAxisAlignment.spaceEvenly: 'spaceEvenly',
 };
 
-const _$CrossAxisAlignmentEnumMap = {
-  CrossAxisAlignment.start: 'start',
-  CrossAxisAlignment.center: 'center',
-  CrossAxisAlignment.end: 'end',
-  CrossAxisAlignment.stretch: 'stretch',
-  CrossAxisAlignment.baseline: 'baseline',
+const _$SyntaxCrossAxisAlignmentEnumMap = {
+  SyntaxCrossAxisAlignment.start: 'start',
+  SyntaxCrossAxisAlignment.center: 'center',
+  SyntaxCrossAxisAlignment.end: 'end',
+  SyntaxCrossAxisAlignment.stretch: 'stretch',
+  SyntaxCrossAxisAlignment.baseline: 'baseline',
 };
 
 RowNode _$RowNodeFromJson(Map<String, dynamic> json) => RowNode(
@@ -51,9 +51,9 @@ RowNode _$RowNodeFromJson(Map<String, dynamic> json) => RowNode(
           .map((e) => LayoutNode.fromJson(e as Map<String, dynamic>))
           .toList(),
       mainAxisAlignment: $enumDecodeNullable(
-          _$MainAxisAlignmentEnumMap, json['mainAxisAlignment']),
+          _$SyntaxMainAxisAlignmentEnumMap, json['mainAxisAlignment']),
       crossAxisAlignment: $enumDecodeNullable(
-          _$CrossAxisAlignmentEnumMap, json['crossAxisAlignment']),
+          _$SyntaxCrossAxisAlignmentEnumMap, json['crossAxisAlignment']),
       spacing: json['spacing'] as String?,
       $type: json['runtimeType'] as String?,
     );
@@ -61,9 +61,9 @@ RowNode _$RowNodeFromJson(Map<String, dynamic> json) => RowNode(
 Map<String, dynamic> _$RowNodeToJson(RowNode instance) => <String, dynamic>{
       'children': instance.children.map((e) => e.toJson()).toList(),
       'mainAxisAlignment':
-          _$MainAxisAlignmentEnumMap[instance.mainAxisAlignment],
+          _$SyntaxMainAxisAlignmentEnumMap[instance.mainAxisAlignment],
       'crossAxisAlignment':
-          _$CrossAxisAlignmentEnumMap[instance.crossAxisAlignment],
+          _$SyntaxCrossAxisAlignmentEnumMap[instance.crossAxisAlignment],
       'spacing': instance.spacing,
       'runtimeType': instance.$type,
     };
@@ -119,7 +119,7 @@ CardNode _$CardNodeFromJson(Map<String, dynamic> json) => CardNode(
       children: (json['children'] as List<dynamic>)
           .map((e) => LayoutNode.fromJson(e as Map<String, dynamic>))
           .toList(),
-      variant: $enumDecodeNullable(_$CardVariantEnumMap, json['variant']),
+      variant: json['variant'] as String?,
       padding: json['padding'] as String?,
       elevation: (json['elevation'] as num?)?.toDouble(),
       $type: json['runtimeType'] as String?,
@@ -127,24 +127,18 @@ CardNode _$CardNodeFromJson(Map<String, dynamic> json) => CardNode(
 
 Map<String, dynamic> _$CardNodeToJson(CardNode instance) => <String, dynamic>{
       'children': instance.children.map((e) => e.toJson()).toList(),
-      'variant': _$CardVariantEnumMap[instance.variant],
+      'variant': instance.variant,
       'padding': instance.padding,
       'elevation': instance.elevation,
       'runtimeType': instance.$type,
     };
-
-const _$CardVariantEnumMap = {
-  CardVariant.elevated: 'elevated',
-  CardVariant.outlined: 'outlined',
-  CardVariant.filled: 'filled',
-};
 
 ListViewNode _$ListViewNodeFromJson(Map<String, dynamic> json) => ListViewNode(
       children: (json['children'] as List<dynamic>)
           .map((e) => LayoutNode.fromJson(e as Map<String, dynamic>))
           .toList(),
       scrollDirection:
-          $enumDecodeNullable(_$AxisEnumMap, json['scrollDirection']),
+          $enumDecodeNullable(_$SyntaxAxisEnumMap, json['scrollDirection']),
       spacing: json['spacing'] as String?,
       shrinkWrap: json['shrinkWrap'] as bool?,
       $type: json['runtimeType'] as String?,
@@ -153,15 +147,15 @@ ListViewNode _$ListViewNodeFromJson(Map<String, dynamic> json) => ListViewNode(
 Map<String, dynamic> _$ListViewNodeToJson(ListViewNode instance) =>
     <String, dynamic>{
       'children': instance.children.map((e) => e.toJson()).toList(),
-      'scrollDirection': _$AxisEnumMap[instance.scrollDirection],
+      'scrollDirection': _$SyntaxAxisEnumMap[instance.scrollDirection],
       'spacing': instance.spacing,
       'shrinkWrap': instance.shrinkWrap,
       'runtimeType': instance.$type,
     };
 
-const _$AxisEnumMap = {
-  Axis.horizontal: 'horizontal',
-  Axis.vertical: 'vertical',
+const _$SyntaxAxisEnumMap = {
+  SyntaxAxis.horizontal: 'horizontal',
+  SyntaxAxis.vertical: 'vertical',
 };
 
 StackNode _$StackNodeFromJson(Map<String, dynamic> json) => StackNode(

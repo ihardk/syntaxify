@@ -9,18 +9,19 @@ part of 'primitive_node.dart';
 TextNode _$TextNodeFromJson(Map<String, dynamic> json) => TextNode(
       text: json['text'] as String,
       variant: $enumDecodeNullable(_$TextVariantEnumMap, json['variant']),
-      align: $enumDecodeNullable(_$TextAlignEnumMap, json['align']),
+      align: $enumDecodeNullable(_$SyntaxTextAlignEnumMap, json['align']),
       maxLines: (json['maxLines'] as num?)?.toInt(),
-      overflow: $enumDecodeNullable(_$TextOverflowEnumMap, json['overflow']),
+      overflow:
+          $enumDecodeNullable(_$SyntaxTextOverflowEnumMap, json['overflow']),
       $type: json['runtimeType'] as String?,
     );
 
 Map<String, dynamic> _$TextNodeToJson(TextNode instance) => <String, dynamic>{
       'text': instance.text,
       'variant': _$TextVariantEnumMap[instance.variant],
-      'align': _$TextAlignEnumMap[instance.align],
+      'align': _$SyntaxTextAlignEnumMap[instance.align],
       'maxLines': instance.maxLines,
-      'overflow': _$TextOverflowEnumMap[instance.overflow],
+      'overflow': _$SyntaxTextOverflowEnumMap[instance.overflow],
       'runtimeType': instance.$type,
     };
 
@@ -33,18 +34,18 @@ const _$TextVariantEnumMap = {
   TextVariant.labelSmall: 'labelSmall',
 };
 
-const _$TextAlignEnumMap = {
-  TextAlign.left: 'left',
-  TextAlign.center: 'center',
-  TextAlign.right: 'right',
-  TextAlign.justify: 'justify',
+const _$SyntaxTextAlignEnumMap = {
+  SyntaxTextAlign.left: 'left',
+  SyntaxTextAlign.center: 'center',
+  SyntaxTextAlign.right: 'right',
+  SyntaxTextAlign.justify: 'justify',
 };
 
-const _$TextOverflowEnumMap = {
-  TextOverflow.visible: 'visible',
-  TextOverflow.clip: 'clip',
-  TextOverflow.ellipsis: 'ellipsis',
-  TextOverflow.fade: 'fade',
+const _$SyntaxTextOverflowEnumMap = {
+  SyntaxTextOverflow.visible: 'visible',
+  SyntaxTextOverflow.clip: 'clip',
+  SyntaxTextOverflow.ellipsis: 'ellipsis',
+  SyntaxTextOverflow.fade: 'fade',
 };
 
 IconNode _$IconNodeFromJson(Map<String, dynamic> json) => IconNode(

@@ -8,7 +8,7 @@ void main() {
         children: [
           LayoutNode.text(text: 'Hello'),
         ],
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: SyntaxMainAxisAlignment.center,
       );
 
       // Verify it is a structural node
@@ -17,7 +17,8 @@ void main() {
           s.node.map(
             column: (col) {
               expect(col.children.length, 1);
-              expect(col.mainAxisAlignment, equals(MainAxisAlignment.center));
+              expect(col.mainAxisAlignment,
+                  equals(SyntaxMainAxisAlignment.center));
             },
             row: (_) => fail('Expected column, got row'),
             container: (_) => fail('Expected column, got container'),
@@ -69,7 +70,7 @@ void main() {
     test('instantiates ButtonNode', () {
       final node = LayoutNode.button(
         label: 'Click Me',
-        variant: ButtonVariant.filled,
+        variant: 'filled',
         onPressed: 'action:submit',
       );
 
@@ -79,7 +80,7 @@ void main() {
             button: (b) {
               expect(b.label, equals('Click Me'));
               expect(b.onPressed, equals('action:submit'));
-              expect(b.props?.variant, equals(ButtonVariant.filled));
+              expect(b.props?.variant, equals('filled'));
             },
             textField: (_) => fail('Expected button, got textField'),
             checkbox: (_) => fail('Expected button, got checkbox'),
@@ -103,7 +104,7 @@ void main() {
           LayoutNode.text(text: 'Label'),
           LayoutNode.icon(name: 'arrow_forward'),
         ],
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: SyntaxMainAxisAlignment.spaceBetween,
       );
 
       node.map(
@@ -112,7 +113,7 @@ void main() {
             row: (row) {
               expect(row.children.length, 2);
               expect(row.mainAxisAlignment,
-                  equals(MainAxisAlignment.spaceBetween));
+                  equals(SyntaxMainAxisAlignment.spaceBetween));
             },
             column: (_) => fail('Expected row, got column'),
             container: (_) => fail('Expected row, got container'),

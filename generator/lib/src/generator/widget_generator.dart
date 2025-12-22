@@ -9,7 +9,7 @@ import 'package:syntaxify/src/core/interfaces/component_generator.dart';
 /// - Widget receives tokens from AppTheme.of(context)
 /// - Uses renderer pattern (tokens + spec)
 /// - No hardcoded styling in widget
-class WidgetGenerator implements ComponentGenerator {
+class WidgetGenerator implements IComponentGenerator {
   WidgetGenerator({
     this.version = '0.1.0',
   });

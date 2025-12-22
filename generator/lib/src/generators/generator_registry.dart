@@ -1,39 +1,39 @@
 import 'package:syntaxify/src/core/interfaces/component_generator.dart';
-import 'package:syntaxify/src/generators/component/generic_generator.dart';
+import 'package:syntaxify/src/generators/component/component_generator.dart';
 import 'package:syntaxify/src/models/component_definition.dart';
 import 'package:syntaxify/src/plugins/syntaxify_plugin.dart';
 import 'package:syntaxify/src/plugins/custom_emitter_handler.dart';
 
 /// Registry of component generators.
 ///
-/// Following Open/Closed principle:
-/// - Open for extension: register new generators without modifying this class
-/// - Closed for modification: existing code doesn't change when adding generators
+/// With the unified meta-driven ComponentGenerator, this registry is
+/// simplified. The single ComponentGenerator handles ALL component types
+/// by reading properties from .meta.dart files.
 ///
 /// Usage:
 /// ```dart
-/// final registry = GeneratorRegistry()
-///   ..register(ButtonGenerator())
-///   ..register(InputGenerator());
-///
+/// final registry = GeneratorRegistry(variantEnums: parsedEnums);
 /// final generator = registry.forComponent(metaComponent);
 /// final code = generator.generate(component: meta, tokens: tokens);
 /// ```
 class GeneratorRegistry {
-  GeneratorRegistry();
+  GeneratorRegistry({Map<String, List<String>> variantEnums = const {}})
+      : _componentGenerator = ComponentGenerator(variantEnums: variantEnums);
 
-  final List<ComponentGenerator> _generators = [];
+  final List<IComponentGenerator> _generators = [];
   final Map<String, CustomEmitterHandler> _customEmitters = {};
-  final GenericGenerator _fallback = GenericGenerator();
 
-  /// Register a component generator.
-  void register(ComponentGenerator generator) {
+  // The ONE generator that handles everything
+  final ComponentGenerator _componentGenerator;
+
+  /// Register a component generator (for plugin extensions only).
+  void register(IComponentGenerator generator) {
     _generators.add(generator);
   }
 
   /// Register a plugin.
   void registerPlugin(SyntaxifyPlugin plugin) {
-    // Register component generators
+    // Register component generators from plugins
     plugin.componentGenerators.forEach((type, generator) {
       register(generator);
     });
@@ -44,15 +44,17 @@ class GeneratorRegistry {
 
   /// Get the appropriate generator for a component.
   ///
-  /// Returns the first registered generator that can handle the component,
-  /// or falls back to GenericGenerator.
-  ComponentGenerator forComponent(ComponentDefinition component) {
+  /// First checks if any registered plugin generator can handle it,
+  /// otherwise uses the universal ComponentGenerator.
+  IComponentGenerator forComponent(ComponentDefinition component) {
+    // Check plugin generators first (for specialized overrides)
     for (final generator in _generators) {
       if (generator.canHandle(component)) {
         return generator;
       }
     }
-    return _fallback;
+    // Default: use the meta-driven ComponentGenerator
+    return _componentGenerator;
   }
 
   /// List all registered component types.

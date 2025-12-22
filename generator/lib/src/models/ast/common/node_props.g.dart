@@ -7,7 +7,7 @@ part of 'node_props.dart';
 // **************************************************************************
 
 _ButtonProps _$ButtonPropsFromJson(Map<String, dynamic> json) => _ButtonProps(
-      variant: $enumDecodeNullable(_$ButtonVariantEnumMap, json['variant']),
+      variant: json['variant'] as String?,
       size: $enumDecodeNullable(_$ButtonSizeEnumMap, json['size']),
       icon: json['icon'] as String?,
       iconPosition:
@@ -19,7 +19,7 @@ _ButtonProps _$ButtonPropsFromJson(Map<String, dynamic> json) => _ButtonProps(
 
 Map<String, dynamic> _$ButtonPropsToJson(_ButtonProps instance) =>
     <String, dynamic>{
-      'variant': _$ButtonVariantEnumMap[instance.variant],
+      'variant': instance.variant,
       'size': _$ButtonSizeEnumMap[instance.size],
       'icon': instance.icon,
       'iconPosition': _$IconPositionEnumMap[instance.iconPosition],
@@ -27,14 +27,6 @@ Map<String, dynamic> _$ButtonPropsToJson(_ButtonProps instance) =>
       'isDisabled': instance.isDisabled,
       'fullWidth': instance.fullWidth,
     };
-
-const _$ButtonVariantEnumMap = {
-  ButtonVariant.filled: 'filled',
-  ButtonVariant.outlined: 'outlined',
-  ButtonVariant.text: 'text',
-  ButtonVariant.elevated: 'elevated',
-  ButtonVariant.filledTonal: 'filledTonal',
-};
 
 const _$ButtonSizeEnumMap = {
   ButtonSize.sm: 'sm',
@@ -62,7 +54,7 @@ _TextFieldProps _$TextFieldPropsFromJson(Map<String, dynamic> json) =>
       errorText: json['errorText'] as String?,
       maxLines: (json['maxLines'] as num?)?.toInt(),
       maxLength: (json['maxLength'] as num?)?.toInt(),
-      variant: $enumDecodeNullable(_$TextFieldVariantEnumMap, json['variant']),
+      variant: json['variant'] as String?,
     );
 
 Map<String, dynamic> _$TextFieldPropsToJson(_TextFieldProps instance) =>
@@ -77,7 +69,7 @@ Map<String, dynamic> _$TextFieldPropsToJson(_TextFieldProps instance) =>
       'errorText': instance.errorText,
       'maxLines': instance.maxLines,
       'maxLength': instance.maxLength,
-      'variant': _$TextFieldVariantEnumMap[instance.variant],
+      'variant': instance.variant,
     };
 
 const _$KeyboardTypeEnumMap = {
@@ -95,9 +87,4 @@ const _$TextInputActionEnumMap = {
   TextInputAction.search: 'search',
   TextInputAction.send: 'send',
   TextInputAction.go: 'go',
-};
-
-const _$TextFieldVariantEnumMap = {
-  TextFieldVariant.outlined: 'outlined',
-  TextFieldVariant.filled: 'filled',
 };

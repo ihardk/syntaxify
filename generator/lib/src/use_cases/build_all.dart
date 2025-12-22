@@ -228,8 +228,7 @@ class BuildAllUseCase {
         'design_system.dart',
         'app_theme.dart',
         'design_style.dart',
-        'button_variant.dart',
-        'enums.dart',
+        'variants.dart',
       ];
 
       for (final file in designSystemFiles) {
@@ -247,6 +246,7 @@ class BuildAllUseCase {
       }
 
       // Style implementation files (Source: design_system/styles/ -> Dest: design_system/styles/)
+      // Style implementation files
       final styleFiles = [
         'material_style.dart',
         'cupertino_style.dart',
@@ -268,37 +268,37 @@ class BuildAllUseCase {
         }
       }
 
-      // Mixin Renderers (Source: design_system/styles/<style>/ -> Dest: design_system/styles/<style>/)
-      final rendererFiles = [
-        'material/button_renderer.dart',
-        'cupertino/button_renderer.dart',
-        'neo/button_renderer.dart',
-        'material/input_renderer.dart',
-        'cupertino/input_renderer.dart',
-        'neo/input_renderer.dart',
-        'material/text_renderer.dart',
-        'cupertino/text_renderer.dart',
-        'neo/text_renderer.dart',
-      ];
+      // Copy components recursively (Source: design_system/components/ -> Dest: design_system/components/)
+      // Uses dart:io Directory for recursion as FileSystem abstraction doesn't support it easily
+      try {
+        final componentsDir =
+            Directory(context.join(designSystemDir, 'components'));
+        if (await componentsDir.exists()) {
+          final destComponentsDir =
+              context.join(outputDir, 'design_system', 'components');
+          await fileSystem.createDirectory(destComponentsDir);
 
-      for (final file in rendererFiles) {
-        try {
-          final srcPath = context.join(designSystemDir, 'styles', file);
-          if (await fileSystem.exists(srcPath)) {
-            // Create sub-directory (e.g., styles/material/)
-            final subDir = context.dirname(file);
-            await fileSystem.createDirectory(
-                context.join(outputDir, 'design_system', 'styles', subDir));
+          await for (final entity
+              in componentsDir.list(recursive: true, followLinks: false)) {
+            if (entity is File) {
+              // Normalize path to posix
+              final relPath = p
+                  .relative(entity.path, from: componentsDir.path)
+                  .replaceAll(p.separator, '/');
+              final destPath = context.join(destComponentsDir, relPath);
 
-            final destPath =
-                context.join(outputDir, 'design_system', 'styles', file);
-            await fileSystem.copyFile(srcPath, destPath);
-            generatedFiles.add('design_system/styles/$file');
-            logger.success('Copied: design_system/styles/$file');
+              // Create parent directory if needed
+              final parentDir = context.dirname(destPath);
+              await fileSystem.createDirectory(parentDir);
+
+              await fileSystem.copyFile(entity.path, destPath);
+              generatedFiles.add('design_system/components/$relPath');
+              logger.success('Copied: design_system/components/$relPath');
+            }
           }
-        } catch (e) {
-          warnings.add('Could not copy renderer $file: $e');
         }
+      } catch (e) {
+        warnings.add('Failed to copy components directory: $e');
       }
 
       // HANDLE APP ICONS (Generate or Copy)

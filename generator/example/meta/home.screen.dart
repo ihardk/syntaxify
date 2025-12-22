@@ -1,9 +1,11 @@
+import 'package:example/syntaxify/design_system/design_system.dart'
+    hide TextVariant;
 import 'package:syntaxify/syntaxify.dart';
 
 /// Home screen definition - main dashboard after login
 final homeScreen = ScreenDefinition(
   id: 'home',
-  appBar: LayoutNode.appBar(title: 'Dashboard'),
+  appBar: const LayoutNode.appBar(title: 'Dashboard'),
   layout: LayoutNode.column(
     children: [
       LayoutNode.text(
@@ -18,7 +20,7 @@ final homeScreen = ScreenDefinition(
 
       // Stats Row
       LayoutNode.row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: SyntaxMainAxisAlignment.spaceEvenly,
         children: [
           LayoutNode.column(
             children: [
@@ -29,7 +31,8 @@ final homeScreen = ScreenDefinition(
           LayoutNode.column(
             children: [
               LayoutNode.text(text: '5', variant: TextVariant.headlineMedium),
-              LayoutNode.text(text: 'Completed', variant: TextVariant.labelSmall),
+              LayoutNode.text(
+                  text: 'Completed', variant: TextVariant.labelSmall),
             ],
           ),
           LayoutNode.column(
@@ -45,19 +48,18 @@ final homeScreen = ScreenDefinition(
       // Action Buttons
       LayoutNode.button(
         label: 'View All Tasks',
-        variant: ButtonVariant.filled,
         onPressed: 'navigateToTasks',
       ),
       LayoutNode.spacer(size: SpacerSize.md),
       LayoutNode.button(
         label: 'Add New Task',
-        variant: ButtonVariant.outlined,
+        variant: ButtonVariant.outlined.name,
         onPressed: 'addNewTask',
       ),
       LayoutNode.spacer(size: SpacerSize.md),
       LayoutNode.button(
         label: 'Settings',
-        variant: ButtonVariant.text,
+        variant: ButtonVariant.text.name,
         onPressed: 'openSettings',
       ),
     ],

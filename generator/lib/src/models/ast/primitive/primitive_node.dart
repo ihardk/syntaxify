@@ -11,9 +11,9 @@ sealed class PrimitiveNode with _$PrimitiveNode {
   const factory PrimitiveNode.text({
     required String text,
     TextVariant? variant,
-    TextAlign? align,
+    SyntaxTextAlign? align,
     int? maxLines,
-    TextOverflow? overflow,
+    SyntaxTextOverflow? overflow,
   }) = TextNode;
 
   const factory PrimitiveNode.icon({

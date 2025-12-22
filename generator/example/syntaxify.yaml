@@ -1,0 +1,19 @@
+# Syntaxify Configuration
+# Customize paths for your project structure
+
+# Source meta files (.meta.dart, .screen.dart)
+meta: meta
+
+# Output directory for generated code
+output: lib/syntaxify
+
+# Design system directory
+design_system: lib/syntaxify/design_system
+
+# Tokens directory (typically same as design_system)
+tokens: lib/syntaxify/design_system
+
+# Generation options
+generate:
+  screens: true
+  components: true

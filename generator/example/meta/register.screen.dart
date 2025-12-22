@@ -1,9 +1,10 @@
+import 'package:example/syntaxify/design_system/design_system.dart';
 import 'package:syntaxify/syntaxify.dart';
 
 /// Registration screen definition
 final registerScreen = ScreenDefinition(
   id: 'register',
-  appBar: LayoutNode.appBar(title: 'Create Account'),
+  appBar: const LayoutNode.appBar(title: 'Create Account'),
   layout: LayoutNode.column(
     children: [
       LayoutNode.text(
@@ -37,13 +38,13 @@ final registerScreen = ScreenDefinition(
       LayoutNode.spacer(size: SpacerSize.lg),
       LayoutNode.button(
         label: 'Create Account',
-        variant: ButtonVariant.filled,
+        variant: ButtonVariant.primary.name,
         onPressed: 'handleRegister',
       ),
       LayoutNode.spacer(size: SpacerSize.md),
       LayoutNode.button(
         label: 'Already have an account? Sign In',
-        variant: ButtonVariant.text,
+        variant: ButtonVariant.secondary.name,
         onPressed: 'navigateToLogin',
       ),
     ],

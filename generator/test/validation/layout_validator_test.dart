@@ -185,7 +185,7 @@ void main() {
         final node = LayoutNode.text(
           text: 'Hello',
           maxLines: 1,
-          overflow: TextOverflow.clip,
+          overflow: SyntaxTextOverflow.clip,
         );
 
         final errors = validator.validate(node);
@@ -201,7 +201,7 @@ void main() {
         final node = LayoutNode.text(
           text: 'Hello',
           maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+          overflow: SyntaxTextOverflow.ellipsis,
         );
 
         final errors = validator.validate(node);
@@ -616,7 +616,7 @@ void main() {
         final node = LayoutNode.text(
           text: 'Hello',
           maxLines: 1,
-          overflow: TextOverflow.clip,
+          overflow: SyntaxTextOverflow.clip,
         );
 
         final errors = validator.validate(node);
@@ -651,7 +651,7 @@ void main() {
         final node = LayoutNode.text(
           text: 'Hello',
           maxLines: 1,
-          overflow: TextOverflow.clip,
+          overflow: SyntaxTextOverflow.clip,
         );
 
         final errors = validator.validate(node);

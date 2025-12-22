@@ -1,34 +1,38 @@
 /// Text component specification
 ///
 /// Defines the API surface for the AppText widget.
-/// This file is read by the Syntaxify generator.
+/// Properties must match DesignStyle.renderText() signature.
+library;
 
-// This is a SPECIFICATION file, not runtime code.
-// The generator parses these annotations to create the widget.
-
+import 'package:flutter/material.dart';
 import 'package:syntaxify/syntaxify.dart';
 
 @SyntaxComponent(description: 'A customizable text component')
 class TextMeta {
   /// The text content to display
+  /// Maps to: LayoutNode.text(text: ...)
   @Required()
   final String text;
 
   /// Text variant (displayLarge, headlineMedium, bodyMedium, etc)
+  /// Maps to: LayoutNode.text(variant: ...)
   @Optional()
-  final String? variant;
+  final TextVariant? variant;
 
   /// Text alignment
+  /// Maps to: LayoutNode.text(align: ...)
   @Optional()
-  final String? align;
+  final TextAlign? align;
 
   /// Maximum number of lines
+  /// Maps to: LayoutNode.text(maxLines: ...)
   @Optional()
   final int? maxLines;
 
   /// Text overflow behavior
+  /// Maps to: LayoutNode.text(overflow: ...)
   @Optional()
-  final String? overflow;
+  final TextOverflow? overflow;
 
   const TextMeta({
     required this.text,

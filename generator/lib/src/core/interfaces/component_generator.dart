@@ -9,7 +9,7 @@ import 'package:syntaxify/src/models/token_definition.dart';
 /// - L: All generators are interchangeable
 /// - I: Focused interface with single responsibility
 /// - D: Clients depend on this abstraction
-abstract class ComponentGenerator {
+abstract class IComponentGenerator {
   /// The component type this generator handles (e.g., 'button', 'input')
   String get componentType;
 

@@ -35,20 +35,20 @@ void main() {
           ],
         ),
         layout: LayoutNode.column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: SyntaxMainAxisAlignment.center,
+          crossAxisAlignment: SyntaxCrossAxisAlignment.stretch,
           spacing: '16',
           children: [
             // Primitive: Text
             LayoutNode.text(
               text: 'Hello World',
               variant: TextVariant.headlineMedium,
-              align: TextAlign.center,
+              align: SyntaxTextAlign.center,
             ),
 
             // Structural: Row
             LayoutNode.row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: SyntaxMainAxisAlignment.spaceBetween,
               children: [
                 // Primitive: Icon
                 LayoutNode.icon(name: 'star', size: IconSize.sm),
@@ -63,7 +63,7 @@ void main() {
             LayoutNode.button(
               label: 'Submit',
               onPressed: 'onSubmit',
-              variant: ButtonVariant.filled,
+              variant: 'filled',
               icon: 'send',
               isLoading: true,
             ),

@@ -164,14 +164,14 @@ void main() {
     test('builds complex nested layout with mixed nodes', () {
       // Complex real-world screen
       final layout = LayoutNode.column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: SyntaxMainAxisAlignment.start,
         children: [
           // Header section
           LayoutNode.container(
             color: ColorSemantic.primary,
             padding: '16',
             child: LayoutNode.row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: SyntaxMainAxisAlignment.spaceBetween,
               children: [
                 LayoutNode.text(
                     text: 'Settings', variant: TextVariant.headlineMedium),

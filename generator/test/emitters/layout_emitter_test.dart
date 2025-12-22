@@ -34,7 +34,7 @@ void main() {
     test('emits Button widget (Filled)', () {
       final node = LayoutNode.button(
         label: 'Submit',
-        variant: ButtonVariant.filled,
+        variant: 'filled',
         onPressed: 'submitData',
       );
 
@@ -114,7 +114,7 @@ void main() {
           LayoutNode.text(text: 'Item 1'),
           LayoutNode.text(text: 'Item 2'),
         ],
-        scrollDirection: Axis.horizontal,
+        scrollDirection: SyntaxAxis.horizontal,
         shrinkWrap: true,
       );
 

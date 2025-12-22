@@ -13,7 +13,7 @@ void main() {
         layout: LayoutNode.column(
           children: [
             LayoutNode.text(text: 'Welcome'),
-            LayoutNode.button(label: 'Sign In', variant: ButtonVariant.filled),
+            LayoutNode.button(label: 'Sign In', variant: 'filled'),
           ],
         ),
       );
@@ -63,6 +63,31 @@ void main() {
       expect(code, contains('return Scaffold('));
       expect(code, isNot(contains('appBar:')));
       expect(code, contains("body: AppText(text: 'Loading...')"));
+    });
+
+    test('generated Stateful widget correctly scopes callbacks with widget.',
+        () {
+      final screen = ScreenDefinition(
+        id: 'login',
+        layout: LayoutNode.column(children: [
+          LayoutNode.textField(label: 'Email', onChanged: 'onEmailChanged'),
+          LayoutNode.button(
+            label: 'Submit',
+            onPressed: 'onSubmit',
+            variant: 'filled',
+          ),
+        ]),
+      );
+
+      final code = generator.generate(screen);
+
+      expect(code, contains('class LoginScreen extends StatefulWidget'));
+      expect(code, contains('final VoidCallback? onSubmit;'));
+      expect(code, contains('final ValueChanged<String>? onEmailChanged;'));
+
+      // Verify usage in build method
+      expect(code, contains('onPressed: widget.onSubmit'));
+      expect(code, contains('onChanged: widget.onEmailChanged'));
     });
   });
 }

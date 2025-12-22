@@ -1,4 +1,3 @@
-import 'package:example/syntaxify/design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -24,7 +23,7 @@ void main() {
     testWidgets('MaterialStyle renders TextField with InputDecoration',
         (tester) async {
       await tester.pumpWidget(wrapWithTheme(
-        const AppInput(label: 'MatInput'),
+        AppInput(label: 'MatInput', controller: TextEditingController()),
         style: const MaterialStyle(),
       ));
 
@@ -35,7 +34,10 @@ void main() {
 
     testWidgets('CupertinoStyle renders CupertinoTextField', (tester) async {
       await tester.pumpWidget(wrapWithTheme(
-        const AppInput(label: 'CupInput', hint: 'Hint'),
+        AppInput(
+            label: 'CupInput',
+            hint: 'Hint',
+            controller: TextEditingController()),
         style: const CupertinoStyle(),
       ));
 
@@ -48,7 +50,7 @@ void main() {
     testWidgets('NeoStyle renders Container and Uppercase Label',
         (tester) async {
       await tester.pumpWidget(wrapWithTheme(
-        const AppInput(label: 'NeoInput'),
+        AppInput(label: 'NeoInput', controller: TextEditingController()),
         style: const NeoStyle(),
       ));
 
@@ -78,20 +80,22 @@ void main() {
 
     testWidgets('ObscureText is propagated', (tester) async {
       // Default false
-      await tester
-          .pumpWidget(wrapWithTheme(const AppInput(obscureText: false)));
+      await tester.pumpWidget(wrapWithTheme(
+          AppInput(obscureText: false, controller: TextEditingController())));
       var textField = tester.widget<TextField>(find.byType(TextField));
       expect(textField.obscureText, false);
 
       // True
-      await tester.pumpWidget(wrapWithTheme(const AppInput(obscureText: true)));
+      await tester.pumpWidget(wrapWithTheme(
+          AppInput(obscureText: true, controller: TextEditingController())));
       textField = tester.widget<TextField>(find.byType(TextField));
       expect(textField.obscureText, true);
     });
 
     testWidgets('ErrorText is propagated', (tester) async {
       await tester.pumpWidget(wrapWithTheme(
-        const AppInput(errorText: 'Invalid Value'),
+        AppInput(
+            errorText: 'Invalid Value', controller: TextEditingController()),
       ));
 
       expect(find.text('Invalid Value'), findsOneWidget);
@@ -107,7 +111,8 @@ void main() {
     testWidgets('OnChanged callback fires', (tester) async {
       String? value;
       await tester.pumpWidget(wrapWithTheme(
-        AppInput(onChanged: (v) => value = v),
+        AppInput(
+            onChanged: (v) => value = v, controller: TextEditingController()),
       ));
 
       await tester.enterText(find.byType(TextField), 'Hello');
@@ -117,7 +122,8 @@ void main() {
     testWidgets('OnSubmitted callback fires', (tester) async {
       String? value;
       await tester.pumpWidget(wrapWithTheme(
-        AppInput(onSubmitted: (v) => value = v),
+        AppInput(
+            onSubmitted: (v) => value = v, controller: TextEditingController()),
       ));
 
       await tester.enterText(find.byType(TextField), 'SubmitMe');
@@ -133,9 +139,11 @@ void main() {
 
     testWidgets('Icons render when defined by AppIcon', (tester) async {
       await tester.pumpWidget(wrapWithTheme(
-        const AppInput(
-          prefixIcon: meta.AppIcon.search,
-          suffixIcon: meta.AppIcon.user,
+        AppInput(
+          label: 'IconInput',
+          prefixIconName: meta.AppIcon.search,
+          suffixIconName: meta.AppIcon.user,
+          controller: TextEditingController(),
         ),
       ));
 

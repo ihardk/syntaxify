@@ -46,7 +46,7 @@ void main() {
 
       test('emits Column with mainAxisAlignment', () {
         final node = LayoutNode.column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: SyntaxMainAxisAlignment.center,
           children: [],
         );
 
@@ -57,7 +57,7 @@ void main() {
 
       test('emits Column with crossAxisAlignment', () {
         final node = LayoutNode.column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: SyntaxCrossAxisAlignment.start,
           children: [],
         );
 
@@ -68,8 +68,8 @@ void main() {
 
       test('emits Column with both alignments', () {
         final node = LayoutNode.column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: SyntaxMainAxisAlignment.spaceBetween,
+          crossAxisAlignment: SyntaxCrossAxisAlignment.end,
           children: [],
         );
 
@@ -108,7 +108,7 @@ void main() {
 
       test('emits Row with mainAxisAlignment', () {
         final node = LayoutNode.row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: SyntaxMainAxisAlignment.spaceEvenly,
           children: [],
         );
 
@@ -120,7 +120,7 @@ void main() {
 
       test('emits Row with crossAxisAlignment', () {
         final node = LayoutNode.row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: SyntaxCrossAxisAlignment.stretch,
           children: [],
         );
 
@@ -156,7 +156,7 @@ void main() {
       test('emits AppText with align', () {
         final node = LayoutNode.text(
           text: 'Centered',
-          align: TextAlign.center,
+          align: SyntaxTextAlign.center,
         );
 
         final code = emitToString(node);
@@ -178,7 +178,7 @@ void main() {
       test('emits AppText with overflow', () {
         final node = LayoutNode.text(
           text: 'Overflow',
-          overflow: TextOverflow.ellipsis,
+          overflow: SyntaxTextOverflow.ellipsis,
         );
 
         final code = emitToString(node);
@@ -190,9 +190,9 @@ void main() {
         final node = LayoutNode.text(
           text: 'Full',
           variant: TextVariant.bodyLarge,
-          align: TextAlign.justify,
+          align: SyntaxTextAlign.justify,
           maxLines: 3,
-          overflow: TextOverflow.fade,
+          overflow: SyntaxTextOverflow.fade,
         );
 
         final code = emitToString(node);
@@ -229,7 +229,7 @@ void main() {
       test('emits AppButton with variant', () {
         final node = LayoutNode.button(
           label: 'Secondary',
-          variant: ButtonVariant.outlined,
+          variant: 'outlined',
         );
 
         final code = emitToString(node);
@@ -242,7 +242,7 @@ void main() {
         final node = LayoutNode.button(
           label: 'Action',
           onPressed: 'handleAction',
-          variant: ButtonVariant.text,
+          variant: 'text',
         );
 
         final code = emitToString(node);
@@ -481,7 +481,7 @@ void main() {
             LayoutNode.text(text: 'Title'),
             LayoutNode.spacer(flex: 1),
             LayoutNode.row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: SyntaxMainAxisAlignment.spaceBetween,
               children: [
                 LayoutNode.button(label: 'Cancel', onPressed: 'onCancel'),
                 LayoutNode.button(label: 'OK', onPressed: 'onOk'),
@@ -587,8 +587,9 @@ void main() {
 
       test('emits all ButtonVariant values except filled (default)', () {
         // Note: emitter skips variant when it's 'filled' (the default)
-        for (final variant in ButtonVariant.values) {
-          if (variant == ButtonVariant.filled) continue; // Skip default
+        final variants = ['filled', 'outlined', 'text', 'elevated', 'tonal'];
+        for (final variant in variants) {
+          if (variant == 'filled') continue; // Skip default
           final node = LayoutNode.button(
             label: 'Test',
             variant: variant,
@@ -596,7 +597,7 @@ void main() {
 
           final code = emitToString(node);
 
-          expect(code, contains('ButtonVariant.${variant.name}'));
+          expect(code, contains('ButtonVariant.$variant'));
         }
       });
 

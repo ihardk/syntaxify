@@ -3,7 +3,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:example/syntaxify/index.dart';
-import 'package:example/syntaxify/design_system/design_system.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -22,51 +21,43 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Dashboard')),
+      appBar: AppBar(title: const AppText(text: 'Dashboard')),
       body: Column(
         children: [
-          AppText(text: 'Welcome Back!', variant: TextVariant.bodyMedium),
-          AppText(
+          const AppText(text: 'Welcome Back!', variant: TextVariant.headlineMedium),
+          const AppText(
             text: 'Here\'s your overview for today',
             variant: TextVariant.bodyMedium,
           ),
-          Spacer(),
-          Row(
+          const SizedBox(height: 16.0),
+          const Row(
             children: [
               Column(
                 children: [
                   AppText(text: '12', variant: TextVariant.headlineMedium),
-                  AppText(text: 'Tasks', variant: TextVariant.bodyMedium),
+                  AppText(text: 'Tasks', variant: TextVariant.labelSmall),
                 ],
               ),
               Column(
                 children: [
                   AppText(text: '5', variant: TextVariant.headlineMedium),
-                  AppText(text: 'Completed', variant: TextVariant.bodyMedium),
+                  AppText(text: 'Completed', variant: TextVariant.labelSmall),
                 ],
               ),
               Column(
                 children: [
                   AppText(text: '3', variant: TextVariant.headlineMedium),
-                  AppText(text: 'Pending', variant: TextVariant.bodyMedium),
+                  AppText(text: 'Pending', variant: TextVariant.labelSmall),
                 ],
               ),
             ],
           ),
-          Spacer(),
+          const SizedBox(height: 16.0),
           AppButton(label: 'View All Tasks', onPressed: navigateToTasks),
-          Spacer(),
-          AppButton(
-            label: 'Add New Task',
-            onPressed: addNewTask,
-            variant: ButtonVariant.outlined,
-          ),
-          Spacer(),
-          AppButton(
-            label: 'Settings',
-            onPressed: openSettings,
-            variant: ButtonVariant.text,
-          ),
+          const SizedBox(height: 16.0),
+          AppButton(label: 'Add New Task', onPressed: addNewTask),
+          const SizedBox(height: 16.0),
+          AppButton(label: 'Settings', onPressed: openSettings),
         ],
       ),
     );

@@ -185,8 +185,6 @@ extension SyntaxifyConfigPatterns on SyntaxifyConfig {
     switch (_that) {
       case _SyntaxifyConfig():
         return $default(_that);
-      case _:
-        throw StateError('Unexpected subclass');
     }
   }
 
@@ -268,8 +266,6 @@ extension SyntaxifyConfigPatterns on SyntaxifyConfig {
       case _SyntaxifyConfig():
         return $default(_that.metaDir, _that.outputDir, _that.designSystemDir,
             _that.tokensDir, _that.generateScreens, _that.generateComponents);
-      case _:
-        throw StateError('Unexpected subclass');
     }
   }
 

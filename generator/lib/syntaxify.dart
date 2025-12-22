@@ -30,8 +30,7 @@ export 'src/parser/token_parser.dart';
 
 // Generators (Strategy Pattern)
 export 'src/generators/generator_registry.dart';
-export 'src/generators/component/button_generator.dart';
-export 'src/generators/component/generic_generator.dart';
+export 'src/generators/component/component_generator.dart';
 export 'src/generator/theme_generator.dart';
 export 'src/generator/syntax_generator.dart';
 

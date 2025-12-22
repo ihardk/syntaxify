@@ -2,6 +2,7 @@
 ///
 /// Pure data class defining styling properties for the Button component.
 /// Used by DesignStyle implementations to provide style-specific tokens.
+library;
 
 import 'package:flutter/material.dart';
 

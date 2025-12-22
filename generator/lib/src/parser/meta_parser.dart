@@ -160,6 +160,15 @@ class _AstNodeVisitor extends RecursiveAstVisitor<void> {
         }
       }
 
+      // Extract type parameters (e.g., <T> from RadioMeta<T>)
+      final typeParameters = <String>[];
+      final typeParamList = classNode.typeParameters;
+      if (typeParamList != null) {
+        for (final typeParam in typeParamList.typeParameters) {
+          typeParameters.add(typeParam.name.lexeme);
+        }
+      }
+
       component = ComponentDefinition(
         name: _toSnakeCase(classNode.name.lexeme),
         className: classNode.name.lexeme,
@@ -167,6 +176,7 @@ class _AstNodeVisitor extends RecursiveAstVisitor<void> {
         properties: properties,
         variants: variants,
         description: _extractDocComment(classNode),
+        typeParameters: typeParameters,
       );
     }
 
@@ -179,6 +189,23 @@ class _AstNodeVisitor extends RecursiveAstVisitor<void> {
       (a) => a.name.toSource() == 'Required',
     );
 
+    // Check for @Default annotation
+    String? defaultValue = variable.initializer?.toSource();
+    for (final annotation in declaration.metadata) {
+      if (annotation.name.toSource() == 'Default') {
+        final args = annotation.arguments?.arguments;
+        if (args != null && args.isNotEmpty) {
+          // Get the value from @Default('value')
+          final firstArg = args.first;
+          if (firstArg is analyzer.StringLiteral) {
+            defaultValue = firstArg.stringValue;
+          } else {
+            defaultValue = firstArg.toSource();
+          }
+        }
+      }
+    }
+
     final typeNode = declaration.fields.type;
     final typeName = typeNode?.toSource() ?? 'dynamic';
 
@@ -186,7 +213,7 @@ class _AstNodeVisitor extends RecursiveAstVisitor<void> {
       name: variable.name.lexeme,
       type: typeName,
       isRequired: isRequired,
-      defaultValue: variable.initializer?.toSource(),
+      defaultValue: defaultValue,
       description: _extractDocComment(declaration),
     );
   }
