@@ -1,5 +1,5 @@
 name: syntaxify
-description: AST-based Flutter UI code generator with multi-style design system. Write components once, render in Material, Cupertino, or custom designs.
+description: The Flutter UI Compiler. Define once, compile to any design system. , Build Your Next Flutter App Designs in Minutes, And Switch Design Systems in Seconds.
 version: 0.1.0-alpha.10
 repository: https://github.com/ihardk/syntaxify
 issue_tracker: https://github.com/ihardk/syntaxify/issues

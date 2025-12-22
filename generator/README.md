@@ -1,6 +1,6 @@
 # Syntaxify ⚡
 
-**The Flutter UI Compiler. Define once, compile to any design system.**
+**The Flutter UI Compiler. Define once, compile to any design system. Build Your Next Flutter App Designs in Minutes, And Switch Design Systems in Seconds, throughout the app with Syntaxify.**
 
 > Stop writing repetitive UI code. Define components once, render in any design system.
 
@@ -37,6 +37,50 @@ final loginScreen = ScreenDefinition(
 
 **Run:** `dart run syntaxify build`
 **Get:** Complete Flutter screen in `lib/screens/login_screen.dart`
+
+
+```dart
+
+// GENERATED AND Analysed by Syntaxify
+
+import 'package:flutter/material.dart';
+import 'package:example/syntaxify/index.dart';
+import 'package:example/syntaxify/design_system/design_system.dart';
+
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({
+    super.key,
+    this.handleLogin,
+  });
+
+  final VoidCallback? handleLogin;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Column(children: [
+      AppText(
+        text: 'Welcome Back',
+        variant: TextVariant.bodyMedium,
+      ),
+      AppInput(
+        label: 'Email',
+        keyboardType: TextInputType.emailAddress,
+      ),
+      AppInput(
+        label: 'Password',
+        obscureText: true,
+      ),
+      AppButton(
+        label: 'Sign In',
+        onPressed: handleLogin,
+      ),
+    ]));
+  }
+}
+
+
+```
 
 **No boilerplate. No repetition. Just results.** ✨
 
