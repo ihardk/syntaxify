@@ -168,7 +168,7 @@ void main() {
         final code = fileSystem.getFile('/output/components/app_input.dart');
         // InputGenerator produces fields with proper types
         expect(code, contains('label'));
-        expect(code, contains('hint'));
+        expect(code, contains('placeholder'));
         expect(code, contains('obscureText'));
         expect(code, contains('onChanged'));
       });

@@ -104,7 +104,7 @@ void main() {
         interactive: (i) {
           i.node.map(
             button: (b) {
-              expect(b.props?.variant, 'filled'); // Default
+              expect(b.props?.variant, 'primary'); // Default
               expect(b.props?.size, null);
               expect(b.props?.isDisabled, false);
             },

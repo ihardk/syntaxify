@@ -68,7 +68,11 @@ class ComponentGenerator implements IComponentGenerator {
     final name =
         component.explicitName ?? component.className.replaceAll('Meta', '');
     // Strip 'App' prefix if present
-    return name.startsWith('App') ? name.substring(3) : name;
+    final base = name.startsWith('App') ? name.substring(3) : name;
+    if (base.isEmpty) {
+      throw Exception('Component name cannot be empty');
+    }
+    return base;
   }
 
   List<String> _generateHeader(String className) {

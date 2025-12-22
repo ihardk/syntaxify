@@ -210,7 +210,7 @@ sealed class LayoutNode with _$LayoutNode {
         label: label,
         onPressed: onPressed,
         props: ButtonProps(
-          variant: variantName,
+          variant: variantName ?? "primary",
           size: size,
           icon: icon,
           iconPosition: iconPosition,
