@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:example/syntaxify/index.dart';
+import 'package:example/syntaxify/design_system/design_system.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key, this.handleRegister, this.navigateToLogin});
@@ -45,15 +46,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const AppText(text: 'Create Account')),
+      appBar: AppBar(title: AppText(text: 'Create Account')),
       body: Column(
         children: [
-          const AppText(text: 'Join Us Today', variant: TextVariant.headlineMedium),
-          const AppText(
+          AppText(text: 'Join Us Today', variant: TextVariant.headlineMedium),
+          AppText(
             text: 'Create your account to get started',
             variant: TextVariant.bodyMedium,
           ),
-          const SizedBox(height: 16.0),
+          SizedBox(height: 16.0),
           AppInput(
             label: 'Full Name',
             controller: _fullNameController,
@@ -77,12 +78,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
             hint: 'Confirm your password',
             obscureText: true,
           ),
-          const SizedBox(height: 16.0),
-          AppButton(label: 'Create Account', onPressed: widget.handleRegister),
-          const SizedBox(height: 16.0),
+          SizedBox(height: 16.0),
+          AppButton(
+            label: 'Create Account',
+            onPressed: widget.handleRegister,
+            variant: ButtonVariant.primary,
+          ),
+          SizedBox(height: 16.0),
           AppButton(
             label: 'Already have an account? Sign In',
             onPressed: widget.navigateToLogin,
+            variant: ButtonVariant.primary,
           ),
         ],
       ),

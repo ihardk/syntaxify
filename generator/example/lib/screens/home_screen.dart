@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:example/syntaxify/index.dart';
+import 'package:example/syntaxify/design_system/design_system.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -21,16 +22,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const AppText(text: 'Dashboard')),
+      appBar: AppBar(title: AppText(text: 'Dashboard')),
       body: Column(
         children: [
-          const AppText(text: 'Welcome Back!', variant: TextVariant.headlineMedium),
-          const AppText(
+          AppText(text: 'Welcome Back!', variant: TextVariant.headlineMedium),
+          AppText(
             text: 'Here\'s your overview for today',
             variant: TextVariant.bodyMedium,
           ),
-          const SizedBox(height: 16.0),
-          const Row(
+          SizedBox(height: 16.0),
+          Row(
             children: [
               Column(
                 children: [
@@ -52,12 +53,24 @@ class HomeScreen extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16.0),
-          AppButton(label: 'View All Tasks', onPressed: navigateToTasks),
-          const SizedBox(height: 16.0),
-          AppButton(label: 'Add New Task', onPressed: addNewTask),
-          const SizedBox(height: 16.0),
-          AppButton(label: 'Settings', onPressed: openSettings),
+          SizedBox(height: 16.0),
+          AppButton(
+            label: 'View All Tasks',
+            onPressed: navigateToTasks,
+            variant: ButtonVariant.primary,
+          ),
+          SizedBox(height: 16.0),
+          AppButton(
+            label: 'Add New Task',
+            onPressed: addNewTask,
+            variant: ButtonVariant.primary,
+          ),
+          SizedBox(height: 16.0),
+          AppButton(
+            label: 'Settings',
+            onPressed: openSettings,
+            variant: ButtonVariant.primary,
+          ),
         ],
       ),
     );

@@ -11,7 +11,7 @@ mixin MaterialSwitchRenderer on DesignStyle {
     return Switch(
       value: value,
       onChanged: enabled ? onChanged : null,
-      activeThumbColor: activeColor ?? Colors.blue,
+      activeColor: activeColor ?? Colors.blue,
     );
   }
 }

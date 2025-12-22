@@ -1,40 +1,90 @@
+/// Input component specification
+///
+/// Defines the API surface for the AppInput widget.
+/// Properties must match DesignStyle.renderInput() signature.
+library;
+
+import 'package:flutter/material.dart';
 import 'package:syntaxify/syntaxify.dart';
 
-/// Text Input component specification
 @SyntaxComponent(
     description: 'A text input field with optional label, hint, and icons')
 class InputMeta {
-  /// The label text displayed above or inside the input
+  /// Text editing controller
+  /// Maps to: _fieldNameController (auto-generated from label)
   @Required()
-  final String label;
+  final TextEditingController? controller;
+
+  /// The label text displayed above or inside the input
+  /// Maps to: LayoutNode.textField(label: ...)
+  @Optional()
+  final String? label;
 
   /// Hint text displayed when empty
+  /// Maps to: LayoutNode.textField(hint: ...)
   @Optional()
   final String? hint;
 
   /// Error text to display
+  /// Maps to: LayoutNode.textField(errorText: ...)
   @Optional()
   final String? errorText;
 
   /// Whether the text should be obscured (password)
+  /// Maps to: LayoutNode.textField(obscureText: ...)
   @Optional()
   @Default('false')
   final bool obscureText;
 
+  /// Whether the input is enabled
+  @Optional()
+  @Default('true')
+  final bool enabled;
+
+  /// Callback when text changes
+  /// Maps to: LayoutNode.textField(onChanged: ...)
+  @Optional()
+  final ValueChanged<String>? onChanged;
+
+  /// Callback when text is submitted
+  /// Maps to: LayoutNode.textField(onSubmitted: ...)
+  @Optional()
+  final ValueChanged<String>? onSubmitted;
+
   /// Leading icon name
   @Optional()
-  final String? prefixIcon;
+  final String? prefixIconName;
 
   /// Trailing icon name
   @Optional()
-  final String? suffixIcon;
+  final String? suffixIconName;
+
+  /// Callback when prefix icon is tapped
+  @Optional()
+  final VoidCallback? onTapPrefix;
+
+  /// Callback when suffix icon is tapped
+  @Optional()
+  final VoidCallback? onTapSuffix;
+
+  /// Keyboard type
+  /// Maps to: LayoutNode.textField(keyboardType: ...)
+  @Optional()
+  final TextInputType? keyboardType;
 
   const InputMeta({
-    required this.label,
+    required this.controller,
+    this.label,
     this.hint,
     this.errorText,
     this.obscureText = false,
-    this.prefixIcon,
-    this.suffixIcon,
+    this.enabled = true,
+    this.onChanged,
+    this.onSubmitted,
+    this.prefixIconName,
+    this.suffixIconName,
+    this.onTapPrefix,
+    this.onTapSuffix,
+    this.keyboardType,
   });
 }
