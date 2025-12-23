@@ -114,6 +114,79 @@ AppTheme(
 
 ---
 
+## Creating Custom Components (NEW in v0.2.0)
+
+You can create **any custom component** that fully integrates with the design system.
+
+### Step 1: Define the Meta
+
+Create `meta/profile_card.meta.dart`:
+
+```dart
+@SyntaxComponent(
+  name: 'ProfileCard',
+  description: 'A card showing user profile info',
+  variants: ['compact', 'expanded'],
+)
+class ProfileCardMeta {
+  final String userName;     // Required (non-nullable)
+  final String? avatarUrl;   // Optional (nullable)
+  final Widget? trailing;    // Optional child widget
+}
+```
+
+### Step 2: Build
+
+```bash
+dart run syntaxify build
+```
+
+This generates:
+- `lib/syntaxify/generated/components/app_profile_card.dart` - The widget
+- `lib/syntaxify/design_system/components/profile_card/material_renderer.dart` - Stub renderer
+- Updates `DesignStyle` with `Widget renderProfileCard(...)`
+
+### Step 3: Implement the Renderer (Optional)
+
+The generated stub works out of the box with placeholder UI. To customize:
+
+```dart
+// lib/syntaxify/design_system/components/profile_card/material_renderer.dart
+mixin MaterialProfileCardRenderer on DesignStyle {
+  @override
+  Widget renderProfileCard({
+    required String userName,
+    String? avatarUrl,
+    Widget? trailing,
+    ProfileCardVariant variant = ProfileCardVariant.compact,
+  }) {
+    return Card(
+      child: ListTile(
+        leading: CircleAvatar(backgroundImage: avatarUrl != null ? NetworkImage(avatarUrl) : null),
+        title: Text(userName),
+        trailing: trailing,
+      ),
+    );
+  }
+}
+```
+
+### Step 4: Use It
+
+```dart
+AppProfileCard(
+  userName: 'Hardik',
+  avatarUrl: 'https://...',
+)
+// or with variant convenience constructors:
+AppProfileCard.compact(userName: 'Hardik')
+AppProfileCard.expanded(userName: 'Hardik')
+```
+
+**Your custom component now renders with Material, Cupertino, or Neo style automatically!**
+
+---
+
 ## Design Tokens
 
 Syntaxify uses design tokens for consistent styling across components.
