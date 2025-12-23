@@ -133,21 +133,21 @@ Define screens using AST nodes that compile to Flutter code.
 
 ```dart
 // Vertical layout
-AstNode.column(
+App.column(
   mainAxisAlignment: MainAxisAlignment.center,
   crossAxisAlignment: CrossAxisAlignment.stretch,
   children: [
-    AstNode.text(text: 'Title'),
-    AstNode.button(label: 'Click'),
+    App.text(text: 'Title'),
+    App.button(label: 'Click'),
   ],
 )
 
 // Horizontal layout
-AstNode.row(
+App.row(
   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
   children: [
-    AstNode.text(text: 'Left'),
-    AstNode.text(text: 'Right'),
+    App.text(text: 'Left'),
+    App.text(text: 'Right'),
   ],
 )
 ```
@@ -156,20 +156,20 @@ AstNode.row(
 
 ```dart
 // Text with variant
-AstNode.text(
+App.text(
   text: 'Welcome!',
   variant: TextVariant.headlineLarge,
 )
 
 // Button with action callback
-AstNode.button(
+App.button(
   label: 'Submit',
   variant: ButtonVariant.filled,
   onPressed: 'handleSubmit', // Becomes VoidCallback? field
 )
 
 // Text input field
-AstNode.textField(
+App.textField(
   label: 'Email',
   hint: 'Enter email',
   keyboardType: KeyboardType.email,
@@ -177,7 +177,7 @@ AstNode.textField(
 )
 
 // Spacing
-AstNode.spacer(size: SpacerSize.lg)
+App.spacer(size: SpacerSize.lg)
 ```
 
 ### Screen Definition
@@ -185,14 +185,14 @@ AstNode.spacer(size: SpacerSize.lg)
 ```dart
 final loginScreen = ScreenDefinition(
   id: 'login',
-  appBar: AstNode.appBar(title: 'Login'),
-  layout: AstNode.column(
+  appBar: App.appBar(title: 'Login'),
+  layout: App.column(
     children: [
-      AstNode.text(text: 'Welcome Back', variant: TextVariant.headlineLarge),
-      AstNode.textField(label: 'Email', keyboardType: KeyboardType.email),
-      AstNode.textField(label: 'Password', obscureText: true),
-      AstNode.spacer(size: SpacerSize.lg),
-      AstNode.button(label: 'Sign In', onPressed: 'handleLogin'),
+      App.text(text: 'Welcome Back', variant: TextVariant.headlineLarge),
+      App.textField(label: 'Email', keyboardType: KeyboardType.email),
+      App.textField(label: 'Password', obscureText: true),
+      App.spacer(size: SpacerSize.lg),
+      App.button(label: 'Sign In', onPressed: 'handleLogin'),
     ],
   ),
 );
@@ -200,16 +200,16 @@ final loginScreen = ScreenDefinition(
 
 ### Available Node Types
 
-| Node                | Purpose           | Key Properties                                 |
-| ------------------- | ----------------- | ---------------------------------------------- |
-| `AstNode.column`    | Vertical layout   | `children`, `mainAxisAlignment`                |
-| `AstNode.row`       | Horizontal layout | `children`, `mainAxisAlignment`                |
-| `AstNode.text`      | Text display      | `text`, `variant`                              |
-| `AstNode.button`    | Button            | `label`, `variant`, `onPressed`                |
-| `AstNode.textField` | Input field       | `label`, `hint`, `keyboardType`, `obscureText` |
-| `AstNode.spacer`    | Spacing           | `size`, `flex`                                 |
-| `AstNode.appBar`    | App bar           | `title`                                        |
-| `AstNode.icon`      | Icon display      | `name`, `size`, `semantic`                     |
+| Node            | Purpose           | Key Properties                                 |
+| --------------- | ----------------- | ---------------------------------------------- |
+| `App.column`    | Vertical layout   | `children`, `mainAxisAlignment`                |
+| `App.row`       | Horizontal layout | `children`, `mainAxisAlignment`                |
+| `App.text`      | Text display      | `text`, `variant`                              |
+| `App.button`    | Button            | `label`, `variant`, `onPressed`                |
+| `App.textField` | Input field       | `label`, `hint`, `keyboardType`, `obscureText` |
+| `App.spacer`    | Spacing           | `size`, `flex`                                 |
+| `App.appBar`    | App bar           | `title`                                        |
+| `App.icon`      | Icon display      | `name`, `size`, `semantic`                     |
 
 ---
 

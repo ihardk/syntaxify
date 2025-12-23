@@ -22,13 +22,13 @@ class AppRadio<T> extends StatelessWidget {
     this.activeColor,
   });
 
-  /// The value this radio represents Maps to: LayoutNode.radio(value: ...)
+  /// The value this radio represents Maps to: App.radio(value: ...)
   final T value;
 
-  /// The currently selected value in the group Maps to: LayoutNode.radio(binding: ...) (wraps binding)
+  /// The currently selected value in the group Maps to: App.radio(binding: ...) (wraps binding)
   final T? groupValue;
 
-  /// Callback when this radio is selected Maps to: LayoutNode.radio(onChanged: ...)
+  /// Callback when this radio is selected Maps to: App.radio(onChanged: ...)
   final ValueChanged<T?>? onChanged;
 
   /// Whether the radio is enabled
@@ -40,11 +40,11 @@ class AppRadio<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppTheme.of(context).style.renderRadio(
-      value: value,
-      groupValue: groupValue,
-      onChanged: onChanged,
-      enabled: enabled,
-      activeColor: activeColor,
-    );
+          value: value,
+          groupValue: groupValue,
+          onChanged: onChanged,
+          enabled: enabled,
+          activeColor: activeColor,
+        );
   }
 }

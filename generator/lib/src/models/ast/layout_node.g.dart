@@ -6,9 +6,8 @@ part of 'layout_node.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-StructuralLayoutNode _$StructuralLayoutNodeFromJson(
-        Map<String, dynamic> json) =>
-    StructuralLayoutNode(
+StructuralApp _$StructuralAppFromJson(Map<String, dynamic> json) =>
+    StructuralApp(
       node: StructuralNode.fromJson(json['node'] as Map<String, dynamic>),
       meta: json['meta'] == null
           ? const NodeMetadata()
@@ -16,16 +15,14 @@ StructuralLayoutNode _$StructuralLayoutNodeFromJson(
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$StructuralLayoutNodeToJson(
-        StructuralLayoutNode instance) =>
+Map<String, dynamic> _$StructuralAppToJson(StructuralApp instance) =>
     <String, dynamic>{
       'node': instance.node.toJson(),
       'meta': instance.meta.toJson(),
       'runtimeType': instance.$type,
     };
 
-PrimitiveLayoutNode _$PrimitiveLayoutNodeFromJson(Map<String, dynamic> json) =>
-    PrimitiveLayoutNode(
+PrimitiveApp _$PrimitiveAppFromJson(Map<String, dynamic> json) => PrimitiveApp(
       node: PrimitiveNode.fromJson(json['node'] as Map<String, dynamic>),
       meta: json['meta'] == null
           ? const NodeMetadata()
@@ -33,17 +30,15 @@ PrimitiveLayoutNode _$PrimitiveLayoutNodeFromJson(Map<String, dynamic> json) =>
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$PrimitiveLayoutNodeToJson(
-        PrimitiveLayoutNode instance) =>
+Map<String, dynamic> _$PrimitiveAppToJson(PrimitiveApp instance) =>
     <String, dynamic>{
       'node': instance.node.toJson(),
       'meta': instance.meta.toJson(),
       'runtimeType': instance.$type,
     };
 
-InteractiveLayoutNode _$InteractiveLayoutNodeFromJson(
-        Map<String, dynamic> json) =>
-    InteractiveLayoutNode(
+InteractiveApp _$InteractiveAppFromJson(Map<String, dynamic> json) =>
+    InteractiveApp(
       node: InteractiveNode.fromJson(json['node'] as Map<String, dynamic>),
       meta: json['meta'] == null
           ? const NodeMetadata()
@@ -51,16 +46,14 @@ InteractiveLayoutNode _$InteractiveLayoutNodeFromJson(
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$InteractiveLayoutNodeToJson(
-        InteractiveLayoutNode instance) =>
+Map<String, dynamic> _$InteractiveAppToJson(InteractiveApp instance) =>
     <String, dynamic>{
       'node': instance.node.toJson(),
       'meta': instance.meta.toJson(),
       'runtimeType': instance.$type,
     };
 
-CustomLayoutNode _$CustomLayoutNodeFromJson(Map<String, dynamic> json) =>
-    CustomLayoutNode(
+CustomApp _$CustomAppFromJson(Map<String, dynamic> json) => CustomApp(
       node: CustomNode.fromJson(json['node'] as Map<String, dynamic>),
       meta: json['meta'] == null
           ? const NodeMetadata()
@@ -68,8 +61,7 @@ CustomLayoutNode _$CustomLayoutNodeFromJson(Map<String, dynamic> json) =>
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$CustomLayoutNodeToJson(CustomLayoutNode instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CustomAppToJson(CustomApp instance) => <String, dynamic>{
       'node': instance.node.toJson(),
       'meta': instance.meta.toJson(),
       'runtimeType': instance.$type,

@@ -10,7 +10,7 @@ _CustomNode _$CustomNodeFromJson(Map<String, dynamic> json) => _CustomNode(
       type: json['type'] as String,
       props: json['props'] as Map<String, dynamic>? ?? const {},
       children: (json['children'] as List<dynamic>?)
-              ?.map((e) => LayoutNode.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => App.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
     );

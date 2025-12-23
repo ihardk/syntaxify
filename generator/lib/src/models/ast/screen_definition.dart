@@ -10,9 +10,9 @@ part 'screen_definition.g.dart';
 /// ```dart
 /// final loginScreen = ScreenDefinition(
 ///   id: 'login',
-///   layout: LayoutNode.column(children: [
-///     LayoutNode.text(text: 'Welcome'),
-///     LayoutNode.button(label: 'Login', onPressed: 'handleLogin'),
+///   layout: App.column(children: [
+///     App.text(text: 'Welcome'),
+///     App.button(label: 'Login', onPressed: 'handleLogin'),
 ///   ]),
 /// );
 /// ```
@@ -20,8 +20,8 @@ part 'screen_definition.g.dart';
 sealed class ScreenDefinition with _$ScreenDefinition {
   const factory ScreenDefinition({
     required String id,
-    required LayoutNode layout,
-    LayoutNode? appBar,
+    required App layout,
+    App? appBar,
     String? padding, // Token
   }) = _ScreenDefinition;
 

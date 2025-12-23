@@ -23,33 +23,33 @@ class AppSlider extends StatelessWidget {
     this.label,
   });
 
-  /// Current slider value Maps to: LayoutNode.slider(binding: ...) (wraps binding)
+  /// Current slider value Maps to: App.slider(binding: ...) (wraps binding)
   final double value;
 
-  /// Callback when slider value changes Maps to: LayoutNode.slider(onChanged: ...)
+  /// Callback when slider value changes Maps to: App.slider(onChanged: ...)
   final ValueChanged<double>? onChanged;
 
-  /// Minimum value Maps to: LayoutNode.slider(min: ...)
+  /// Minimum value Maps to: App.slider(min: ...)
   final double min;
 
-  /// Maximum value Maps to: LayoutNode.slider(max: ...)
+  /// Maximum value Maps to: App.slider(max: ...)
   final double max;
 
-  /// Number of discrete divisions Maps to: LayoutNode.slider(divisions: ...)
+  /// Number of discrete divisions Maps to: App.slider(divisions: ...)
   final int? divisions;
 
-  /// Label to display Maps to: LayoutNode.slider(label: ...)
+  /// Label to display Maps to: App.slider(label: ...)
   final String? label;
 
   @override
   Widget build(BuildContext context) {
     return AppTheme.of(context).style.renderSlider(
-      value: value,
-      onChanged: onChanged,
-      min: min,
-      max: max,
-      divisions: divisions,
-      label: label,
-    );
+          value: value,
+          onChanged: onChanged,
+          min: min,
+          max: max,
+          divisions: divisions,
+          label: label,
+        );
   }
 }

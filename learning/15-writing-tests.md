@@ -337,9 +337,9 @@ void main() {
     group('emit', () {
       test('emits Column for ColumnNode', () {
         // Arrange
-        final node = LayoutNode.column(
+        final node = App.column(
           children: [
-            LayoutNode.text(text: 'Hello'),
+            App.text(text: 'Hello'),
           ],
         );
 
@@ -353,10 +353,10 @@ void main() {
       });
 
       test('emits Row for RowNode', () {
-        final node = LayoutNode.row(
+        final node = App.row(
           children: [
-            LayoutNode.text(text: 'Left'),
-            LayoutNode.text(text: 'Right'),
+            App.text(text: 'Left'),
+            App.text(text: 'Right'),
           ],
         );
 
@@ -368,7 +368,7 @@ void main() {
       });
 
       test('emits AppText for TextNode', () {
-        final node = LayoutNode.text(
+        final node = App.text(
           text: 'Hello World',
           variant: TextVariant.headlineMedium,
         );
@@ -382,7 +382,7 @@ void main() {
       });
 
       test('emits AppButton for ButtonNode', () {
-        final node = LayoutNode.button(
+        final node = App.button(
           label: 'Click Me',
           onPressed: 'handleClick',
           variant: ButtonVariant.primary,
@@ -398,7 +398,7 @@ void main() {
       });
 
       test('emits AppInput for TextFieldNode', () {
-        final node = LayoutNode.textField(
+        final node = App.textField(
           label: 'Email',
           placeholder: 'you@example.com',
           keyboardType: KeyboardType.email,
@@ -414,13 +414,13 @@ void main() {
       });
 
       test('emits nested layout correctly', () {
-        final node = LayoutNode.column(
+        final node = App.column(
           children: [
-            LayoutNode.text(text: 'Header'),
-            LayoutNode.row(
+            App.text(text: 'Header'),
+            App.row(
               children: [
-                LayoutNode.button(label: 'Cancel', onPressed: 'onCancel'),
-                LayoutNode.button(label: 'OK', onPressed: 'onOk'),
+                App.button(label: 'Cancel', onPressed: 'onCancel'),
+                App.button(label: 'OK', onPressed: 'onOk'),
               ],
             ),
           ],
@@ -436,7 +436,7 @@ void main() {
       });
 
       test('emits SizedBox for SpacerNode', () {
-        final node = LayoutNode.spacer(height: 24);
+        final node = App.spacer(height: 24);
 
         final expression = emitter.emit(node);
         final code = expression.accept(DartEmitter()).toString();
@@ -446,7 +446,7 @@ void main() {
       });
 
       test('handles empty children list', () {
-        final node = LayoutNode.column(children: []);
+        final node = App.column(children: []);
 
         final expression = emitter.emit(node);
         final code = expression.accept(DartEmitter()).toString();
@@ -456,7 +456,7 @@ void main() {
       });
 
       test('includes alignment parameters', () {
-        final node = LayoutNode.column(
+        final node = App.column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [],
@@ -881,11 +881,11 @@ import 'package:syntaxify/syntaxify.dart';
 
 final profileScreen = ScreenDefinition(
   id: 'profile',
-  layout: LayoutNode.column(
+  layout: App.column(
     children: [
-      LayoutNode.text(text: 'Profile'),
-      LayoutNode.button(label: 'Logout', onPressed: 'handleLogout'),
-      LayoutNode.button(label: 'Settings', onPressed: 'handleSettings'),
+      App.text(text: 'Profile'),
+      App.button(label: 'Logout', onPressed: 'handleLogout'),
+      App.button(label: 'Settings', onPressed: 'handleSettings'),
     ],
   ),
 );
@@ -949,26 +949,26 @@ class TestFixtures {
     );
   }
 
-  static LayoutNode loginScreenLayout() {
-    return LayoutNode.column(
+  static App loginScreenLayout() {
+    return App.column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        LayoutNode.text(
+        App.text(
           text: 'Welcome Back',
           variant: TextVariant.headlineMedium,
         ),
-        LayoutNode.spacer(height: 24),
-        LayoutNode.textField(
+        App.spacer(height: 24),
+        App.textField(
           label: 'Email',
           keyboardType: KeyboardType.email,
         ),
-        LayoutNode.spacer(height: 16),
-        LayoutNode.textField(
+        App.spacer(height: 16),
+        App.textField(
           label: 'Password',
           obscureText: true,
         ),
-        LayoutNode.spacer(height: 32),
-        LayoutNode.button(
+        App.spacer(height: 32),
+        App.button(
           label: 'Sign In',
           onPressed: 'handleLogin',
         ),
@@ -1016,7 +1016,7 @@ test('parses component with explicit name from @SyntaxComponent annotation', () 
 ```dart
 test('emits Column for ColumnNode', () {
   // Arrange - Set up test data
-  final node = LayoutNode.column(children: []);
+  final node = App.column(children: []);
 
   // Act - Execute the code under test
   final expression = emitter.emit(node);
@@ -1076,25 +1076,25 @@ group('MetaParser', () {
 ```dart
 group('LayoutEmitter', () {
   test('handles empty children list', () {
-    final node = LayoutNode.column(children: []);
+    final node = App.column(children: []);
     final result = emitter.emit(node);
     expect(result, isNotNull);
   });
 
   test('handles null optional parameters', () {
-    final node = LayoutNode.button(label: 'Test', onPressed: null);
+    final node = App.button(label: 'Test', onPressed: null);
     final result = emitter.emit(node);
     expect(result, isNotNull);
   });
 
   test('handles deeply nested layout', () {
-    final node = LayoutNode.column(
+    final node = App.column(
       children: [
-        LayoutNode.row(
+        App.row(
           children: [
-            LayoutNode.column(
+            App.column(
               children: [
-                LayoutNode.text(text: 'Deep'),
+                App.text(text: 'Deep'),
               ],
             ),
           ],

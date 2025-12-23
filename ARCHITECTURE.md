@@ -31,7 +31,7 @@ flowchart LR
 ```
 
 1.  **Source Parsing**: Reads `.screen.dart` files to understand *intent* (e.g., "I need a primary button").
-2.  **AST Transformation**: Converts raw definitions into a structured Abstract Syntax Tree (`LayoutNode`).
+2.  **AST Transformation**: Converts raw definitions into a structured Abstract Syntax Tree (`App`).
 3.  **Code Emission**: The `LayoutEmitter` walks the AST and emits valid Dart code using `package:code_builder`.
 
 ### 2. The Renderer Pattern (Separation of Concerns)

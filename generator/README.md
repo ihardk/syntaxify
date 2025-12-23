@@ -17,20 +17,20 @@
 // Create meta/login.screen.dart
 final loginScreen = ScreenDefinition(
   id: 'login',
-  appBar: AstNode.appBar(title: 'Login'),
-  layout: LayoutNode.column(children: [
-    LayoutNode.text(text: 'Welcome', variant: TextVariant.headlineLarge),
-    LayoutNode.textField(label: 'Email', keyboardType: KeyboardType.email),
-    LayoutNode.textField(label: 'Password', obscureText: true),
+  appBar: App.appBar(title: 'Login'),
+  layout: App.column(children: [
+    App.text(text: 'Welcome', variant: TextVariant.headlineLarge),
+    App.textField(label: 'Email', keyboardType: KeyboardType.email),
+    App.textField(label: 'Password', obscureText: true),
     
     // New Interactive Components
-    LayoutNode.row(children: [
-        LayoutNode.checkbox(label: 'Remember me', binding: 'rememberMe'),
-        LayoutNode.switchNode(label: 'Dark Mode', binding: 'isDarkMode'),
+    App.row(children: [
+        App.checkbox(label: 'Remember me', binding: 'rememberMe'),
+        App.switchNode(label: 'Dark Mode', binding: 'isDarkMode'),
     ]),
-    LayoutNode.slider(min: 0, max: 100, binding: 'volume'),
+    App.slider(min: 0, max: 100, binding: 'volume'),
     
-    LayoutNode.button(label: 'Login', onPressed: 'handleLogin'),
+    App.button(label: 'Login', onPressed: 'handleLogin'),
   ]),
 );
 ```
@@ -235,10 +235,10 @@ AppTheme(
 // meta/login.screen.dart
 final loginScreen = ScreenDefinition(
   id: 'login',
-  layout: LayoutNode.column(children: [
-    LayoutNode.text(text: 'Welcome Back'),
-    LayoutNode.textField(label: 'Email'),
-    LayoutNode.button(label: 'Sign In', onPressed: 'handleLogin'),
+  layout: App.column(children: [
+    App.text(text: 'Welcome Back'),
+    App.textField(label: 'Email'),
+    App.button(label: 'Sign In', onPressed: 'handleLogin'),
   ]),
 );
 ```
@@ -257,27 +257,27 @@ Syntaxify's component system is categorized into three types:
 
 #### 1. Interactive Nodes (Design System Wrappers)
 These nodes render using the active `DesignStyle` (Material/Cupertino/Neo).
-- **AppButton** (`LayoutNode.button`) - With variants (primary, secondary, etc.)
-- **AppInput** (`LayoutNode.textField`) - Text fields with validation
-- **AppCheckbox** (`LayoutNode.checkbox`) - Tri-state checkboxes
-- **AppSwitch** (`LayoutNode.switchWidget`) - Toggle switches
-- **AppSlider** (`LayoutNode.slider`) - Range sliders
-- **AppRadio** (`LayoutNode.radio`) - Radio groups
+- **AppButton** (`App.button`) - With variants (primary, secondary, etc.)
+- **AppInput** (`App.textField`) - Text fields with validation
+- **AppCheckbox** (`App.checkbox`) - Tri-state checkboxes
+- **AppSwitch** (`App.switchWidget`) - Toggle switches
+- **AppSlider** (`App.slider`) - Range sliders
+- **AppRadio** (`App.radio`) - Radio groups
 
 #### 2. Structural Nodes (Layout)
 These define the layout structure of your screen.
-- **Column/Row** (`LayoutNode.column`, `LayoutNode.row`)
-- **Container** (`LayoutNode.container`)
-- **Card** (`LayoutNode.card`)
-- **ListView/GridView** (`LayoutNode.listView`, `LayoutNode.gridView`)
-- **Stack** (`LayoutNode.stack`)
+- **Column/Row** (`App.column`, `App.row`)
+- **Container** (`App.container`)
+- **Card** (`App.card`)
+- **ListView/GridView** (`App.listView`, `App.gridView`)
+- **Stack** (`App.stack`)
 
 #### 3. Primitive Nodes (Display)
 Basic display elements without complex interaction.
-- **Text** (`LayoutNode.text`)
-- **Icon** (`LayoutNode.icon`)
-- **Image** (`LayoutNode.image`)
-- **Divider** (`LayoutNode.divider`)
+- **Text** (`App.text`)
+- **Icon** (`App.icon`)
+- **Image** (`App.image`)
+- **Divider** (`App.divider`)
 
 **7 interactive components × 3 styles = 21 styled variants!**
 
@@ -430,11 +430,11 @@ import 'package:syntaxify/syntaxify.dart';
 
 final loginScreen = ScreenDefinition(
   id: 'login',
-  layout: LayoutNode.column(children: [
-    LayoutNode.text(text: 'Welcome Back'),
-    LayoutNode.textField(label: 'Email', keyboardType: KeyboardType.emailAddress),
-    LayoutNode.textField(label: 'Password', obscureText: true),
-    LayoutNode.button(label: 'Sign In', onPressed: 'handleLogin'),
+  layout: App.column(children: [
+    App.text(text: 'Welcome Back'),
+    App.textField(label: 'Email', keyboardType: KeyboardType.emailAddress),
+    App.textField(label: 'Password', obscureText: true),
+    App.button(label: 'Sign In', onPressed: 'handleLogin'),
   ]),
 );
 ```

@@ -80,10 +80,10 @@ void main() {
       // 2. Define a screen using the custom node
       final screen = ScreenDefinition(
         id: 'dashboard',
-        layout: LayoutNode.column(
+        layout: App.column(
           children: [
-            LayoutNode.text(text: 'Featured Items'),
-            LayoutNode.custom(
+            App.text(text: 'Featured Items'),
+            App.custom(
               node: CustomNode(
                 type: 'Carousel',
                 props: {

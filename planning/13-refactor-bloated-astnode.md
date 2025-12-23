@@ -1,4 +1,4 @@
-# Issue #13: Refactor Bloated LayoutNode Class
+# Issue #13: Refactor Bloated App Class
 
 ## Status: ❌ NEEDS REFACTORING (Medium-High Priority)
 
@@ -17,15 +17,15 @@
 All node types in one sealed class:
 ```dart
 @freezed
-sealed class LayoutNode with _$LayoutNode {
-  const factory LayoutNode.column(...) = ColumnNode;      // 6 params
-  const factory LayoutNode.row(...) = RowNode;            // 6 params
-  const factory LayoutNode.text(...) = TextNode;          // 7 params
-  const factory LayoutNode.button(...) = ButtonNode;      // 11 params
-  const factory LayoutNode.textField(...) = TextFieldNode; // 15 params
-  const factory LayoutNode.icon(...) = IconNode;          // 5 params
-  const factory LayoutNode.spacer(...) = SpacerNode;      // 4 params
-  const factory LayoutNode.appBar(...) = AppBarNode;      // 6 params
+sealed class App with _$App {
+  const factory App.column(...) = ColumnNode;      // 6 params
+  const factory App.row(...) = RowNode;            // 6 params
+  const factory App.text(...) = TextNode;          // 7 params
+  const factory App.button(...) = ButtonNode;      // 11 params
+  const factory App.textField(...) = TextFieldNode; // 15 params
+  const factory App.icon(...) = IconNode;          // 5 params
+  const factory App.spacer(...) = SpacerNode;      // 4 params
+  const factory App.appBar(...) = AppBarNode;      // 6 params
 }
 ```
 
@@ -49,7 +49,7 @@ String? visibleWhen,  // Repeated 8 times
 
 **TextField has 15 parameters!**
 ```dart
-const factory LayoutNode.textField({
+const factory App.textField({
   String? id,
   String? visibleWhen,
   String? label,
@@ -113,23 +113,23 @@ Split into focused, smaller classes:
 ```dart
 // Base node with common properties
 @freezed
-sealed class LayoutNode with _$LayoutNode {
-  const factory LayoutNode.layout(LayoutNode node) = LayoutLayoutNode;
-  const factory LayoutNode.primitive(PrimitiveNode node) = PrimitiveLayoutNode;
-  const factory LayoutNode.interactive(InteractiveNode node) = InteractiveLayoutNode;
+sealed class App with _$App {
+  const factory App.layout(App node) = LayoutApp;
+  const factory App.primitive(PrimitiveNode node) = PrimitiveApp;
+  const factory App.interactive(InteractiveNode node) = InteractiveApp;
 }
 
 // Layout nodes (separate file)
 @freezed
-sealed class LayoutNode with _$LayoutNode {
-  const factory LayoutNode.column({
-    required List<LayoutNode> children,
+sealed class App with _$App {
+  const factory App.column({
+    required List<App> children,
     MainAxisAlignment? mainAxisAlignment,
     CrossAxisAlignment? crossAxisAlignment,
   }) = ColumnLayout;
 
-  const factory LayoutNode.row({
-    required List<LayoutNode> children,
+  const factory App.row({
+    required List<App> children,
     MainAxisAlignment? mainAxisAlignment,
     CrossAxisAlignment? crossAxisAlignment,
   }) = RowLayout;
@@ -206,8 +206,8 @@ class ButtonProps with _$ButtonProps {
 }
 
 @freezed
-sealed class LayoutNode with _$LayoutNode {
-  const factory LayoutNode.button({
+sealed class App with _$App {
+  const factory App.button({
     String? id,
     String? visibleWhen,
     required String label,
@@ -224,7 +224,7 @@ sealed class LayoutNode with _$LayoutNode {
 - ✅ Partial breaking change (can keep old constructors)
 
 **Drawbacks:**
-- ❌ More verbose: `LayoutNode.button(label: 'X', props: ButtonProps(variant: ...))`
+- ❌ More verbose: `App.button(label: 'X', props: ButtonProps(variant: ...))`
 - ❌ Adds indirection
 
 ---
@@ -235,10 +235,10 @@ Fluent API for complex nodes:
 
 ```dart
 // Simple nodes - direct construction
-LayoutNode.text(text: 'Hello');
+App.text(text: 'Hello');
 
 // Complex nodes - builder
-LayoutNode.button('Click Me')
+App.button('Click Me')
   .onPressed('handleClick')
   .variant(ButtonVariant.primary)
   .icon('arrow_forward')
@@ -279,8 +279,8 @@ class ButtonBuilder {
   }
 }
 
-// Extension on LayoutNode
-extension LayoutNodeBuilders on LayoutNode {
+// Extension on App
+extension AppBuilders on App {
   static ButtonBuilder button(String label) => ButtonBuilder(label);
 }
 ```
@@ -323,13 +323,13 @@ lib/src/models/ast/
 **ast_node.dart (base):**
 ```dart
 @freezed
-sealed class AstNode with _$AstNode {
+sealed class App with _$App {
   // Reference to separate files
-  const factory AstNode.column(ColumnNode node) = _ColumnAstNode;
-  const factory AstNode.row(RowNode node) = _RowAstNode;
-  const factory AstNode.text(TextNode node) = _TextAstNode;
-  const factory AstNode.button(ButtonNode node) = _ButtonAstNode;
-  const factory AstNode.textField(TextFieldNode node) = _TextFieldAstNode;
+  const factory App.column(ColumnNode node) = _ColumnAstNode;
+  const factory App.row(RowNode node) = _RowAstNode;
+  const factory App.text(TextNode node) = _TextAstNode;
+  const factory App.button(ButtonNode node) = _ButtonAstNode;
+  const factory App.textField(TextFieldNode node) = _TextFieldAstNode;
   // etc.
 }
 ```
@@ -352,7 +352,7 @@ class ButtonNode with _$ButtonNode {
 - ✅ Organized file structure
 - ✅ Each node in own file
 - ✅ Easier to find specific nodes
-- ✅ Can still use `AstNode.button(...)`
+- ✅ Can still use `App.button(...)`
 
 **Drawbacks:**
 - ❌ Still generates large freezed file
@@ -377,7 +377,7 @@ lib/src/models/ast/
 │   ├── node_metadata.dart           # id, visibleWhen mixin
 │   └── node_props.dart              # ButtonProps, TextFieldProps
 ├── layout/
-│   └── layout_node.dart             # LayoutNode union (column, row)
+│   └── layout_node.dart             # App union (column, row)
 ├── primitive/
 │   └── primitive_node.dart          # PrimitiveNode union (text, icon, spacer)
 └── interactive/
@@ -389,10 +389,10 @@ lib/src/models/ast/
 **ast_node.dart (12 lines):**
 ```dart
 @freezed
-sealed class AstNode with _$AstNode, NodeMetadata {
-  const factory AstNode.layout(LayoutNode node, NodeMetadata meta) = LayoutAstNode;
-  const factory AstNode.primitive(PrimitiveNode node, NodeMetadata meta) = PrimitiveAstNode;
-  const factory AstNode.interactive(InteractiveNode node, NodeMetadata meta) = InteractiveAstNode;
+sealed class App with _$App, NodeMetadata {
+  const factory App.layout(App node, NodeMetadata meta) = LayoutAstNode;
+  const factory App.primitive(PrimitiveNode node, NodeMetadata meta) = PrimitiveAstNode;
+  const factory App.interactive(InteractiveNode node, NodeMetadata meta) = InteractiveAstNode;
 }
 
 // Mixin for common fields
@@ -405,16 +405,16 @@ mixin NodeMetadata {
 **layout_node.dart (~30 lines):**
 ```dart
 @freezed
-sealed class LayoutNode with _$LayoutNode {
-  const factory LayoutNode.column({
-    required List<AstNode> children,
+sealed class App with _$App {
+  const factory App.column({
+    required List<App> children,
     MainAxisAlignment? mainAxisAlignment,
     CrossAxisAlignment? crossAxisAlignment,
     String? spacing,
   }) = ColumnLayout;
 
-  const factory LayoutNode.row({
-    required List<AstNode> children,
+  const factory App.row({
+    required List<App> children,
     MainAxisAlignment? mainAxisAlignment,
     CrossAxisAlignment? crossAxisAlignment,
     String? spacing,
@@ -456,7 +456,7 @@ sealed class InteractiveNode with _$InteractiveNode {
 
 **Before (bloated):**
 ```dart
-AstNode.button(
+App.button(
   id: 'submit-btn',
   visibleWhen: 'isLoggedIn',
   label: 'Submit',
@@ -473,7 +473,7 @@ AstNode.button(
 
 **After (clean):**
 ```dart
-AstNode.interactive(
+App.interactive(
   InteractiveNode.button(
     label: 'Submit',
     onPressed: 'handleSubmit',
@@ -512,17 +512,17 @@ InteractiveNode.button(
 
 ```dart
 // New API
-AstNode.layout(LayoutNode.column(...));
+App.layout(App.column(...));
 
 // Internally delegates to old API
-AstNode.column(...);
+App.column(...);
 ```
 
 ### Phase 2: Deprecate Old API
 
 ```dart
-@Deprecated('Use AstNode.layout(LayoutNode.column(...)) instead')
-const factory AstNode.column(...);
+@Deprecated('Use App.layout(App.column(...)) instead')
+const factory App.column(...);
 ```
 
 ### Phase 3: Remove Old API (Breaking)
@@ -599,8 +599,8 @@ If full refactor is too much, consider lightweight improvements:
 ### 1. Add Extension Methods
 
 ```dart
-extension AstNodeExtensions on AstNode {
-  AstNode withId(String id) {
+extension AstNodeExtensions on App {
+  App withId(String id) {
     return map(
       column: (n) => n.copyWith(id: id),
       button: (n) => n.copyWith(id: id),
@@ -608,7 +608,7 @@ extension AstNodeExtensions on AstNode {
     );
   }
 
-  AstNode when(String condition) {
+  App when(String condition) {
     return map(
       column: (n) => n.copyWith(visibleWhen: condition),
       button: (n) => n.copyWith(visibleWhen: condition),
@@ -618,7 +618,7 @@ extension AstNodeExtensions on AstNode {
 }
 
 // Usage
-AstNode.button(label: 'Submit')
+App.button(label: 'Submit')
   .withId('submit-btn')
   .when('isLoggedIn');
 ```
@@ -626,17 +626,17 @@ AstNode.button(label: 'Submit')
 ### 2. Add Named Constructor Groups
 
 ```dart
-extension ButtonConstructors on AstNode {
-  static AstNode primaryButton(String label, String onPressed) {
-    return AstNode.button(
+extension ButtonConstructors on App {
+  static App primaryButton(String label, String onPressed) {
+    return App.button(
       label: label,
       onPressed: onPressed,
       variant: ButtonVariant.primary,
     );
   }
 
-  static AstNode loadingButton(String label) {
-    return AstNode.button(
+  static App loadingButton(String label) {
+    return App.button(
       label: label,
       isLoading: true,
       isDisabled: true,
@@ -645,7 +645,7 @@ extension ButtonConstructors on AstNode {
 }
 
 // Usage
-AstNode.primaryButton('Submit', 'handleSubmit');
+App.primaryButton('Submit', 'handleSubmit');
 ```
 
 **Effort:** 3-4 hours
@@ -692,4 +692,4 @@ AstNode.primaryButton('Submit', 'handleSubmit');
 10. `example/meta/*.screen.dart` - Update to new API
 
 **Deleted (eventually):**
-11. Old AstNode variants
+11. Old App variants

@@ -10,34 +10,34 @@ import 'package:syntaxify/syntaxify.dart';
 @SyntaxComponent(description: 'A design-system-aware slider component')
 class SliderMeta {
   /// Current slider value
-  /// Maps to: LayoutNode.slider(binding: ...) (wraps binding)
+  /// Maps to: App.slider(binding: ...) (wraps binding)
   @Required()
   final double value;
 
   /// Callback when slider value changes
-  /// Maps to: LayoutNode.slider(onChanged: ...)
+  /// Maps to: App.slider(onChanged: ...)
   @Optional()
   final ValueChanged<double>? onChanged;
 
   /// Minimum value
-  /// Maps to: LayoutNode.slider(min: ...)
+  /// Maps to: App.slider(min: ...)
   @Optional()
   @Default('0.0')
   final double min;
 
   /// Maximum value
-  /// Maps to: LayoutNode.slider(max: ...)
+  /// Maps to: App.slider(max: ...)
   @Optional()
   @Default('1.0')
   final double max;
 
   /// Number of discrete divisions
-  /// Maps to: LayoutNode.slider(divisions: ...)
+  /// Maps to: App.slider(divisions: ...)
   @Optional()
   final int? divisions;
 
   /// Label to display
-  /// Maps to: LayoutNode.slider(label: ...)
+  /// Maps to: App.slider(label: ...)
   @Optional()
   final String? label;
 

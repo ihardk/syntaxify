@@ -89,7 +89,7 @@
 
 ### 5.1 Core Architecture Refactor (Stability) ✅ COMPLETE
 - [x] **AST Structural Split** (Issue #13)
-  - [x] Define `LayoutNode`, `PrimitiveNode`, `InteractiveNode` sealed classes
+  - [x] Define `App`, `PrimitiveNode`, `InteractiveNode` sealed classes
   - [x] Implement `NodeMetadata` mixin (id, visibleWhen)
   - [x] Migrate `LayoutEmitter` to Visitor pattern
   - [x] Add 18+ node types (structural, primitive, interactive)
@@ -102,7 +102,7 @@
 - [x] **Plugin Architecture** (Issue #8)
   - [x] Define `SyntaxifyPlugin` interface (Generator + Validator contract)
   - [x] Implement `GeneratorRegistry` for plugin management
-  - [x] Add `LayoutNode.custom` for plugin extensibility
+  - [x] Add `App.custom` for plugin extensibility
   - [x] E2E test: `plugin_e2e_test.dart`
 - [x] **Default Plugin**
   - [x] Core components moved to internal DefaultPlugin

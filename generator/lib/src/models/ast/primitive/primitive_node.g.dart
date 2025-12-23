@@ -173,7 +173,7 @@ SizedBoxNode _$SizedBoxNodeFromJson(Map<String, dynamic> json) => SizedBoxNode(
       height: (json['height'] as num?)?.toDouble(),
       child: json['child'] == null
           ? null
-          : LayoutNode.fromJson(json['child'] as Map<String, dynamic>),
+          : App.fromJson(json['child'] as Map<String, dynamic>),
       $type: json['runtimeType'] as String?,
     );
 
@@ -186,7 +186,7 @@ Map<String, dynamic> _$SizedBoxNodeToJson(SizedBoxNode instance) =>
     };
 
 ExpandedNode _$ExpandedNodeFromJson(Map<String, dynamic> json) => ExpandedNode(
-      child: LayoutNode.fromJson(json['child'] as Map<String, dynamic>),
+      child: App.fromJson(json['child'] as Map<String, dynamic>),
       flex: (json['flex'] as num?)?.toInt(),
       $type: json['runtimeType'] as String?,
     );

@@ -34,33 +34,33 @@ void main() {
             AppBarAction(icon: 'search', onPressed: 'onSearch'),
           ],
         ),
-        layout: LayoutNode.column(
-          mainAxisAlignment: SyntaxMainAxisAlignment.center,
-          crossAxisAlignment: SyntaxCrossAxisAlignment.stretch,
+        layout: App.column(
+          mainAxisAlignment: MainAlignment.center,
+          crossAxisAlignment: CrossAlignment.stretch,
           spacing: '16',
           children: [
             // Primitive: Text
-            LayoutNode.text(
+            App.text(
               text: 'Hello World',
               variant: TextVariant.headlineMedium,
               align: SyntaxTextAlign.center,
             ),
 
             // Structural: Row
-            LayoutNode.row(
-              mainAxisAlignment: SyntaxMainAxisAlignment.spaceBetween,
+            App.row(
+              mainAxisAlignment: MainAlignment.spaceBetween,
               children: [
                 // Primitive: Icon
-                LayoutNode.icon(name: 'star', size: IconSize.sm),
-                LayoutNode.text(text: 'Rating: 5.0'),
+                App.icon(name: 'star', size: IconSize.sm),
+                App.text(text: 'Rating: 5.0'),
               ],
             ),
 
             // Primitive: Spacer
-            LayoutNode.spacer(flex: 1),
+            App.spacer(flex: 1),
 
             // Interactive: Button
-            LayoutNode.button(
+            App.button(
               label: 'Submit',
               onPressed: 'onSubmit',
               variant: 'filled',
@@ -69,7 +69,7 @@ void main() {
             ),
 
             // Interactive: TextField
-            LayoutNode.textField(
+            App.textField(
               label: 'Email',
               hint: 'Enter email',
               keyboardType: KeyboardType.email,

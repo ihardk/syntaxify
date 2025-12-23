@@ -6,7 +6,7 @@ import 'package:syntaxify/src/parser/layout_node_parser.dart';
 import 'package:test/test.dart';
 
 void main() {
-  const parser = LayoutNodeParser();
+  const parser = AppParser();
 
   Expression parseExpression(String code) {
     final result = parseString(content: 'final x = $code;');
@@ -14,10 +14,10 @@ void main() {
     return decl.variables.variables.first.initializer!;
   }
 
-  group('LayoutNodeParser', () {
+  group('AppParser', () {
     test('parses ButtonNode properties', () {
       final code = '''
-        LayoutNode.button(
+        App.button(
           label: 'Click Me',
           variant: ButtonVariant.outlined,
           size: ButtonSize.lg,
@@ -28,7 +28,7 @@ void main() {
       ''';
 
       final expression = parseExpression(code);
-      final node = parser.parseLayoutNode(expression);
+      final node = parser.parseApp(expression);
 
       node.map(
         interactive: (i) {
@@ -59,7 +59,7 @@ void main() {
 
     test('parses TextFieldNode properties', () {
       final code = '''
-        LayoutNode.textField(
+        App.textField(
           label: 'Username',
           hint: 'Enter your username',
           obscureText: true,
@@ -68,7 +68,7 @@ void main() {
       ''';
 
       final expression = parseExpression(code);
-      final node = parser.parseLayoutNode(expression);
+      final node = parser.parseApp(expression);
 
       node.map(
         interactive: (i) {
@@ -96,9 +96,9 @@ void main() {
     });
 
     test('parses defaults correctly', () {
-      final code = "LayoutNode.button(label: 'Simple')";
+      final code = "App.button(label: 'Simple')";
       final expression = parseExpression(code);
-      final node = parser.parseLayoutNode(expression);
+      final node = parser.parseApp(expression);
 
       node.map(
         interactive: (i) {

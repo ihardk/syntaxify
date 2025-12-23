@@ -75,10 +75,10 @@ class ButtonMeta {
 // meta/login.screen.dart
 final loginScreen = ScreenDefinition(
   id: 'login',
-  layout: AstNode.column(children: [
-    AstNode.text(text: 'Welcome Back'),
-    AstNode.textField(label: 'Email'),
-    AstNode.button(label: 'Sign In', onPressed: 'handleLogin'),
+  layout: App.column(children: [
+    App.text(text: 'Welcome Back'),
+    App.textField(label: 'Email'),
+    App.button(label: 'Sign In', onPressed: 'handleLogin'),
   ]),
 );
 ```

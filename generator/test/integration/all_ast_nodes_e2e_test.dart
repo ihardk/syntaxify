@@ -18,7 +18,7 @@ void main() {
         DartFormatter(languageVersion: DartFormatter.latestLanguageVersion);
   });
 
-  String emit(LayoutNode node) {
+  String emit(App node) {
     final expr = emitter.emit(node);
     final emitter_ = DartEmitter(useNullSafetySyntax: true);
     return expr.accept(emitter_).toString();
@@ -27,42 +27,42 @@ void main() {
   group('All AST Nodes E2E Test', () {
     test('builds screen with ALL structural nodes', () {
       // Test all 9 structural nodes
-      final layout = LayoutNode.column(children: [
-        LayoutNode.row(children: [
-          LayoutNode.text(text: 'Row Item 1'),
-          LayoutNode.text(text: 'Row Item 2'),
+      final layout = App.column(children: [
+        App.row(children: [
+          App.text(text: 'Row Item 1'),
+          App.text(text: 'Row Item 2'),
         ]),
-        LayoutNode.container(
+        App.container(
           width: 200,
           height: 100,
           color: ColorSemantic.surface,
-          child: LayoutNode.text(text: 'Container'),
+          child: App.text(text: 'Container'),
         ),
-        LayoutNode.card(
-          children: [LayoutNode.text(text: 'Card Content')],
+        App.card(
+          children: [App.text(text: 'Card Content')],
           elevation: 4,
         ),
-        LayoutNode.listView(
+        App.listView(
           children: [
-            LayoutNode.text(text: 'List Item 1'),
-            LayoutNode.text(text: 'List Item 2'),
+            App.text(text: 'List Item 1'),
+            App.text(text: 'List Item 2'),
           ],
           shrinkWrap: true,
         ),
-        LayoutNode.stack(children: [
-          LayoutNode.container(width: 100, height: 100),
-          LayoutNode.center(child: LayoutNode.text(text: 'Centered')),
+        App.stack(children: [
+          App.container(width: 100, height: 100),
+          App.center(child: App.text(text: 'Centered')),
         ]),
-        LayoutNode.gridView(
+        App.gridView(
           crossAxisCount: 2,
           children: [
-            LayoutNode.text(text: 'Grid 1'),
-            LayoutNode.text(text: 'Grid 2'),
+            App.text(text: 'Grid 1'),
+            App.text(text: 'Grid 2'),
           ],
         ),
-        LayoutNode.padding(
+        App.padding(
           padding: '16',
-          child: LayoutNode.text(text: 'Padded'),
+          child: App.text(text: 'Padded'),
         ),
       ]);
 
@@ -82,17 +82,16 @@ void main() {
 
     test('builds screen with ALL primitive nodes', () {
       // Test all 8 primitive nodes
-      final layout = LayoutNode.column(children: [
-        LayoutNode.text(
-            text: 'Hello World', variant: TextVariant.headlineMedium),
-        LayoutNode.icon(name: 'star', size: IconSize.md),
-        LayoutNode.spacer(size: SpacerSize.lg),
-        LayoutNode.image(src: 'assets/logo.png', width: 100, height: 100),
-        LayoutNode.divider(thickness: 2),
-        LayoutNode.circularProgressIndicator(strokeWidth: 4),
-        LayoutNode.sizedBox(width: 50, height: 50),
-        LayoutNode.expanded(
-          child: LayoutNode.text(text: 'Expanded Content'),
+      final layout = App.column(children: [
+        App.text(text: 'Hello World', variant: TextVariant.headlineMedium),
+        App.icon(name: 'star', size: IconSize.md),
+        App.spacer(size: SpacerSize.lg),
+        App.image(src: 'assets/logo.png', width: 100, height: 100),
+        App.divider(thickness: 2),
+        App.circularProgressIndicator(strokeWidth: 4),
+        App.sizedBox(width: 50, height: 50),
+        App.expanded(
+          child: App.text(text: 'Expanded Content'),
         ),
       ]);
 
@@ -111,37 +110,37 @@ void main() {
 
     test('builds screen with ALL interactive nodes', () {
       // Test all 8 interactive nodes
-      final layout = LayoutNode.column(children: [
-        LayoutNode.button(
+      final layout = App.column(children: [
+        App.button(
           label: 'Click Me',
           onPressed: 'handleClick',
         ),
-        LayoutNode.textField(
+        App.textField(
           label: 'Email',
           hint: 'Enter email',
         ),
-        LayoutNode.checkbox(
+        App.checkbox(
           binding: 'isChecked',
           label: 'Accept terms',
         ),
-        LayoutNode.switchWidget(
+        App.switchWidget(
           binding: 'isEnabled',
           label: 'Enable',
         ),
-        LayoutNode.iconButton(
+        App.iconButton(
           icon: 'settings',
           onPressed: 'handleSettings',
         ),
-        LayoutNode.dropdown(
+        App.dropdown(
           binding: 'selectedItem',
           items: ['Option 1', 'Option 2'],
         ),
-        LayoutNode.radio(
+        App.radio(
           binding: 'selectedOption',
           value: 'option1',
           label: 'Option 1',
         ),
-        LayoutNode.slider(
+        App.slider(
           binding: 'sliderValue',
           min: 0,
           max: 100,
@@ -163,46 +162,45 @@ void main() {
 
     test('builds complex nested layout with mixed nodes', () {
       // Complex real-world screen
-      final layout = LayoutNode.column(
-        mainAxisAlignment: SyntaxMainAxisAlignment.start,
+      final layout = App.column(
+        mainAxisAlignment: MainAlignment.start,
         children: [
           // Header section
-          LayoutNode.container(
+          App.container(
             color: ColorSemantic.primary,
             padding: '16',
-            child: LayoutNode.row(
-              mainAxisAlignment: SyntaxMainAxisAlignment.spaceBetween,
+            child: App.row(
+              mainAxisAlignment: MainAlignment.spaceBetween,
               children: [
-                LayoutNode.text(
-                    text: 'Settings', variant: TextVariant.headlineMedium),
-                LayoutNode.iconButton(icon: 'close', onPressed: 'handleClose'),
+                App.text(text: 'Settings', variant: TextVariant.headlineMedium),
+                App.iconButton(icon: 'close', onPressed: 'handleClose'),
               ],
             ),
           ),
-          LayoutNode.spacer(size: SpacerSize.lg),
+          App.spacer(size: SpacerSize.lg),
 
           // Settings form
-          LayoutNode.padding(
+          App.padding(
             padding: '16',
-            child: LayoutNode.column(children: [
-              LayoutNode.switchWidget(
+            child: App.column(children: [
+              App.switchWidget(
                 binding: 'notifications',
                 label: 'Enable Notifications',
               ),
-              LayoutNode.divider(),
-              LayoutNode.switchWidget(
+              App.divider(),
+              App.switchWidget(
                 binding: 'darkMode',
                 label: 'Dark Mode',
               ),
-              LayoutNode.divider(),
-              LayoutNode.slider(
+              App.divider(),
+              App.slider(
                 binding: 'volume',
                 min: 0,
                 max: 100,
                 label: 'Volume',
               ),
-              LayoutNode.spacer(size: SpacerSize.xl),
-              LayoutNode.button(
+              App.spacer(size: SpacerSize.xl),
+              App.button(
                 label: 'Save Settings',
                 onPressed: 'handleSave',
               ),
@@ -229,36 +227,35 @@ void main() {
       // Create nodes of each type and validate
       final nodes = [
         // Structural
-        LayoutNode.column(children: [LayoutNode.text(text: 'Test')]),
-        LayoutNode.row(children: [LayoutNode.text(text: 'Test')]),
-        LayoutNode.container(child: LayoutNode.text(text: 'Test')),
-        LayoutNode.card(children: [LayoutNode.text(text: 'Test')]),
-        LayoutNode.listView(children: [LayoutNode.text(text: 'Test')]),
-        LayoutNode.stack(children: [LayoutNode.text(text: 'Test')]),
-        LayoutNode.gridView(
-            crossAxisCount: 2, children: [LayoutNode.text(text: 'Test')]),
-        LayoutNode.padding(padding: '16', child: LayoutNode.text(text: 'Test')),
-        LayoutNode.center(child: LayoutNode.text(text: 'Test')),
+        App.column(children: [App.text(text: 'Test')]),
+        App.row(children: [App.text(text: 'Test')]),
+        App.container(child: App.text(text: 'Test')),
+        App.card(children: [App.text(text: 'Test')]),
+        App.listView(children: [App.text(text: 'Test')]),
+        App.stack(children: [App.text(text: 'Test')]),
+        App.gridView(crossAxisCount: 2, children: [App.text(text: 'Test')]),
+        App.padding(padding: '16', child: App.text(text: 'Test')),
+        App.center(child: App.text(text: 'Test')),
 
         // Primitive
-        LayoutNode.text(text: 'Test'),
-        LayoutNode.icon(name: 'star'),
-        LayoutNode.spacer(size: SpacerSize.md),
-        LayoutNode.image(src: 'test.png'),
-        LayoutNode.divider(),
-        LayoutNode.circularProgressIndicator(),
-        LayoutNode.sizedBox(width: 10),
-        LayoutNode.expanded(child: LayoutNode.text(text: 'Test')),
+        App.text(text: 'Test'),
+        App.icon(name: 'star'),
+        App.spacer(size: SpacerSize.md),
+        App.image(src: 'test.png'),
+        App.divider(),
+        App.circularProgressIndicator(),
+        App.sizedBox(width: 10),
+        App.expanded(child: App.text(text: 'Test')),
 
         // Interactive
-        LayoutNode.button(label: 'Test'),
-        LayoutNode.textField(label: 'Test'),
-        LayoutNode.checkbox(binding: 'test'),
-        LayoutNode.switchWidget(binding: 'test'),
-        LayoutNode.iconButton(icon: 'test'),
-        LayoutNode.dropdown(binding: 'test', items: ['a', 'b']),
-        LayoutNode.radio(binding: 'test', value: 'a'),
-        LayoutNode.slider(binding: 'test'),
+        App.button(label: 'Test'),
+        App.textField(label: 'Test'),
+        App.checkbox(binding: 'test'),
+        App.switchWidget(binding: 'test'),
+        App.iconButton(icon: 'test'),
+        App.dropdown(binding: 'test', items: ['a', 'b']),
+        App.radio(binding: 'test', value: 'a'),
+        App.slider(binding: 'test'),
       ];
 
       for (final node in nodes) {

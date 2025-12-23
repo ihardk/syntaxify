@@ -2,13 +2,13 @@ import 'package:syntaxify/syntaxify.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('LayoutNode', () {
+  group('App', () {
     test('instantiates ColumnNode', () {
-      final node = LayoutNode.column(
+      final node = App.column(
         children: [
-          LayoutNode.text(text: 'Hello'),
+          App.text(text: 'Hello'),
         ],
-        mainAxisAlignment: SyntaxMainAxisAlignment.center,
+        mainAxisAlignment: MainAlignment.center,
       );
 
       // Verify it is a structural node
@@ -17,8 +17,7 @@ void main() {
           s.node.map(
             column: (col) {
               expect(col.children.length, 1);
-              expect(col.mainAxisAlignment,
-                  equals(SyntaxMainAxisAlignment.center));
+              expect(col.mainAxisAlignment, equals(MainAlignment.center));
             },
             row: (_) => fail('Expected column, got row'),
             container: (_) => fail('Expected column, got container'),
@@ -38,7 +37,7 @@ void main() {
     });
 
     test('instantiates TextNode', () {
-      final node = LayoutNode.text(
+      final node = App.text(
         text: 'Hello World',
         variant: TextVariant.headlineMedium,
       );
@@ -68,7 +67,7 @@ void main() {
     });
 
     test('instantiates ButtonNode', () {
-      final node = LayoutNode.button(
+      final node = App.button(
         label: 'Click Me',
         variant: 'filled',
         onPressed: 'action:submit',
@@ -99,12 +98,12 @@ void main() {
     });
 
     test('instantiates RowNode', () {
-      final node = LayoutNode.row(
+      final node = App.row(
         children: [
-          LayoutNode.text(text: 'Label'),
-          LayoutNode.icon(name: 'arrow_forward'),
+          App.text(text: 'Label'),
+          App.icon(name: 'arrow_forward'),
         ],
-        mainAxisAlignment: SyntaxMainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAlignment.spaceBetween,
       );
 
       node.map(
@@ -112,8 +111,7 @@ void main() {
           s.node.map(
             row: (row) {
               expect(row.children.length, 2);
-              expect(row.mainAxisAlignment,
-                  equals(SyntaxMainAxisAlignment.spaceBetween));
+              expect(row.mainAxisAlignment, equals(MainAlignment.spaceBetween));
             },
             column: (_) => fail('Expected row, got column'),
             container: (_) => fail('Expected row, got container'),
@@ -133,7 +131,7 @@ void main() {
     });
 
     test('instantiates TextFieldNode', () {
-      final node = LayoutNode.textField(
+      final node = App.textField(
         label: 'Username',
         hint: 'Enter your logic',
         keyboardType: KeyboardType.email,
@@ -165,7 +163,7 @@ void main() {
     });
 
     test('instantiates IconNode', () {
-      final node = LayoutNode.icon(
+      final node = App.icon(
         name: 'person',
         size: IconSize.md,
       );
@@ -195,7 +193,7 @@ void main() {
     });
 
     test('instantiates SpacerNode', () {
-      final node = LayoutNode.spacer(
+      final node = App.spacer(
         flex: 2,
       );
 
@@ -223,7 +221,7 @@ void main() {
     });
 
     test('instantiates CustomNode', () {
-      final node = LayoutNode.custom(
+      final node = App.custom(
         node: CustomNode(type: 'Carousel', props: {'items': []}),
       );
 
@@ -240,17 +238,17 @@ void main() {
     });
 
     test('serialization works for all types', () {
-      final textNode = LayoutNode.text(text: 'Test');
-      expect(LayoutNode.fromJson(textNode.toJson()), equals(textNode));
+      final textNode = App.text(text: 'Test');
+      expect(App.fromJson(textNode.toJson()), equals(textNode));
 
-      final colNode = LayoutNode.column(children: [textNode]);
-      expect(LayoutNode.fromJson(colNode.toJson()), equals(colNode));
+      final colNode = App.column(children: [textNode]);
+      expect(App.fromJson(colNode.toJson()), equals(colNode));
 
-      final rowNode = LayoutNode.row(children: [textNode]);
-      expect(LayoutNode.fromJson(rowNode.toJson()), equals(rowNode));
+      final rowNode = App.row(children: [textNode]);
+      expect(App.fromJson(rowNode.toJson()), equals(rowNode));
 
-      final iconNode = LayoutNode.icon(name: 'check');
-      expect(LayoutNode.fromJson(iconNode.toJson()), equals(iconNode));
+      final iconNode = App.icon(name: 'check');
+      expect(App.fromJson(iconNode.toJson()), equals(iconNode));
     });
   });
 
@@ -258,8 +256,8 @@ void main() {
     test('instantiates ScreenDefinition', () {
       final screen = ScreenDefinition(
         id: 'home_screen',
-        layout: LayoutNode.column(children: []),
-        appBar: LayoutNode.appBar(title: 'Home') as AppBarNode,
+        layout: App.column(children: []),
+        appBar: App.appBar(title: 'Home') as AppBarNode,
       );
 
       expect(screen.id, equals('home_screen'));

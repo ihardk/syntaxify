@@ -87,8 +87,8 @@
 
 ### 🔄 Breaking Changes
 
-**AstNode → LayoutNode Rename**
-- Renamed `AstNode` to `LayoutNode` throughout entire codebase (23 files)
+**App → App Rename**
+- Renamed `App` to `App` throughout entire codebase (23 files)
 - More accessible naming for non-technical users
 - Migration notes in documentation
 
@@ -109,9 +109,9 @@
 - `learning/16-validation-and-linting.md` - Complete validation system guide
 
 **Updated:**
-- `learning/03-ast-system.md` - Updated with LayoutNode naming
+- `learning/03-ast-system.md` - Updated with App naming
 - `learning/13-api-reference.md` - Updated API documentation
-- All references to AstNode updated to LayoutNode
+- All references to App updated to App
 
 ### 🏗️ Infrastructure
 
@@ -137,7 +137,7 @@
 - **+333 lines** for cache system alone
 - **+520 lines** for validation system
 - **+60 test cases** for comprehensive coverage
-- **23 files** refactored for LayoutNode rename
+- **23 files** refactored for App rename
 - **16 documentation files** created/updated
 
 ### 🎁 Developer Experience
@@ -175,7 +175,7 @@
   - AppBar with title support
 
 ### Breaking Changes
-- `ScreenDefinition.appBar` changed from `AppBarNode?` to `AstNode?`
+- `ScreenDefinition.appBar` changed from `AppBarNode?` to `App?`
 
 ### Dependency Upgrades
 - dart_style 3.x (added `languageVersion` parameter)

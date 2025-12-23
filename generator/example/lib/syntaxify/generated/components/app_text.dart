@@ -22,29 +22,29 @@ class AppText extends StatelessWidget {
     this.overflow,
   });
 
-  /// The text content to display Maps to: LayoutNode.text(text: ...)
+  /// The text content to display Maps to: App.text(text: ...)
   final String text;
 
-  /// Text variant (displayLarge, headlineMedium, bodyMedium, etc) Maps to: LayoutNode.text(variant: ...)
+  /// Text variant (displayLarge, headlineMedium, bodyMedium, etc) Maps to: App.text(variant: ...)
   final TextVariant? variant;
 
-  /// Text alignment Maps to: LayoutNode.text(align: ...)
+  /// Text alignment Maps to: App.text(align: ...)
   final TextAlign? align;
 
-  /// Maximum number of lines Maps to: LayoutNode.text(maxLines: ...)
+  /// Maximum number of lines Maps to: App.text(maxLines: ...)
   final int? maxLines;
 
-  /// Text overflow behavior Maps to: LayoutNode.text(overflow: ...)
+  /// Text overflow behavior Maps to: App.text(overflow: ...)
   final TextOverflow? overflow;
 
   @override
   Widget build(BuildContext context) {
     return AppTheme.of(context).style.renderText(
-      text: text,
-      variant: variant,
-      align: align,
-      maxLines: maxLines,
-      overflow: overflow,
-    );
+          text: text,
+          variant: variant,
+          align: align,
+          maxLines: maxLines,
+          overflow: overflow,
+        );
   }
 }

@@ -17,7 +17,7 @@ class LayoutValidator {
   ///
   /// [node] - The layout node to validate
   /// [path] - The path to this node (used for error reporting)
-  List<ValidationError> validate(LayoutNode node, [String path = 'root']) {
+  List<ValidationError> validate(App node, [String path = 'root']) {
     return node.map(
       structural: (n) => _validateStructural(n.node, path),
       primitive: (n) => _validatePrimitive(n.node, path),
@@ -275,7 +275,7 @@ class LayoutValidator {
     // Let's check TextFieldInteractiveNode definition. It's likely in `node`.
     // Wait, TextFieldInteractiveNode usually has `label`, `onChanged` etc directly?
     // Or in `props`? `InteractiveNode.textField` has specific fields.
-    // The previous error was accessing `node.binding`? No, the test used `LayoutNode.textField(binding: ...)`.
+    // The previous error was accessing `node.binding`? No, the test used `App.textField(binding: ...)`.
     // I need to check `TextFieldInteractiveNode` definition for `binding`.
     // Note: I don't see `binding` in the `validation_error.dart` I wrote earlier
     // but the test uses it. Assuming `TextFieldInteractiveNode` has it.

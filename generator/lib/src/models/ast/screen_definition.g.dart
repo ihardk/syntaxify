@@ -9,10 +9,10 @@ part of 'screen_definition.dart';
 _ScreenDefinition _$ScreenDefinitionFromJson(Map<String, dynamic> json) =>
     _ScreenDefinition(
       id: json['id'] as String,
-      layout: LayoutNode.fromJson(json['layout'] as Map<String, dynamic>),
+      layout: App.fromJson(json['layout'] as Map<String, dynamic>),
       appBar: json['appBar'] == null
           ? null
-          : LayoutNode.fromJson(json['appBar'] as Map<String, dynamic>),
+          : App.fromJson(json['appBar'] as Map<String, dynamic>),
       padding: json['padding'] as String?,
     );
 

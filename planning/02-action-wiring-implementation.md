@@ -8,7 +8,7 @@ The critique stated that action wiring is missing:
 
 **AST Definition:**
 ```dart
-LayoutNode.button(
+App.button(
   label: 'Login',
   onPressed: 'handleLogin',  // String identifier
 )
@@ -42,7 +42,7 @@ class LoginScreen extends StatelessWidget {
 
 **Callback Collection (Lines 79-104):**
 ```dart
-Set<String> _collectCallbacks(LayoutNode node) {
+Set<String> _collectCallbacks(App node) {
   final callbacks = <String>{};
 
   node.map(
@@ -104,9 +104,9 @@ Expression _emitButton(ButtonNode node) {
 ```dart
 final loginScreen = ScreenDefinition(
   id: 'login',
-  layout: LayoutNode.column(
+  layout: App.column(
     children: [
-      LayoutNode.button(
+      App.button(
         label: 'Sign In',
         onPressed: 'handleLogin',  // String identifier
       ),
@@ -180,7 +180,7 @@ textField: (_) {}, // TODO: Add onChanged etc if needed
 
 **Example that would break:**
 ```dart
-LayoutNode.button(
+App.button(
   label: 'Click',
   onPressed: 'my-callback',  // Invalid Dart identifier!
 )

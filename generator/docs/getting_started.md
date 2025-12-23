@@ -142,15 +142,15 @@ import 'package:syntaxify/syntaxify.dart';
 
 final loginScreen = ScreenDefinition(
   id: 'login',
-  appBar: AstNode.appBar(title: 'Login'),
-  layout: AstNode.column(
+  appBar: App.appBar(title: 'Login'),
+  layout: App.column(
     children: [
-      AstNode.text(text: 'Welcome Back', variant: TextVariant.headlineLarge),
-      AstNode.spacer(size: SpacerSize.lg),
-      AstNode.textField(label: 'Email', keyboardType: KeyboardType.email),
-      AstNode.textField(label: 'Password', obscureText: true),
-      AstNode.spacer(size: SpacerSize.lg),
-      AstNode.button(
+      App.text(text: 'Welcome Back', variant: TextVariant.headlineLarge),
+      App.spacer(size: SpacerSize.lg),
+      App.textField(label: 'Email', keyboardType: KeyboardType.email),
+      App.textField(label: 'Password', obscureText: true),
+      App.spacer(size: SpacerSize.lg),
+      App.button(
         label: 'Sign In',
         variant: ButtonVariant.filled,
         onPressed: 'handleLogin',  // Becomes VoidCallback? field

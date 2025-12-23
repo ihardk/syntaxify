@@ -60,7 +60,7 @@ enum SnackbarSemantic { info, success, warning, error }
 ## 3. Base Node
 
 ```dart
-abstract class AstNode {
+abstract class App {
   final String? id;           // Unique identifier
   final String? visibleWhen;  // Binding: 'isLoggedIn'
 }
@@ -75,7 +75,7 @@ abstract class AstNode {
 ```dart
 class ScreenDefinition {
   final String id;
-  final AstNode layout;
+  final App layout;
   final AppBarNode? appBar;
   final String? padding;      // Token
 }
@@ -84,7 +84,7 @@ class ScreenDefinition {
 ### AppBarNode [P1]
 
 ```dart
-class AppBarNode extends AstNode {
+class AppBarNode extends App {
   final String? title;
   final String? leadingIcon;
   final String? leadingAction;
@@ -105,8 +105,8 @@ class AppBarAction {
 ### ColumnNode [P0]
 
 ```dart
-class ColumnNode extends AstNode {
-  final List<AstNode> children;
+class ColumnNode extends App {
+  final List<App> children;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
   final String? spacing; // Token
@@ -116,8 +116,8 @@ class ColumnNode extends AstNode {
 ### RowNode [P0]
 
 ```dart
-class RowNode extends AstNode {
-  final List<AstNode> children;
+class RowNode extends App {
+  final List<App> children;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
   final String? spacing;
@@ -127,8 +127,8 @@ class RowNode extends AstNode {
 ### StackNode [P1]
 
 ```dart
-class StackNode extends AstNode {
-  final List<AstNode> children;
+class StackNode extends App {
+  final List<App> children;
   final StackAlignment? alignment;
 }
 ```
@@ -136,20 +136,20 @@ class StackNode extends AstNode {
 ### ListNode [P1]
 
 ```dart
-class ListNode extends AstNode {
-  final AstNode itemTemplate;
+class ListNode extends App {
+  final App itemTemplate;
   final String itemsBinding;
   final Axis? direction;
   final String? spacing;
-  final AstNode? emptyState;
+  final App? emptyState;
 }
 ```
 
 ### GridNode [P2]
 
 ```dart
-class GridNode extends AstNode {
-  final AstNode itemTemplate;
+class GridNode extends App {
+  final App itemTemplate;
   final String itemsBinding;
   final int crossAxisCount;
   final String? spacing;
@@ -159,8 +159,8 @@ class GridNode extends AstNode {
 ### ScrollNode [P1]
 
 ```dart
-class ScrollNode extends AstNode {
-  final AstNode child;
+class ScrollNode extends App {
+  final App child;
   final Axis? direction;
 }
 ```
@@ -168,8 +168,8 @@ class ScrollNode extends AstNode {
 ### ExpandedNode [P1]
 
 ```dart
-class ExpandedNode extends AstNode {
-  final AstNode child;
+class ExpandedNode extends App {
+  final App child;
   final int? flex;
 }
 ```
@@ -177,8 +177,8 @@ class ExpandedNode extends AstNode {
 ### CenterNode [P1]
 
 ```dart
-class CenterNode extends AstNode {
-  final AstNode child;
+class CenterNode extends App {
+  final App child;
 }
 ```
 
@@ -189,7 +189,7 @@ class CenterNode extends AstNode {
 ### TextNode [P0]
 
 ```dart
-class TextNode extends AstNode {
+class TextNode extends App {
   final String text;
   final TextVariant? variant;
   final TextAlign? align;
@@ -201,7 +201,7 @@ class TextNode extends AstNode {
 ### ButtonNode [P0]
 
 ```dart
-class ButtonNode extends AstNode {
+class ButtonNode extends App {
   final String label;
   final String? onPressed;
   final ButtonVariant? variant;
@@ -217,7 +217,7 @@ class ButtonNode extends AstNode {
 ### IconButtonNode [P1]
 
 ```dart
-class IconButtonNode extends AstNode {
+class IconButtonNode extends App {
   final String icon;
   final String? onPressed;
   final ButtonVariant? variant;
@@ -230,7 +230,7 @@ class IconButtonNode extends AstNode {
 ### TextFieldNode [P0]
 
 ```dart
-class TextFieldNode extends AstNode {
+class TextFieldNode extends App {
   final String? label;
   final String? hint;
   final String? helperText;
@@ -252,7 +252,7 @@ class TextFieldNode extends AstNode {
 ### IconNode [P0]
 
 ```dart
-class IconNode extends AstNode {
+class IconNode extends App {
   final String name;
   final IconSize? size;
   final ColorSemantic? semantic;
@@ -262,7 +262,7 @@ class IconNode extends AstNode {
 ### ImageNode [P1]
 
 ```dart
-class ImageNode extends AstNode {
+class ImageNode extends App {
   final String source;
   final ImageFit? fit;
   final String? size;        // 'sm', 'md', 'full' (token)
@@ -275,7 +275,7 @@ class ImageNode extends AstNode {
 ### SpacerNode [P0]
 
 ```dart
-class SpacerNode extends AstNode {
+class SpacerNode extends App {
   final SpacerSize? size;
   final int? flex;
 }
@@ -284,7 +284,7 @@ class SpacerNode extends AstNode {
 ### DividerNode [P1]
 
 ```dart
-class DividerNode extends AstNode {
+class DividerNode extends App {
   final Axis? direction;
 }
 ```
@@ -292,7 +292,7 @@ class DividerNode extends AstNode {
 ### ToggleNode [P1]
 
 ```dart
-class ToggleNode extends AstNode {
+class ToggleNode extends App {
   final String binding;
   final String? onChanged;
   final String? label;
@@ -303,7 +303,7 @@ class ToggleNode extends AstNode {
 ### CheckboxNode [P1]
 
 ```dart
-class CheckboxNode extends AstNode {
+class CheckboxNode extends App {
   final String binding;
   final String? onChanged;
   final String? label;
@@ -314,7 +314,7 @@ class CheckboxNode extends AstNode {
 ### RadioGroupNode [P2]
 
 ```dart
-class RadioGroupNode extends AstNode {
+class RadioGroupNode extends App {
   final String binding;
   final List<RadioOption> options;
   final Axis? direction;
@@ -331,7 +331,7 @@ class RadioOption {
 ### SelectNode [P2]
 
 ```dart
-class SelectNode extends AstNode {
+class SelectNode extends App {
   final String binding;
   final List<SelectOption> options;
   final String? label;
@@ -349,7 +349,7 @@ class SelectOption {
 ### SliderNode [P2]
 
 ```dart
-class SliderNode extends AstNode {
+class SliderNode extends App {
   final String binding;
   final double min;
   final double max;
@@ -362,7 +362,7 @@ class SliderNode extends AstNode {
 ### DatePickerNode [P2]
 
 ```dart
-class DatePickerNode extends AstNode {
+class DatePickerNode extends App {
   final String binding;
   final String? label;
   final String? hint;
@@ -373,7 +373,7 @@ class DatePickerNode extends AstNode {
 ### ChipGroupNode [P2]
 
 ```dart
-class ChipGroupNode extends AstNode {
+class ChipGroupNode extends App {
   final String binding;
   final List<ChipOption> options;
   final bool? multiSelect;
@@ -389,8 +389,8 @@ class ChipOption {
 ### BadgeNode [P2]
 
 ```dart
-class BadgeNode extends AstNode {
-  final AstNode child;
+class BadgeNode extends App {
+  final App child;
   final String? count;
   final BadgeSemantic? semantic;
 }
@@ -399,7 +399,7 @@ class BadgeNode extends AstNode {
 ### ProgressNode [P2]
 
 ```dart
-class ProgressNode extends AstNode {
+class ProgressNode extends App {
   final String? value;
   final ProgressVariant? variant;
   final String? size;
@@ -410,7 +410,7 @@ class ProgressNode extends AstNode {
 ### AvatarNode [P2]
 
 ```dart
-class AvatarNode extends AstNode {
+class AvatarNode extends App {
   final String? imageSource;
   final String? initials;
   final String? size;
@@ -425,8 +425,8 @@ class AvatarNode extends AstNode {
 ### CardNode [P1]
 
 ```dart
-class CardNode extends AstNode {
-  final AstNode child;
+class CardNode extends App {
+  final App child;
   final CardVariant? variant;
   final String? onPressed;
   final String? padding;
@@ -436,8 +436,8 @@ class CardNode extends AstNode {
 ### ContainerNode [P1]
 
 ```dart
-class ContainerNode extends AstNode {
-  final AstNode child;
+class ContainerNode extends App {
+  final App child;
   final String? padding;
   final String? margin;
   final ContainerSemantic? semantic;
@@ -447,9 +447,9 @@ class ContainerNode extends AstNode {
 ### ExpansionNode [P2]
 
 ```dart
-class ExpansionNode extends AstNode {
-  final AstNode header;
-  final AstNode content;
+class ExpansionNode extends App {
+  final App header;
+  final App content;
   final String? expandedBinding;
   final bool? initiallyExpanded;
 }
@@ -458,7 +458,7 @@ class ExpansionNode extends AstNode {
 ### TabBarNode [P3]
 
 ```dart
-class TabBarNode extends AstNode {
+class TabBarNode extends App {
   final String binding;
   final List<TabItem> tabs;
   final String? onChanged;
@@ -467,15 +467,15 @@ class TabBarNode extends AstNode {
 class TabItem {
   final String label;
   final String? icon;
-  final AstNode content;
+  final App content;
 }
 ```
 
 ### DialogNode [P3]
 
 ```dart
-class DialogNode extends AstNode {
-  final AstNode content;
+class DialogNode extends App {
+  final App content;
   final String? title;
   final String? visibleBinding;
   final List<DialogAction>? actions;
@@ -492,8 +492,8 @@ class DialogAction {
 ### BottomSheetNode [P3]
 
 ```dart
-class BottomSheetNode extends AstNode {
-  final AstNode content;
+class BottomSheetNode extends App {
+  final App content;
   final String? visibleBinding;
 }
 ```
@@ -501,7 +501,7 @@ class BottomSheetNode extends AstNode {
 ### SnackbarNode [P3]
 
 ```dart
-class SnackbarNode extends AstNode {
+class SnackbarNode extends App {
   final String message;
   final String? actionLabel;
   final String? onAction;
@@ -516,8 +516,8 @@ class SnackbarNode extends AstNode {
 ### TappableNode [P1]
 
 ```dart
-class TappableNode extends AstNode {
-  final AstNode child;
+class TappableNode extends App {
+  final App child;
   final String onPressed;
 }
 ```
@@ -529,9 +529,9 @@ class TappableNode extends AstNode {
 ### ConditionalNode [P1]
 
 ```dart
-class ConditionalNode extends AstNode {
+class ConditionalNode extends App {
   final String condition;
-  final AstNode whenTrue;
-  final AstNode? whenFalse;
+  final App whenTrue;
+  final App? whenFalse;
 }
 ```

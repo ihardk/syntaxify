@@ -636,10 +636,10 @@ Screens work similarly, but with a twist:
 // meta/login.screen.dart
 final loginScreen = ScreenDefinition(
   id: 'login',
-  layout: AstNode.column(
+  layout: App.column(
     children: [
-      AstNode.text(text: 'Welcome'),
-      AstNode.button(label: 'Login', onPressed: 'handleLogin'),
+      App.text(text: 'Welcome'),
+      App.button(label: 'Login', onPressed: 'handleLogin'),
     ],
   ),
 );

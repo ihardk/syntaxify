@@ -201,14 +201,13 @@ class ScreenGenerator {
   }
 
   // Collect controllers from input nodes
-  List<ControllerInfo> _collectControllers(LayoutNode node) {
+  List<ControllerInfo> _collectControllers(App node) {
     final controllers = <ControllerInfo>[];
     _traverseForControllers(node, controllers);
     return controllers;
   }
 
-  void _traverseForControllers(
-      LayoutNode node, List<ControllerInfo> controllers) {
+  void _traverseForControllers(App node, List<ControllerInfo> controllers) {
     node.map(
       structural: (n) => _traverseStructuralForControllers(n.node, controllers),
       primitive: (n) => _traversePrimitiveForControllers(n.node, controllers),
@@ -309,7 +308,7 @@ class ScreenGenerator {
   }
 
   // Rewrite using AST Visitor pattern
-  Map<String, Reference> _collectCallbacks(LayoutNode node) {
+  Map<String, Reference> _collectCallbacks(App node) {
     final callbacks = <String, Reference>{};
 
     node.map(

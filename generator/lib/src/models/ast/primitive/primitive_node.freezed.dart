@@ -235,9 +235,8 @@ extension PrimitiveNodePatterns on PrimitiveNode {
         divider,
     TResult Function(double? value, ColorSemantic? color, double? strokeWidth)?
         circularProgressIndicator,
-    TResult Function(double? width, double? height, LayoutNode? child)?
-        sizedBox,
-    TResult Function(LayoutNode child, int? flex)? expanded,
+    TResult Function(double? width, double? height, App? child)? sizedBox,
+    TResult Function(App child, int? flex)? expanded,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -299,9 +298,9 @@ extension PrimitiveNodePatterns on PrimitiveNode {
     required TResult Function(
             double? value, ColorSemantic? color, double? strokeWidth)
         circularProgressIndicator,
-    required TResult Function(double? width, double? height, LayoutNode? child)
+    required TResult Function(double? width, double? height, App? child)
         sizedBox,
-    required TResult Function(LayoutNode child, int? flex) expanded,
+    required TResult Function(App child, int? flex) expanded,
   }) {
     final _that = this;
     switch (_that) {
@@ -356,9 +355,8 @@ extension PrimitiveNodePatterns on PrimitiveNode {
         divider,
     TResult? Function(double? value, ColorSemantic? color, double? strokeWidth)?
         circularProgressIndicator,
-    TResult? Function(double? width, double? height, LayoutNode? child)?
-        sizedBox,
-    TResult? Function(LayoutNode child, int? flex)? expanded,
+    TResult? Function(double? width, double? height, App? child)? sizedBox,
+    TResult? Function(App child, int? flex)? expanded,
   }) {
     final _that = this;
     switch (_that) {
@@ -1026,7 +1024,7 @@ class SizedBoxNode implements PrimitiveNode {
 
   final double? width;
   final double? height;
-  final LayoutNode? child;
+  final App? child;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
@@ -1072,9 +1070,9 @@ abstract mixin class $SizedBoxNodeCopyWith<$Res>
           SizedBoxNode value, $Res Function(SizedBoxNode) _then) =
       _$SizedBoxNodeCopyWithImpl;
   @useResult
-  $Res call({double? width, double? height, LayoutNode? child});
+  $Res call({double? width, double? height, App? child});
 
-  $LayoutNodeCopyWith<$Res>? get child;
+  $AppCopyWith<$Res>? get child;
 }
 
 /// @nodoc
@@ -1104,7 +1102,7 @@ class _$SizedBoxNodeCopyWithImpl<$Res> implements $SizedBoxNodeCopyWith<$Res> {
       child: freezed == child
           ? _self.child
           : child // ignore: cast_nullable_to_non_nullable
-              as LayoutNode?,
+              as App?,
     ));
   }
 
@@ -1112,12 +1110,12 @@ class _$SizedBoxNodeCopyWithImpl<$Res> implements $SizedBoxNodeCopyWith<$Res> {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $LayoutNodeCopyWith<$Res>? get child {
+  $AppCopyWith<$Res>? get child {
     if (_self.child == null) {
       return null;
     }
 
-    return $LayoutNodeCopyWith<$Res>(_self.child!, (value) {
+    return $AppCopyWith<$Res>(_self.child!, (value) {
       return _then(_self.copyWith(child: value));
     });
   }
@@ -1131,7 +1129,7 @@ class ExpandedNode implements PrimitiveNode {
   factory ExpandedNode.fromJson(Map<String, dynamic> json) =>
       _$ExpandedNodeFromJson(json);
 
-  final LayoutNode child;
+  final App child;
   final int? flex;
 
   @JsonKey(name: 'runtimeType')
@@ -1177,9 +1175,9 @@ abstract mixin class $ExpandedNodeCopyWith<$Res>
           ExpandedNode value, $Res Function(ExpandedNode) _then) =
       _$ExpandedNodeCopyWithImpl;
   @useResult
-  $Res call({LayoutNode child, int? flex});
+  $Res call({App child, int? flex});
 
-  $LayoutNodeCopyWith<$Res> get child;
+  $AppCopyWith<$Res> get child;
 }
 
 /// @nodoc
@@ -1200,7 +1198,7 @@ class _$ExpandedNodeCopyWithImpl<$Res> implements $ExpandedNodeCopyWith<$Res> {
       child: null == child
           ? _self.child
           : child // ignore: cast_nullable_to_non_nullable
-              as LayoutNode,
+              as App,
       flex: freezed == flex
           ? _self.flex
           : flex // ignore: cast_nullable_to_non_nullable
@@ -1212,8 +1210,8 @@ class _$ExpandedNodeCopyWithImpl<$Res> implements $ExpandedNodeCopyWith<$Res> {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $LayoutNodeCopyWith<$Res> get child {
-    return $LayoutNodeCopyWith<$Res>(_self.child, (value) {
+  $AppCopyWith<$Res> get child {
+    return $AppCopyWith<$Res>(_self.child, (value) {
       return _then(_self.copyWith(child: value));
     });
   }

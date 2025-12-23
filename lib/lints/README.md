@@ -1,6 +1,6 @@
 # Syntaxify Custom Lints
 
-IDE-integrated validation for LayoutNode definitions in `.screen.dart` files.
+IDE-integrated validation for App definitions in `.screen.dart` files.
 
 ## Available Lint Rules
 

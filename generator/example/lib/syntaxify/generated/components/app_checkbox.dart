@@ -21,10 +21,10 @@ class AppCheckbox extends StatelessWidget {
     this.activeColor,
   });
 
-  /// Whether the checkbox is checked Maps to: LayoutNode.checkbox(binding: ...) (wraps binding)
+  /// Whether the checkbox is checked Maps to: App.checkbox(binding: ...) (wraps binding)
   final bool value;
 
-  /// Callback when checkbox value changes Maps to: LayoutNode.checkbox(onChanged: ...)
+  /// Callback when checkbox value changes Maps to: App.checkbox(onChanged: ...)
   final ValueChanged<bool?>? onChanged;
 
   /// Whether the checkbox is enabled
@@ -36,10 +36,10 @@ class AppCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppTheme.of(context).style.renderCheckbox(
-      value: value,
-      onChanged: onChanged,
-      enabled: enabled,
-      activeColor: activeColor,
-    );
+          value: value,
+          onChanged: onChanged,
+          enabled: enabled,
+          activeColor: activeColor,
+        );
   }
 }

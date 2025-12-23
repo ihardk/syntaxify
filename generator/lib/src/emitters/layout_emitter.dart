@@ -25,7 +25,7 @@ import 'package:syntaxify/src/generators/generator_registry.dart';
 ///
 /// ```dart
 /// final emitter = LayoutEmitter();
-/// final expression = emitter.emit(layoutNode);
+/// final expression = emitter.emit(app);
 /// final dartCode = expression.accept(DartEmitter()).toString();
 /// ```
 class LayoutEmitter {
@@ -44,8 +44,8 @@ class LayoutEmitter {
   /// Map of variable names to their scoped reference (e.g. 'handleLogin' -> 'widget.handleLogin').
   final Map<String, String> variableMap;
 
-  /// Converts a [LayoutNode] into a [Spec] (Expression).
-  Expression emit(LayoutNode node) {
+  /// Converts a [App] into a [Spec] (Expression).
+  Expression emit(App node) {
     return node.map(
       structural: (n) => _emitStructural(n.node),
       primitive: (n) => _emitPrimitive(n.node),

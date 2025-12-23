@@ -56,7 +56,7 @@ DevDependencies:
 ### AST Node Hierarchy (Refactored)
 
 ```
-LayoutNode (sealed class)
+App (sealed class)
 ├── structural/ (StructuralNode)
 │   ├── column, row
 │   ├── container, card, listView
@@ -142,7 +142,7 @@ LayoutNode (sealed class)
 ## Coding Patterns Observed
 
 1. **Freezed/Sealed Classes**: All AST nodes use `@freezed` with `sealed class`
-2. **Factory Pattern**: Shim factories on `LayoutNode` for convenient construction
+2. **Factory Pattern**: Shim factories on `App` for convenient construction
 3. **Visitor Pattern**: `.map()` method on unions for exhaustive matching
 4. **Registry Pattern**: `GeneratorRegistry` for plugin management
 5. **Use Case Pattern**: `GenerateScreenUseCase`, `GenerateComponentUseCase`

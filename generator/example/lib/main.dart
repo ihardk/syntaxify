@@ -200,7 +200,8 @@ class _ButtonsTabState extends State<ButtonsTab> {
           const SizedBox(height: 32),
 
           // Interactive Demo
-          const AppText(text: 'Interactive Demo', variant: TextVariant.titleMedium),
+          const AppText(
+              text: 'Interactive Demo', variant: TextVariant.titleMedium),
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(24),
@@ -239,14 +240,17 @@ class _ButtonsTabState extends State<ButtonsTab> {
           const SizedBox(height: 32),
 
           // Typography Scale - Same component, different variants!
-          const AppText(text: 'Typography Scale', variant: TextVariant.titleMedium),
+          const AppText(
+              text: 'Typography Scale', variant: TextVariant.titleMedium),
           const SizedBox(height: 16),
 
           // 📝 SYNTAXIFY: All use AppText, just different variants
           // Each adapts to the current design style (Material/Cupertino/Neo)
-          const AppText(text: 'Display Large', variant: TextVariant.displayLarge),
+          const AppText(
+              text: 'Display Large', variant: TextVariant.displayLarge),
           const SizedBox(height: 8),
-          const AppText(text: 'Headline Medium', variant: TextVariant.headlineMedium),
+          const AppText(
+              text: 'Headline Medium', variant: TextVariant.headlineMedium),
           const SizedBox(height: 8),
           const AppText(text: 'Title Medium', variant: TextVariant.titleMedium),
           const SizedBox(height: 8),
@@ -354,7 +358,8 @@ class _InputsTabState extends State<InputsTab> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const AppText(text: 'Contact Form', variant: TextVariant.titleMedium),
+                const AppText(
+                    text: 'Contact Form', variant: TextVariant.titleMedium),
                 const SizedBox(height: 16),
                 AppInput(
                     label: 'Name',
@@ -457,7 +462,8 @@ class ScreensTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const AppText(text: 'Screen Generation', variant: TextVariant.displayLarge),
+          const AppText(
+              text: 'Screen Generation', variant: TextVariant.displayLarge),
           const SizedBox(height: 8),
           const AppText(
             text: 'The Power of .screen.dart Files',
@@ -507,7 +513,8 @@ class ScreensTab extends StatelessWidget {
           ),
           const SizedBox(height: 32),
 
-          const AppText(text: 'Live Example', variant: TextVariant.headlineMedium),
+          const AppText(
+              text: 'Live Example', variant: TextVariant.headlineMedium),
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(16),
@@ -601,17 +608,17 @@ class ScreensTab extends StatelessWidget {
             ),
             child: const Text('''final loginScreen = ScreenDefinition(
   id: 'login',
-  layout: LayoutNode.column(children: [
-    LayoutNode.text(text: 'Welcome Back'),
-    LayoutNode.textField(
+  layout: App.column(children: [
+    App.text(text: 'Welcome Back'),
+    App.textField(
       label: 'Email',
       keyboardType: KeyboardType.emailAddress
     ),
-    LayoutNode.textField(
+    App.textField(
       label: 'Password',
       obscureText: true
     ),
-    LayoutNode.button(
+    App.button(
       label: 'Sign In',
       onPressed: 'handleLogin'
     ),

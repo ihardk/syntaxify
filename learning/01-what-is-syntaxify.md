@@ -148,11 +148,11 @@ Syntaxify separates **WHAT you want** from **HOW it looks**.
 // meta/login.screen.dart
 final loginScreen = ScreenDefinition(
   id: 'login',
-  layout: LayoutNode.column(children: [
-    LayoutNode.text(text: 'Welcome Back'),
-    LayoutNode.textField(label: 'Email'),
-    LayoutNode.textField(label: 'Password', obscureText: true),
-    LayoutNode.button(label: 'Sign In', onPressed: 'handleLogin'),
+  layout: App.column(children: [
+    App.text(text: 'Welcome Back'),
+    App.textField(label: 'Email'),
+    App.textField(label: 'Password', obscureText: true),
+    App.button(label: 'Sign In', onPressed: 'handleLogin'),
   ]),
 );
 ```
@@ -201,10 +201,10 @@ class LoginScreen extends StatelessWidget {
 // meta/profile.screen.dart
 final profileScreen = ScreenDefinition(
   id: 'profile',
-  appBar: AstNode.appBar(title: 'Profile'),
-  layout: AstNode.column(children: [
-    AstNode.text(text: 'John Doe', variant: TextVariant.headlineMedium),
-    AstNode.button(label: 'Edit Profile', onPressed: 'handleEdit'),
+  appBar: App.appBar(title: 'Profile'),
+  layout: App.column(children: [
+    App.text(text: 'John Doe', variant: TextVariant.headlineMedium),
+    App.button(label: 'Edit Profile', onPressed: 'handleEdit'),
   ]),
 );
 ```
@@ -388,9 +388,9 @@ class AppButton extends StatelessWidget {
 Screen layouts are defined as a tree of nodes.
 
 ```dart
-AstNode.column(children: [
-  AstNode.text(text: 'Title'),      // Node 1
-  AstNode.button(label: 'Submit'),  // Node 2
+App.column(children: [
+  App.text(text: 'Title'),      // Node 1
+  App.button(label: 'Submit'),  // Node 2
 ])
 ```
 
@@ -435,22 +435,22 @@ import 'package:syntaxify/syntaxify.dart';
 
 final loginScreen = ScreenDefinition(
   id: 'login',
-  appBar: AstNode.appBar(title: 'Login'),
-  layout: AstNode.column(
+  appBar: App.appBar(title: 'Login'),
+  layout: App.column(
     children: [
-      AstNode.text(
+      App.text(
         text: 'Welcome Back!',
         variant: TextVariant.headlineMedium,
       ),
-      AstNode.textField(
+      App.textField(
         label: 'Email',
         keyboardType: KeyboardType.email,
       ),
-      AstNode.textField(
+      App.textField(
         label: 'Password',
         obscureText: true,
       ),
-      AstNode.button(
+      App.button(
         label: 'Sign In',
         onPressed: 'handleLogin',
       ),

@@ -2,13 +2,13 @@ import 'package:analyzer/dart/ast/ast.dart' as analyzer;
 import 'package:syntaxify/src/models/ast/nodes.dart';
 
 /// Helper class to parse Dart AST expressions into Syntaxify layout nodes.
-class LayoutNodeParser {
-  const LayoutNodeParser();
+class AppParser {
+  const AppParser();
 
   ScreenDefinition parseScreenFromExpression(
       analyzer.Expression expression, String varName) {
     String? id;
-    LayoutNode? layout;
+    App? layout;
     AppBarNode? appBar;
 
     analyzer.ArgumentList? argumentList;
@@ -30,7 +30,7 @@ class LayoutNodeParser {
         if (name == 'id') {
           id = (exp as analyzer.StringLiteral).stringValue;
         } else if (name == 'layout') {
-          layout = parseLayoutNode(exp);
+          layout = parseApp(exp);
         } else if (name == 'appBar') {
           appBar = parseAppBar(exp);
         }
@@ -39,12 +39,12 @@ class LayoutNodeParser {
 
     return ScreenDefinition(
       id: id ?? varName,
-      layout: layout ?? LayoutNode.column(children: []),
+      layout: layout ?? App.column(children: []),
       appBar: appBar,
     );
   }
 
-  LayoutNode parseLayoutNode(analyzer.Expression expression) {
+  App parseApp(analyzer.Expression expression) {
     String? typeName;
     String? constructorName;
     analyzer.ArgumentList? argumentList;
@@ -62,7 +62,7 @@ class LayoutNodeParser {
       argumentList = expression.argumentList;
     }
 
-    if (typeName == 'LayoutNode' && argumentList != null) {
+    if (typeName == 'App' && argumentList != null) {
       analyzer.Expression? getArg(String name) {
         return argumentList!.arguments
             .whereType<analyzer.NamedExpression>()
@@ -72,9 +72,9 @@ class LayoutNodeParser {
       }
 
       if (constructorName == 'column') {
-        return LayoutNode.column(children: _parseChildren(getArg('children')));
+        return App.column(children: _parseChildren(getArg('children')));
       } else if (constructorName == 'row') {
-        return LayoutNode.row(children: _parseChildren(getArg('children')));
+        return App.row(children: _parseChildren(getArg('children')));
       } else if (constructorName == 'text') {
         final textExp = getArg('text');
         final text =
@@ -83,7 +83,7 @@ class LayoutNodeParser {
         final variantExp = tryGetArg(argumentList, 'variant');
         final variant = _parseTextVariant(variantExp);
 
-        return LayoutNode.text(text: text ?? '', variant: variant);
+        return App.text(text: text ?? '', variant: variant);
       } else if (constructorName == 'button') {
         // P0 Properties Implementation
         final labelExp = getArg('label');
@@ -116,7 +116,7 @@ class LayoutNodeParser {
             ? isDisabledExp.value
             : null;
 
-        return LayoutNode.button(
+        return App.button(
           label: label ?? '',
           variant: variant,
           size: size,
@@ -142,7 +142,7 @@ class LayoutNodeParser {
           variant = variantExp.stringValue;
         }
 
-        return LayoutNode.textField(
+        return App.textField(
           label: (labelExp as analyzer.StringLiteral).stringValue ?? '',
           hint:
               (hintExp is analyzer.StringLiteral) ? hintExp.stringValue : null,
@@ -174,7 +174,7 @@ class LayoutNodeParser {
                 ? elevationExp.value?.toDouble()
                 : null;
 
-        return LayoutNode.card(
+        return App.card(
           children: _parseChildren(getArg('children')),
           variant: variant,
           padding: padding,
@@ -185,11 +185,11 @@ class LayoutNodeParser {
         final flexExp = tryGetArg(argumentList, 'flex');
         final flex =
             (flexExp is analyzer.IntegerLiteral) ? flexExp.value : null;
-        return LayoutNode.spacer(flex: flex);
+        return App.spacer(flex: flex);
       }
     }
 
-    return LayoutNode.column(children: []);
+    return App.column(children: []);
   }
 
   analyzer.Expression? tryGetArg(analyzer.ArgumentList args, String name) {
@@ -231,14 +231,14 @@ class LayoutNodeParser {
     return defaultValue;
   }
 
-  List<LayoutNode> _parseChildren(analyzer.Expression? expression) {
+  List<App> _parseChildren(analyzer.Expression? expression) {
     if (expression is analyzer.ListLiteral) {
       return expression.elements
           .map((e) {
-            if (e is analyzer.Expression) return parseLayoutNode(e);
+            if (e is analyzer.Expression) return parseApp(e);
             return null;
           })
-          .whereType<LayoutNode>()
+          .whereType<App>()
           .toList();
     }
     return [];

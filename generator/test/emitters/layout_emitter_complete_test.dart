@@ -13,14 +13,14 @@ void main() {
       dartEmitter = DartEmitter(useNullSafetySyntax: true);
     });
 
-    String emitToString(LayoutNode node) {
+    String emitToString(App node) {
       final expression = emitter.emit(node);
       return expression.accept(dartEmitter).toString();
     }
 
     group('Column emission', () {
       test('emits basic Column', () {
-        final node = LayoutNode.column(children: []);
+        final node = App.column(children: []);
 
         final code = emitToString(node);
 
@@ -29,10 +29,10 @@ void main() {
       });
 
       test('emits Column with children', () {
-        final node = LayoutNode.column(
+        final node = App.column(
           children: [
-            LayoutNode.text(text: 'Hello'),
-            LayoutNode.text(text: 'World'),
+            App.text(text: 'Hello'),
+            App.text(text: 'World'),
           ],
         );
 
@@ -45,8 +45,8 @@ void main() {
       });
 
       test('emits Column with mainAxisAlignment', () {
-        final node = LayoutNode.column(
-          mainAxisAlignment: SyntaxMainAxisAlignment.center,
+        final node = App.column(
+          mainAxisAlignment: MainAlignment.center,
           children: [],
         );
 
@@ -56,8 +56,8 @@ void main() {
       });
 
       test('emits Column with crossAxisAlignment', () {
-        final node = LayoutNode.column(
-          crossAxisAlignment: SyntaxCrossAxisAlignment.start,
+        final node = App.column(
+          crossAxisAlignment: CrossAlignment.start,
           children: [],
         );
 
@@ -67,9 +67,9 @@ void main() {
       });
 
       test('emits Column with both alignments', () {
-        final node = LayoutNode.column(
-          mainAxisAlignment: SyntaxMainAxisAlignment.spaceBetween,
-          crossAxisAlignment: SyntaxCrossAxisAlignment.end,
+        final node = App.column(
+          mainAxisAlignment: MainAlignment.spaceBetween,
+          crossAxisAlignment: CrossAlignment.end,
           children: [],
         );
 
@@ -83,7 +83,7 @@ void main() {
 
     group('Row emission', () {
       test('emits basic Row', () {
-        final node = LayoutNode.row(children: []);
+        final node = App.row(children: []);
 
         final code = emitToString(node);
 
@@ -92,10 +92,10 @@ void main() {
       });
 
       test('emits Row with children', () {
-        final node = LayoutNode.row(
+        final node = App.row(
           children: [
-            LayoutNode.text(text: 'Left'),
-            LayoutNode.text(text: 'Right'),
+            App.text(text: 'Left'),
+            App.text(text: 'Right'),
           ],
         );
 
@@ -107,8 +107,8 @@ void main() {
       });
 
       test('emits Row with mainAxisAlignment', () {
-        final node = LayoutNode.row(
-          mainAxisAlignment: SyntaxMainAxisAlignment.spaceEvenly,
+        final node = App.row(
+          mainAxisAlignment: MainAlignment.spaceEvenly,
           children: [],
         );
 
@@ -119,8 +119,8 @@ void main() {
       });
 
       test('emits Row with crossAxisAlignment', () {
-        final node = LayoutNode.row(
-          crossAxisAlignment: SyntaxCrossAxisAlignment.stretch,
+        final node = App.row(
+          crossAxisAlignment: CrossAlignment.stretch,
           children: [],
         );
 
@@ -133,7 +133,7 @@ void main() {
 
     group('Text emission', () {
       test('emits basic AppText', () {
-        final node = LayoutNode.text(text: 'Hello World');
+        final node = App.text(text: 'Hello World');
 
         final code = emitToString(node);
 
@@ -143,7 +143,7 @@ void main() {
       });
 
       test('emits AppText with variant', () {
-        final node = LayoutNode.text(
+        final node = App.text(
           text: 'Title',
           variant: TextVariant.headlineMedium,
         );
@@ -154,7 +154,7 @@ void main() {
       });
 
       test('emits AppText with align', () {
-        final node = LayoutNode.text(
+        final node = App.text(
           text: 'Centered',
           align: SyntaxTextAlign.center,
         );
@@ -165,7 +165,7 @@ void main() {
       });
 
       test('emits AppText with maxLines', () {
-        final node = LayoutNode.text(
+        final node = App.text(
           text: 'Limited',
           maxLines: 2,
         );
@@ -176,7 +176,7 @@ void main() {
       });
 
       test('emits AppText with overflow', () {
-        final node = LayoutNode.text(
+        final node = App.text(
           text: 'Overflow',
           overflow: SyntaxTextOverflow.ellipsis,
         );
@@ -187,7 +187,7 @@ void main() {
       });
 
       test('emits AppText with all parameters', () {
-        final node = LayoutNode.text(
+        final node = App.text(
           text: 'Full',
           variant: TextVariant.bodyLarge,
           align: SyntaxTextAlign.justify,
@@ -206,7 +206,7 @@ void main() {
 
     group('Button emission', () {
       test('emits basic AppButton', () {
-        final node = LayoutNode.button(label: 'Click Me');
+        final node = App.button(label: 'Click Me');
 
         final code = emitToString(node);
 
@@ -216,7 +216,7 @@ void main() {
       });
 
       test('emits AppButton with onPressed callback', () {
-        final node = LayoutNode.button(
+        final node = App.button(
           label: 'Submit',
           onPressed: 'handleSubmit',
         );
@@ -227,7 +227,7 @@ void main() {
       });
 
       test('emits AppButton with variant', () {
-        final node = LayoutNode.button(
+        final node = App.button(
           label: 'Secondary',
           variant: 'outlined',
         );
@@ -239,7 +239,7 @@ void main() {
 
       test('emits AppButton with all parameters', () {
         // Note: variant is not emitted when it's 'filled' (the default)
-        final node = LayoutNode.button(
+        final node = App.button(
           label: 'Action',
           onPressed: 'handleAction',
           variant: 'text',
@@ -255,7 +255,7 @@ void main() {
 
     group('TextField emission', () {
       test('emits basic AppInput', () {
-        final node = LayoutNode.textField(label: 'Email');
+        final node = App.textField(label: 'Email');
 
         final code = emitToString(node);
 
@@ -265,7 +265,7 @@ void main() {
       });
 
       test('emits AppInput with hint', () {
-        final node = LayoutNode.textField(
+        final node = App.textField(
           label: 'Email',
           hint: 'you@example.com',
         );
@@ -277,7 +277,7 @@ void main() {
       });
 
       test('emits AppInput with obscureText', () {
-        final node = LayoutNode.textField(
+        final node = App.textField(
           label: 'Password',
           obscureText: true,
         );
@@ -289,7 +289,7 @@ void main() {
 
       test('emits AppInput with keyboardType', () {
         // Note: Emitter maps KeyboardType enum to TextInputType
-        final node = LayoutNode.textField(
+        final node = App.textField(
           label: 'Email',
           keyboardType: KeyboardType.email,
         );
@@ -302,7 +302,7 @@ void main() {
 
       test('emits basic AppInput with just label', () {
         // Note: onChanged callback is not currently emitted by LayoutEmitter
-        final node = LayoutNode.textField(
+        final node = App.textField(
           label: 'Name',
         );
 
@@ -314,7 +314,7 @@ void main() {
       });
 
       test('emits AppInput with all parameters', () {
-        final node = LayoutNode.textField(
+        final node = App.textField(
           label: 'Phone',
           hint: '+1234567890',
           keyboardType: KeyboardType.phone,
@@ -331,7 +331,7 @@ void main() {
 
     group('AppBar emission', () {
       test('emits basic AppBar', () {
-        final node = LayoutNode.appBar(title: 'Home');
+        final node = App.appBar(title: 'Home');
 
         final code = emitToString(node);
 
@@ -342,7 +342,7 @@ void main() {
 
       test('emits AppBar with title only', () {
         // Note: actions are not currently emitted by LayoutEmitter
-        final node = LayoutNode.appBar(
+        final node = App.appBar(
           title: 'Profile',
           actions: [
             AppBarAction(icon: 'settings', onPressed: 'handleSettings'),
@@ -358,7 +358,7 @@ void main() {
 
     group('Icon emission', () {
       test('emits basic Icon', () {
-        final node = LayoutNode.icon(name: 'home');
+        final node = App.icon(name: 'home');
 
         final code = emitToString(node);
 
@@ -368,7 +368,7 @@ void main() {
 
       test('emits Icon with size parameter', () {
         // Note: emitter uses literal size value (24), not IconSize enum
-        final node = LayoutNode.icon(
+        final node = App.icon(
           name: 'settings',
           size: IconSize.lg,
         );
@@ -382,7 +382,7 @@ void main() {
 
     group('Spacer emission', () {
       test('emits Spacer with default', () {
-        final node = LayoutNode.spacer();
+        final node = App.spacer();
 
         final code = emitToString(node);
 
@@ -392,7 +392,7 @@ void main() {
       });
 
       test('emits Spacer with flex', () {
-        final node = LayoutNode.spacer(flex: 2);
+        final node = App.spacer(flex: 2);
 
         final code = emitToString(node);
 
@@ -401,7 +401,7 @@ void main() {
 
       test('emits Spacer with size', () {
         // Note: Spacer emitter currently only supports flex, not size enum
-        final node = LayoutNode.spacer(size: SpacerSize.lg);
+        final node = App.spacer(size: SpacerSize.lg);
 
         final code = emitToString(node);
 
@@ -413,13 +413,13 @@ void main() {
 
     group('Nested layouts', () {
       test('emits nested Column inside Column', () {
-        final node = LayoutNode.column(
+        final node = App.column(
           children: [
-            LayoutNode.text(text: 'Header'),
-            LayoutNode.column(
+            App.text(text: 'Header'),
+            App.column(
               children: [
-                LayoutNode.text(text: 'Nested 1'),
-                LayoutNode.text(text: 'Nested 2'),
+                App.text(text: 'Nested 1'),
+                App.text(text: 'Nested 2'),
               ],
             ),
           ],
@@ -434,12 +434,12 @@ void main() {
       });
 
       test('emits Row inside Column', () {
-        final node = LayoutNode.column(
+        final node = App.column(
           children: [
-            LayoutNode.row(
+            App.row(
               children: [
-                LayoutNode.text(text: 'Left'),
-                LayoutNode.text(text: 'Right'),
+                App.text(text: 'Left'),
+                App.text(text: 'Right'),
               ],
             ),
           ],
@@ -454,13 +454,13 @@ void main() {
       });
 
       test('emits deeply nested layout', () {
-        final node = LayoutNode.column(
+        final node = App.column(
           children: [
-            LayoutNode.row(
+            App.row(
               children: [
-                LayoutNode.column(
+                App.column(
                   children: [
-                    LayoutNode.text(text: 'Deep'),
+                    App.text(text: 'Deep'),
                   ],
                 ),
               ],
@@ -476,15 +476,15 @@ void main() {
       });
 
       test('emits complex mixed layout', () {
-        final node = LayoutNode.column(
+        final node = App.column(
           children: [
-            LayoutNode.text(text: 'Title'),
-            LayoutNode.spacer(flex: 1),
-            LayoutNode.row(
-              mainAxisAlignment: SyntaxMainAxisAlignment.spaceBetween,
+            App.text(text: 'Title'),
+            App.spacer(flex: 1),
+            App.row(
+              mainAxisAlignment: MainAlignment.spaceBetween,
               children: [
-                LayoutNode.button(label: 'Cancel', onPressed: 'onCancel'),
-                LayoutNode.button(label: 'OK', onPressed: 'onOk'),
+                App.button(label: 'Cancel', onPressed: 'onCancel'),
+                App.button(label: 'OK', onPressed: 'onOk'),
               ],
             ),
           ],
@@ -504,7 +504,7 @@ void main() {
 
     group('Edge cases', () {
       test('handles empty Column', () {
-        final node = LayoutNode.column(children: []);
+        final node = App.column(children: []);
 
         final code = emitToString(node);
 
@@ -513,7 +513,7 @@ void main() {
       });
 
       test('handles empty Row', () {
-        final node = LayoutNode.row(children: []);
+        final node = App.row(children: []);
 
         final code = emitToString(node);
 
@@ -522,7 +522,7 @@ void main() {
       });
 
       test('handles text with special characters', () {
-        final node = LayoutNode.text(text: 'Hello "World" & \'Friends\'');
+        final node = App.text(text: 'Hello "World" & \'Friends\'');
 
         final code = emitToString(node);
 
@@ -530,7 +530,7 @@ void main() {
       });
 
       test('handles text with newlines', () {
-        final node = LayoutNode.text(text: 'Line 1\nLine 2');
+        final node = App.text(text: 'Line 1\nLine 2');
 
         final code = emitToString(node);
 
@@ -540,10 +540,10 @@ void main() {
       test('handles many children (100+)', () {
         final children = List.generate(
           150,
-          (i) => LayoutNode.text(text: 'Item $i'),
+          (i) => App.text(text: 'Item $i'),
         );
 
-        final node = LayoutNode.column(children: children);
+        final node = App.column(children: children);
 
         final code = emitToString(node);
 
@@ -553,11 +553,11 @@ void main() {
       });
 
       test('handles deeply nested layout (10 levels)', () {
-        LayoutNode createNested(int depth) {
+        App createNested(int depth) {
           if (depth == 0) {
-            return LayoutNode.text(text: 'Leaf');
+            return App.text(text: 'Leaf');
           }
-          return LayoutNode.column(
+          return App.column(
             children: [createNested(depth - 1)],
           );
         }
@@ -574,7 +574,7 @@ void main() {
     group('All variants', () {
       test('emits all TextVariant values', () {
         for (final variant in TextVariant.values) {
-          final node = LayoutNode.text(
+          final node = App.text(
             text: 'Test',
             variant: variant,
           );
@@ -590,7 +590,7 @@ void main() {
         final variants = ['filled', 'outlined', 'text', 'elevated', 'tonal'];
         for (final variant in variants) {
           if (variant == 'filled') continue; // Skip default
-          final node = LayoutNode.button(
+          final node = App.button(
             label: 'Test',
             variant: variant,
           );
@@ -613,7 +613,7 @@ void main() {
         };
 
         for (final entry in expectedMappings.entries) {
-          final node = LayoutNode.textField(
+          final node = App.textField(
             label: 'Test',
             keyboardType: entry.key,
           );
@@ -626,7 +626,7 @@ void main() {
 
       test('emits spacer nodes', () {
         // Note: Spacer emitter only emits flex, not SpacerSize enum
-        final node = LayoutNode.spacer(flex: 1);
+        final node = App.spacer(flex: 1);
 
         final code = emitToString(node);
 

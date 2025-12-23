@@ -93,20 +93,20 @@ class CardMeta {
 
 If you want this component usable in screen definitions, add it to the AST.
 
-### Update AstNode
+### Update App
 
 ```dart
 // generator/lib/src/models/ast/layout_node.dart
 
 @freezed
-sealed class LayoutNode with _$LayoutNode {
+sealed class App with _$App {
   // ... existing nodes
 
   /// Card component node
-  const factory LayoutNode.card({
+  const factory App.card({
     String? title,
     String? subtitle,
-    @Default([]) List<LayoutNode> children,
+    @Default([]) List<App> children,
   }) = CardNode;
 }
 ```
@@ -710,7 +710,7 @@ If you added the component to AST, update the emitter.
 // generator/lib/src/emitters/layout_emitter.dart
 
 class LayoutEmitter {
-  Expression emit(AstNode node) {
+  Expression emit(App node) {
     return node.map(
       // ... existing nodes
 
@@ -733,14 +733,14 @@ Now you can use it in screen definitions:
 // meta/profile.screen.dart
 final profileScreen = ScreenDefinition(
   id: 'profile',
-  layout: LayoutNode.column(
+  layout: App.column(
     children: [
-      LayoutNode.card(
+      App.card(
         title: 'Profile',
         subtitle: 'User information',
         children: [
-          LayoutNode.text(text: 'John Doe'),
-          LayoutNode.text(text: 'john@example.com'),
+          App.text(text: 'John Doe'),
+          App.text(text: 'john@example.com'),
         ],
       ),
     ],

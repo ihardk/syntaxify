@@ -21,7 +21,7 @@ mixin _$CustomNode {
   Map<String, dynamic> get props;
 
   /// Child nodes, if the component supports children
-  List<LayoutNode> get children;
+  List<App> get children;
 
   /// Create a copy of CustomNode
   /// with the given fields replaced by the non-null parameter values.
@@ -63,8 +63,7 @@ abstract mixin class $CustomNodeCopyWith<$Res> {
           CustomNode value, $Res Function(CustomNode) _then) =
       _$CustomNodeCopyWithImpl;
   @useResult
-  $Res call(
-      {String type, Map<String, dynamic> props, List<LayoutNode> children});
+  $Res call({String type, Map<String, dynamic> props, List<App> children});
 }
 
 /// @nodoc
@@ -95,7 +94,7 @@ class _$CustomNodeCopyWithImpl<$Res> implements $CustomNodeCopyWith<$Res> {
       children: null == children
           ? _self.children
           : children // ignore: cast_nullable_to_non_nullable
-              as List<LayoutNode>,
+              as List<App>,
     ));
   }
 }
@@ -192,7 +191,7 @@ extension CustomNodePatterns on CustomNode {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
-            String type, Map<String, dynamic> props, List<LayoutNode> children)?
+            String type, Map<String, dynamic> props, List<App> children)?
         $default, {
     required TResult orElse(),
   }) {
@@ -221,7 +220,7 @@ extension CustomNodePatterns on CustomNode {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
-            String type, Map<String, dynamic> props, List<LayoutNode> children)
+            String type, Map<String, dynamic> props, List<App> children)
         $default,
   ) {
     final _that = this;
@@ -246,7 +245,7 @@ extension CustomNodePatterns on CustomNode {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
-            String type, Map<String, dynamic> props, List<LayoutNode> children)?
+            String type, Map<String, dynamic> props, List<App> children)?
         $default,
   ) {
     final _that = this;
@@ -265,7 +264,7 @@ class _CustomNode implements CustomNode {
   const _CustomNode(
       {required this.type,
       final Map<String, dynamic> props = const {},
-      final List<LayoutNode> children = const []})
+      final List<App> children = const []})
       : _props = props,
         _children = children;
   factory _CustomNode.fromJson(Map<String, dynamic> json) =>
@@ -288,12 +287,12 @@ class _CustomNode implements CustomNode {
   }
 
   /// Child nodes, if the component supports children
-  final List<LayoutNode> _children;
+  final List<App> _children;
 
   /// Child nodes, if the component supports children
   @override
   @JsonKey()
-  List<LayoutNode> get children {
+  List<App> get children {
     if (_children is EqualUnmodifiableListView) return _children;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_children);
@@ -346,8 +345,7 @@ abstract mixin class _$CustomNodeCopyWith<$Res>
       __$CustomNodeCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {String type, Map<String, dynamic> props, List<LayoutNode> children});
+  $Res call({String type, Map<String, dynamic> props, List<App> children});
 }
 
 /// @nodoc
@@ -378,7 +376,7 @@ class __$CustomNodeCopyWithImpl<$Res> implements _$CustomNodeCopyWith<$Res> {
       children: null == children
           ? _self._children
           : children // ignore: cast_nullable_to_non_nullable
-              as List<LayoutNode>,
+              as List<App>,
     ));
   }
 }

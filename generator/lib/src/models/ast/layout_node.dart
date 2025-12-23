@@ -18,42 +18,42 @@ part 'layout_node.g.dart';
 /// - [PrimitiveNode] (Text, Icon, Spacer)
 /// - [InteractiveNode] (Button, TextField)
 @freezed
-sealed class LayoutNode with _$LayoutNode {
+sealed class App with _$App {
   // --- Hierarchical Nodes ---
 
-  const factory LayoutNode.structural({
+  const factory App.structural({
     required StructuralNode node,
     @Default(NodeMetadata()) NodeMetadata meta,
-  }) = StructuralLayoutNode;
+  }) = StructuralApp;
 
-  const factory LayoutNode.primitive({
+  const factory App.primitive({
     required PrimitiveNode node,
     @Default(NodeMetadata()) NodeMetadata meta,
-  }) = PrimitiveLayoutNode;
+  }) = PrimitiveApp;
 
-  const factory LayoutNode.interactive({
+  const factory App.interactive({
     required InteractiveNode node,
     @Default(NodeMetadata()) NodeMetadata meta,
-  }) = InteractiveLayoutNode;
+  }) = InteractiveApp;
 
-  const factory LayoutNode.custom({
+  const factory App.custom({
     required CustomNode node,
     @Default(NodeMetadata()) NodeMetadata meta,
-  }) = CustomLayoutNode;
+  }) = CustomApp;
 
   // --- Legacy Support (Shim) ---
   // These factories maintain backward compatibility for parsing,
   // mapping old JSON structure to the new hierarchy.
 
-  factory LayoutNode.column({
+  factory App.column({
     String? id,
     String? visibleWhen,
-    required List<LayoutNode> children,
-    SyntaxMainAxisAlignment? mainAxisAlignment,
-    SyntaxCrossAxisAlignment? crossAxisAlignment,
+    required List<App> children,
+    MainAlignment? mainAxisAlignment,
+    CrossAlignment? crossAxisAlignment,
     String? spacing,
   }) =>
-      LayoutNode.structural(
+      App.structural(
         node: StructuralNode.column(
           children: children,
           mainAxisAlignment: mainAxisAlignment,
@@ -63,15 +63,15 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.row({
+  factory App.row({
     String? id,
     String? visibleWhen,
-    required List<LayoutNode> children,
-    SyntaxMainAxisAlignment? mainAxisAlignment,
-    SyntaxCrossAxisAlignment? crossAxisAlignment,
+    required List<App> children,
+    MainAlignment? mainAxisAlignment,
+    CrossAlignment? crossAxisAlignment,
     String? spacing,
   }) =>
-      LayoutNode.structural(
+      App.structural(
         node: StructuralNode.row(
           children: children,
           mainAxisAlignment: mainAxisAlignment,
@@ -81,10 +81,10 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.container({
+  factory App.container({
     String? id,
     String? visibleWhen,
-    LayoutNode? child,
+    App? child,
     double? width,
     double? height,
     String? padding,
@@ -93,7 +93,7 @@ sealed class LayoutNode with _$LayoutNode {
     double? borderRadius,
     ContainerSemantic? semantic,
   }) =>
-      LayoutNode.structural(
+      App.structural(
         node: StructuralNode.container(
           child: child,
           width: width,
@@ -107,10 +107,10 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.card({
+  factory App.card({
     String? id,
     String? visibleWhen,
-    required List<LayoutNode> children,
+    required List<App> children,
     dynamic variant,
     String? padding,
     double? elevation,
@@ -123,7 +123,7 @@ sealed class LayoutNode with _$LayoutNode {
       variantName = variant;
     }
 
-    return LayoutNode.structural(
+    return App.structural(
       node: StructuralNode.card(
         children: children,
         variant: variantName,
@@ -134,15 +134,15 @@ sealed class LayoutNode with _$LayoutNode {
     );
   }
 
-  factory LayoutNode.listView({
+  factory App.listView({
     String? id,
     String? visibleWhen,
-    required List<LayoutNode> children,
+    required List<App> children,
     SyntaxAxis? scrollDirection,
     String? spacing,
     bool? shrinkWrap,
   }) =>
-      LayoutNode.structural(
+      App.structural(
         node: StructuralNode.listView(
           children: children,
           scrollDirection: scrollDirection,
@@ -152,7 +152,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.text({
+  factory App.text({
     String? id,
     String? visibleWhen,
     required String text,
@@ -169,7 +169,7 @@ sealed class LayoutNode with _$LayoutNode {
       variantName = variant;
     }
 
-    return LayoutNode.primitive(
+    return App.primitive(
       node: PrimitiveNode.text(
         text: text,
         variant: variantName != null
@@ -184,7 +184,7 @@ sealed class LayoutNode with _$LayoutNode {
     );
   }
 
-  factory LayoutNode.button({
+  factory App.button({
     String? id,
     String? visibleWhen,
     required String label,
@@ -205,7 +205,7 @@ sealed class LayoutNode with _$LayoutNode {
       variantName = variant;
     }
 
-    return LayoutNode.interactive(
+    return App.interactive(
       node: InteractiveNode.button(
         label: label,
         onPressed: onPressed,
@@ -223,7 +223,7 @@ sealed class LayoutNode with _$LayoutNode {
     );
   }
 
-  factory LayoutNode.textField({
+  factory App.textField({
     String? id,
     String? visibleWhen,
     String? label,
@@ -250,7 +250,7 @@ sealed class LayoutNode with _$LayoutNode {
       variantName = variant;
     }
 
-    return LayoutNode.interactive(
+    return App.interactive(
       node: InteractiveNode.textField(
         label: label,
         binding: binding,
@@ -274,14 +274,14 @@ sealed class LayoutNode with _$LayoutNode {
     );
   }
 
-  factory LayoutNode.icon({
+  factory App.icon({
     String? id,
     String? visibleWhen,
     required String name,
     IconSize? size,
     ColorSemantic? semantic,
   }) =>
-      LayoutNode.primitive(
+      App.primitive(
         node: PrimitiveNode.icon(
           name: name,
           size: size,
@@ -290,13 +290,13 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.spacer({
+  factory App.spacer({
     String? id,
     String? visibleWhen,
     SpacerSize? size,
     int? flex,
   }) =>
-      LayoutNode.primitive(
+      App.primitive(
         node: PrimitiveNode.spacer(
           size: size,
           flex: flex,
@@ -304,14 +304,14 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.sizedBox({
+  factory App.sizedBox({
     String? id,
     String? visibleWhen,
     double? width,
     double? height,
-    LayoutNode? child,
+    App? child,
   }) =>
-      LayoutNode.primitive(
+      App.primitive(
         node: PrimitiveNode.sizedBox(
           width: width,
           height: height,
@@ -320,13 +320,13 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.expanded({
+  factory App.expanded({
     String? id,
     String? visibleWhen,
-    required LayoutNode child,
+    required App child,
     int? flex,
   }) =>
-      LayoutNode.primitive(
+      App.primitive(
         node: PrimitiveNode.expanded(
           child: child,
           flex: flex,
@@ -334,7 +334,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.image({
+  factory App.image({
     String? id,
     String? visibleWhen,
     required String src,
@@ -344,7 +344,7 @@ sealed class LayoutNode with _$LayoutNode {
     String? placeholder,
     String? errorWidget,
   }) =>
-      LayoutNode.primitive(
+      App.primitive(
         node: PrimitiveNode.image(
           src: src,
           width: width,
@@ -356,7 +356,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.divider({
+  factory App.divider({
     String? id,
     String? visibleWhen,
     double? thickness,
@@ -364,7 +364,7 @@ sealed class LayoutNode with _$LayoutNode {
     double? indent,
     double? endIndent,
   }) =>
-      LayoutNode.primitive(
+      App.primitive(
         node: PrimitiveNode.divider(
           thickness: thickness,
           color: color,
@@ -374,14 +374,14 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.circularProgressIndicator({
+  factory App.circularProgressIndicator({
     String? id,
     String? visibleWhen,
     double? value,
     ColorSemantic? color,
     double? strokeWidth,
   }) =>
-      LayoutNode.primitive(
+      App.primitive(
         node: PrimitiveNode.circularProgressIndicator(
           value: value,
           color: color,
@@ -390,7 +390,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.checkbox({
+  factory App.checkbox({
     String? id,
     String? visibleWhen,
     required String binding,
@@ -398,7 +398,7 @@ sealed class LayoutNode with _$LayoutNode {
     String? onChanged,
     bool? tristate,
   }) =>
-      LayoutNode.interactive(
+      App.interactive(
         node: InteractiveNode.checkbox(
           binding: binding,
           label: label,
@@ -408,14 +408,14 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.switchWidget({
+  factory App.switchWidget({
     String? id,
     String? visibleWhen,
     required String binding,
     String? label,
     String? onChanged,
   }) =>
-      LayoutNode.interactive(
+      App.interactive(
         node: InteractiveNode.switchNode(
           binding: binding,
           label: label,
@@ -424,7 +424,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.iconButton({
+  factory App.iconButton({
     String? id,
     String? visibleWhen,
     required String icon,
@@ -432,7 +432,7 @@ sealed class LayoutNode with _$LayoutNode {
     double? size,
     ColorSemantic? color,
   }) =>
-      LayoutNode.interactive(
+      App.interactive(
         node: InteractiveNode.iconButton(
           icon: icon,
           onPressed: onPressed,
@@ -442,7 +442,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.dropdown({
+  factory App.dropdown({
     String? id,
     String? visibleWhen,
     required String binding,
@@ -450,7 +450,7 @@ sealed class LayoutNode with _$LayoutNode {
     String? label,
     String? onChanged,
   }) =>
-      LayoutNode.interactive(
+      App.interactive(
         node: InteractiveNode.dropdown(
           binding: binding,
           items: items,
@@ -460,7 +460,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.radio({
+  factory App.radio({
     String? id,
     String? visibleWhen,
     required String binding,
@@ -468,7 +468,7 @@ sealed class LayoutNode with _$LayoutNode {
     String? label,
     String? onChanged,
   }) =>
-      LayoutNode.interactive(
+      App.interactive(
         node: InteractiveNode.radio(
           binding: binding,
           value: value,
@@ -478,7 +478,7 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.slider({
+  factory App.slider({
     String? id,
     String? visibleWhen,
     required String binding,
@@ -488,7 +488,7 @@ sealed class LayoutNode with _$LayoutNode {
     String? label,
     String? onChanged,
   }) =>
-      LayoutNode.interactive(
+      App.interactive(
         node: InteractiveNode.slider(
           binding: binding,
           min: min,
@@ -500,14 +500,14 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.stack({
+  factory App.stack({
     String? id,
     String? visibleWhen,
-    required List<LayoutNode> children,
+    required List<App> children,
     StackFit? fit,
     AlignmentEnum? alignment,
   }) =>
-      LayoutNode.structural(
+      App.structural(
         node: StructuralNode.stack(
           children: children,
           fit: fit,
@@ -516,17 +516,17 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.gridView({
+  factory App.gridView({
     String? id,
     String? visibleWhen,
-    required List<LayoutNode> children,
+    required List<App> children,
     required int crossAxisCount,
     String? spacing,
     String? crossAxisSpacing,
     double? childAspectRatio,
     bool? shrinkWrap,
   }) =>
-      LayoutNode.structural(
+      App.structural(
         node: StructuralNode.gridView(
           children: children,
           crossAxisCount: crossAxisCount,
@@ -538,13 +538,13 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.padding({
+  factory App.padding({
     String? id,
     String? visibleWhen,
-    required LayoutNode child,
+    required App child,
     required String padding,
   }) =>
-      LayoutNode.structural(
+      App.structural(
         node: StructuralNode.padding(
           child: child,
           padding: padding,
@@ -552,25 +552,24 @@ sealed class LayoutNode with _$LayoutNode {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory LayoutNode.center({
+  factory App.center({
     String? id,
     String? visibleWhen,
-    required LayoutNode child,
+    required App child,
   }) =>
-      LayoutNode.structural(
+      App.structural(
         node: StructuralNode.center(
           child: child,
         ),
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  const factory LayoutNode.appBar({
+  const factory App.appBar({
     String? title,
     List<AppBarAction>? actions,
     String? leadingIcon,
     String? onLeadingPressed,
   }) = AppBarNode;
 
-  factory LayoutNode.fromJson(Map<String, dynamic> json) =>
-      _$LayoutNodeFromJson(json);
+  factory App.fromJson(Map<String, dynamic> json) => _$AppFromJson(json);
 }

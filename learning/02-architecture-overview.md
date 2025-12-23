@@ -178,12 +178,12 @@ class ButtonGenerator {
 **5. Emitter Layer** (`lib/src/emitters/`)
 - Converts AST nodes to code
 - Handles layout generation
-- Produces Flutter widgets from LayoutNode definitions
+- Produces Flutter widgets from App definitions
 
 ```dart
 // Example: layout_emitter.dart
 class LayoutEmitter {
-  Expression emit(AstNode node) {
+  Expression emit(App node) {
     return node.map(
       column: (n) => _emitColumn(n),
       button: (n) => _emitButton(n),
@@ -573,14 +573,14 @@ class MaterialStyle extends DesignStyle
 }
 ```
 
-### 5. Factory Pattern (LayoutNode Creation)
+### 5. Factory Pattern (App Creation)
 
 Static factory methods for creating layout nodes.
 
 ```dart
-LayoutNode.button(label: 'Submit', onPressed: 'handleSubmit')
-LayoutNode.text(text: 'Hello')
-LayoutNode.column(children: [...])
+App.button(label: 'Submit', onPressed: 'handleSubmit')
+App.text(text: 'Hello')
+App.column(children: [...])
 ```
 
 ---

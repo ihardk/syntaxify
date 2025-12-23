@@ -319,7 +319,7 @@ class ScreenGenerator {
 **Key method:**
 ```dart
 class LayoutEmitter {
-  Expression emit(LayoutNode node) {
+  Expression emit(App node) {
     return node.map(
       column: (n) => _emitColumn(n),
       row: (n) => _emitRow(n),
@@ -350,8 +350,8 @@ class LayoutEmitter {
 **Pattern:**
 ```dart
 @freezed
-sealed class LayoutNode with _$LayoutNode {
-  const factory LayoutNode.button({
+sealed class App with _$App {
+  const factory App.button({
     required String label,
     String? onPressed,
     ButtonVariant? variant,
@@ -407,7 +407,7 @@ class ComponentDefinition with _$ComponentDefinition {
 ```dart
 class ScreenDefinition {
   final String id;
-  final LayoutNode layout;
+  final App layout;
   final AppBarNode? appBar;
 }
 ```
@@ -727,10 +727,10 @@ class ButtonMeta {
 // login.screen.dart
 final loginScreen = ScreenDefinition(
   id: 'login',
-  layout: LayoutNode.column(
+  layout: App.column(
     children: [
-      LayoutNode.text(text: 'Welcome'),
-      LayoutNode.button(label: 'Login', onPressed: 'handleLogin'),
+      App.text(text: 'Welcome'),
+      App.button(label: 'Login', onPressed: 'handleLogin'),
     ],
   ),
 );

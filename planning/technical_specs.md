@@ -51,11 +51,11 @@ Generated code MUST be:
 // meta/login.screen.dart
 final loginScreen = ScreenDefinition(
   id: 'login',
-  layout: AstNode.column(
+  layout: App.column(
     children: [
-      AstNode.text(text: 'Welcome Back', variant: TextVariant.headlineMedium),
-      AstNode.textField(label: 'Email'),
-      AstNode.button(label: 'Login', onPressed: 'login'),
+      App.text(text: 'Welcome Back', variant: TextVariant.headlineMedium),
+      App.textField(label: 'Email'),
+      App.button(label: 'Login', onPressed: 'login'),
     ],
   ),
 );

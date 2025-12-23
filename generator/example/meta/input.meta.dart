@@ -16,22 +16,22 @@ class InputMeta {
   final TextEditingController? controller;
 
   /// The label text displayed above or inside the input
-  /// Maps to: LayoutNode.textField(label: ...)
+  /// Maps to: App.textField(label: ...)
   @Optional()
   final String? label;
 
   /// Hint text displayed when empty
-  /// Maps to: LayoutNode.textField(hint: ...)
+  /// Maps to: App.textField(hint: ...)
   @Optional()
   final String? hint;
 
   /// Error text to display
-  /// Maps to: LayoutNode.textField(errorText: ...)
+  /// Maps to: App.textField(errorText: ...)
   @Optional()
   final String? errorText;
 
   /// Whether the text should be obscured (password)
-  /// Maps to: LayoutNode.textField(obscureText: ...)
+  /// Maps to: App.textField(obscureText: ...)
   @Optional()
   @Default('false')
   final bool obscureText;
@@ -42,12 +42,12 @@ class InputMeta {
   final bool enabled;
 
   /// Callback when text changes
-  /// Maps to: LayoutNode.textField(onChanged: ...)
+  /// Maps to: App.textField(onChanged: ...)
   @Optional()
   final ValueChanged<String>? onChanged;
 
   /// Callback when text is submitted
-  /// Maps to: LayoutNode.textField(onSubmitted: ...)
+  /// Maps to: App.textField(onSubmitted: ...)
   @Optional()
   final ValueChanged<String>? onSubmitted;
 
@@ -68,7 +68,7 @@ class InputMeta {
   final VoidCallback? onTapSuffix;
 
   /// Keyboard type
-  /// Maps to: LayoutNode.textField(keyboardType: ...)
+  /// Maps to: App.textField(keyboardType: ...)
   @Optional()
   final TextInputType? keyboardType;
 

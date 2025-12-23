@@ -227,20 +227,14 @@ extension StructuralNodePatterns on StructuralNode {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            List<LayoutNode> children,
-            SyntaxMainAxisAlignment? mainAxisAlignment,
-            SyntaxCrossAxisAlignment? crossAxisAlignment,
-            String? spacing)?
+    TResult Function(List<App> children, MainAlignment? mainAxisAlignment,
+            CrossAlignment? crossAxisAlignment, String? spacing)?
         column,
-    TResult Function(
-            List<LayoutNode> children,
-            SyntaxMainAxisAlignment? mainAxisAlignment,
-            SyntaxCrossAxisAlignment? crossAxisAlignment,
-            String? spacing)?
+    TResult Function(List<App> children, MainAlignment? mainAxisAlignment,
+            CrossAlignment? crossAxisAlignment, String? spacing)?
         row,
     TResult Function(
-            LayoutNode? child,
+            App? child,
             double? width,
             double? height,
             String? padding,
@@ -249,25 +243,25 @@ extension StructuralNodePatterns on StructuralNode {
             double? borderRadius,
             ContainerSemantic? semantic)?
         container,
-    TResult Function(List<LayoutNode> children, String? variant,
-            String? padding, double? elevation)?
+    TResult Function(List<App> children, String? variant, String? padding,
+            double? elevation)?
         card,
-    TResult Function(List<LayoutNode> children, SyntaxAxis? scrollDirection,
+    TResult Function(List<App> children, SyntaxAxis? scrollDirection,
             String? spacing, bool? shrinkWrap)?
         listView,
     TResult Function(
-            List<LayoutNode> children, StackFit? fit, AlignmentEnum? alignment)?
+            List<App> children, StackFit? fit, AlignmentEnum? alignment)?
         stack,
     TResult Function(
-            List<LayoutNode> children,
+            List<App> children,
             int crossAxisCount,
             String? spacing,
             String? crossAxisSpacing,
             double? childAspectRatio,
             bool? shrinkWrap)?
         gridView,
-    TResult Function(LayoutNode child, String padding)? padding,
-    TResult Function(LayoutNode child)? center,
+    TResult Function(App child, String padding)? padding,
+    TResult Function(App child)? center,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -317,19 +311,19 @@ extension StructuralNodePatterns on StructuralNode {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            List<LayoutNode> children,
-            SyntaxMainAxisAlignment? mainAxisAlignment,
-            SyntaxCrossAxisAlignment? crossAxisAlignment,
+            List<App> children,
+            MainAlignment? mainAxisAlignment,
+            CrossAlignment? crossAxisAlignment,
             String? spacing)
         column,
     required TResult Function(
-            List<LayoutNode> children,
-            SyntaxMainAxisAlignment? mainAxisAlignment,
-            SyntaxCrossAxisAlignment? crossAxisAlignment,
+            List<App> children,
+            MainAlignment? mainAxisAlignment,
+            CrossAlignment? crossAxisAlignment,
             String? spacing)
         row,
     required TResult Function(
-            LayoutNode? child,
+            App? child,
             double? width,
             double? height,
             String? padding,
@@ -338,25 +332,25 @@ extension StructuralNodePatterns on StructuralNode {
             double? borderRadius,
             ContainerSemantic? semantic)
         container,
-    required TResult Function(List<LayoutNode> children, String? variant,
+    required TResult Function(List<App> children, String? variant,
             String? padding, double? elevation)
         card,
-    required TResult Function(List<LayoutNode> children,
-            SyntaxAxis? scrollDirection, String? spacing, bool? shrinkWrap)
+    required TResult Function(List<App> children, SyntaxAxis? scrollDirection,
+            String? spacing, bool? shrinkWrap)
         listView,
     required TResult Function(
-            List<LayoutNode> children, StackFit? fit, AlignmentEnum? alignment)
+            List<App> children, StackFit? fit, AlignmentEnum? alignment)
         stack,
     required TResult Function(
-            List<LayoutNode> children,
+            List<App> children,
             int crossAxisCount,
             String? spacing,
             String? crossAxisSpacing,
             double? childAspectRatio,
             bool? shrinkWrap)
         gridView,
-    required TResult Function(LayoutNode child, String padding) padding,
-    required TResult Function(LayoutNode child) center,
+    required TResult Function(App child, String padding) padding,
+    required TResult Function(App child) center,
   }) {
     final _that = this;
     switch (_that) {
@@ -401,20 +395,14 @@ extension StructuralNodePatterns on StructuralNode {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            List<LayoutNode> children,
-            SyntaxMainAxisAlignment? mainAxisAlignment,
-            SyntaxCrossAxisAlignment? crossAxisAlignment,
-            String? spacing)?
+    TResult? Function(List<App> children, MainAlignment? mainAxisAlignment,
+            CrossAlignment? crossAxisAlignment, String? spacing)?
         column,
-    TResult? Function(
-            List<LayoutNode> children,
-            SyntaxMainAxisAlignment? mainAxisAlignment,
-            SyntaxCrossAxisAlignment? crossAxisAlignment,
-            String? spacing)?
+    TResult? Function(List<App> children, MainAlignment? mainAxisAlignment,
+            CrossAlignment? crossAxisAlignment, String? spacing)?
         row,
     TResult? Function(
-            LayoutNode? child,
+            App? child,
             double? width,
             double? height,
             String? padding,
@@ -423,25 +411,25 @@ extension StructuralNodePatterns on StructuralNode {
             double? borderRadius,
             ContainerSemantic? semantic)?
         container,
-    TResult? Function(List<LayoutNode> children, String? variant,
-            String? padding, double? elevation)?
+    TResult? Function(List<App> children, String? variant, String? padding,
+            double? elevation)?
         card,
-    TResult? Function(List<LayoutNode> children, SyntaxAxis? scrollDirection,
+    TResult? Function(List<App> children, SyntaxAxis? scrollDirection,
             String? spacing, bool? shrinkWrap)?
         listView,
     TResult? Function(
-            List<LayoutNode> children, StackFit? fit, AlignmentEnum? alignment)?
+            List<App> children, StackFit? fit, AlignmentEnum? alignment)?
         stack,
     TResult? Function(
-            List<LayoutNode> children,
+            List<App> children,
             int crossAxisCount,
             String? spacing,
             String? crossAxisSpacing,
             double? childAspectRatio,
             bool? shrinkWrap)?
         gridView,
-    TResult? Function(LayoutNode child, String padding)? padding,
-    TResult? Function(LayoutNode child)? center,
+    TResult? Function(App child, String padding)? padding,
+    TResult? Function(App child)? center,
   }) {
     final _that = this;
     switch (_that) {
@@ -479,7 +467,7 @@ extension StructuralNodePatterns on StructuralNode {
 @JsonSerializable()
 class ColumnNode implements StructuralNode {
   const ColumnNode(
-      {required final List<LayoutNode> children,
+      {required final List<App> children,
       this.mainAxisAlignment,
       this.crossAxisAlignment,
       this.spacing,
@@ -489,15 +477,15 @@ class ColumnNode implements StructuralNode {
   factory ColumnNode.fromJson(Map<String, dynamic> json) =>
       _$ColumnNodeFromJson(json);
 
-  final List<LayoutNode> _children;
-  List<LayoutNode> get children {
+  final List<App> _children;
+  List<App> get children {
     if (_children is EqualUnmodifiableListView) return _children;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_children);
   }
 
-  final SyntaxMainAxisAlignment? mainAxisAlignment;
-  final SyntaxCrossAxisAlignment? crossAxisAlignment;
+  final MainAlignment? mainAxisAlignment;
+  final CrossAlignment? crossAxisAlignment;
   final String? spacing;
 
   @JsonKey(name: 'runtimeType')
@@ -553,9 +541,9 @@ abstract mixin class $ColumnNodeCopyWith<$Res>
       _$ColumnNodeCopyWithImpl;
   @useResult
   $Res call(
-      {List<LayoutNode> children,
-      SyntaxMainAxisAlignment? mainAxisAlignment,
-      SyntaxCrossAxisAlignment? crossAxisAlignment,
+      {List<App> children,
+      MainAlignment? mainAxisAlignment,
+      CrossAlignment? crossAxisAlignment,
       String? spacing});
 }
 
@@ -579,15 +567,15 @@ class _$ColumnNodeCopyWithImpl<$Res> implements $ColumnNodeCopyWith<$Res> {
       children: null == children
           ? _self._children
           : children // ignore: cast_nullable_to_non_nullable
-              as List<LayoutNode>,
+              as List<App>,
       mainAxisAlignment: freezed == mainAxisAlignment
           ? _self.mainAxisAlignment
           : mainAxisAlignment // ignore: cast_nullable_to_non_nullable
-              as SyntaxMainAxisAlignment?,
+              as MainAlignment?,
       crossAxisAlignment: freezed == crossAxisAlignment
           ? _self.crossAxisAlignment
           : crossAxisAlignment // ignore: cast_nullable_to_non_nullable
-              as SyntaxCrossAxisAlignment?,
+              as CrossAlignment?,
       spacing: freezed == spacing
           ? _self.spacing
           : spacing // ignore: cast_nullable_to_non_nullable
@@ -600,7 +588,7 @@ class _$ColumnNodeCopyWithImpl<$Res> implements $ColumnNodeCopyWith<$Res> {
 @JsonSerializable()
 class RowNode implements StructuralNode {
   const RowNode(
-      {required final List<LayoutNode> children,
+      {required final List<App> children,
       this.mainAxisAlignment,
       this.crossAxisAlignment,
       this.spacing,
@@ -610,15 +598,15 @@ class RowNode implements StructuralNode {
   factory RowNode.fromJson(Map<String, dynamic> json) =>
       _$RowNodeFromJson(json);
 
-  final List<LayoutNode> _children;
-  List<LayoutNode> get children {
+  final List<App> _children;
+  List<App> get children {
     if (_children is EqualUnmodifiableListView) return _children;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_children);
   }
 
-  final SyntaxMainAxisAlignment? mainAxisAlignment;
-  final SyntaxCrossAxisAlignment? crossAxisAlignment;
+  final MainAlignment? mainAxisAlignment;
+  final CrossAlignment? crossAxisAlignment;
   final String? spacing;
 
   @JsonKey(name: 'runtimeType')
@@ -673,9 +661,9 @@ abstract mixin class $RowNodeCopyWith<$Res>
       _$RowNodeCopyWithImpl;
   @useResult
   $Res call(
-      {List<LayoutNode> children,
-      SyntaxMainAxisAlignment? mainAxisAlignment,
-      SyntaxCrossAxisAlignment? crossAxisAlignment,
+      {List<App> children,
+      MainAlignment? mainAxisAlignment,
+      CrossAlignment? crossAxisAlignment,
       String? spacing});
 }
 
@@ -699,15 +687,15 @@ class _$RowNodeCopyWithImpl<$Res> implements $RowNodeCopyWith<$Res> {
       children: null == children
           ? _self._children
           : children // ignore: cast_nullable_to_non_nullable
-              as List<LayoutNode>,
+              as List<App>,
       mainAxisAlignment: freezed == mainAxisAlignment
           ? _self.mainAxisAlignment
           : mainAxisAlignment // ignore: cast_nullable_to_non_nullable
-              as SyntaxMainAxisAlignment?,
+              as MainAlignment?,
       crossAxisAlignment: freezed == crossAxisAlignment
           ? _self.crossAxisAlignment
           : crossAxisAlignment // ignore: cast_nullable_to_non_nullable
-              as SyntaxCrossAxisAlignment?,
+              as CrossAlignment?,
       spacing: freezed == spacing
           ? _self.spacing
           : spacing // ignore: cast_nullable_to_non_nullable
@@ -733,7 +721,7 @@ class ContainerNode implements StructuralNode {
   factory ContainerNode.fromJson(Map<String, dynamic> json) =>
       _$ContainerNodeFromJson(json);
 
-  final LayoutNode? child;
+  final App? child;
   final double? width;
   final double? height;
   final String? padding;
@@ -795,7 +783,7 @@ abstract mixin class $ContainerNodeCopyWith<$Res>
       _$ContainerNodeCopyWithImpl;
   @useResult
   $Res call(
-      {LayoutNode? child,
+      {App? child,
       double? width,
       double? height,
       String? padding,
@@ -804,7 +792,7 @@ abstract mixin class $ContainerNodeCopyWith<$Res>
       double? borderRadius,
       ContainerSemantic? semantic});
 
-  $LayoutNodeCopyWith<$Res>? get child;
+  $AppCopyWith<$Res>? get child;
 }
 
 /// @nodoc
@@ -832,7 +820,7 @@ class _$ContainerNodeCopyWithImpl<$Res>
       child: freezed == child
           ? _self.child
           : child // ignore: cast_nullable_to_non_nullable
-              as LayoutNode?,
+              as App?,
       width: freezed == width
           ? _self.width
           : width // ignore: cast_nullable_to_non_nullable
@@ -868,12 +856,12 @@ class _$ContainerNodeCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $LayoutNodeCopyWith<$Res>? get child {
+  $AppCopyWith<$Res>? get child {
     if (_self.child == null) {
       return null;
     }
 
-    return $LayoutNodeCopyWith<$Res>(_self.child!, (value) {
+    return $AppCopyWith<$Res>(_self.child!, (value) {
       return _then(_self.copyWith(child: value));
     });
   }
@@ -883,7 +871,7 @@ class _$ContainerNodeCopyWithImpl<$Res>
 @JsonSerializable()
 class CardNode implements StructuralNode {
   const CardNode(
-      {required final List<LayoutNode> children,
+      {required final List<App> children,
       this.variant,
       this.padding,
       this.elevation,
@@ -893,8 +881,8 @@ class CardNode implements StructuralNode {
   factory CardNode.fromJson(Map<String, dynamic> json) =>
       _$CardNodeFromJson(json);
 
-  final List<LayoutNode> _children;
-  List<LayoutNode> get children {
+  final List<App> _children;
+  List<App> get children {
     if (_children is EqualUnmodifiableListView) return _children;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_children);
@@ -955,7 +943,7 @@ abstract mixin class $CardNodeCopyWith<$Res>
       _$CardNodeCopyWithImpl;
   @useResult
   $Res call(
-      {List<LayoutNode> children,
+      {List<App> children,
       String? variant,
       String? padding,
       double? elevation});
@@ -981,7 +969,7 @@ class _$CardNodeCopyWithImpl<$Res> implements $CardNodeCopyWith<$Res> {
       children: null == children
           ? _self._children
           : children // ignore: cast_nullable_to_non_nullable
-              as List<LayoutNode>,
+              as List<App>,
       variant: freezed == variant
           ? _self.variant
           : variant // ignore: cast_nullable_to_non_nullable
@@ -1002,7 +990,7 @@ class _$CardNodeCopyWithImpl<$Res> implements $CardNodeCopyWith<$Res> {
 @JsonSerializable()
 class ListViewNode implements StructuralNode {
   const ListViewNode(
-      {required final List<LayoutNode> children,
+      {required final List<App> children,
       this.scrollDirection,
       this.spacing,
       this.shrinkWrap,
@@ -1012,8 +1000,8 @@ class ListViewNode implements StructuralNode {
   factory ListViewNode.fromJson(Map<String, dynamic> json) =>
       _$ListViewNodeFromJson(json);
 
-  final List<LayoutNode> _children;
-  List<LayoutNode> get children {
+  final List<App> _children;
+  List<App> get children {
     if (_children is EqualUnmodifiableListView) return _children;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_children);
@@ -1076,7 +1064,7 @@ abstract mixin class $ListViewNodeCopyWith<$Res>
       _$ListViewNodeCopyWithImpl;
   @useResult
   $Res call(
-      {List<LayoutNode> children,
+      {List<App> children,
       SyntaxAxis? scrollDirection,
       String? spacing,
       bool? shrinkWrap});
@@ -1102,7 +1090,7 @@ class _$ListViewNodeCopyWithImpl<$Res> implements $ListViewNodeCopyWith<$Res> {
       children: null == children
           ? _self._children
           : children // ignore: cast_nullable_to_non_nullable
-              as List<LayoutNode>,
+              as List<App>,
       scrollDirection: freezed == scrollDirection
           ? _self.scrollDirection
           : scrollDirection // ignore: cast_nullable_to_non_nullable
@@ -1123,7 +1111,7 @@ class _$ListViewNodeCopyWithImpl<$Res> implements $ListViewNodeCopyWith<$Res> {
 @JsonSerializable()
 class StackNode implements StructuralNode {
   const StackNode(
-      {required final List<LayoutNode> children,
+      {required final List<App> children,
       this.fit,
       this.alignment,
       final String? $type})
@@ -1132,8 +1120,8 @@ class StackNode implements StructuralNode {
   factory StackNode.fromJson(Map<String, dynamic> json) =>
       _$StackNodeFromJson(json);
 
-  final List<LayoutNode> _children;
-  List<LayoutNode> get children {
+  final List<App> _children;
+  List<App> get children {
     if (_children is EqualUnmodifiableListView) return _children;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_children);
@@ -1187,8 +1175,7 @@ abstract mixin class $StackNodeCopyWith<$Res>
   factory $StackNodeCopyWith(StackNode value, $Res Function(StackNode) _then) =
       _$StackNodeCopyWithImpl;
   @useResult
-  $Res call(
-      {List<LayoutNode> children, StackFit? fit, AlignmentEnum? alignment});
+  $Res call({List<App> children, StackFit? fit, AlignmentEnum? alignment});
 }
 
 /// @nodoc
@@ -1210,7 +1197,7 @@ class _$StackNodeCopyWithImpl<$Res> implements $StackNodeCopyWith<$Res> {
       children: null == children
           ? _self._children
           : children // ignore: cast_nullable_to_non_nullable
-              as List<LayoutNode>,
+              as List<App>,
       fit: freezed == fit
           ? _self.fit
           : fit // ignore: cast_nullable_to_non_nullable
@@ -1227,7 +1214,7 @@ class _$StackNodeCopyWithImpl<$Res> implements $StackNodeCopyWith<$Res> {
 @JsonSerializable()
 class GridViewNode implements StructuralNode {
   const GridViewNode(
-      {required final List<LayoutNode> children,
+      {required final List<App> children,
       required this.crossAxisCount,
       this.spacing,
       this.crossAxisSpacing,
@@ -1239,8 +1226,8 @@ class GridViewNode implements StructuralNode {
   factory GridViewNode.fromJson(Map<String, dynamic> json) =>
       _$GridViewNodeFromJson(json);
 
-  final List<LayoutNode> _children;
-  List<LayoutNode> get children {
+  final List<App> _children;
+  List<App> get children {
     if (_children is EqualUnmodifiableListView) return _children;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_children);
@@ -1311,7 +1298,7 @@ abstract mixin class $GridViewNodeCopyWith<$Res>
       _$GridViewNodeCopyWithImpl;
   @useResult
   $Res call(
-      {List<LayoutNode> children,
+      {List<App> children,
       int crossAxisCount,
       String? spacing,
       String? crossAxisSpacing,
@@ -1341,7 +1328,7 @@ class _$GridViewNodeCopyWithImpl<$Res> implements $GridViewNodeCopyWith<$Res> {
       children: null == children
           ? _self._children
           : children // ignore: cast_nullable_to_non_nullable
-              as List<LayoutNode>,
+              as List<App>,
       crossAxisCount: null == crossAxisCount
           ? _self.crossAxisCount
           : crossAxisCount // ignore: cast_nullable_to_non_nullable
@@ -1375,7 +1362,7 @@ class PaddingNode implements StructuralNode {
   factory PaddingNode.fromJson(Map<String, dynamic> json) =>
       _$PaddingNodeFromJson(json);
 
-  final LayoutNode child;
+  final App child;
   final String padding;
 
   @JsonKey(name: 'runtimeType')
@@ -1421,9 +1408,9 @@ abstract mixin class $PaddingNodeCopyWith<$Res>
           PaddingNode value, $Res Function(PaddingNode) _then) =
       _$PaddingNodeCopyWithImpl;
   @useResult
-  $Res call({LayoutNode child, String padding});
+  $Res call({App child, String padding});
 
-  $LayoutNodeCopyWith<$Res> get child;
+  $AppCopyWith<$Res> get child;
 }
 
 /// @nodoc
@@ -1444,7 +1431,7 @@ class _$PaddingNodeCopyWithImpl<$Res> implements $PaddingNodeCopyWith<$Res> {
       child: null == child
           ? _self.child
           : child // ignore: cast_nullable_to_non_nullable
-              as LayoutNode,
+              as App,
       padding: null == padding
           ? _self.padding
           : padding // ignore: cast_nullable_to_non_nullable
@@ -1456,8 +1443,8 @@ class _$PaddingNodeCopyWithImpl<$Res> implements $PaddingNodeCopyWith<$Res> {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $LayoutNodeCopyWith<$Res> get child {
-    return $LayoutNodeCopyWith<$Res>(_self.child, (value) {
+  $AppCopyWith<$Res> get child {
+    return $AppCopyWith<$Res>(_self.child, (value) {
       return _then(_self.copyWith(child: value));
     });
   }
@@ -1471,7 +1458,7 @@ class CenterNode implements StructuralNode {
   factory CenterNode.fromJson(Map<String, dynamic> json) =>
       _$CenterNodeFromJson(json);
 
-  final LayoutNode child;
+  final App child;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
@@ -1515,9 +1502,9 @@ abstract mixin class $CenterNodeCopyWith<$Res>
           CenterNode value, $Res Function(CenterNode) _then) =
       _$CenterNodeCopyWithImpl;
   @useResult
-  $Res call({LayoutNode child});
+  $Res call({App child});
 
-  $LayoutNodeCopyWith<$Res> get child;
+  $AppCopyWith<$Res> get child;
 }
 
 /// @nodoc
@@ -1537,7 +1524,7 @@ class _$CenterNodeCopyWithImpl<$Res> implements $CenterNodeCopyWith<$Res> {
       child: null == child
           ? _self.child
           : child // ignore: cast_nullable_to_non_nullable
-              as LayoutNode,
+              as App,
     ));
   }
 
@@ -1545,8 +1532,8 @@ class _$CenterNodeCopyWithImpl<$Res> implements $CenterNodeCopyWith<$Res> {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $LayoutNodeCopyWith<$Res> get child {
-    return $LayoutNodeCopyWith<$Res>(_self.child, (value) {
+  $AppCopyWith<$Res> get child {
+    return $AppCopyWith<$Res>(_self.child, (value) {
       return _then(_self.copyWith(child: value));
     });
   }

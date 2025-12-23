@@ -10,7 +10,7 @@ void main() {
       DartFormatter(languageVersion: DartFormatter.latestLanguageVersion);
   const layoutEmitter = LayoutEmitter();
 
-  String emit(LayoutNode node) {
+  String emit(App node) {
     final expression = layoutEmitter.emit(node);
     // Wrap in a statement so DartFormatter can handle it
     final statement = expression.assignFinal('w').statement;
@@ -19,7 +19,7 @@ void main() {
 
   group('LayoutEmitter', () {
     test('emits Text widget', () {
-      final node = LayoutNode.text(
+      final node = App.text(
         text: 'Hello World',
         variant: TextVariant.headlineMedium,
       );
@@ -32,7 +32,7 @@ void main() {
     });
 
     test('emits Button widget (Filled)', () {
-      final node = LayoutNode.button(
+      final node = App.button(
         label: 'Submit',
         variant: 'filled',
         onPressed: 'submitData',
@@ -47,7 +47,7 @@ void main() {
     });
 
     test('emits TextField widget', () {
-      final node = LayoutNode.textField(
+      final node = App.textField(
         label: 'Username',
         hint: 'Enter here',
         obscureText: true,
@@ -68,14 +68,14 @@ void main() {
 
   group('LayoutEmitter - Structural Nodes', () {
     test('emits Container with all properties', () {
-      final node = LayoutNode.container(
+      final node = App.container(
         width: 200,
         height: 100,
         padding: '16',
         margin: '8',
         color: ColorSemantic.primary,
         borderRadius: 12,
-        child: LayoutNode.text(text: 'Inside container'),
+        child: App.text(text: 'Inside container'),
       );
 
       final code = emit(node);
@@ -90,10 +90,10 @@ void main() {
     });
 
     test('emits Card with children and elevation', () {
-      final node = LayoutNode.card(
+      final node = App.card(
         children: [
-          LayoutNode.text(text: 'Card Title'),
-          LayoutNode.text(text: 'Card Body'),
+          App.text(text: 'Card Title'),
+          App.text(text: 'Card Body'),
         ],
         padding: '16',
         elevation: 4,
@@ -109,10 +109,10 @@ void main() {
     });
 
     test('emits ListView with scrollDirection and shrinkWrap', () {
-      final node = LayoutNode.listView(
+      final node = App.listView(
         children: [
-          LayoutNode.text(text: 'Item 1'),
-          LayoutNode.text(text: 'Item 2'),
+          App.text(text: 'Item 1'),
+          App.text(text: 'Item 2'),
         ],
         scrollDirection: SyntaxAxis.horizontal,
         shrinkWrap: true,
@@ -126,10 +126,10 @@ void main() {
     });
 
     test('emits Stack with fit and alignment', () {
-      final node = LayoutNode.stack(
+      final node = App.stack(
         children: [
-          LayoutNode.text(text: 'Background'),
-          LayoutNode.text(text: 'Foreground'),
+          App.text(text: 'Background'),
+          App.text(text: 'Foreground'),
         ],
         fit: StackFit.expand,
         alignment: AlignmentEnum.center,
@@ -143,12 +143,12 @@ void main() {
     });
 
     test('emits GridView with crossAxisCount and spacing', () {
-      final node = LayoutNode.gridView(
+      final node = App.gridView(
         children: [
-          LayoutNode.text(text: 'Grid Item 1'),
-          LayoutNode.text(text: 'Grid Item 2'),
-          LayoutNode.text(text: 'Grid Item 3'),
-          LayoutNode.text(text: 'Grid Item 4'),
+          App.text(text: 'Grid Item 1'),
+          App.text(text: 'Grid Item 2'),
+          App.text(text: 'Grid Item 3'),
+          App.text(text: 'Grid Item 4'),
         ],
         crossAxisCount: 2,
         spacing: '8',
@@ -167,9 +167,9 @@ void main() {
     });
 
     test('emits Padding with child', () {
-      final node = LayoutNode.padding(
+      final node = App.padding(
         padding: '16,8',
-        child: LayoutNode.text(text: 'Padded text'),
+        child: App.text(text: 'Padded text'),
       );
 
       final code = emit(node);
@@ -181,8 +181,8 @@ void main() {
     });
 
     test('emits Center with child', () {
-      final node = LayoutNode.center(
-        child: LayoutNode.text(text: 'Centered text'),
+      final node = App.center(
+        child: App.text(text: 'Centered text'),
       );
 
       final code = emit(node);
@@ -198,7 +198,7 @@ void main() {
 
   group('LayoutEmitter - Primitive Nodes', () {
     test('emits Image with network URL', () {
-      final node = LayoutNode.image(
+      final node = App.image(
         src: 'https://example.com/image.png',
         width: 100,
         height: 100,
@@ -214,7 +214,7 @@ void main() {
     });
 
     test('emits Image with asset path', () {
-      final node = LayoutNode.image(
+      final node = App.image(
         src: 'assets/images/logo.png',
         width: 50,
       );
@@ -226,7 +226,7 @@ void main() {
     });
 
     test('emits Divider with properties', () {
-      final node = LayoutNode.divider(
+      final node = App.divider(
         thickness: 2,
         indent: 16,
         endIndent: 16,
@@ -240,7 +240,7 @@ void main() {
     });
 
     test('emits CircularProgressIndicator with value', () {
-      final node = LayoutNode.circularProgressIndicator(
+      final node = App.circularProgressIndicator(
         value: 0.75,
         strokeWidth: 4,
       );
@@ -252,10 +252,10 @@ void main() {
     });
 
     test('emits SizedBox with dimensions', () {
-      final node = LayoutNode.sizedBox(
+      final node = App.sizedBox(
         width: 100,
         height: 50,
-        child: LayoutNode.text(text: 'Inside SizedBox'),
+        child: App.text(text: 'Inside SizedBox'),
       );
 
       final code = emit(node);
@@ -266,9 +266,9 @@ void main() {
     });
 
     test('emits Expanded with flex', () {
-      final node = LayoutNode.expanded(
+      final node = App.expanded(
         flex: 2,
-        child: LayoutNode.text(text: 'Expanded child'),
+        child: App.text(text: 'Expanded child'),
       );
 
       final code = emit(node);
@@ -284,7 +284,7 @@ void main() {
 
   group('LayoutEmitter - Interactive Nodes', () {
     test('emits Checkbox with binding and label', () {
-      final node = LayoutNode.checkbox(
+      final node = App.checkbox(
         binding: 'isChecked',
         label: 'Agree to terms',
         onChanged: 'onCheckboxChanged',
@@ -299,7 +299,7 @@ void main() {
     });
 
     test('emits Switch with binding and label', () {
-      final node = LayoutNode.switchWidget(
+      final node = App.switchWidget(
         binding: 'isEnabled',
         label: 'Enable notifications',
         onChanged: 'onSwitchChanged',
@@ -313,7 +313,7 @@ void main() {
     });
 
     test('emits IconButton with icon and callback', () {
-      final node = LayoutNode.iconButton(
+      final node = App.iconButton(
         icon: 'settings',
         onPressed: 'onSettingsPressed',
         size: 24,
@@ -329,7 +329,7 @@ void main() {
     });
 
     test('emits Dropdown with items and binding', () {
-      final node = LayoutNode.dropdown(
+      final node = App.dropdown(
         binding: 'selectedOption',
         items: ['Option 1', 'Option 2', 'Option 3'],
         label: 'Select an option',
@@ -349,7 +349,7 @@ void main() {
     });
 
     test('emits Radio with binding and value', () {
-      final node = LayoutNode.radio(
+      final node = App.radio(
         binding: 'selectedGender',
         value: 'male',
         label: 'Male',
@@ -365,7 +365,7 @@ void main() {
     });
 
     test('emits Slider with min, max, and divisions', () {
-      final node = LayoutNode.slider(
+      final node = App.slider(
         binding: 'volume',
         min: 0,
         max: 100,

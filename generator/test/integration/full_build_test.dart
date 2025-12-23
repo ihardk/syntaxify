@@ -116,10 +116,10 @@ void main() {
       final screens = [
         ScreenDefinition(
           id: 'login',
-          layout: LayoutNode.column(
+          layout: App.column(
             children: [
-              LayoutNode.text(text: 'Welcome'),
-              LayoutNode.button(label: 'Login', onPressed: 'handleLogin'),
+              App.text(text: 'Welcome'),
+              App.button(label: 'Login', onPressed: 'handleLogin'),
             ],
           ),
         ),
@@ -152,9 +152,9 @@ void main() {
       final screens = [
         ScreenDefinition(
           id: 'home',
-          layout: LayoutNode.column(
+          layout: App.column(
             children: [
-              LayoutNode.text(text: 'Home'),
+              App.text(text: 'Home'),
             ],
           ),
         ),
@@ -238,7 +238,7 @@ void main() {
       final screens = [
         ScreenDefinition(
           id: '', // Empty ID
-          layout: LayoutNode.column(children: []),
+          layout: App.column(children: []),
         ),
       ];
 
@@ -327,9 +327,9 @@ void main() {
         5,
         (i) => ScreenDefinition(
           id: 'screen$i',
-          layout: LayoutNode.column(
+          layout: App.column(
             children: [
-              LayoutNode.text(text: 'Screen $i'),
+              App.text(text: 'Screen $i'),
             ],
           ),
         ),
@@ -395,7 +395,7 @@ void main() {
     test('subsequent builds preserve existing screen files', () async {
       final screen = ScreenDefinition(
         id: 'existing',
-        layout: LayoutNode.column(children: []),
+        layout: App.column(children: []),
       );
 
       // Pre-create the screen file with custom content
@@ -457,22 +457,20 @@ void main() {
       final screens = [
         ScreenDefinition(
           id: 'complex',
-          layout: LayoutNode.column(
+          layout: App.column(
             children: [
-              LayoutNode.row(
+              App.row(
                 children: [
-                  LayoutNode.column(
+                  App.column(
                     children: [
-                      LayoutNode.text(text: 'Deep 1'),
-                      LayoutNode.text(text: 'Deep 2'),
+                      App.text(text: 'Deep 1'),
+                      App.text(text: 'Deep 2'),
                     ],
                   ),
-                  LayoutNode.column(
+                  App.column(
                     children: [
-                      LayoutNode.button(
-                          label: 'Action 1', onPressed: 'onAction1'),
-                      LayoutNode.button(
-                          label: 'Action 2', onPressed: 'onAction2'),
+                      App.button(label: 'Action 1', onPressed: 'onAction1'),
+                      App.button(label: 'Action 2', onPressed: 'onAction2'),
                     ],
                   ),
                 ],

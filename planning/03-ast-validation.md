@@ -14,7 +14,7 @@ Currently, there's NO validation of AST nodes before code generation. This allow
 
 **Example 1: Empty Button Label**
 ```dart
-LayoutNode.button(
+App.button(
   label: '',  // Empty string - useless button!
   onPressed: 'handleClick',
 )
@@ -25,7 +25,7 @@ LayoutNode.button(
 
 **Example 2: Invalid Dart Identifier**
 ```dart
-LayoutNode.button(
+App.button(
   label: 'Click Me',
   onPressed: 'this-is-not-valid',  // Hyphens not allowed in Dart!
 )
@@ -40,7 +40,7 @@ final VoidCallback? this-is-not-valid;  // SYNTAXIFY ERROR!
 
 **Example 3: Empty Column**
 ```dart
-LayoutNode.column(
+App.column(
   children: [],  // No children - meaningless widget
 )
 ```
@@ -50,7 +50,7 @@ LayoutNode.column(
 
 **Example 4: Conflicting Properties**
 ```dart
-LayoutNode.text(
+App.text(
   text: 'Hello',
   maxLines: 1,
   overflow: TextOverflow.visible,  // Conflicts with maxLines!
@@ -62,10 +62,10 @@ LayoutNode.text(
 
 **Example 5: Nested Invalid Data**
 ```dart
-LayoutNode.column(
+App.column(
   children: [
-    LayoutNode.button(label: '', onPressed: 'bad-name'),  // Both invalid!
-    LayoutNode.text(text: ''),  // Empty text
+    App.button(label: '', onPressed: 'bad-name'),  // Both invalid!
+    App.text(text: ''),  // Empty text
   ],
 )
 ```
@@ -76,7 +76,7 @@ LayoutNode.column(
 ```
 User defines AST in .screen.dart
          ↓
-LayoutNodeParser.parseScreenFromExpression()
+AppParser.parseScreenFromExpression()
          ↓
 ScreenGenerator.generate()
          ↓
@@ -96,7 +96,7 @@ User runs app → BOOM 💥
 ```
 User defines AST in .screen.dart
          ↓
-LayoutNodeParser.parseScreenFromExpression()
+AppParser.parseScreenFromExpression()
          ↓
 ✨ NEW: AstValidator.validate() ✨  ← Catch errors early!
          ↓
@@ -175,7 +175,7 @@ class AstValidator {
 
   /// Validates an AST node and all its children
   /// Returns list of validation errors (empty if valid)
-  List<ValidationError> validate(LayoutNode node, [String path = 'root']) {
+  List<ValidationError> validate(App node, [String path = 'root']) {
     return node.map(
       column: (n) => _validateColumn(n, path),
       row: (n) => _validateRow(n, path),
@@ -237,7 +237,7 @@ class AstValidator {
         message: 'Column must have at least one child',
         nodePath: nodePath,
         fieldName: 'children',
-        suggestion: 'Add child widgets like LayoutNode.text() or LayoutNode.button()',
+        suggestion: 'Add child widgets like App.text() or App.button()',
         severity: ErrorSeverity.warning, // Warning, not error (could be intentional)
       ));
     }
@@ -263,7 +263,7 @@ class AstValidator {
         message: 'Row must have at least one child',
         nodePath: nodePath,
         fieldName: 'children',
-        suggestion: 'Add child widgets like LayoutNode.text() or LayoutNode.button()',
+        suggestion: 'Add child widgets like App.text() or App.button()',
         severity: ErrorSeverity.warning,
       ));
     }
@@ -594,7 +594,7 @@ Build failed with 2 error(s) and 1 warning(s)
 void main() {
   group('AstValidator - Button', () {
     test('rejects empty label', () {
-      final node = AstNode.button(label: '', onPressed: 'handleClick');
+      final node = App.button(label: '', onPressed: 'handleClick');
       final errors = AstValidator().validate(node);
 
       expect(errors, hasLength(1));
@@ -603,7 +603,7 @@ void main() {
     });
 
     test('rejects invalid identifier', () {
-      final node = AstNode.button(label: 'Click', onPressed: 'bad-name');
+      final node = App.button(label: 'Click', onPressed: 'bad-name');
       final errors = AstValidator().validate(node);
 
       expect(errors, hasLength(1));
@@ -612,7 +612,7 @@ void main() {
     });
 
     test('accepts valid button', () {
-      final node = AstNode.button(label: 'Submit', onPressed: 'handleSubmit');
+      final node = App.button(label: 'Submit', onPressed: 'handleSubmit');
       final errors = AstValidator().validate(node);
 
       expect(errors, isEmpty);
@@ -621,7 +621,7 @@ void main() {
 
   group('AstValidator - Column', () {
     test('warns on empty children', () {
-      final node = AstNode.column(children: []);
+      final node = App.column(children: []);
       final errors = AstValidator().validate(node);
 
       expect(errors, hasLength(1));
@@ -629,9 +629,9 @@ void main() {
     });
 
     test('recursively validates children', () {
-      final node = AstNode.column(children: [
-        AstNode.button(label: '', onPressed: 'handleClick'),
-        AstNode.text(text: ''),
+      final node = App.column(children: [
+        App.button(label: '', onPressed: 'handleClick'),
+        App.text(text: ''),
       ]);
 
       final errors = AstValidator().validate(node);

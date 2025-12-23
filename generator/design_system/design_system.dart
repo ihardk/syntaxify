@@ -18,6 +18,7 @@ export 'tokens/button_tokens.dart';
 export 'tokens/input_tokens.dart';
 export 'tokens/text_tokens.dart';
 export 'app_icons.dart';
+export 'package:syntaxify/syntaxify.dart' show TextVariant;
 
 // Part files - same library as sealed class
 part 'app_theme.dart';

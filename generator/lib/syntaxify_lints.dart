@@ -3,7 +3,7 @@ import 'lints/layout_node_lints.dart';
 
 /// Entry point for Syntaxify custom lint rules.
 ///
-/// This plugin provides IDE-integrated validation for LayoutNode definitions,
+/// This plugin provides IDE-integrated validation for App definitions,
 /// showing errors and warnings as you type in .screen.dart files.
 PluginBase createPlugin() => _SyntaxifyLintPlugin();
 

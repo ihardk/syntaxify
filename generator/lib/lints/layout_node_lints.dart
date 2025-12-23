@@ -5,7 +5,7 @@ import 'package:custom_lint_builder/custom_lint_builder.dart';
 
 /// Lint rule that checks for empty button labels.
 ///
-/// Shows an error when LayoutNode.button() has an empty label string.
+/// Shows an error when App.button() has an empty label string.
 class EmptyButtonLabelLint extends DartLintRule {
   const EmptyButtonLabelLint() : super(code: _code);
 
@@ -23,8 +23,8 @@ class EmptyButtonLabelLint extends DartLintRule {
     CustomLintContext context,
   ) {
     context.registry.addMethodInvocation((node) {
-      // Check if this is a LayoutNode.button() call
-      if (!_isLayoutNodeMethod(node, 'button')) return;
+      // Check if this is a App.button() call
+      if (!_isAppMethod(node, 'button')) return;
 
       // Find the label argument
       final labelArg = _findNamedArgument(node, 'label');
@@ -129,14 +129,14 @@ class InvalidCallbackNameLint extends DartLintRule {
     CustomLintContext context,
   ) {
     context.registry.addMethodInvocation((node) {
-      // Check LayoutNode.button() and LayoutNode.textField()
-      if (_isLayoutNodeMethod(node, 'button')) {
+      // Check App.button() and App.textField()
+      if (_isAppMethod(node, 'button')) {
         _checkCallbackArg(node, 'onPressed', reporter);
-      } else if (_isLayoutNodeMethod(node, 'textField')) {
+      } else if (_isAppMethod(node, 'textField')) {
         _checkCallbackArg(node, 'onChanged', reporter);
         _checkCallbackArg(node, 'onSubmitted', reporter);
         _checkCallbackArg(node, 'binding', reporter);
-      } else if (_isLayoutNodeMethod(node, 'appBar')) {
+      } else if (_isAppMethod(node, 'appBar')) {
         _checkCallbackArg(node, 'leadingAction', reporter);
       }
     });
@@ -166,7 +166,7 @@ class InvalidCallbackNameLint extends DartLintRule {
 
 /// Lint rule that checks for empty text content.
 ///
-/// Shows an error when LayoutNode.text() has an empty text string.
+/// Shows an error when App.text() has an empty text string.
 class EmptyTextContentLint extends DartLintRule {
   const EmptyTextContentLint() : super(code: _code);
 
@@ -184,7 +184,7 @@ class EmptyTextContentLint extends DartLintRule {
     CustomLintContext context,
   ) {
     context.registry.addMethodInvocation((node) {
-      if (!_isLayoutNodeMethod(node, 'text')) return;
+      if (!_isAppMethod(node, 'text')) return;
 
       final textArg = _findNamedArgument(node, 'text');
       if (textArg == null) return;
@@ -199,15 +199,14 @@ class EmptyTextContentLint extends DartLintRule {
 
 /// Lint rule that checks for empty containers (Column/Row with no children).
 ///
-/// Shows a warning when LayoutNode.column() or LayoutNode.row() has no children.
+/// Shows a warning when App.column() or App.row() has no children.
 class EmptyContainerLint extends DartLintRule {
   const EmptyContainerLint() : super(code: _code);
 
   static const _code = LintCode(
     name: 'empty_container',
     problemMessage: 'Container has no children',
-    correctionMessage:
-        'Add child widgets like LayoutNode.text() or LayoutNode.button()',
+    correctionMessage: 'Add child widgets like App.text() or App.button()',
     errorSeverity: ErrorSeverity.WARNING,
   );
 
@@ -218,8 +217,7 @@ class EmptyContainerLint extends DartLintRule {
     CustomLintContext context,
   ) {
     context.registry.addMethodInvocation((node) {
-      if (!_isLayoutNodeMethod(node, 'column') &&
-          !_isLayoutNodeMethod(node, 'row')) {
+      if (!_isAppMethod(node, 'column') && !_isAppMethod(node, 'row')) {
         return;
       }
 
@@ -236,12 +234,12 @@ class EmptyContainerLint extends DartLintRule {
 
 // Helper functions
 
-/// Checks if a method invocation is a LayoutNode factory method.
-bool _isLayoutNodeMethod(MethodInvocation node, String methodName) {
+/// Checks if a method invocation is a App factory method.
+bool _isAppMethod(MethodInvocation node, String methodName) {
   if (node.methodName.name != methodName) return false;
 
   final target = node.target;
-  if (target is SimpleIdentifier && target.name == 'LayoutNode') {
+  if (target is SimpleIdentifier && target.name == 'App') {
     return true;
   }
 
@@ -269,16 +267,16 @@ class NegativeNumberLint extends DartLintRule {
   ) {
     context.registry.addMethodInvocation((node) {
       // Check text nodes for maxLines
-      if (_isLayoutNodeMethod(node, 'text')) {
+      if (_isAppMethod(node, 'text')) {
         _checkPositiveArg(node, 'maxLines', reporter);
       }
       // Check textField for maxLines and maxLength
-      else if (_isLayoutNodeMethod(node, 'textField')) {
+      else if (_isAppMethod(node, 'textField')) {
         _checkPositiveArg(node, 'maxLines', reporter);
         _checkPositiveArg(node, 'maxLength', reporter);
       }
       // Check spacer for flex
-      else if (_isLayoutNodeMethod(node, 'spacer')) {
+      else if (_isAppMethod(node, 'spacer')) {
         _checkPositiveArg(node, 'flex', reporter);
       }
     });
@@ -323,7 +321,7 @@ class ConflictingPropertiesLint extends DartLintRule {
     CustomLintContext context,
   ) {
     context.registry.addMethodInvocation((node) {
-      if (!_isLayoutNodeMethod(node, 'text')) return;
+      if (!_isAppMethod(node, 'text')) return;
 
       final maxLinesArg = _findNamedArgument(node, 'maxLines');
       final overflowArg = _findNamedArgument(node, 'overflow');
@@ -343,7 +341,7 @@ class ConflictingPropertiesLint extends DartLintRule {
 
 /// Lint rule that checks for empty icon names.
 ///
-/// Shows an error when icon name is empty in LayoutNode.icon() or button icons.
+/// Shows an error when icon name is empty in App.icon() or button icons.
 class EmptyIconNameLint extends DartLintRule {
   const EmptyIconNameLint() : super(code: _code);
 
@@ -362,7 +360,7 @@ class EmptyIconNameLint extends DartLintRule {
   ) {
     context.registry.addMethodInvocation((node) {
       // Check icon nodes
-      if (_isLayoutNodeMethod(node, 'icon')) {
+      if (_isAppMethod(node, 'icon')) {
         final nameArg = _findNamedArgument(node, 'name');
         if (nameArg is StringLiteral &&
             nameArg.stringValue?.trim().isEmpty == true) {
@@ -370,7 +368,7 @@ class EmptyIconNameLint extends DartLintRule {
         }
       }
       // Check button icon property
-      else if (_isLayoutNodeMethod(node, 'button')) {
+      else if (_isAppMethod(node, 'button')) {
         final iconArg = _findNamedArgument(node, 'icon');
         if (iconArg is StringLiteral &&
             iconArg.stringValue?.trim().isEmpty == true) {
@@ -401,7 +399,7 @@ class MissingTextFieldLabelLint extends DartLintRule {
     CustomLintContext context,
   ) {
     context.registry.addMethodInvocation((node) {
-      if (!_isLayoutNodeMethod(node, 'textField')) return;
+      if (!_isAppMethod(node, 'textField')) return;
 
       final labelArg = _findNamedArgument(node, 'label');
       final hintArg = _findNamedArgument(node, 'hint');
@@ -443,7 +441,7 @@ class EmptyAppBarTitleLint extends DartLintRule {
     CustomLintContext context,
   ) {
     context.registry.addMethodInvocation((node) {
-      if (!_isLayoutNodeMethod(node, 'appBar')) return;
+      if (!_isAppMethod(node, 'appBar')) return;
 
       final titleArg = _findNamedArgument(node, 'title');
 

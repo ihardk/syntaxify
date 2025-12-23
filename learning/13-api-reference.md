@@ -57,38 +57,38 @@ class ButtonMeta {
 
 ---
 
-## LayoutNode
+## App
 
-All layout nodes are created using `LayoutNode` factory constructors.
+All layout nodes are created using `App` factory constructors.
 
-> **Note:** `LayoutNode` was previously called `AstNode` (Abstract Syntax Tree Node). We renamed it in v0.1.0-alpha.8 to make the API more approachable.
+> **Note:** `App` was previously called `App` (Abstract Syntax Tree Node). We renamed it in v0.1.0-alpha.8 to make the API more approachable.
 
-### LayoutNode.column
+### App.column
 
 Creates a vertical layout.
 
 **Signature:**
 ```dart
-const factory LayoutNode.column({
-  @Default([]) List<LayoutNode> children,
+const factory App.column({
+  @Default([]) List<App> children,
   MainAxisAlignment? mainAxisAlignment,
   CrossAxisAlignment? crossAxisAlignment,
 }) = ColumnNode;
 ```
 
 **Parameters:**
-- `children` (List\<LayoutNode\>) - Child nodes. Default: `[]`
+- `children` (List\<App\>) - Child nodes. Default: `[]`
 - `mainAxisAlignment` (MainAxisAlignment?) - Vertical alignment. Default: `MainAxisAlignment.start`
 - `crossAxisAlignment` (CrossAxisAlignment?) - Horizontal alignment. Default: `CrossAxisAlignment.center`
 
 **Example:**
 ```dart
-LayoutNode.column(
+App.column(
   mainAxisAlignment: MainAxisAlignment.center,
   crossAxisAlignment: CrossAxisAlignment.start,
   children: [
-    LayoutNode.text(text: 'Title'),
-    LayoutNode.text(text: 'Subtitle'),
+    App.text(text: 'Title'),
+    App.text(text: 'Subtitle'),
   ],
 )
 ```
@@ -107,44 +107,44 @@ Column(
 
 ---
 
-### LayoutNode.row
+### App.row
 
 Creates a horizontal layout.
 
 **Signature:**
 ```dart
-const factory LayoutNode.row({
-  @Default([]) List<LayoutNode> children,
+const factory App.row({
+  @Default([]) List<App> children,
   MainAxisAlignment? mainAxisAlignment,
   CrossAxisAlignment? crossAxisAlignment,
 }) = RowNode;
 ```
 
 **Parameters:**
-- `children` (List\<LayoutNode\>) - Child nodes. Default: `[]`
+- `children` (List\<App\>) - Child nodes. Default: `[]`
 - `mainAxisAlignment` (MainAxisAlignment?) - Horizontal alignment. Default: `MainAxisAlignment.start`
 - `crossAxisAlignment` (CrossAxisAlignment?) - Vertical alignment. Default: `CrossAxisAlignment.center`
 
 **Example:**
 ```dart
-LayoutNode.row(
+App.row(
   mainAxisAlignment: MainAxisAlignment.spaceBetween,
   children: [
-    LayoutNode.text(text: 'Left'),
-    LayoutNode.text(text: 'Right'),
+    App.text(text: 'Left'),
+    App.text(text: 'Right'),
   ],
 )
 ```
 
 ---
 
-### LayoutNode.text
+### App.text
 
 Creates a text display.
 
 **Signature:**
 ```dart
-const factory LayoutNode.text({
+const factory App.text({
   required String text,
   TextVariant? variant,
   TextAlign? align,
@@ -162,7 +162,7 @@ const factory LayoutNode.text({
 
 **Example:**
 ```dart
-LayoutNode.text(
+App.text(
   text: 'Welcome Back!',
   variant: TextVariant.headlineMedium,
   align: TextAlign.center,
@@ -184,13 +184,13 @@ AppText(
 
 ---
 
-### LayoutNode.button
+### App.button
 
 Creates a button.
 
 **Signature:**
 ```dart
-const factory LayoutNode.button({
+const factory App.button({
   required String label,
   String? onPressed,
   ButtonVariant? variant,
@@ -204,7 +204,7 @@ const factory LayoutNode.button({
 
 **Example:**
 ```dart
-LayoutNode.button(
+App.button(
   label: 'Sign In',
   onPressed: 'handleLogin',
   variant: ButtonVariant.primary,
@@ -224,13 +224,13 @@ AppButton(
 
 ---
 
-### LayoutNode.textField
+### App.textField
 
 Creates a text input field.
 
 **Signature:**
 ```dart
-const factory LayoutNode.textField({
+const factory App.textField({
   required String label,
   String? placeholder,
   @Default(false) bool obscureText,
@@ -248,7 +248,7 @@ const factory LayoutNode.textField({
 
 **Example:**
 ```dart
-LayoutNode.textField(
+App.textField(
   label: 'Email',
   placeholder: 'you@example.com',
   keyboardType: KeyboardType.email,
@@ -258,13 +258,13 @@ LayoutNode.textField(
 
 ---
 
-### LayoutNode.appBar
+### App.appBar
 
 Creates an app bar.
 
 **Signature:**
 ```dart
-const factory LayoutNode.appBar({
+const factory App.appBar({
   required String title,
   List<AppBarAction>? actions,
 }) = AppBarNode;
@@ -276,7 +276,7 @@ const factory LayoutNode.appBar({
 
 **Example:**
 ```dart
-LayoutNode.appBar(
+App.appBar(
   title: 'Profile',
   actions: [
     AppBarAction(icon: 'settings', onPressed: 'handleSettings'),
@@ -287,13 +287,13 @@ LayoutNode.appBar(
 
 ---
 
-### LayoutNode.image
+### App.image
 
 Creates an image display.
 
 **Signature:**
 ```dart
-const factory LayoutNode.image({
+const factory App.image({
   required String path,
   double? width,
   double? height,
@@ -309,7 +309,7 @@ const factory LayoutNode.image({
 
 **Example:**
 ```dart
-LayoutNode.image(
+App.image(
   path: 'assets/logo.png',
   width: 200,
   height: 200,
@@ -319,13 +319,13 @@ LayoutNode.image(
 
 ---
 
-### LayoutNode.spacer
+### App.spacer
 
 Creates spacing.
 
 **Signature:**
 ```dart
-const factory LayoutNode.spacer({
+const factory App.spacer({
   double? height,
   double? width,
 }) = SpacerNode;
@@ -337,8 +337,8 @@ const factory LayoutNode.spacer({
 
 **Example:**
 ```dart
-LayoutNode.spacer(height: 24)  // Vertical spacing
-LayoutNode.spacer(width: 16)   // Horizontal spacing
+App.spacer(height: 24)  // Vertical spacing
+App.spacer(width: 16)   // Horizontal spacing
 ```
 
 **Generates:**
@@ -365,25 +365,25 @@ class ScreenDefinition {
   });
 
   final String id;
-  final LayoutNode layout;
+  final App layout;
   final AppBarNode? appBar;
 }
 ```
 
 **Parameters:**
 - `id` (String, required) - Screen identifier (used for file name)
-- `layout` (LayoutNode, required) - Root layout node
+- `layout` (App, required) - Root layout node
 - `appBar` (AppBarNode?) - Optional app bar. Default: `null`
 
 **Example:**
 ```dart
 final loginScreen = ScreenDefinition(
   id: 'login',
-  appBar: LayoutNode.appBar(title: 'Login'),
-  layout: LayoutNode.column(
+  appBar: App.appBar(title: 'Login'),
+  layout: App.column(
     children: [
-      LayoutNode.text(text: 'Welcome'),
-      LayoutNode.button(label: 'Sign In', onPressed: 'handleLogin'),
+      App.text(text: 'Welcome'),
+      App.button(label: 'Sign In', onPressed: 'handleLogin'),
     ],
   ),
 );
@@ -897,7 +897,7 @@ AppInput(
 ```dart
 final myScreen = ScreenDefinition(
   id: 'my_screen',
-  layout: LayoutNode.column(
+  layout: App.column(
     children: [/* nodes */],
   ),
 );

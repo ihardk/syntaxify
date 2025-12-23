@@ -21,10 +21,10 @@ class AppSwitch extends StatelessWidget {
     this.activeColor,
   });
 
-  /// Whether the switch is on Maps to: LayoutNode.switchWidget(binding: ...) (wraps binding)
+  /// Whether the switch is on Maps to: App.switchWidget(binding: ...) (wraps binding)
   final bool value;
 
-  /// Callback when switch value changes Maps to: LayoutNode.switchWidget(onChanged: ...)
+  /// Callback when switch value changes Maps to: App.switchWidget(onChanged: ...)
   final ValueChanged<bool>? onChanged;
 
   /// Whether the switch is enabled
@@ -36,10 +36,10 @@ class AppSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppTheme.of(context).style.renderSwitch(
-      value: value,
-      onChanged: onChanged,
-      enabled: enabled,
-      activeColor: activeColor,
-    );
+          value: value,
+          onChanged: onChanged,
+          enabled: enabled,
+          activeColor: activeColor,
+        );
   }
 }

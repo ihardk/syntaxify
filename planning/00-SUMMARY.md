@@ -110,7 +110,7 @@ Analyzed 12 reported issues across the syntaxify codebase. Found that **5 issues
 - **Implementation:**
   - ✅ `SyntaxifyPlugin` interface with `namespace`, `componentGenerators`, `layoutEmitters`
   - ✅ `GeneratorRegistry` for plugin management
-  - ✅ `LayoutNode.custom` for plugin-defined nodes
+  - ✅ `App.custom` for plugin-defined nodes
   - ✅ End-to-end test: `plugin_e2e_test.dart`
 - **File:** `lib/src/plugins/syntaxify_plugin.dart`
 

@@ -9,21 +9,21 @@ part 'structural_node.g.dart';
 @freezed
 sealed class StructuralNode with _$StructuralNode {
   const factory StructuralNode.column({
-    required List<LayoutNode> children,
-    SyntaxMainAxisAlignment? mainAxisAlignment,
-    SyntaxCrossAxisAlignment? crossAxisAlignment,
+    required List<App> children,
+    MainAlignment? mainAxisAlignment,
+    CrossAlignment? crossAxisAlignment,
     String? spacing,
   }) = ColumnNode;
 
   const factory StructuralNode.row({
-    required List<LayoutNode> children,
-    SyntaxMainAxisAlignment? mainAxisAlignment,
-    SyntaxCrossAxisAlignment? crossAxisAlignment,
+    required List<App> children,
+    MainAlignment? mainAxisAlignment,
+    CrossAlignment? crossAxisAlignment,
     String? spacing,
   }) = RowNode;
 
   const factory StructuralNode.container({
-    LayoutNode? child,
+    App? child,
     double? width,
     double? height,
     String? padding,
@@ -34,27 +34,27 @@ sealed class StructuralNode with _$StructuralNode {
   }) = ContainerNode;
 
   const factory StructuralNode.card({
-    required List<LayoutNode> children,
+    required List<App> children,
     String? variant,
     String? padding,
     double? elevation,
   }) = CardNode;
 
   const factory StructuralNode.listView({
-    required List<LayoutNode> children,
+    required List<App> children,
     SyntaxAxis? scrollDirection,
     String? spacing,
     bool? shrinkWrap,
   }) = ListViewNode;
 
   const factory StructuralNode.stack({
-    required List<LayoutNode> children,
+    required List<App> children,
     StackFit? fit,
     AlignmentEnum? alignment,
   }) = StackNode;
 
   const factory StructuralNode.gridView({
-    required List<LayoutNode> children,
+    required List<App> children,
     required int crossAxisCount,
     String? spacing,
     String? crossAxisSpacing,
@@ -63,12 +63,12 @@ sealed class StructuralNode with _$StructuralNode {
   }) = GridViewNode;
 
   const factory StructuralNode.padding({
-    required LayoutNode child,
+    required App child,
     required String padding,
   }) = PaddingNode;
 
   const factory StructuralNode.center({
-    required LayoutNode child,
+    required App child,
   }) = CenterNode;
 
   factory StructuralNode.fromJson(Map<String, dynamic> json) =>

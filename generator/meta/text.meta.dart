@@ -10,27 +10,27 @@ import 'package:syntaxify/syntaxify.dart';
 @SyntaxComponent(description: 'A customizable text component')
 class TextMeta {
   /// The text content to display
-  /// Maps to: LayoutNode.text(text: ...)
+  /// Maps to: App.text(text: ...)
   @Required()
   final String text;
 
   /// Text variant (displayLarge, headlineMedium, bodyMedium, etc)
-  /// Maps to: LayoutNode.text(variant: ...)
+  /// Maps to: App.text(variant: ...)
   @Optional()
   final TextVariant? variant;
 
   /// Text alignment
-  /// Maps to: LayoutNode.text(align: ...)
+  /// Maps to: App.text(align: ...)
   @Optional()
   final TextAlign? align;
 
   /// Maximum number of lines
-  /// Maps to: LayoutNode.text(maxLines: ...)
+  /// Maps to: App.text(maxLines: ...)
   @Optional()
   final int? maxLines;
 
   /// Text overflow behavior
-  /// Maps to: LayoutNode.text(overflow: ...)
+  /// Maps to: App.text(overflow: ...)
   @Optional()
   final TextOverflow? overflow;
 

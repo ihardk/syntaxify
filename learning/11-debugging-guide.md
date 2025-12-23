@@ -272,13 +272,13 @@ Callback name is not a string in AST definition.
 **Fix:**
 ```dart
 // ❌ WRONG
-AstNode.button(
+App.button(
   label: 'Submit',
   onPressed: handleSubmit,  // Function reference
 )
 
 // ✅ CORRECT
-LayoutNode.button(
+App.button(
   label: 'Submit',
   onPressed: 'handleSubmit',  // String name
 )
@@ -628,7 +628,7 @@ Widget renderButton({...}) {
 
 **In AST emission:**
 ```dart
-Expression emit(AstNode node) {
+Expression emit(App node) {
   print('Emitting node: ${node.runtimeType}');
 
   return node.map(
@@ -759,7 +759,7 @@ You modified `ast_node.dart` but forgot to run build_runner.
 
 **Symptoms:**
 ```
-Error: The getter 'cardNode' isn't defined for the class 'AstNode'
+Error: The getter 'cardNode' isn't defined for the class 'App'
 ```
 
 **Fix:**

@@ -11,7 +11,7 @@ void main() {
 
     group('ButtonNode Validation', () {
       test('validates button with empty label', () {
-        final node = LayoutNode.button(
+        final node = App.button(
           label: '',
           onPressed: 'handleClick',
         );
@@ -25,7 +25,7 @@ void main() {
       });
 
       test('validates button with whitespace-only label', () {
-        final node = LayoutNode.button(
+        final node = App.button(
           label: '   ',
           onPressed: 'handleClick',
         );
@@ -37,7 +37,7 @@ void main() {
       });
 
       test('validates button with invalid callback name', () {
-        final node = LayoutNode.button(
+        final node = App.button(
           label: 'Click',
           onPressed: 'handle-click',
         );
@@ -52,7 +52,7 @@ void main() {
       });
 
       test('validates button with callback containing spaces', () {
-        final node = LayoutNode.button(
+        final node = App.button(
           label: 'Click',
           onPressed: 'handle click',
         );
@@ -65,7 +65,7 @@ void main() {
       });
 
       test('validates button with callback starting with number', () {
-        final node = LayoutNode.button(
+        final node = App.button(
           label: 'Click',
           onPressed: '1handleClick',
         );
@@ -78,7 +78,7 @@ void main() {
       });
 
       test('validates button with Dart keyword as callback', () {
-        final node = LayoutNode.button(
+        final node = App.button(
           label: 'Click',
           onPressed: 'class',
         );
@@ -91,7 +91,7 @@ void main() {
       });
 
       test('accepts button with valid camelCase callback', () {
-        final node = LayoutNode.button(
+        final node = App.button(
           label: 'Click',
           onPressed: 'handleButtonClick',
         );
@@ -102,7 +102,7 @@ void main() {
       });
 
       test('accepts button with underscore in callback', () {
-        final node = LayoutNode.button(
+        final node = App.button(
           label: 'Click',
           onPressed: '_handleClick',
         );
@@ -113,7 +113,7 @@ void main() {
       });
 
       test('accepts button with null callback', () {
-        final node = LayoutNode.button(
+        final node = App.button(
           label: 'Click',
         );
 
@@ -123,7 +123,7 @@ void main() {
       });
 
       test('validates button with multiple errors', () {
-        final node = LayoutNode.button(
+        final node = App.button(
           label: '',
           onPressed: 'invalid-name',
         );
@@ -136,7 +136,7 @@ void main() {
 
     group('TextNode Validation', () {
       test('validates text with empty content', () {
-        final node = LayoutNode.text(text: '');
+        final node = App.text(text: '');
 
         final errors = validator.validate(node);
 
@@ -147,7 +147,7 @@ void main() {
       });
 
       test('validates text with whitespace-only content', () {
-        final node = LayoutNode.text(text: '   \n\t  ');
+        final node = App.text(text: '   \n\t  ');
 
         final errors = validator.validate(node);
 
@@ -156,7 +156,7 @@ void main() {
       });
 
       test('validates text with negative maxLines', () {
-        final node = LayoutNode.text(
+        final node = App.text(
           text: 'Hello',
           maxLines: -1,
         );
@@ -170,7 +170,7 @@ void main() {
       });
 
       test('validates text with zero maxLines', () {
-        final node = LayoutNode.text(
+        final node = App.text(
           text: 'Hello',
           maxLines: 0,
         );
@@ -182,7 +182,7 @@ void main() {
       });
 
       test('validates text with conflicting overflow and maxLines', () {
-        final node = LayoutNode.text(
+        final node = App.text(
           text: 'Hello',
           maxLines: 1,
           overflow: SyntaxTextOverflow.clip,
@@ -198,7 +198,7 @@ void main() {
       });
 
       test('accepts text with maxLines and ellipsis', () {
-        final node = LayoutNode.text(
+        final node = App.text(
           text: 'Hello',
           maxLines: 2,
           overflow: SyntaxTextOverflow.ellipsis,
@@ -210,7 +210,7 @@ void main() {
       });
 
       test('accepts text with valid content', () {
-        final node = LayoutNode.text(
+        final node = App.text(
           text: 'Hello World',
           variant: TextVariant.headlineMedium,
         );
@@ -223,7 +223,7 @@ void main() {
 
     group('TextFieldNode Validation', () {
       test('validates textField with empty label and no hint', () {
-        final node = LayoutNode.textField();
+        final node = App.textField();
 
         final errors = validator.validate(node);
 
@@ -232,7 +232,7 @@ void main() {
       });
 
       test('validates textField with negative maxLength', () {
-        final node = LayoutNode.textField(
+        final node = App.textField(
           label: 'Name',
           maxLength: -1,
         );
@@ -245,7 +245,7 @@ void main() {
       });
 
       test('validates textField with zero maxLength', () {
-        final node = LayoutNode.textField(
+        final node = App.textField(
           label: 'Name',
           maxLength: 0,
         );
@@ -257,7 +257,7 @@ void main() {
       });
 
       test('validates textField with negative maxLines', () {
-        final node = LayoutNode.textField(
+        final node = App.textField(
           label: 'Name',
           maxLines: -1,
         );
@@ -270,7 +270,7 @@ void main() {
       });
 
       test('validates textField with invalid onChanged callback', () {
-        final node = LayoutNode.textField(
+        final node = App.textField(
           label: 'Name',
           onChanged: 'handle-change',
         );
@@ -284,7 +284,7 @@ void main() {
       });
 
       test('validates textField with invalid onSubmitted callback', () {
-        final node = LayoutNode.textField(
+        final node = App.textField(
           label: 'Name',
           onSubmitted: 'on submit',
         );
@@ -298,7 +298,7 @@ void main() {
       });
 
       test('validates textField with invalid binding', () {
-        final node = LayoutNode.textField(
+        final node = App.textField(
           label: 'Name',
           binding: 'my-controller',
         );
@@ -312,7 +312,7 @@ void main() {
       });
 
       test('accepts textField with valid callbacks', () {
-        final node = LayoutNode.textField(
+        final node = App.textField(
           label: 'Email',
           onChanged: 'handleEmailChanged',
           onSubmitted: 'handleSubmit',
@@ -325,7 +325,7 @@ void main() {
       });
 
       test('accepts textField with positive maxLength and maxLines', () {
-        final node = LayoutNode.textField(
+        final node = App.textField(
           label: 'Bio',
           maxLength: 500,
           maxLines: 5,
@@ -339,7 +339,7 @@ void main() {
 
     group('IconNode Validation', () {
       test('validates icon with empty name', () {
-        final node = LayoutNode.icon(name: '');
+        final node = App.icon(name: '');
 
         final errors = validator.validate(node);
 
@@ -350,7 +350,7 @@ void main() {
       });
 
       test('validates icon with whitespace-only name', () {
-        final node = LayoutNode.icon(name: '  ');
+        final node = App.icon(name: '  ');
 
         final errors = validator.validate(node);
 
@@ -359,7 +359,7 @@ void main() {
       });
 
       test('accepts icon with valid name', () {
-        final node = LayoutNode.icon(name: 'home');
+        final node = App.icon(name: 'home');
 
         final errors = validator.validate(node);
 
@@ -367,7 +367,7 @@ void main() {
       });
 
       test('accepts icon with underscores and numbers', () {
-        final node = LayoutNode.icon(name: 'arrow_forward_ios');
+        final node = App.icon(name: 'arrow_forward_ios');
 
         final errors = validator.validate(node);
 
@@ -377,7 +377,7 @@ void main() {
 
     group('AppBarNode Validation', () {
       test('validates appBar with empty title', () {
-        final node = LayoutNode.appBar(title: '');
+        final node = App.appBar(title: '');
 
         final errors = validator.validate(node);
 
@@ -389,7 +389,7 @@ void main() {
       });
 
       test('validates appBar with invalid onLeadingPressed', () {
-        final node = LayoutNode.appBar(
+        final node = App.appBar(
           title: 'Home',
           leadingIcon: 'arrow_back',
           onLeadingPressed: 'handle-back',
@@ -404,7 +404,7 @@ void main() {
       });
 
       test('accepts appBar with valid title and onLeadingPressed', () {
-        final node = LayoutNode.appBar(
+        final node = App.appBar(
           title: 'Home',
           leadingIcon: 'arrow_back', // Added dependency
           onLeadingPressed: 'handleBack',
@@ -418,7 +418,7 @@ void main() {
 
     group('SpacerNode Validation', () {
       test('validates spacer with negative flex', () {
-        final node = LayoutNode.spacer(flex: -1);
+        final node = App.spacer(flex: -1);
 
         final errors = validator.validate(node);
 
@@ -429,7 +429,7 @@ void main() {
       });
 
       test('validates spacer with zero flex', () {
-        final node = LayoutNode.spacer(flex: 0);
+        final node = App.spacer(flex: 0);
 
         final errors = validator.validate(node);
 
@@ -438,7 +438,7 @@ void main() {
       });
 
       test('accepts spacer with positive flex', () {
-        final node = LayoutNode.spacer(flex: 2);
+        final node = App.spacer(flex: 2);
 
         final errors = validator.validate(node);
 
@@ -446,7 +446,7 @@ void main() {
       });
 
       test('accepts spacer with size', () {
-        final node = LayoutNode.spacer(size: SpacerSize.lg);
+        final node = App.spacer(size: SpacerSize.lg);
 
         final errors = validator.validate(node);
 
@@ -456,7 +456,7 @@ void main() {
 
     group('ColumnNode Validation', () {
       test('validates column with empty children', () {
-        final node = LayoutNode.column(children: []);
+        final node = App.column(children: []);
 
         final errors = validator.validate(node);
 
@@ -467,10 +467,10 @@ void main() {
       });
 
       test('validates nested errors in column children', () {
-        final node = LayoutNode.column(
+        final node = App.column(
           children: [
-            LayoutNode.text(text: ''),
-            LayoutNode.button(label: '', onPressed: 'invalid-name'),
+            App.text(text: ''),
+            App.button(label: '', onPressed: 'invalid-name'),
           ],
         );
 
@@ -486,10 +486,10 @@ void main() {
       });
 
       test('accepts column with valid children', () {
-        final node = LayoutNode.column(
+        final node = App.column(
           children: [
-            LayoutNode.text(text: 'Hello'),
-            LayoutNode.button(label: 'Click', onPressed: 'handleClick'),
+            App.text(text: 'Hello'),
+            App.button(label: 'Click', onPressed: 'handleClick'),
           ],
         );
 
@@ -499,13 +499,13 @@ void main() {
       });
 
       test('validates deeply nested structure', () {
-        final node = LayoutNode.column(
+        final node = App.column(
           children: [
-            LayoutNode.row(
+            App.row(
               children: [
-                LayoutNode.column(
+                App.column(
                   children: [
-                    LayoutNode.text(text: ''),
+                    App.text(text: ''),
                   ],
                 ),
               ],
@@ -521,7 +521,7 @@ void main() {
 
     group('RowNode Validation', () {
       test('validates row with empty children', () {
-        final node = LayoutNode.row(children: []);
+        final node = App.row(children: []);
 
         final errors = validator.validate(node);
 
@@ -531,10 +531,10 @@ void main() {
       });
 
       test('validates nested errors in row children', () {
-        final node = LayoutNode.row(
+        final node = App.row(
           children: [
-            LayoutNode.icon(name: ''),
-            LayoutNode.text(text: '', maxLines: -1),
+            App.icon(name: ''),
+            App.text(text: '', maxLines: -1),
           ],
         );
 
@@ -547,10 +547,10 @@ void main() {
       });
 
       test('accepts row with valid children', () {
-        final node = LayoutNode.row(
+        final node = App.row(
           children: [
-            LayoutNode.icon(name: 'home'),
-            LayoutNode.text(text: 'Home'),
+            App.icon(name: 'home'),
+            App.text(text: 'Home'),
           ],
         );
 
@@ -562,11 +562,11 @@ void main() {
 
     group('Path Tracking', () {
       test('tracks error paths correctly for nested nodes', () {
-        final node = LayoutNode.column(
+        final node = App.column(
           children: [
-            LayoutNode.row(
+            App.row(
               children: [
-                LayoutNode.button(label: ''),
+                App.button(label: ''),
               ],
             ),
           ],
@@ -583,9 +583,9 @@ void main() {
       });
 
       test('provides node path for validation errors', () {
-        final node = LayoutNode.column(
+        final node = App.column(
           children: [
-            LayoutNode.text(text: ''),
+            App.text(text: ''),
           ],
         );
 
@@ -597,7 +597,7 @@ void main() {
 
     group('Error Severity', () {
       test('returns error severity for empty required fields', () {
-        final node = LayoutNode.button(label: '');
+        final node = App.button(label: '');
 
         final errors = validator.validate(node);
 
@@ -605,7 +605,7 @@ void main() {
       });
 
       test('returns warning severity for empty containers', () {
-        final node = LayoutNode.column(children: []);
+        final node = App.column(children: []);
 
         final errors = validator.validate(node);
 
@@ -613,7 +613,7 @@ void main() {
       });
 
       test('returns info severity for property conflicts', () {
-        final node = LayoutNode.text(
+        final node = App.text(
           text: 'Hello',
           maxLines: 1,
           overflow: SyntaxTextOverflow.clip,
@@ -627,7 +627,7 @@ void main() {
 
     group('Suggestions', () {
       test('provides helpful suggestions for empty values', () {
-        final node = LayoutNode.button(label: '');
+        final node = App.button(label: '');
 
         final errors = validator.validate(node);
 
@@ -636,7 +636,7 @@ void main() {
       });
 
       test('provides suggestions for invalid identifiers', () {
-        final node = LayoutNode.button(
+        final node = App.button(
           label: 'Click',
           onPressed: 'handle-click',
         );
@@ -648,7 +648,7 @@ void main() {
       });
 
       test('provides suggestions for conflicting properties', () {
-        final node = LayoutNode.text(
+        final node = App.text(
           text: 'Hello',
           maxLines: 1,
           overflow: SyntaxTextOverflow.clip,
@@ -663,7 +663,7 @@ void main() {
 
     group('Edge Cases', () {
       test('handles nodes with all null optional fields', () {
-        final node = LayoutNode.button(label: 'Click');
+        final node = App.button(label: 'Click');
 
         final errors = validator.validate(node);
 
@@ -671,20 +671,20 @@ void main() {
       });
 
       test('handles complex nested structures', () {
-        final node = LayoutNode.column(
+        final node = App.column(
           children: [
-            LayoutNode.appBar(title: 'App'),
-            LayoutNode.row(
+            App.appBar(title: 'App'),
+            App.row(
               children: [
-                LayoutNode.icon(name: 'menu'),
-                LayoutNode.column(
+                App.icon(name: 'menu'),
+                App.column(
                   children: [
-                    LayoutNode.text(text: 'Title'),
-                    LayoutNode.text(text: 'Subtitle'),
+                    App.text(text: 'Title'),
+                    App.text(text: 'Subtitle'),
                   ],
                 ),
-                LayoutNode.spacer(flex: 1),
-                LayoutNode.button(label: 'Action', onPressed: 'handleAction'),
+                App.spacer(flex: 1),
+                App.button(label: 'Action', onPressed: 'handleAction'),
               ],
             ),
           ],
@@ -696,11 +696,11 @@ void main() {
       });
 
       test('validates extremely long nested structures', () {
-        LayoutNode createDeepNesting(int depth) {
+        App createDeepNesting(int depth) {
           if (depth == 0) {
-            return LayoutNode.text(text: 'Deep');
+            return App.text(text: 'Deep');
           }
-          return LayoutNode.column(
+          return App.column(
             children: [createDeepNesting(depth - 1)],
           );
         }
@@ -715,10 +715,10 @@ void main() {
       test('handles validation of large lists of children', () {
         final children = List.generate(
           100,
-          (i) => LayoutNode.text(text: 'Item $i'),
+          (i) => App.text(text: 'Item $i'),
         );
 
-        final node = LayoutNode.column(children: children);
+        final node = App.column(children: children);
 
         final errors = validator.validate(node);
 
@@ -728,10 +728,10 @@ void main() {
       test('collects all errors from large invalid structures', () {
         final children = List.generate(
           50,
-          (i) => LayoutNode.button(label: '', onPressed: 'invalid-$i'),
+          (i) => App.button(label: '', onPressed: 'invalid-$i'),
         );
 
-        final node = LayoutNode.column(children: children);
+        final node = App.column(children: children);
 
         final errors = validator.validate(node);
 
@@ -746,8 +746,8 @@ void main() {
 
     group('New Structural Node Validation', () {
       test('validates Container with child recursively', () {
-        final node = LayoutNode.container(
-          child: LayoutNode.button(label: '', onPressed: 'invalid-name'),
+        final node = App.container(
+          child: App.button(label: '', onPressed: 'invalid-name'),
         );
 
         final errors = validator.validate(node);
@@ -756,7 +756,7 @@ void main() {
       });
 
       test('validates Card with empty children', () {
-        final node = LayoutNode.card(children: []);
+        final node = App.card(children: []);
 
         final errors = validator.validate(node);
 
@@ -765,10 +765,10 @@ void main() {
       });
 
       test('validates ListView with invalid children', () {
-        final node = LayoutNode.listView(
+        final node = App.listView(
           children: [
-            LayoutNode.text(text: ''),
-            LayoutNode.button(label: ''),
+            App.text(text: ''),
+            App.button(label: ''),
           ],
         );
 
@@ -778,10 +778,10 @@ void main() {
       });
 
       test('validates Stack with children recursively', () {
-        final node = LayoutNode.stack(
+        final node = App.stack(
           children: [
-            LayoutNode.text(text: 'Valid'),
-            LayoutNode.text(text: ''),
+            App.text(text: 'Valid'),
+            App.text(text: ''),
           ],
         );
 
@@ -792,8 +792,8 @@ void main() {
       });
 
       test('validates GridView with zero crossAxisCount', () {
-        final node = LayoutNode.gridView(
-          children: [LayoutNode.text(text: 'Item')],
+        final node = App.gridView(
+          children: [App.text(text: 'Item')],
           crossAxisCount: 0,
         );
 
@@ -805,8 +805,8 @@ void main() {
       });
 
       test('validates GridView with negative crossAxisCount', () {
-        final node = LayoutNode.gridView(
-          children: [LayoutNode.text(text: 'Item')],
+        final node = App.gridView(
+          children: [App.text(text: 'Item')],
           crossAxisCount: -2,
         );
 
@@ -817,9 +817,9 @@ void main() {
       });
 
       test('validates Padding with empty padding value', () {
-        final node = LayoutNode.padding(
+        final node = App.padding(
           padding: '',
-          child: LayoutNode.text(text: 'Content'),
+          child: App.text(text: 'Content'),
         );
 
         final errors = validator.validate(node);
@@ -830,8 +830,8 @@ void main() {
       });
 
       test('validates Center with invalid child', () {
-        final node = LayoutNode.center(
-          child: LayoutNode.button(label: ''),
+        final node = App.center(
+          child: App.button(label: ''),
         );
 
         final errors = validator.validate(node);
@@ -841,11 +841,11 @@ void main() {
       });
 
       test('accepts valid Container', () {
-        final node = LayoutNode.container(
+        final node = App.container(
           width: 100,
           height: 50,
           color: ColorSemantic.primary,
-          child: LayoutNode.text(text: 'Valid'),
+          child: App.text(text: 'Valid'),
         );
 
         final errors = validator.validate(node);
@@ -854,11 +854,11 @@ void main() {
       });
 
       test('accepts valid GridView', () {
-        final node = LayoutNode.gridView(
+        final node = App.gridView(
           crossAxisCount: 2,
           children: [
-            LayoutNode.text(text: 'Item 1'),
-            LayoutNode.text(text: 'Item 2'),
+            App.text(text: 'Item 1'),
+            App.text(text: 'Item 2'),
           ],
         );
 
@@ -874,7 +874,7 @@ void main() {
 
     group('New Primitive Node Validation', () {
       test('validates Image with empty src', () {
-        final node = LayoutNode.image(src: '');
+        final node = App.image(src: '');
 
         final errors = validator.validate(node);
 
@@ -884,7 +884,7 @@ void main() {
       });
 
       test('accepts valid Image with network URL', () {
-        final node = LayoutNode.image(
+        final node = App.image(
           src: 'https://example.com/image.png',
           width: 100,
           height: 100,
@@ -896,9 +896,9 @@ void main() {
       });
 
       test('validates SizedBox with child recursively', () {
-        final node = LayoutNode.sizedBox(
+        final node = App.sizedBox(
           width: 100,
-          child: LayoutNode.text(text: ''),
+          child: App.text(text: ''),
         );
 
         final errors = validator.validate(node);
@@ -907,8 +907,8 @@ void main() {
       });
 
       test('validates Expanded with invalid child', () {
-        final node = LayoutNode.expanded(
-          child: LayoutNode.button(label: ''),
+        final node = App.expanded(
+          child: App.button(label: ''),
         );
 
         final errors = validator.validate(node);
@@ -917,7 +917,7 @@ void main() {
       });
 
       test('accepts valid Divider', () {
-        final node = LayoutNode.divider(
+        final node = App.divider(
           thickness: 1,
           indent: 16,
           endIndent: 16,
@@ -929,7 +929,7 @@ void main() {
       });
 
       test('accepts valid CircularProgressIndicator', () {
-        final node = LayoutNode.circularProgressIndicator(
+        final node = App.circularProgressIndicator(
           value: 0.5,
           strokeWidth: 4,
         );
@@ -946,7 +946,7 @@ void main() {
 
     group('New Interactive Node Validation', () {
       test('validates Checkbox with invalid binding', () {
-        final node = LayoutNode.checkbox(
+        final node = App.checkbox(
           binding: 'invalid-binding',
         );
 
@@ -959,7 +959,7 @@ void main() {
       });
 
       test('validates Switch with empty binding', () {
-        final node = LayoutNode.switchWidget(
+        final node = App.switchWidget(
           binding: '',
         );
 
@@ -969,7 +969,7 @@ void main() {
       });
 
       test('validates IconButton with empty icon', () {
-        final node = LayoutNode.iconButton(
+        final node = App.iconButton(
           icon: '',
         );
 
@@ -981,7 +981,7 @@ void main() {
       });
 
       test('validates Dropdown with invalid binding', () {
-        final node = LayoutNode.dropdown(
+        final node = App.dropdown(
           binding: 'class', // Dart keyword
           items: ['Option1', 'Option2'],
         );
@@ -994,7 +994,7 @@ void main() {
       });
 
       test('validates Radio with invalid binding', () {
-        final node = LayoutNode.radio(
+        final node = App.radio(
           binding: '123invalid',
           value: 'option1',
         );
@@ -1007,7 +1007,7 @@ void main() {
       });
 
       test('validates Slider with invalid binding', () {
-        final node = LayoutNode.slider(
+        final node = App.slider(
           binding: 'void', // Dart keyword
         );
 
@@ -1019,7 +1019,7 @@ void main() {
       });
 
       test('accepts valid Checkbox', () {
-        final node = LayoutNode.checkbox(
+        final node = App.checkbox(
           binding: 'isAccepted',
           label: 'Accept terms',
           onChanged: 'onTermsChanged',
@@ -1031,7 +1031,7 @@ void main() {
       });
 
       test('accepts valid Switch', () {
-        final node = LayoutNode.switchWidget(
+        final node = App.switchWidget(
           binding: 'notificationsEnabled',
           label: 'Enable notifications',
         );
@@ -1042,7 +1042,7 @@ void main() {
       });
 
       test('accepts valid IconButton', () {
-        final node = LayoutNode.iconButton(
+        final node = App.iconButton(
           icon: 'settings',
           onPressed: 'openSettings',
         );
@@ -1053,7 +1053,7 @@ void main() {
       });
 
       test('accepts valid Dropdown', () {
-        final node = LayoutNode.dropdown(
+        final node = App.dropdown(
           binding: 'selectedCountry',
           items: ['USA', 'Canada', 'UK'],
           label: 'Select Country',
@@ -1065,7 +1065,7 @@ void main() {
       });
 
       test('accepts valid Radio', () {
-        final node = LayoutNode.radio(
+        final node = App.radio(
           binding: 'selectedOption',
           value: 'option1',
           label: 'Option 1',
@@ -1077,7 +1077,7 @@ void main() {
       });
 
       test('accepts valid Slider', () {
-        final node = LayoutNode.slider(
+        final node = App.slider(
           binding: 'volume',
           min: 0,
           max: 100,

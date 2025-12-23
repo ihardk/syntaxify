@@ -6,25 +6,25 @@ import 'package:syntaxify/syntaxify.dart';
 /// Run `syntaxify build` to generate lib/screens/login_screen.dart
 final loginScreen = ScreenDefinition(
   id: 'login',
-  layout: LayoutNode.column(
-    mainAxisAlignment: SyntaxMainAxisAlignment.center,
-    crossAxisAlignment: SyntaxCrossAxisAlignment.stretch,
+  layout: App.column(
+    mainAxisAlignment: MainAlignment.center,
+    crossAxisAlignment: CrossAlignment.stretch,
     children: [
-      LayoutNode.text(
+      App.text(
         text: 'Welcome Back',
         variant: TextVariant.headlineMedium,
       ),
-      LayoutNode.spacer(flex: 1),
-      LayoutNode.textField(
+      App.spacer(flex: 1),
+      App.textField(
         label: 'Email',
         keyboardType: KeyboardType.email,
       ),
-      LayoutNode.textField(
+      App.textField(
         label: 'Password',
         obscureText: true,
       ),
-      LayoutNode.spacer(flex: 1),
-      LayoutNode.button(
+      App.spacer(flex: 1),
+      App.button(
         label: 'Sign In',
         onPressed: 'handleLogin',
       ),

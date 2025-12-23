@@ -10,12 +10,12 @@ import 'package:syntaxify/syntaxify.dart';
 @SyntaxComponent(description: 'A design-system-aware switch component')
 class SwitchMeta {
   /// Whether the switch is on
-  /// Maps to: LayoutNode.switchWidget(binding: ...) (wraps binding)
+  /// Maps to: App.switchWidget(binding: ...) (wraps binding)
   @Required()
   final bool value;
 
   /// Callback when switch value changes
-  /// Maps to: LayoutNode.switchWidget(onChanged: ...)
+  /// Maps to: App.switchWidget(onChanged: ...)
   @Optional()
   final ValueChanged<bool>? onChanged;
 

@@ -15,7 +15,7 @@ sealed class CustomNode with _$CustomNode {
     @Default({}) Map<String, dynamic> props,
 
     /// Child nodes, if the component supports children
-    @Default([]) List<LayoutNode> children,
+    @Default([]) List<App> children,
   }) = _CustomNode;
 
   factory CustomNode.fromJson(Map<String, dynamic> json) =>

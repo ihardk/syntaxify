@@ -33,25 +33,25 @@ class AppInput extends StatelessWidget {
   /// Text editing controller Maps to: _fieldNameController (auto-generated from label)
   final TextEditingController? controller;
 
-  /// The label text displayed above or inside the input Maps to: LayoutNode.textField(label: ...)
+  /// The label text displayed above or inside the input Maps to: App.textField(label: ...)
   final String? label;
 
-  /// Hint text displayed when empty Maps to: LayoutNode.textField(hint: ...)
+  /// Hint text displayed when empty Maps to: App.textField(hint: ...)
   final String? hint;
 
-  /// Error text to display Maps to: LayoutNode.textField(errorText: ...)
+  /// Error text to display Maps to: App.textField(errorText: ...)
   final String? errorText;
 
-  /// Whether the text should be obscured (password) Maps to: LayoutNode.textField(obscureText: ...)
+  /// Whether the text should be obscured (password) Maps to: App.textField(obscureText: ...)
   final bool obscureText;
 
   /// Whether the input is enabled
   final bool enabled;
 
-  /// Callback when text changes Maps to: LayoutNode.textField(onChanged: ...)
+  /// Callback when text changes Maps to: App.textField(onChanged: ...)
   final ValueChanged<String>? onChanged;
 
-  /// Callback when text is submitted Maps to: LayoutNode.textField(onSubmitted: ...)
+  /// Callback when text is submitted Maps to: App.textField(onSubmitted: ...)
   final ValueChanged<String>? onSubmitted;
 
   /// Leading icon name
@@ -66,25 +66,25 @@ class AppInput extends StatelessWidget {
   /// Callback when suffix icon is tapped
   final VoidCallback? onTapSuffix;
 
-  /// Keyboard type Maps to: LayoutNode.textField(keyboardType: ...)
+  /// Keyboard type Maps to: App.textField(keyboardType: ...)
   final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
     return AppTheme.of(context).style.renderInput(
-      controller: controller,
-      label: label,
-      hint: hint,
-      errorText: errorText,
-      obscureText: obscureText,
-      enabled: enabled,
-      onChanged: onChanged,
-      onSubmitted: onSubmitted,
-      prefixIconName: prefixIconName,
-      suffixIconName: suffixIconName,
-      onTapPrefix: onTapPrefix,
-      onTapSuffix: onTapSuffix,
-      keyboardType: keyboardType,
-    );
+          controller: controller,
+          label: label,
+          hint: hint,
+          errorText: errorText,
+          obscureText: obscureText,
+          enabled: enabled,
+          onChanged: onChanged,
+          onSubmitted: onSubmitted,
+          prefixIconName: prefixIconName,
+          suffixIconName: suffixIconName,
+          onTapPrefix: onTapPrefix,
+          onTapSuffix: onTapSuffix,
+          keyboardType: keyboardType,
+        );
   }
 }

@@ -10,12 +10,12 @@ import 'package:syntaxify/syntaxify.dart';
 @SyntaxComponent(description: 'A design-system-aware checkbox component')
 class CheckboxMeta {
   /// Whether the checkbox is checked
-  /// Maps to: LayoutNode.checkbox(binding: ...) (wraps binding)
+  /// Maps to: App.checkbox(binding: ...) (wraps binding)
   @Required()
   final bool value;
 
   /// Callback when checkbox value changes
-  /// Maps to: LayoutNode.checkbox(onChanged: ...)
+  /// Maps to: App.checkbox(onChanged: ...)
   @Optional()
   final ValueChanged<bool?>? onChanged;
 

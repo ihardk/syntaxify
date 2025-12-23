@@ -7,7 +7,7 @@ The current AST is **90% compatible** with Jetpack Compose. Here's what needs to
 ## ✅ Already Platform-Agnostic
 
 ### 1. Core AST Structure
-- LayoutNode tree structure works identically
+- App tree structure works identically
 - Node categories (Structural, Primitive, Interactive, Custom) map directly
 - All validation rules apply to Compose
 
@@ -18,24 +18,24 @@ The current AST is **90% compatible** with Jetpack Compose. Here's what needs to
 
 ### 3. Node Mappings
 
-| AST Node | Flutter Widget | Compose Composable |
-|----------|---------------|-------------------|
-| Column | Column | Column |
-| Row | Row | Row |
-| Container | Container | Box |
-| Card | Card | Card |
-| Text | Text | Text |
-| Image | Image | Image |
-| Button | ElevatedButton | Button |
-| TextField | TextField | TextField |
-| Checkbox | Checkbox | Checkbox |
-| Switch | Switch | Switch |
-| Spacer | Spacer | Spacer |
-| SizedBox | SizedBox | Spacer(Modifier.size) |
-| Expanded | Expanded | Box(Modifier.weight) |
-| Divider | Divider | Divider |
+| AST Node                  | Flutter Widget            | Compose Composable        |
+| ------------------------- | ------------------------- | ------------------------- |
+| Column                    | Column                    | Column                    |
+| Row                       | Row                       | Row                       |
+| Container                 | Container                 | Box                       |
+| Card                      | Card                      | Card                      |
+| Text                      | Text                      | Text                      |
+| Image                     | Image                     | Image                     |
+| Button                    | ElevatedButton            | Button                    |
+| TextField                 | TextField                 | TextField                 |
+| Checkbox                  | Checkbox                  | Checkbox                  |
+| Switch                    | Switch                    | Switch                    |
+| Spacer                    | Spacer                    | Spacer                    |
+| SizedBox                  | SizedBox                  | Spacer(Modifier.size)     |
+| Expanded                  | Expanded                  | Box(Modifier.weight)      |
+| Divider                   | Divider                   | Divider                   |
 | CircularProgressIndicator | CircularProgressIndicator | CircularProgressIndicator |
-| ListView | ListView | LazyColumn |
+| ListView                  | ListView                  | LazyColumn                |
 
 ## 🔧 What Needs Implementation
 
@@ -43,7 +43,7 @@ The current AST is **90% compatible** with Jetpack Compose. Here's what needs to
 
 ```dart
 class ComposeEmitter {
-  String emit(LayoutNode node) {
+  String emit(App node) {
     return node.map(
       structural: (n) => _emitStructural(n.node),
       primitive: (n) => _emitPrimitive(n.node),
@@ -99,13 +99,13 @@ ColorSemantic.primary
 
 ## 📊 Platform-Agnostic Score
 
-| Component | Agnostic? | Notes |
-|-----------|-----------|-------|
-| AST Models | ✅ 95% | Minor naming biases, but concepts universal |
-| Validation | ✅ 100% | Rules apply to all platforms |
-| String Parsing | ✅ 100% | Output format is emitter's job |
-| Emitters | ❌ 0% | LayoutEmitter is Flutter-specific (by design) |
-| Design System | ✅ 90% | Semantic enums work for both |
+| Component      | Agnostic? | Notes                                         |
+| -------------- | --------- | --------------------------------------------- |
+| AST Models     | ✅ 95%     | Minor naming biases, but concepts universal   |
+| Validation     | ✅ 100%    | Rules apply to all platforms                  |
+| String Parsing | ✅ 100%    | Output format is emitter's job                |
+| Emitters       | ❌ 0%      | LayoutEmitter is Flutter-specific (by design) |
+| Design System  | ✅ 90%     | Semantic enums work for both                  |
 
 ## 🎯 Recommended Architecture
 
@@ -114,7 +114,7 @@ ColorSemantic.primary
 │         Platform-Agnostic           │
 │    ┌─────────────────────────┐     │
 │    │   AST Models (Freezed)  │     │
-│    │  - LayoutNode           │     │
+│    │  - App           │     │
 │    │  - StructuralNode       │     │
 │    │  - PrimitiveNode        │     │
 │    │  - Enums & Semantics    │     │
@@ -158,12 +158,12 @@ The changes you've made are **excellent for multi-platform support**:
 
 ```dart
 // Define once
-final loginScreen = LayoutNode.column(
+final loginScreen = App.column(
   spacing: "16",
   children: [
-    LayoutNode.text(text: "Login"),
-    LayoutNode.textField(label: "Email"),
-    LayoutNode.button(label: "Submit", onPressed: "handleLogin"),
+    App.text(text: "Login"),
+    App.textField(label: "Email"),
+    App.button(label: "Submit", onPressed: "handleLogin"),
   ],
 );
 

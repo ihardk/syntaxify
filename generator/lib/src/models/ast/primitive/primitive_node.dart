@@ -52,11 +52,11 @@ sealed class PrimitiveNode with _$PrimitiveNode {
   const factory PrimitiveNode.sizedBox({
     double? width,
     double? height,
-    LayoutNode? child,
+    App? child,
   }) = SizedBoxNode;
 
   const factory PrimitiveNode.expanded({
-    required LayoutNode child,
+    required App child,
     int? flex,
   }) = ExpandedNode;
 

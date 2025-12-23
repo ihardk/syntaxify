@@ -10,7 +10,7 @@ This guide explains Syntaxify's comprehensive validation system that catches err
 ## Table of Contents
 
 1. [Overview](#overview)
-2. [The LayoutNode Naming](#the-layoutnode-naming)
+2. [The App Naming](#the-app-naming)
 3. [Two-Tier Validation](#two-tier-validation)
 4. [IDE-Integrated Linting](#ide-integrated-linting)
 5. [Build-Time Validation](#build-time-validation)
@@ -31,13 +31,13 @@ This ensures you catch mistakes immediately, not after running the build command
 
 ```dart
 // ❌ IDE shows error immediately: "Button label cannot be empty"
-LayoutNode.button(
+App.button(
   label: '',  // Red squiggly line appears
   onPressed: 'handleClick',
 )
 
 // ✅ Fixed - no errors
-LayoutNode.button(
+App.button(
   label: 'Submit',
   onPressed: 'handleClick',
 )
@@ -45,46 +45,46 @@ LayoutNode.button(
 
 ---
 
-## The LayoutNode Naming
+## The App Naming
 
-We renamed `LayoutNode` to `LayoutNode` to make the API more approachable for developers who aren't familiar with compiler terminology.
+We renamed `App` to `App` to make the API more approachable for developers who aren't familiar with compiler terminology.
 
 ### Why the Change?
 
-- **Before**: `LayoutNode.button()` - "AST" is technical jargon (Abstract Syntax Tree)
-- **After**: `LayoutNode.button()` - Clear and descriptive
+- **Before**: `App.button()` - "AST" is technical jargon (Abstract Syntax Tree)
+- **After**: `App.button()` - Clear and descriptive
 
 ### Migration Guide
 
-If you have existing code using `LayoutNode`, simply replace all occurrences with `LayoutNode`:
+If you have existing code using `App`, simply replace all occurrences with `App`:
 
 ```dart
 // Old code (before v0.1.0-alpha.8)
-final node = LayoutNode.column(
+final node = App.column(
   children: [
-    LayoutNode.text(text: 'Hello'),
-    LayoutNode.button(label: 'Click me'),
+    App.text(text: 'Hello'),
+    App.button(label: 'Click me'),
   ],
 );
 
 // New code (v0.1.0-alpha.8+)
-final node = LayoutNode.column(
+final node = App.column(
   children: [
-    LayoutNode.text(text: 'Hello'),
-    LayoutNode.button(label: 'Click me'),
+    App.text(text: 'Hello'),
+    App.button(label: 'Click me'),
   ],
 );
 ```
 
 All factory constructors remain the same:
-- `LayoutNode.column()` ✅
-- `LayoutNode.row()` ✅
-- `LayoutNode.button()` ✅
-- `LayoutNode.text()` ✅
-- `LayoutNode.textField()` ✅
-- `LayoutNode.icon()` ✅
-- `LayoutNode.spacer()` ✅
-- `LayoutNode.appBar()` ✅
+- `App.column()` ✅
+- `App.row()` ✅
+- `App.button()` ✅
+- `App.text()` ✅
+- `App.textField()` ✅
+- `App.icon()` ✅
+- `App.spacer()` ✅
+- `App.appBar()` ✅
 
 ---
 
@@ -102,7 +102,7 @@ Shows errors **as you type** in your code editor.
 Example:
 ```dart
 // You type this in VS Code...
-LayoutNode.button(
+App.button(
   label: '',  // ← Immediately shows red squiggly
 )
 
@@ -219,7 +219,7 @@ import 'package:syntaxify/src/models/validation_error.dart';
 void main() {
   final validator = LayoutValidator();
 
-  final node = LayoutNode.button(
+  final node = App.button(
     label: '',  // Invalid
     onPressed: 'handle-click',  // Invalid (contains hyphen)
   );
@@ -289,13 +289,13 @@ enum ErrorSeverity {
 
 ```dart
 // ❌ Error
-LayoutNode.button(
+App.button(
   label: '',  // Cannot be empty
   onPressed: 'handleClick',
 )
 
 // ✅ Fixed
-LayoutNode.button(
+App.button(
   label: 'Submit',
   onPressed: 'handleClick',
 )
@@ -312,12 +312,12 @@ LayoutNode.button(
 
 ```dart
 // ❌ Error
-LayoutNode.text(
+App.text(
   text: '',  // Cannot be empty
 )
 
 // ✅ Fixed
-LayoutNode.text(
+App.text(
   text: 'Hello World',
 )
 ```
@@ -333,23 +333,23 @@ LayoutNode.text(
 
 ```dart
 // ❌ Error
-LayoutNode.icon(
+App.icon(
   name: '',  // Cannot be empty
 )
 
 // ❌ Error
-LayoutNode.button(
+App.button(
   label: 'Click',
   icon: '',  // Cannot be empty
   iconPosition: IconPosition.left,
 )
 
 // ✅ Fixed
-LayoutNode.icon(
+App.icon(
   name: 'home',
 )
 
-LayoutNode.button(
+App.button(
   label: 'Click',
   icon: 'arrow_forward',
   iconPosition: IconPosition.left,
@@ -367,13 +367,13 @@ LayoutNode.button(
 
 ```dart
 // ⚠️ Warning
-LayoutNode.appBar(
+App.appBar(
   // No title provided
   leadingAction: 'handleBack',
 )
 
 // ✅ Fixed
-LayoutNode.appBar(
+App.appBar(
   title: 'My App',
   leadingAction: 'handleBack',
 )
@@ -392,21 +392,21 @@ LayoutNode.appBar(
 
 ```dart
 // ⚠️ Warning
-LayoutNode.column(
+App.column(
   children: [],  // Empty children list
 )
 
 // ✅ Fixed
-LayoutNode.column(
+App.column(
   children: [
-    LayoutNode.text(text: 'Hello'),
-    LayoutNode.button(label: 'Click me'),
+    App.text(text: 'Hello'),
+    App.button(label: 'Click me'),
   ],
 )
 ```
 
 **Message**: Container has no children
-**Suggestion**: Add child widgets like LayoutNode.text() or LayoutNode.button()
+**Suggestion**: Add child widgets like App.text() or App.button()
 
 ---
 
@@ -418,30 +418,30 @@ LayoutNode.column(
 
 ```dart
 // ❌ Error - contains hyphen
-LayoutNode.button(
+App.button(
   label: 'Submit',
   onPressed: 'handle-click',  // Invalid: contains hyphen
 )
 
 // ❌ Error - contains space
-LayoutNode.textField(
+App.textField(
   label: 'Email',
   onChanged: 'handle change',  // Invalid: contains space
 )
 
 // ❌ Error - Dart keyword
-LayoutNode.button(
+App.button(
   label: 'Click',
   onPressed: 'class',  // Invalid: Dart keyword
 )
 
 // ✅ Fixed - valid camelCase identifiers
-LayoutNode.button(
+App.button(
   label: 'Submit',
   onPressed: 'handleClick',
 )
 
-LayoutNode.textField(
+App.textField(
   label: 'Email',
   onChanged: 'handleChange',
   onSubmitted: 'handleSubmit',
@@ -474,34 +474,34 @@ LayoutNode.textField(
 
 ```dart
 // ❌ Error - maxLines must be positive
-LayoutNode.text(
+App.text(
   text: 'Hello',
   maxLines: -1,  // Invalid: negative
 )
 
 // ❌ Error - maxLength must be positive
-LayoutNode.textField(
+App.textField(
   label: 'Name',
   maxLength: 0,  // Invalid: zero
 )
 
 // ❌ Error - flex must be positive
-LayoutNode.spacer(
+App.spacer(
   flex: -1,  // Invalid: negative
 )
 
 // ✅ Fixed
-LayoutNode.text(
+App.text(
   text: 'Hello',
   maxLines: 2,
 )
 
-LayoutNode.textField(
+App.textField(
   label: 'Name',
   maxLength: 50,
 )
 
-LayoutNode.spacer(
+App.spacer(
   flex: 1,
 )
 ```
@@ -525,14 +525,14 @@ LayoutNode.spacer(
 
 ```dart
 // ℹ️ Info - maxLines=1 with overflow=visible may cause issues
-LayoutNode.text(
+App.text(
   text: 'Very long text that will overflow',
   maxLines: 1,
   overflow: TextOverflow.visible,  // May cause layout issues
 )
 
 // ✅ Better approach
-LayoutNode.text(
+App.text(
   text: 'Very long text that will overflow',
   maxLines: 1,
   overflow: TextOverflow.ellipsis,  // Shows "..." when truncated
@@ -552,25 +552,25 @@ LayoutNode.text(
 
 ```dart
 // ⚠️ Warning - no label or hint
-LayoutNode.textField(
+App.textField(
   onChanged: 'handleChange',
   // Missing both label and hint
 )
 
 // ✅ Fixed - has label
-LayoutNode.textField(
+App.textField(
   label: 'Email',
   onChanged: 'handleChange',
 )
 
 // ✅ Also valid - has hint
-LayoutNode.textField(
+App.textField(
   hint: 'Enter your email',
   onChanged: 'handleChange',
 )
 
 // ✅ Best - has both
-LayoutNode.textField(
+App.textField(
   label: 'Email',
   hint: 'example@email.com',
   onChanged: 'handleChange',
@@ -720,12 +720,12 @@ Priority order:
 
 ✅ **DO**: Use meaningful, descriptive identifiers
 ```dart
-LayoutNode.button(
+App.button(
   label: 'Submit Form',
   onPressed: 'handleFormSubmission',
 )
 
-LayoutNode.textField(
+App.textField(
   label: 'Email Address',
   binding: 'emailController',
   onChanged: 'handleEmailChanged',
@@ -735,12 +735,12 @@ LayoutNode.textField(
 
 ❌ **DON'T**: Use generic or unclear names
 ```dart
-LayoutNode.button(
+App.button(
   label: 'Click',
   onPressed: 'handler1',
 )
 
-LayoutNode.textField(
+App.textField(
   label: 'Input',
   binding: 'ctrl',
   onChanged: 'fn',
@@ -753,7 +753,7 @@ LayoutNode.textField(
 
 ✅ **DO**: Give clear labels and hints
 ```dart
-LayoutNode.textField(
+App.textField(
   label: 'Password',
   hint: 'Must be at least 8 characters',
   obscureText: true,
@@ -763,7 +763,7 @@ LayoutNode.textField(
 
 ❌ **DON'T**: Leave fields unlabeled
 ```dart
-LayoutNode.textField(
+App.textField(
   // No label or hint - user doesn't know what to enter
   obscureText: true,
 )
@@ -775,7 +775,7 @@ LayoutNode.textField(
 
 ✅ **DO**: Use ellipsis for single-line truncation
 ```dart
-LayoutNode.text(
+App.text(
   text: 'Very long username that might overflow',
   maxLines: 1,
   overflow: TextOverflow.ellipsis,  // Shows "..."
@@ -784,7 +784,7 @@ LayoutNode.text(
 
 ❌ **DON'T**: Use visible overflow with maxLines
 ```dart
-LayoutNode.text(
+App.text(
   text: 'Very long username that might overflow',
   maxLines: 1,
   overflow: TextOverflow.visible,  // May cause layout issues
@@ -817,22 +817,22 @@ All callback names must be valid Dart identifiers:
 
 ✅ **DO**: Add meaningful children
 ```dart
-LayoutNode.column(
+App.column(
   children: [
-    LayoutNode.text(text: 'Welcome'),
-    LayoutNode.button(label: 'Get Started'),
+    App.text(text: 'Welcome'),
+    App.button(label: 'Get Started'),
   ],
 )
 ```
 
 ❌ **DON'T**: Create empty containers
 ```dart
-LayoutNode.column(
+App.column(
   children: [],  // Warning: empty container
 )
 ```
 
-If you need spacing, use `LayoutNode.spacer()` instead.
+If you need spacing, use `App.spacer()` instead.
 
 ---
 
@@ -856,7 +856,7 @@ Syntaxify's validation system provides:
 
 ## Next Steps
 
-- **[03-ast-system.md](./03-ast-system.md)** - Deep dive into LayoutNode architecture
+- **[03-ast-system.md](./03-ast-system.md)** - Deep dive into App architecture
 - **[05-code-generation.md](./05-code-generation.md)** - How validation integrates with code generation
 - **[15-writing-tests.md](./15-writing-tests.md)** - Testing validation rules
 

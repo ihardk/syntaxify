@@ -24,9 +24,9 @@ void main() {
         // Arrange
         final screen = ScreenDefinition(
           id: 'login',
-          layout: LayoutNode.column(
+          layout: App.column(
             children: [
-              LayoutNode.text(text: 'Welcome'),
+              App.text(text: 'Welcome'),
             ],
           ),
         );
@@ -45,7 +45,7 @@ void main() {
       test('generates correct file name from screen id', () async {
         final screen = ScreenDefinition(
           id: 'profile',
-          layout: LayoutNode.column(children: []),
+          layout: App.column(children: []),
         );
 
         final filePath = await useCase.execute(
@@ -59,7 +59,7 @@ void main() {
       test('creates screens directory if it doesn\'t exist', () async {
         final screen = ScreenDefinition(
           id: 'home',
-          layout: LayoutNode.column(children: []),
+          layout: App.column(children: []),
         );
 
         await useCase.execute(
@@ -74,10 +74,10 @@ void main() {
       test('writes valid Dart code to file', () async {
         final screen = ScreenDefinition(
           id: 'login',
-          layout: LayoutNode.column(
+          layout: App.column(
             children: [
-              LayoutNode.text(text: 'Login'),
-              LayoutNode.button(label: 'Submit', onPressed: 'handleSubmit'),
+              App.text(text: 'Login'),
+              App.button(label: 'Submit', onPressed: 'handleSubmit'),
             ],
           ),
         );
@@ -97,10 +97,10 @@ void main() {
       test('includes callbacks from button nodes', () async {
         final screen = ScreenDefinition(
           id: 'profile',
-          layout: LayoutNode.column(
+          layout: App.column(
             children: [
-              LayoutNode.button(label: 'Logout', onPressed: 'handleLogout'),
-              LayoutNode.button(label: 'Settings', onPressed: 'handleSettings'),
+              App.button(label: 'Logout', onPressed: 'handleLogout'),
+              App.button(label: 'Settings', onPressed: 'handleSettings'),
             ],
           ),
         );
@@ -122,7 +122,7 @@ void main() {
           appBar: AppBarNode(
             title: 'Home',
           ),
-          layout: LayoutNode.column(children: []),
+          layout: App.column(children: []),
         );
 
         await useCase.execute(
@@ -138,8 +138,8 @@ void main() {
       test('generates screen without app bar', () async {
         final screen = ScreenDefinition(
           id: 'splash',
-          layout: LayoutNode.column(children: [
-            LayoutNode.text(text: 'Loading...'),
+          layout: App.column(children: [
+            App.text(text: 'Loading...'),
           ]),
         );
 
@@ -156,18 +156,18 @@ void main() {
       test('handles nested layout', () async {
         final screen = ScreenDefinition(
           id: 'complex',
-          layout: LayoutNode.column(
+          layout: App.column(
             children: [
-              LayoutNode.row(
+              App.row(
                 children: [
-                  LayoutNode.text(text: 'Left'),
-                  LayoutNode.text(text: 'Right'),
+                  App.text(text: 'Left'),
+                  App.text(text: 'Right'),
                 ],
               ),
-              LayoutNode.column(
+              App.column(
                 children: [
-                  LayoutNode.button(label: 'Action1', onPressed: 'onAction1'),
-                  LayoutNode.button(label: 'Action2', onPressed: 'onAction2'),
+                  App.button(label: 'Action1', onPressed: 'onAction1'),
+                  App.button(label: 'Action2', onPressed: 'onAction2'),
                 ],
               ),
             ],
@@ -187,9 +187,9 @@ void main() {
       test('includes text field callbacks', () async {
         final screen = ScreenDefinition(
           id: 'form',
-          layout: LayoutNode.column(
+          layout: App.column(
             children: [
-              LayoutNode.textField(
+              App.textField(
                 label: 'Email',
                 onChanged: 'handleEmailChanged',
               ),
@@ -210,7 +210,7 @@ void main() {
       test('does not overwrite existing screen file', () async {
         final screen = ScreenDefinition(
           id: 'existing',
-          layout: LayoutNode.column(children: []),
+          layout: App.column(children: []),
         );
 
         // Pre-create the file
@@ -232,12 +232,12 @@ void main() {
       test('generates multiple different screens', () async {
         final login = ScreenDefinition(
           id: 'login',
-          layout: LayoutNode.column(children: []),
+          layout: App.column(children: []),
         );
 
         final profile = ScreenDefinition(
           id: 'profile',
-          layout: LayoutNode.column(children: []),
+          layout: App.column(children: []),
         );
 
         await useCase.execute(screen: login, outputDir: '/output');
@@ -251,11 +251,11 @@ void main() {
       test('handles screen with spacer nodes', () async {
         final screen = ScreenDefinition(
           id: 'spaced',
-          layout: LayoutNode.column(
+          layout: App.column(
             children: [
-              LayoutNode.text(text: 'Title'),
-              LayoutNode.spacer(size: SpacerSize.lg),
-              LayoutNode.text(text: 'Subtitle'),
+              App.text(text: 'Title'),
+              App.spacer(size: SpacerSize.lg),
+              App.text(text: 'Subtitle'),
             ],
           ),
         );
@@ -274,9 +274,9 @@ void main() {
       test('handles screen with icon nodes', () async {
         final screen = ScreenDefinition(
           id: 'gallery',
-          layout: LayoutNode.column(
+          layout: App.column(
             children: [
-              LayoutNode.icon(
+              App.icon(
                 name: 'home',
                 size: IconSize.lg,
               ),

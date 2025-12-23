@@ -10,17 +10,17 @@ import 'package:syntaxify/syntaxify.dart';
 @SyntaxComponent(description: 'A design-system-aware radio button component')
 class RadioMeta<T> {
   /// The value this radio represents
-  /// Maps to: LayoutNode.radio(value: ...)
+  /// Maps to: App.radio(value: ...)
   @Required()
   final T value;
 
   /// The currently selected value in the group
-  /// Maps to: LayoutNode.radio(binding: ...) (wraps binding)
+  /// Maps to: App.radio(binding: ...) (wraps binding)
   @Required()
   final T? groupValue;
 
   /// Callback when this radio is selected
-  /// Maps to: LayoutNode.radio(onChanged: ...)
+  /// Maps to: App.radio(onChanged: ...)
   @Optional()
   final ValueChanged<T?>? onChanged;
 

@@ -6,7 +6,7 @@ library enums;
 
 /// Alignment of children along the main axis in Row/Column.
 /// Alignment of children along the main axis in Row/Column.
-enum SyntaxMainAxisAlignment {
+enum MainAlignment {
   /// Align children at the start.
   start,
 
@@ -28,7 +28,7 @@ enum SyntaxMainAxisAlignment {
 
 /// Alignment of children along the cross axis in Row/Column.
 /// Alignment of children along the cross axis in Row/Column.
-enum SyntaxCrossAxisAlignment {
+enum CrossAlignment {
   /// Align children at the start of the cross axis.
   start,
 

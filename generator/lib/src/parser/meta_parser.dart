@@ -84,7 +84,7 @@ class _AstNodeVisitor extends RecursiveAstVisitor<void> {
   final screens = <ScreenDefinition>[];
   final enums = <ComponentEnum>[];
 
-  final _nodeParser = const LayoutNodeParser();
+  final _nodeParser = const AppParser();
 
   @override
   void visitEnumDeclaration(analyzer.EnumDeclaration node) {

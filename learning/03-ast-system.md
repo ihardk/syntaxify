@@ -1,23 +1,23 @@
-# The LayoutNode System 📝
+# The App System 📝
 
 **Understanding how screen definitions work**
 
-Syntaxify uses a tree structure called LayoutNode to represent UI layouts. This document explains what that means and how to use it.
+Syntaxify uses a tree structure called App to represent UI layouts. This document explains what that means and how to use it.
 
-> **Note:** LayoutNode was previously called AstNode (Abstract Syntax Tree Node). We renamed it in v0.1.0-alpha.8 to make the API more approachable for developers unfamiliar with compiler terminology.
+> **Note:** App was previously called App (Abstract Syntax Tree Node). We renamed it in v0.1.0-alpha.8 to make the API more approachable for developers unfamiliar with compiler terminology.
 
 ---
 
-## What is a LayoutNode? 🤔
+## What is a App? 🤔
 
-**LayoutNode = A node in your UI layout tree**
+**App = A node in your UI layout tree**
 
 It's a tree structure that represents your UI layout **before** it becomes actual Flutter widgets. Think of it as the blueprint for your UI.
 
 ### Analogy: Recipe vs Meal
 
 ```
-Recipe (LayoutNode)       →        Meal (Widgets)
+Recipe (App)       →        Meal (Widgets)
 ─────────────────────────          ──────────────────────
 "Column:                           Column(
   - Text 'Hello'                     children: [
@@ -27,7 +27,7 @@ Recipe (LayoutNode)       →        Meal (Widgets)
                                    )
 ```
 
-**The Recipe (LayoutNode):**
+**The Recipe (App):**
 - Describes WHAT you want
 - Platform-independent
 - Simple data structure
@@ -40,9 +40,9 @@ Recipe (LayoutNode)       →        Meal (Widgets)
 
 ---
 
-## Why Use LayoutNode?
+## Why Use App?
 
-### Problem Without LayoutNode
+### Problem Without App
 
 Directly write Flutter code:
 
@@ -67,16 +67,16 @@ Widget build(BuildContext context) {
 - ❌ Repetitive code for similar screens
 - ❌ Hard to analyze or modify
 
-### Solution With LayoutNode
+### Solution With App
 
 Define structure separately:
 
 ```dart
 // Platform-independent description!
-final layout = LayoutNode.column(
+final layout = App.column(
   children: [
-    LayoutNode.text(text: 'Hello', variant: TextVariant.headlineMedium),
-    LayoutNode.button(label: 'Submit', onPressed: 'handleSubmit'),
+    App.text(text: 'Hello', variant: TextVariant.headlineMedium),
+    App.button(label: 'Submit', onPressed: 'handleSubmit'),
   ],
 );
 ```
@@ -89,34 +89,34 @@ final layout = LayoutNode.column(
 
 ---
 
-## LayoutNode Types
+## App Types
 
 Syntaxify now uses a **hierarchical** model to organize nodes by their behavior:
 
 ```dart
 // lib/src/models/ast/layout_node.dart
 @freezed
-sealed class LayoutNode with _$LayoutNode {
+sealed class App with _$App {
   // 1. Structural Layer (Layouts)
-  const factory LayoutNode.structural({
+  const factory App.structural({
     required StructuralNode node,
     NodeMetadata? meta,
-  }) = StructuralLayoutNode;
+  }) = StructuralApp;
 
   // 2. Primitive Layer (Static Content)
-  const factory LayoutNode.primitive({
+  const factory App.primitive({
     required PrimitiveNode node,
     NodeMetadata? meta,
-  }) = PrimitiveLayoutNode;
+  }) = PrimitiveApp;
 
   // 3. Interactive Layer (User Input)
-  const factory LayoutNode.interactive({
+  const factory App.interactive({
     required InteractiveNode node,
     NodeMetadata? meta,
-  }) = InteractiveLayoutNode;
+  }) = InteractiveApp;
 
   // 4. Special Nodes
-  const factory LayoutNode.appBar({...}) = AppBarLayoutNode;
+  const factory App.appBar({...}) = AppBarApp;
 }
 ```
 
@@ -137,10 +137,10 @@ This wrapper structure separates **metadata** (like `id` and `visibleWhen`) from
     *   `SwitchNode`, `IconButtonNode`, `DropdownNode`
     *   `RadioNode`, `SliderNode`
 4.  **CustomNode**: Plugin-defined extensible nodes.
-    *   `LayoutNode.custom(type: 'Carousel', props: {...})`
+    *   `App.custom(type: 'Carousel', props: {...})`
 
 > **Note:** For convenience, we provide **shim factories** that look like the old API.
-> `LayoutNode.column(...)` actually creates a `LayoutNode.structural(node: StructuralNode.column(...))` under the hood.
+> `App.column(...)` actually creates a `App.structural(node: StructuralNode.column(...))` under the hood.
 
 
 Each node type has specific properties.
@@ -154,8 +154,8 @@ Each node type has specific properties.
 Vertical layout (like Flutter's `Column`).
 
 ```dart
-LayoutNode.column({
-  List<LayoutNode> children = const [],
+App.column({
+  List<App> children = const [],
   MainAxisAlignment? mainAxisAlignment,
   CrossAxisAlignment? crossAxisAlignment,
 })
@@ -163,11 +163,11 @@ LayoutNode.column({
 
 **Example:**
 ```dart
-LayoutNode.column(
+App.column(
   mainAxisAlignment: MainAxisAlignment.center,
   children: [
-    LayoutNode.text(text: 'Title'),
-    LayoutNode.text(text: 'Subtitle'),
+    App.text(text: 'Title'),
+    App.text(text: 'Subtitle'),
   ],
 )
 ```
@@ -188,8 +188,8 @@ Column(
 Horizontal layout (like Flutter's `Row`).
 
 ```dart
-LayoutNode.row({
-  List<LayoutNode> children = const [],
+App.row({
+  List<App> children = const [],
   MainAxisAlignment? mainAxisAlignment,
   CrossAxisAlignment? crossAxisAlignment,
 })
@@ -197,11 +197,11 @@ LayoutNode.row({
 
 **Example:**
 ```dart
-LayoutNode.row(
+App.row(
   mainAxisAlignment: MainAxisAlignment.spaceBetween,
   children: [
-    LayoutNode.text(text: 'Left'),
-    LayoutNode.text(text: 'Right'),
+    App.text(text: 'Left'),
+    App.text(text: 'Right'),
   ],
 )
 ```
@@ -211,7 +211,7 @@ LayoutNode.row(
 Displays text.
 
 ```dart
-LayoutNode.text({
+App.text({
   required String text,
   TextVariant? variant,
   TextAlign? align,
@@ -234,7 +234,7 @@ enum TextVariant {
 
 **Example:**
 ```dart
-LayoutNode.text(
+App.text(
   text: 'Welcome Back!',
   variant: TextVariant.headlineMedium,
   align: TextAlign.center,
@@ -246,7 +246,7 @@ LayoutNode.text(
 Clickable button.
 
 ```dart
-LayoutNode.button({
+App.button({
   required String label,
   String? onPressed,     // Callback name
   ButtonVariant? variant,
@@ -264,7 +264,7 @@ enum ButtonVariant {
 
 **Example:**
 ```dart
-LayoutNode.button(
+App.button(
   label: 'Sign In',
   onPressed: 'handleLogin',
   variant: ButtonVariant.primary,
@@ -278,7 +278,7 @@ LayoutNode.button(
 Text input field.
 
 ```dart
-LayoutNode.textField({
+App.textField({
   required String label,
   String? placeholder,
   bool obscureText = false,
@@ -300,7 +300,7 @@ enum KeyboardType {
 
 **Example:**
 ```dart
-LayoutNode.textField(
+App.textField(
   label: 'Email',
   placeholder: 'you@example.com',
   keyboardType: KeyboardType.email,
@@ -312,7 +312,7 @@ LayoutNode.textField(
 Top app bar.
 
 ```dart
-LayoutNode.appBar({
+App.appBar({
   required String title,
   List<AppBarAction>? actions,
 })
@@ -320,7 +320,7 @@ LayoutNode.appBar({
 
 **Example:**
 ```dart
-LayoutNode.appBar(
+App.appBar(
   title: 'Profile',
   actions: [
     AppBarAction(icon: 'settings', onPressed: 'handleSettings'),
@@ -333,7 +333,7 @@ LayoutNode.appBar(
 Display an image.
 
 ```dart
-LayoutNode.image({
+App.image({
   required String path,
   double? width,
   double? height,
@@ -343,7 +343,7 @@ LayoutNode.image({
 
 **Example:**
 ```dart
-LayoutNode.image(
+App.image(
   path: 'assets/logo.png',
   width: 200,
   height: 200,
@@ -356,7 +356,7 @@ LayoutNode.image(
 Adds spacing.
 
 ```dart
-LayoutNode.spacer({
+App.spacer({
   double? height,
   double? width,
 })
@@ -364,11 +364,11 @@ LayoutNode.spacer({
 
 **Example:**
 ```dart
-LayoutNode.column(
+App.column(
   children: [
-    LayoutNode.text(text: 'First'),
-    LayoutNode.spacer(height: 20),
-    LayoutNode.text(text: 'Second'),
+    App.text(text: 'First'),
+    App.spacer(height: 20),
+    App.text(text: 'Second'),
   ],
 )
 ```
@@ -385,8 +385,8 @@ import 'package:syntaxify/syntaxify.dart';
 
 final myScreen = ScreenDefinition(
   id: 'my_screen',              // Unique ID
-  appBar: LayoutNode.appBar(...),  // Optional app bar
-  layout: LayoutNode.column(...),  // Root layout node
+  appBar: App.appBar(...),  // Optional app bar
+  layout: App.column(...),  // Root layout node
 );
 ```
 
@@ -398,26 +398,26 @@ import 'package:syntaxify/syntaxify.dart';
 
 final loginScreen = ScreenDefinition(
   id: 'login',
-  appBar: LayoutNode.appBar(title: 'Login'),
-  layout: LayoutNode.column(
+  appBar: App.appBar(title: 'Login'),
+  layout: App.column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      LayoutNode.text(
+      App.text(
         text: 'Welcome Back!',
         variant: TextVariant.headlineMedium,
       ),
-      LayoutNode.spacer(height: 32),
-      LayoutNode.textField(
+      App.spacer(height: 32),
+      App.textField(
         label: 'Email',
         keyboardType: KeyboardType.email,
       ),
-      LayoutNode.spacer(height: 16),
-      LayoutNode.textField(
+      App.spacer(height: 16),
+      App.textField(
         label: 'Password',
         obscureText: true,
       ),
-      LayoutNode.spacer(height: 32),
-      LayoutNode.button(
+      App.spacer(height: 32),
+      App.button(
         label: 'Sign In',
         onPressed: 'handleLogin',
       ),
@@ -482,26 +482,26 @@ class LoginScreen extends StatelessWidget {
 ```
 
 **Notice:**
-- `LayoutNode.column` → `Column`
-- `LayoutNode.text` → `AppText`
-- `LayoutNode.button` → `AppButton`
-- `LayoutNode.spacer` → `SizedBox`
+- `App.column` → `Column`
+- `App.text` → `AppText`
+- `App.button` → `AppButton`
+- `App.spacer` → `SizedBox`
 - `onPressed: 'handleLogin'` → Parameter `VoidCallback? handleLogin`
 
 ---
 
-## LayoutNode Tree Visualization
+## App Tree Visualization
 
 ### Definition
 
 ```dart
-LayoutNode.column(
+App.column(
   children: [
-    LayoutNode.text(text: 'Title'),
-    LayoutNode.row(
+    App.text(text: 'Title'),
+    App.row(
       children: [
-        LayoutNode.button(label: 'Cancel', onPressed: 'onCancel'),
-        LayoutNode.button(label: 'OK', onPressed: 'onOk'),
+        App.button(label: 'Cancel', onPressed: 'onCancel'),
+        App.button(label: 'OK', onPressed: 'onOk'),
       ],
     ),
   ],
@@ -536,7 +536,7 @@ Column(
 
 ---
 
-## How LayoutNode Becomes Code
+## How App Becomes Code
 
 ### The Process
 
@@ -582,7 +582,7 @@ Column(
 ```dart
 // lib/src/emitters/layout_emitter.dart
 class LayoutEmitter {
-  Expression emit(LayoutNode node) {
+  Expression emit(App node) {
     return node.map(
       // Column node → Column widget
       column: (n) => refer('Column').newInstance([], {
@@ -619,7 +619,7 @@ Each AST node type is converted to a corresponding widget using `code_builder`.
 
 ### Problem
 
-LayoutNode nodes are **data**, not functions. How do we handle callbacks?
+App nodes are **data**, not functions. How do we handle callbacks?
 
 ### Solution
 
@@ -627,7 +627,7 @@ Use **string references** to callback names.
 
 **In the definition:**
 ```dart
-LayoutNode.button(
+App.button(
   label: 'Submit',
   onPressed: 'handleSubmit',  // String, not function!
 )
@@ -636,7 +636,7 @@ LayoutNode.button(
 **Generator discovers callbacks:**
 ```dart
 // lib/src/generators/screen_generator.dart
-Set<String> _collectCallbacks(LayoutNode node) {
+Set<String> _collectCallbacks(App node) {
   final callbacks = <String>{};
   node.map(
     button: (n) {
@@ -688,26 +688,26 @@ You can nest layouts as deep as you want.
 ### Example: Complex Layout
 
 ```dart
-LayoutNode.column(
+App.column(
   children: [
-    LayoutNode.text(text: 'Header'),
-    LayoutNode.row(
+    App.text(text: 'Header'),
+    App.row(
       children: [
-        LayoutNode.column(
+        App.column(
           children: [
-            LayoutNode.text(text: 'Left Top'),
-            LayoutNode.text(text: 'Left Bottom'),
+            App.text(text: 'Left Top'),
+            App.text(text: 'Left Bottom'),
           ],
         ),
-        LayoutNode.column(
+        App.column(
           children: [
-            LayoutNode.text(text: 'Right Top'),
-            LayoutNode.text(text: 'Right Bottom'),
+            App.text(text: 'Right Top'),
+            App.text(text: 'Right Bottom'),
           ],
         ),
       ],
     ),
-    LayoutNode.button(label: 'Footer Button'),
+    App.button(label: 'Footer Button'),
   ],
 )
 ```
@@ -731,11 +731,11 @@ Column
 
 ## Style Independence
 
-The beauty of LayoutNode: **no mention of Material, Cupertino, or any style!**
+The beauty of App: **no mention of Material, Cupertino, or any style!**
 
 ```dart
 // This definition works with ANY style
-LayoutNode.button(label: 'Submit', onPressed: 'handleSubmit')
+App.button(label: 'Submit', onPressed: 'handleSubmit')
 ```
 
 **With MaterialStyle:**
@@ -767,7 +767,7 @@ Container(
 )
 ```
 
-**Same LayoutNode definition, different rendering!** That's the power.
+**Same App definition, different rendering!** That's the power.
 
 ---
 
@@ -775,19 +775,19 @@ Container(
 
 Want to add a new UI element? Follow these steps.
 
-### Step 1: Add to LayoutNode
+### Step 1: Add to App
 
 ```dart
 // lib/src/models/layout_node.dart
 @freezed
-sealed class LayoutNode with _$LayoutNode {
+sealed class App with _$App {
   // ... existing nodes
 
   // NEW: Card node
-  const factory LayoutNode.card({
+  const factory App.card({
     required String title,
     String? subtitle,
-    List<LayoutNode>? children,
+    List<App>? children,
   }) = CardNode;
 }
 ```
@@ -796,7 +796,7 @@ sealed class LayoutNode with _$LayoutNode {
 
 ```dart
 // lib/src/emitters/layout_emitter.dart
-Expression emit(LayoutNode node) {
+Expression emit(App node) {
   return node.map(
     // ... existing nodes
 
@@ -834,11 +834,11 @@ $ dart run syntaxify build
 ### Step 5: Use It
 
 ```dart
-LayoutNode.card(
+App.card(
   title: 'My Card',
   subtitle: 'Subtitle text',
   children: [
-    LayoutNode.text(text: 'Card content'),
+    App.text(text: 'Card content'),
   ],
 )
 ```
@@ -851,7 +851,7 @@ LayoutNode.card(
 
 **Use semantic variants:**
 ```dart
-LayoutNode.text(
+App.text(
   text: 'Title',
   variant: TextVariant.headlineMedium,  // Good!
 )
@@ -859,42 +859,42 @@ LayoutNode.text(
 
 **Group related content:**
 ```dart
-LayoutNode.column(
+App.column(
   children: [
     // Header section
-    LayoutNode.text(text: 'Header'),
+    App.text(text: 'Header'),
 
     // Content section
-    LayoutNode.text(text: 'Content'),
+    App.text(text: 'Content'),
 
     // Footer section
-    LayoutNode.button(label: 'Action'),
+    App.button(label: 'Action'),
   ],
 )
 ```
 
 **Use spacers for spacing:**
 ```dart
-LayoutNode.column(
+App.column(
   children: [
-    LayoutNode.text(text: 'First'),
-    LayoutNode.spacer(height: 16),  // Explicit spacing
-    LayoutNode.text(text: 'Second'),
+    App.text(text: 'First'),
+    App.spacer(height: 16),  // Explicit spacing
+    App.text(text: 'Second'),
   ],
 )
 ```
 
 ### ❌ DON'T
 
-**Don't hardcode styles in LayoutNode:**
+**Don't hardcode styles in App:**
 ```dart
 // BAD: No way to specify colors/sizes in AST
-LayoutNode.text(text: 'Title')  // ✓ Good, style comes from design tokens
+App.text(text: 'Title')  // ✓ Good, style comes from design tokens
 ```
 
 **Don't mix responsibilities:**
 ```dart
-// BAD: Don't put business logic in LayoutNode definitions
+// BAD: Don't put business logic in App definitions
 final screen = ScreenDefinition(
   id: 'login',
   layout: someComplexFunction(),  // ✗ Bad
@@ -903,7 +903,7 @@ final screen = ScreenDefinition(
 // GOOD: Keep it declarative
 final screen = ScreenDefinition(
   id: 'login',
-  layout: LayoutNode.column(...),  // ✓ Good
+  layout: App.column(...),  // ✓ Good
 );
 ```
 
@@ -914,18 +914,18 @@ final screen = ScreenDefinition(
 ### Pattern 1: Form Layout
 
 ```dart
-LayoutNode.column(
+App.column(
   mainAxisAlignment: MainAxisAlignment.center,
   children: [
-    LayoutNode.text(text: 'Form Title', variant: TextVariant.headlineMedium),
-    LayoutNode.spacer(height: 24),
-    LayoutNode.textField(label: 'Field 1'),
-    LayoutNode.spacer(height: 16),
-    LayoutNode.textField(label: 'Field 2'),
-    LayoutNode.spacer(height: 16),
-    LayoutNode.textField(label: 'Field 3'),
-    LayoutNode.spacer(height: 32),
-    LayoutNode.button(label: 'Submit', onPressed: 'handleSubmit'),
+    App.text(text: 'Form Title', variant: TextVariant.headlineMedium),
+    App.spacer(height: 24),
+    App.textField(label: 'Field 1'),
+    App.spacer(height: 16),
+    App.textField(label: 'Field 2'),
+    App.spacer(height: 16),
+    App.textField(label: 'Field 3'),
+    App.spacer(height: 32),
+    App.button(label: 'Submit', onPressed: 'handleSubmit'),
   ],
 )
 ```
@@ -933,17 +933,17 @@ LayoutNode.column(
 ### Pattern 2: List Item
 
 ```dart
-LayoutNode.row(
+App.row(
   mainAxisAlignment: MainAxisAlignment.spaceBetween,
   children: [
-    LayoutNode.column(
+    App.column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        LayoutNode.text(text: 'Title', variant: TextVariant.titleMedium),
-        LayoutNode.text(text: 'Subtitle', variant: TextVariant.bodyMedium),
+        App.text(text: 'Title', variant: TextVariant.titleMedium),
+        App.text(text: 'Subtitle', variant: TextVariant.bodyMedium),
       ],
     ),
-    LayoutNode.button(
+    App.button(
       label: 'Action',
       variant: ButtonVariant.text,
       onPressed: 'handleAction',
@@ -955,19 +955,19 @@ LayoutNode.row(
 ### Pattern 3: Header + Content
 
 ```dart
-LayoutNode.column(
+App.column(
   children: [
     // Header
-    LayoutNode.row(
+    App.row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        LayoutNode.text(text: 'Screen Title', variant: TextVariant.headlineMedium),
-        LayoutNode.button(label: 'Settings', onPressed: 'onSettings'),
+        App.text(text: 'Screen Title', variant: TextVariant.headlineMedium),
+        App.button(label: 'Settings', onPressed: 'onSettings'),
       ],
     ),
-    LayoutNode.spacer(height: 24),
+    App.spacer(height: 24),
     // Content
-    LayoutNode.text(text: 'Content goes here'),
+    App.text(text: 'Content goes here'),
   ],
 )
 ```
@@ -976,7 +976,7 @@ LayoutNode.column(
 
 ## Summary
 
-**LayoutNode = UI Layout Tree Node**
+**App = UI Layout Tree Node**
 - Platform-independent UI description
 - Tree structure of nodes
 - Gets converted to Flutter widgets
@@ -986,7 +986,7 @@ LayoutNode.column(
 - UI: `text`, `button`, `textField`, `appBar`, `image`, `spacer`
 
 **Process:**
-1. Define screen with LayoutNode nodes
+1. Define screen with App nodes
 2. Run `dart run syntaxify build`
 3. Syntaxify generates Flutter code
 4. Use generated screen in your app
@@ -1000,7 +1000,7 @@ LayoutNode.column(
 
 **Key Files:**
 - `lib/src/models/layout_node.dart` - Node definitions
-- `lib/src/emitters/layout_emitter.dart` - LayoutNode → code conversion
+- `lib/src/emitters/layout_emitter.dart` - App → code conversion
 - `meta/*.screen.dart` - Your screen definitions
 
 ---

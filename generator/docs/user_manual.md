@@ -219,14 +219,14 @@ import 'package:syntaxify/syntaxify.dart';
 
 final loginScreen = ScreenDefinition(
   id: 'login',
-  layout: AstNode.column(
+  layout: App.column(
     children: [
-      AstNode.text(text: 'Welcome Back'),
-      AstNode.textField(
+      App.text(text: 'Welcome Back'),
+      App.textField(
         label: 'Email',
         keyboardType: KeyboardType.email,
       ),
-      AstNode.button(
+      App.button(
         label: 'Sign In',
         onPressed: 'handleLogin',
       ),

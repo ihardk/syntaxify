@@ -60,7 +60,7 @@ test('builds complete project from meta files', () async {
 Exact output verification:
 ```dart
 test('generates correct button code', () {
-  final ast = AstNode.button(label: 'Click Me', onPressed: 'handleClick');
+  final ast = App.button(label: 'Click Me', onPressed: 'handleClick');
   final generated = LayoutEmitter().emit(ast);
   final formatted = DartFormatter().format(generated.toString());
 
@@ -80,7 +80,7 @@ test('rejects empty button label', () {
     () => ScreenGenerator().generate(
       ScreenDefinition(
         id: 'test',
-        layout: AstNode.button(label: ''),
+        layout: App.button(label: ''),
       ),
     ),
     throwsA(isA<ValidationException>()),
@@ -93,10 +93,10 @@ test('rejects empty button label', () {
 Unusual but valid inputs:
 ```dart
 test('handles deeply nested columns', () {
-  final ast = AstNode.column(children: [
-    AstNode.column(children: [
-      AstNode.column(children: [
-        AstNode.text(text: 'Nested'),
+  final ast = App.column(children: [
+    App.column(children: [
+      App.column(children: [
+        App.text(text: 'Nested'),
       ]),
     ]),
   ]);

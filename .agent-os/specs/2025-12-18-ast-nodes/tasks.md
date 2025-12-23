@@ -7,12 +7,12 @@
 
 - [ ] 1. **Core Refactor (Purge Runtime Types)**
   - [x] 1.1 Remove `void Function()` callbacks from `ButtonMeta`
-  - [x] 1.2 Rename `MetaComponent` to `AstNode` (which was renamed to `ComponentDefinition`)
+  - [x] 1.2 Rename `MetaComponent` to `App` (which was renamed to `ComponentDefinition`)
   - [x] 1.3 Update `parser.dart` to support new Enum types
   - [x] 1.4 Verify old tests fail (verified via extensive refactoring and test updates)
 
 - [x] 2. **Implement Base & Root Nodes (P0)**
-  - [x] 2.1 Create `AstNode` base class with `id` and `visibleWhen`
+  - [x] 2.1 Create `App` base class with `id` and `visibleWhen`
   - [x] 2.2 Implement `ScreenDefinition` and `AppBarNode`
   - [x] 2.3 Implement P0 Layout & Primitive Nodes (in `ast_node.dart`)
   - [x] 2.4 Write tests for root node parsing and serialization
@@ -31,7 +31,7 @@
   - [x] 4.5 Write unit tests for node serialization (Complete in `ast_node_test.dart`)
 
 - [ ] 5. **Update CLI & Emitter**
-  - [x] 5.1 Update `syntaxify build` to use new `AstNode` tree (Updated `MetaParser`, `ParseResult`, `BuildAll`, `SyntaxGenerator`)
+  - [x] 5.1 Update `syntaxify build` to use new `App` tree (Updated `MetaParser`, `ParseResult`, `BuildAll`, `SyntaxGenerator`)
   - [x] 5.2 Implement basic Flutter emission for P0 nodes (Verified via `LayoutEmitter`)
   - [x] 5.3 Verify `flutter analyze` on generated code (Verified via `screen_generator_test.dart`)
 

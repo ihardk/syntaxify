@@ -11,34 +11,34 @@ part of 'layout_node.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-LayoutNode _$LayoutNodeFromJson(Map<String, dynamic> json) {
+App _$AppFromJson(Map<String, dynamic> json) {
   switch (json['runtimeType']) {
     case 'structural':
-      return StructuralLayoutNode.fromJson(json);
+      return StructuralApp.fromJson(json);
     case 'primitive':
-      return PrimitiveLayoutNode.fromJson(json);
+      return PrimitiveApp.fromJson(json);
     case 'interactive':
-      return InteractiveLayoutNode.fromJson(json);
+      return InteractiveApp.fromJson(json);
     case 'custom':
-      return CustomLayoutNode.fromJson(json);
+      return CustomApp.fromJson(json);
     case 'appBar':
       return AppBarNode.fromJson(json);
 
     default:
-      throw CheckedFromJsonException(json, 'runtimeType', 'LayoutNode',
+      throw CheckedFromJsonException(json, 'runtimeType', 'App',
           'Invalid union type "${json['runtimeType']}"!');
   }
 }
 
 /// @nodoc
-mixin _$LayoutNode {
-  /// Serializes this LayoutNode to a JSON map.
+mixin _$App {
+  /// Serializes this App to a JSON map.
   Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is LayoutNode);
+        (other.runtimeType == runtimeType && other is App);
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -47,17 +47,17 @@ mixin _$LayoutNode {
 
   @override
   String toString() {
-    return 'LayoutNode()';
+    return 'App()';
   }
 }
 
 /// @nodoc
-class $LayoutNodeCopyWith<$Res> {
-  $LayoutNodeCopyWith(LayoutNode _, $Res Function(LayoutNode) __);
+class $AppCopyWith<$Res> {
+  $AppCopyWith(App _, $Res Function(App) __);
 }
 
-/// Adds pattern-matching-related methods to [LayoutNode].
-extension LayoutNodePatterns on LayoutNode {
+/// Adds pattern-matching-related methods to [App].
+extension AppPatterns on App {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -72,22 +72,22 @@ extension LayoutNodePatterns on LayoutNode {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(StructuralLayoutNode value)? structural,
-    TResult Function(PrimitiveLayoutNode value)? primitive,
-    TResult Function(InteractiveLayoutNode value)? interactive,
-    TResult Function(CustomLayoutNode value)? custom,
+    TResult Function(StructuralApp value)? structural,
+    TResult Function(PrimitiveApp value)? primitive,
+    TResult Function(InteractiveApp value)? interactive,
+    TResult Function(CustomApp value)? custom,
     TResult Function(AppBarNode value)? appBar,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case StructuralLayoutNode() when structural != null:
+      case StructuralApp() when structural != null:
         return structural(_that);
-      case PrimitiveLayoutNode() when primitive != null:
+      case PrimitiveApp() when primitive != null:
         return primitive(_that);
-      case InteractiveLayoutNode() when interactive != null:
+      case InteractiveApp() when interactive != null:
         return interactive(_that);
-      case CustomLayoutNode() when custom != null:
+      case CustomApp() when custom != null:
         return custom(_that);
       case AppBarNode() when appBar != null:
         return appBar(_that);
@@ -111,21 +111,21 @@ extension LayoutNodePatterns on LayoutNode {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(StructuralLayoutNode value) structural,
-    required TResult Function(PrimitiveLayoutNode value) primitive,
-    required TResult Function(InteractiveLayoutNode value) interactive,
-    required TResult Function(CustomLayoutNode value) custom,
+    required TResult Function(StructuralApp value) structural,
+    required TResult Function(PrimitiveApp value) primitive,
+    required TResult Function(InteractiveApp value) interactive,
+    required TResult Function(CustomApp value) custom,
     required TResult Function(AppBarNode value) appBar,
   }) {
     final _that = this;
     switch (_that) {
-      case StructuralLayoutNode():
+      case StructuralApp():
         return structural(_that);
-      case PrimitiveLayoutNode():
+      case PrimitiveApp():
         return primitive(_that);
-      case InteractiveLayoutNode():
+      case InteractiveApp():
         return interactive(_that);
-      case CustomLayoutNode():
+      case CustomApp():
         return custom(_that);
       case AppBarNode():
         return appBar(_that);
@@ -146,21 +146,21 @@ extension LayoutNodePatterns on LayoutNode {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(StructuralLayoutNode value)? structural,
-    TResult? Function(PrimitiveLayoutNode value)? primitive,
-    TResult? Function(InteractiveLayoutNode value)? interactive,
-    TResult? Function(CustomLayoutNode value)? custom,
+    TResult? Function(StructuralApp value)? structural,
+    TResult? Function(PrimitiveApp value)? primitive,
+    TResult? Function(InteractiveApp value)? interactive,
+    TResult? Function(CustomApp value)? custom,
     TResult? Function(AppBarNode value)? appBar,
   }) {
     final _that = this;
     switch (_that) {
-      case StructuralLayoutNode() when structural != null:
+      case StructuralApp() when structural != null:
         return structural(_that);
-      case PrimitiveLayoutNode() when primitive != null:
+      case PrimitiveApp() when primitive != null:
         return primitive(_that);
-      case InteractiveLayoutNode() when interactive != null:
+      case InteractiveApp() when interactive != null:
         return interactive(_that);
-      case CustomLayoutNode() when custom != null:
+      case CustomApp() when custom != null:
         return custom(_that);
       case AppBarNode() when appBar != null:
         return appBar(_that);
@@ -194,13 +194,13 @@ extension LayoutNodePatterns on LayoutNode {
   }) {
     final _that = this;
     switch (_that) {
-      case StructuralLayoutNode() when structural != null:
+      case StructuralApp() when structural != null:
         return structural(_that.node, _that.meta);
-      case PrimitiveLayoutNode() when primitive != null:
+      case PrimitiveApp() when primitive != null:
         return primitive(_that.node, _that.meta);
-      case InteractiveLayoutNode() when interactive != null:
+      case InteractiveApp() when interactive != null:
         return interactive(_that.node, _that.meta);
-      case CustomLayoutNode() when custom != null:
+      case CustomApp() when custom != null:
         return custom(_that.node, _that.meta);
       case AppBarNode() when appBar != null:
         return appBar(_that.title, _that.actions, _that.leadingIcon,
@@ -237,13 +237,13 @@ extension LayoutNodePatterns on LayoutNode {
   }) {
     final _that = this;
     switch (_that) {
-      case StructuralLayoutNode():
+      case StructuralApp():
         return structural(_that.node, _that.meta);
-      case PrimitiveLayoutNode():
+      case PrimitiveApp():
         return primitive(_that.node, _that.meta);
-      case InteractiveLayoutNode():
+      case InteractiveApp():
         return interactive(_that.node, _that.meta);
-      case CustomLayoutNode():
+      case CustomApp():
         return custom(_that.node, _that.meta);
       case AppBarNode():
         return appBar(_that.title, _that.actions, _that.leadingIcon,
@@ -275,13 +275,13 @@ extension LayoutNodePatterns on LayoutNode {
   }) {
     final _that = this;
     switch (_that) {
-      case StructuralLayoutNode() when structural != null:
+      case StructuralApp() when structural != null:
         return structural(_that.node, _that.meta);
-      case PrimitiveLayoutNode() when primitive != null:
+      case PrimitiveApp() when primitive != null:
         return primitive(_that.node, _that.meta);
-      case InteractiveLayoutNode() when interactive != null:
+      case InteractiveApp() when interactive != null:
         return interactive(_that.node, _that.meta);
-      case CustomLayoutNode() when custom != null:
+      case CustomApp() when custom != null:
         return custom(_that.node, _that.meta);
       case AppBarNode() when appBar != null:
         return appBar(_that.title, _that.actions, _that.leadingIcon,
@@ -294,14 +294,14 @@ extension LayoutNodePatterns on LayoutNode {
 
 /// @nodoc
 @JsonSerializable()
-class StructuralLayoutNode implements LayoutNode {
-  const StructuralLayoutNode(
+class StructuralApp implements App {
+  const StructuralApp(
       {required this.node,
       this.meta = const NodeMetadata(),
       final String? $type})
       : $type = $type ?? 'structural';
-  factory StructuralLayoutNode.fromJson(Map<String, dynamic> json) =>
-      _$StructuralLayoutNodeFromJson(json);
+  factory StructuralApp.fromJson(Map<String, dynamic> json) =>
+      _$StructuralAppFromJson(json);
 
   final StructuralNode node;
   @JsonKey()
@@ -310,17 +310,16 @@ class StructuralLayoutNode implements LayoutNode {
   @JsonKey(name: 'runtimeType')
   final String $type;
 
-  /// Create a copy of LayoutNode
+  /// Create a copy of App
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $StructuralLayoutNodeCopyWith<StructuralLayoutNode> get copyWith =>
-      _$StructuralLayoutNodeCopyWithImpl<StructuralLayoutNode>(
-          this, _$identity);
+  $StructuralAppCopyWith<StructuralApp> get copyWith =>
+      _$StructuralAppCopyWithImpl<StructuralApp>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$StructuralLayoutNodeToJson(
+    return _$StructuralAppToJson(
       this,
     );
   }
@@ -329,7 +328,7 @@ class StructuralLayoutNode implements LayoutNode {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is StructuralLayoutNode &&
+            other is StructuralApp &&
             (identical(other.node, node) || other.node == node) &&
             (identical(other.meta, meta) || other.meta == meta));
   }
@@ -340,16 +339,16 @@ class StructuralLayoutNode implements LayoutNode {
 
   @override
   String toString() {
-    return 'LayoutNode.structural(node: $node, meta: $meta)';
+    return 'App.structural(node: $node, meta: $meta)';
   }
 }
 
 /// @nodoc
-abstract mixin class $StructuralLayoutNodeCopyWith<$Res>
-    implements $LayoutNodeCopyWith<$Res> {
-  factory $StructuralLayoutNodeCopyWith(StructuralLayoutNode value,
-          $Res Function(StructuralLayoutNode) _then) =
-      _$StructuralLayoutNodeCopyWithImpl;
+abstract mixin class $StructuralAppCopyWith<$Res>
+    implements $AppCopyWith<$Res> {
+  factory $StructuralAppCopyWith(
+          StructuralApp value, $Res Function(StructuralApp) _then) =
+      _$StructuralAppCopyWithImpl;
   @useResult
   $Res call({StructuralNode node, NodeMetadata meta});
 
@@ -358,21 +357,21 @@ abstract mixin class $StructuralLayoutNodeCopyWith<$Res>
 }
 
 /// @nodoc
-class _$StructuralLayoutNodeCopyWithImpl<$Res>
-    implements $StructuralLayoutNodeCopyWith<$Res> {
-  _$StructuralLayoutNodeCopyWithImpl(this._self, this._then);
+class _$StructuralAppCopyWithImpl<$Res>
+    implements $StructuralAppCopyWith<$Res> {
+  _$StructuralAppCopyWithImpl(this._self, this._then);
 
-  final StructuralLayoutNode _self;
-  final $Res Function(StructuralLayoutNode) _then;
+  final StructuralApp _self;
+  final $Res Function(StructuralApp) _then;
 
-  /// Create a copy of LayoutNode
+  /// Create a copy of App
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
     Object? node = null,
     Object? meta = null,
   }) {
-    return _then(StructuralLayoutNode(
+    return _then(StructuralApp(
       node: null == node
           ? _self.node
           : node // ignore: cast_nullable_to_non_nullable
@@ -384,7 +383,7 @@ class _$StructuralLayoutNodeCopyWithImpl<$Res>
     ));
   }
 
-  /// Create a copy of LayoutNode
+  /// Create a copy of App
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -394,7 +393,7 @@ class _$StructuralLayoutNodeCopyWithImpl<$Res>
     });
   }
 
-  /// Create a copy of LayoutNode
+  /// Create a copy of App
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -407,14 +406,14 @@ class _$StructuralLayoutNodeCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class PrimitiveLayoutNode implements LayoutNode {
-  const PrimitiveLayoutNode(
+class PrimitiveApp implements App {
+  const PrimitiveApp(
       {required this.node,
       this.meta = const NodeMetadata(),
       final String? $type})
       : $type = $type ?? 'primitive';
-  factory PrimitiveLayoutNode.fromJson(Map<String, dynamic> json) =>
-      _$PrimitiveLayoutNodeFromJson(json);
+  factory PrimitiveApp.fromJson(Map<String, dynamic> json) =>
+      _$PrimitiveAppFromJson(json);
 
   final PrimitiveNode node;
   @JsonKey()
@@ -423,16 +422,16 @@ class PrimitiveLayoutNode implements LayoutNode {
   @JsonKey(name: 'runtimeType')
   final String $type;
 
-  /// Create a copy of LayoutNode
+  /// Create a copy of App
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $PrimitiveLayoutNodeCopyWith<PrimitiveLayoutNode> get copyWith =>
-      _$PrimitiveLayoutNodeCopyWithImpl<PrimitiveLayoutNode>(this, _$identity);
+  $PrimitiveAppCopyWith<PrimitiveApp> get copyWith =>
+      _$PrimitiveAppCopyWithImpl<PrimitiveApp>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$PrimitiveLayoutNodeToJson(
+    return _$PrimitiveAppToJson(
       this,
     );
   }
@@ -441,7 +440,7 @@ class PrimitiveLayoutNode implements LayoutNode {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is PrimitiveLayoutNode &&
+            other is PrimitiveApp &&
             (identical(other.node, node) || other.node == node) &&
             (identical(other.meta, meta) || other.meta == meta));
   }
@@ -452,16 +451,15 @@ class PrimitiveLayoutNode implements LayoutNode {
 
   @override
   String toString() {
-    return 'LayoutNode.primitive(node: $node, meta: $meta)';
+    return 'App.primitive(node: $node, meta: $meta)';
   }
 }
 
 /// @nodoc
-abstract mixin class $PrimitiveLayoutNodeCopyWith<$Res>
-    implements $LayoutNodeCopyWith<$Res> {
-  factory $PrimitiveLayoutNodeCopyWith(
-          PrimitiveLayoutNode value, $Res Function(PrimitiveLayoutNode) _then) =
-      _$PrimitiveLayoutNodeCopyWithImpl;
+abstract mixin class $PrimitiveAppCopyWith<$Res> implements $AppCopyWith<$Res> {
+  factory $PrimitiveAppCopyWith(
+          PrimitiveApp value, $Res Function(PrimitiveApp) _then) =
+      _$PrimitiveAppCopyWithImpl;
   @useResult
   $Res call({PrimitiveNode node, NodeMetadata meta});
 
@@ -470,21 +468,20 @@ abstract mixin class $PrimitiveLayoutNodeCopyWith<$Res>
 }
 
 /// @nodoc
-class _$PrimitiveLayoutNodeCopyWithImpl<$Res>
-    implements $PrimitiveLayoutNodeCopyWith<$Res> {
-  _$PrimitiveLayoutNodeCopyWithImpl(this._self, this._then);
+class _$PrimitiveAppCopyWithImpl<$Res> implements $PrimitiveAppCopyWith<$Res> {
+  _$PrimitiveAppCopyWithImpl(this._self, this._then);
 
-  final PrimitiveLayoutNode _self;
-  final $Res Function(PrimitiveLayoutNode) _then;
+  final PrimitiveApp _self;
+  final $Res Function(PrimitiveApp) _then;
 
-  /// Create a copy of LayoutNode
+  /// Create a copy of App
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
     Object? node = null,
     Object? meta = null,
   }) {
-    return _then(PrimitiveLayoutNode(
+    return _then(PrimitiveApp(
       node: null == node
           ? _self.node
           : node // ignore: cast_nullable_to_non_nullable
@@ -496,7 +493,7 @@ class _$PrimitiveLayoutNodeCopyWithImpl<$Res>
     ));
   }
 
-  /// Create a copy of LayoutNode
+  /// Create a copy of App
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -506,7 +503,7 @@ class _$PrimitiveLayoutNodeCopyWithImpl<$Res>
     });
   }
 
-  /// Create a copy of LayoutNode
+  /// Create a copy of App
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -519,14 +516,14 @@ class _$PrimitiveLayoutNodeCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class InteractiveLayoutNode implements LayoutNode {
-  const InteractiveLayoutNode(
+class InteractiveApp implements App {
+  const InteractiveApp(
       {required this.node,
       this.meta = const NodeMetadata(),
       final String? $type})
       : $type = $type ?? 'interactive';
-  factory InteractiveLayoutNode.fromJson(Map<String, dynamic> json) =>
-      _$InteractiveLayoutNodeFromJson(json);
+  factory InteractiveApp.fromJson(Map<String, dynamic> json) =>
+      _$InteractiveAppFromJson(json);
 
   final InteractiveNode node;
   @JsonKey()
@@ -535,17 +532,16 @@ class InteractiveLayoutNode implements LayoutNode {
   @JsonKey(name: 'runtimeType')
   final String $type;
 
-  /// Create a copy of LayoutNode
+  /// Create a copy of App
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $InteractiveLayoutNodeCopyWith<InteractiveLayoutNode> get copyWith =>
-      _$InteractiveLayoutNodeCopyWithImpl<InteractiveLayoutNode>(
-          this, _$identity);
+  $InteractiveAppCopyWith<InteractiveApp> get copyWith =>
+      _$InteractiveAppCopyWithImpl<InteractiveApp>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$InteractiveLayoutNodeToJson(
+    return _$InteractiveAppToJson(
       this,
     );
   }
@@ -554,7 +550,7 @@ class InteractiveLayoutNode implements LayoutNode {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is InteractiveLayoutNode &&
+            other is InteractiveApp &&
             (identical(other.node, node) || other.node == node) &&
             (identical(other.meta, meta) || other.meta == meta));
   }
@@ -565,16 +561,16 @@ class InteractiveLayoutNode implements LayoutNode {
 
   @override
   String toString() {
-    return 'LayoutNode.interactive(node: $node, meta: $meta)';
+    return 'App.interactive(node: $node, meta: $meta)';
   }
 }
 
 /// @nodoc
-abstract mixin class $InteractiveLayoutNodeCopyWith<$Res>
-    implements $LayoutNodeCopyWith<$Res> {
-  factory $InteractiveLayoutNodeCopyWith(InteractiveLayoutNode value,
-          $Res Function(InteractiveLayoutNode) _then) =
-      _$InteractiveLayoutNodeCopyWithImpl;
+abstract mixin class $InteractiveAppCopyWith<$Res>
+    implements $AppCopyWith<$Res> {
+  factory $InteractiveAppCopyWith(
+          InteractiveApp value, $Res Function(InteractiveApp) _then) =
+      _$InteractiveAppCopyWithImpl;
   @useResult
   $Res call({InteractiveNode node, NodeMetadata meta});
 
@@ -583,21 +579,21 @@ abstract mixin class $InteractiveLayoutNodeCopyWith<$Res>
 }
 
 /// @nodoc
-class _$InteractiveLayoutNodeCopyWithImpl<$Res>
-    implements $InteractiveLayoutNodeCopyWith<$Res> {
-  _$InteractiveLayoutNodeCopyWithImpl(this._self, this._then);
+class _$InteractiveAppCopyWithImpl<$Res>
+    implements $InteractiveAppCopyWith<$Res> {
+  _$InteractiveAppCopyWithImpl(this._self, this._then);
 
-  final InteractiveLayoutNode _self;
-  final $Res Function(InteractiveLayoutNode) _then;
+  final InteractiveApp _self;
+  final $Res Function(InteractiveApp) _then;
 
-  /// Create a copy of LayoutNode
+  /// Create a copy of App
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
     Object? node = null,
     Object? meta = null,
   }) {
-    return _then(InteractiveLayoutNode(
+    return _then(InteractiveApp(
       node: null == node
           ? _self.node
           : node // ignore: cast_nullable_to_non_nullable
@@ -609,7 +605,7 @@ class _$InteractiveLayoutNodeCopyWithImpl<$Res>
     ));
   }
 
-  /// Create a copy of LayoutNode
+  /// Create a copy of App
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -619,7 +615,7 @@ class _$InteractiveLayoutNodeCopyWithImpl<$Res>
     });
   }
 
-  /// Create a copy of LayoutNode
+  /// Create a copy of App
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -632,14 +628,14 @@ class _$InteractiveLayoutNodeCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class CustomLayoutNode implements LayoutNode {
-  const CustomLayoutNode(
+class CustomApp implements App {
+  const CustomApp(
       {required this.node,
       this.meta = const NodeMetadata(),
       final String? $type})
       : $type = $type ?? 'custom';
-  factory CustomLayoutNode.fromJson(Map<String, dynamic> json) =>
-      _$CustomLayoutNodeFromJson(json);
+  factory CustomApp.fromJson(Map<String, dynamic> json) =>
+      _$CustomAppFromJson(json);
 
   final CustomNode node;
   @JsonKey()
@@ -648,16 +644,16 @@ class CustomLayoutNode implements LayoutNode {
   @JsonKey(name: 'runtimeType')
   final String $type;
 
-  /// Create a copy of LayoutNode
+  /// Create a copy of App
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $CustomLayoutNodeCopyWith<CustomLayoutNode> get copyWith =>
-      _$CustomLayoutNodeCopyWithImpl<CustomLayoutNode>(this, _$identity);
+  $CustomAppCopyWith<CustomApp> get copyWith =>
+      _$CustomAppCopyWithImpl<CustomApp>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$CustomLayoutNodeToJson(
+    return _$CustomAppToJson(
       this,
     );
   }
@@ -666,7 +662,7 @@ class CustomLayoutNode implements LayoutNode {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is CustomLayoutNode &&
+            other is CustomApp &&
             (identical(other.node, node) || other.node == node) &&
             (identical(other.meta, meta) || other.meta == meta));
   }
@@ -677,16 +673,14 @@ class CustomLayoutNode implements LayoutNode {
 
   @override
   String toString() {
-    return 'LayoutNode.custom(node: $node, meta: $meta)';
+    return 'App.custom(node: $node, meta: $meta)';
   }
 }
 
 /// @nodoc
-abstract mixin class $CustomLayoutNodeCopyWith<$Res>
-    implements $LayoutNodeCopyWith<$Res> {
-  factory $CustomLayoutNodeCopyWith(
-          CustomLayoutNode value, $Res Function(CustomLayoutNode) _then) =
-      _$CustomLayoutNodeCopyWithImpl;
+abstract mixin class $CustomAppCopyWith<$Res> implements $AppCopyWith<$Res> {
+  factory $CustomAppCopyWith(CustomApp value, $Res Function(CustomApp) _then) =
+      _$CustomAppCopyWithImpl;
   @useResult
   $Res call({CustomNode node, NodeMetadata meta});
 
@@ -695,21 +689,20 @@ abstract mixin class $CustomLayoutNodeCopyWith<$Res>
 }
 
 /// @nodoc
-class _$CustomLayoutNodeCopyWithImpl<$Res>
-    implements $CustomLayoutNodeCopyWith<$Res> {
-  _$CustomLayoutNodeCopyWithImpl(this._self, this._then);
+class _$CustomAppCopyWithImpl<$Res> implements $CustomAppCopyWith<$Res> {
+  _$CustomAppCopyWithImpl(this._self, this._then);
 
-  final CustomLayoutNode _self;
-  final $Res Function(CustomLayoutNode) _then;
+  final CustomApp _self;
+  final $Res Function(CustomApp) _then;
 
-  /// Create a copy of LayoutNode
+  /// Create a copy of App
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
     Object? node = null,
     Object? meta = null,
   }) {
-    return _then(CustomLayoutNode(
+    return _then(CustomApp(
       node: null == node
           ? _self.node
           : node // ignore: cast_nullable_to_non_nullable
@@ -721,7 +714,7 @@ class _$CustomLayoutNodeCopyWithImpl<$Res>
     ));
   }
 
-  /// Create a copy of LayoutNode
+  /// Create a copy of App
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -731,7 +724,7 @@ class _$CustomLayoutNodeCopyWithImpl<$Res>
     });
   }
 
-  /// Create a copy of LayoutNode
+  /// Create a copy of App
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -744,7 +737,7 @@ class _$CustomLayoutNodeCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class AppBarNode implements LayoutNode {
+class AppBarNode implements App {
   const AppBarNode(
       {this.title,
       final List<AppBarAction>? actions,
@@ -772,7 +765,7 @@ class AppBarNode implements LayoutNode {
   @JsonKey(name: 'runtimeType')
   final String $type;
 
-  /// Create a copy of LayoutNode
+  /// Create a copy of App
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
@@ -810,13 +803,12 @@ class AppBarNode implements LayoutNode {
 
   @override
   String toString() {
-    return 'LayoutNode.appBar(title: $title, actions: $actions, leadingIcon: $leadingIcon, onLeadingPressed: $onLeadingPressed)';
+    return 'App.appBar(title: $title, actions: $actions, leadingIcon: $leadingIcon, onLeadingPressed: $onLeadingPressed)';
   }
 }
 
 /// @nodoc
-abstract mixin class $AppBarNodeCopyWith<$Res>
-    implements $LayoutNodeCopyWith<$Res> {
+abstract mixin class $AppBarNodeCopyWith<$Res> implements $AppCopyWith<$Res> {
   factory $AppBarNodeCopyWith(
           AppBarNode value, $Res Function(AppBarNode) _then) =
       _$AppBarNodeCopyWithImpl;
@@ -835,7 +827,7 @@ class _$AppBarNodeCopyWithImpl<$Res> implements $AppBarNodeCopyWith<$Res> {
   final AppBarNode _self;
   final $Res Function(AppBarNode) _then;
 
-  /// Create a copy of LayoutNode
+  /// Create a copy of App
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
