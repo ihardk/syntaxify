@@ -9,17 +9,20 @@ part 'screen_definition.g.dart';
 /// Create instances of this class in `.screen.dart` files:
 /// ```dart
 /// final loginScreen = ScreenDefinition(
-///   id: 'login',
 ///   layout: App.column(children: [
 ///     App.text(text: 'Welcome'),
 ///     App.button(label: 'Login', onPressed: 'handleLogin'),
 ///   ]),
 /// );
 /// ```
+///
+/// The `id` is optional - if not provided, it will be inferred from the
+/// variable name (e.g., `loginScreen` → id: 'loginScreen').
 @freezed
 sealed class ScreenDefinition with _$ScreenDefinition {
   const factory ScreenDefinition({
-    required String id,
+    /// Screen identifier. If not provided, inferred from variable name.
+    @Default('') String id,
     required App layout,
     App? appBar,
     String? padding, // Token

@@ -111,16 +111,28 @@ class _AstNodeVisitor extends RecursiveAstVisitor<void> {
       final properties = <ComponentProp>[];
       final variants = <String>[];
 
-      // Extract explicit name from annotation
+      // Extract explicit name and variants from annotation
       String? explicitName;
       final args = metaAnnotation.arguments?.arguments;
       if (args != null) {
         for (final arg in args) {
           if (arg is analyzer.NamedExpression) {
-            if (arg.name.label.name == 'name') {
+            final argName = arg.name.label.name;
+
+            if (argName == 'name') {
               if (arg.expression is analyzer.StringLiteral) {
                 explicitName =
                     (arg.expression as analyzer.StringLiteral).stringValue;
+              }
+            } else if (argName == 'variants') {
+              // Extract variants from @SyntaxComponent(variants: ['a', 'b', 'c'])
+              if (arg.expression is analyzer.ListLiteral) {
+                final listLiteral = arg.expression as analyzer.ListLiteral;
+                for (final element in listLiteral.elements) {
+                  if (element is analyzer.StringLiteral) {
+                    variants.add(element.stringValue ?? '');
+                  }
+                }
               }
             }
           }
@@ -185,8 +197,12 @@ class _AstNodeVisitor extends RecursiveAstVisitor<void> {
 
   ComponentProp? _extractProperty(analyzer.VariableDeclaration variable,
       analyzer.FieldDeclaration declaration) {
-    final isRequired = declaration.metadata.any(
+    // Check for explicit @Required or @Optional annotations first
+    final hasRequiredAnnotation = declaration.metadata.any(
       (a) => a.name.toSource() == 'Required',
+    );
+    final hasOptionalAnnotation = declaration.metadata.any(
+      (a) => a.name.toSource() == 'Optional',
     );
 
     // Check for @Default annotation
@@ -208,6 +224,20 @@ class _AstNodeVisitor extends RecursiveAstVisitor<void> {
 
     final typeNode = declaration.fields.type;
     final typeName = typeNode?.toSource() ?? 'dynamic';
+
+    // Convention-based parsing:
+    // 1. If @Required annotation exists → required
+    // 2. If @Optional annotation exists → optional
+    // 3. Otherwise, use type nullability: String? → optional, String → required
+    bool isRequired;
+    if (hasRequiredAnnotation) {
+      isRequired = true;
+    } else if (hasOptionalAnnotation) {
+      isRequired = false;
+    } else {
+      // Convention: nullable type (ends with ?) means optional
+      isRequired = !typeName.endsWith('?');
+    }
 
     return ComponentProp(
       name: variable.name.lexeme,

@@ -145,7 +145,7 @@ void main() {
       test('emits AppText with variant', () {
         final node = App.text(
           text: 'Title',
-          variant: TextVariant.headlineMedium,
+          variant: 'headlineMedium',
         );
 
         final code = emitToString(node);
@@ -189,7 +189,7 @@ void main() {
       test('emits AppText with all parameters', () {
         final node = App.text(
           text: 'Full',
-          variant: TextVariant.bodyLarge,
+          variant: 'bodyLarge',
           align: SyntaxTextAlign.justify,
           maxLines: 3,
           overflow: SyntaxTextOverflow.fade,
@@ -572,8 +572,15 @@ void main() {
     });
 
     group('All variants', () {
-      test('emits all TextVariant values', () {
-        for (final variant in TextVariant.values) {
+      test('emits all text variant values', () {
+        final variants = [
+          'headlineLarge',
+          'headlineMedium',
+          'bodyLarge',
+          'bodyMedium',
+          'labelSmall'
+        ];
+        for (final variant in variants) {
           final node = App.text(
             text: 'Test',
             variant: variant,
@@ -581,7 +588,7 @@ void main() {
 
           final code = emitToString(node);
 
-          expect(code, contains('TextVariant.${variant.name}'));
+          expect(code, contains('TextVariant.$variant'));
         }
       });
 

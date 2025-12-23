@@ -83,7 +83,7 @@ void main() {
     test('builds screen with ALL primitive nodes', () {
       // Test all 8 primitive nodes
       final layout = App.column(children: [
-        App.text(text: 'Hello World', variant: TextVariant.headlineMedium),
+        App.text(text: 'Hello World', variant: 'headlineMedium'),
         App.icon(name: 'star', size: IconSize.md),
         App.spacer(size: SpacerSize.lg),
         App.image(src: 'assets/logo.png', width: 100, height: 100),
@@ -172,7 +172,7 @@ void main() {
             child: App.row(
               mainAxisAlignment: MainAlignment.spaceBetween,
               children: [
-                App.text(text: 'Settings', variant: TextVariant.headlineMedium),
+                App.text(text: 'Settings', variant: 'headlineMedium'),
                 App.iconButton(icon: 'close', onPressed: 'handleClose'),
               ],
             ),

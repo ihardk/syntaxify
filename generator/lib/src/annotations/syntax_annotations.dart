@@ -16,10 +16,19 @@ class SyntaxComponent {
   /// Optional description of the component.
   final String? description;
 
-  const SyntaxComponent({this.name, this.description});
+  /// Variant values for this component.
+  /// The generator will create an enum and convenience constructors.
+  /// Example: `variants: ['primary', 'secondary', 'outlined']`
+  final List<String>? variants;
+
+  const SyntaxComponent({this.name, this.description, this.variants});
 }
 
 /// Marks a field as required in the generated widget.
+///
+/// **Deprecated:** Use non-nullable types instead (e.g., `String` instead of `String?`).
+@Deprecated(
+    'Use non-nullable types instead. String → required, String? → optional')
 class Required {
   /// Optional documentation for the field.
   final String? doc;
@@ -28,6 +37,9 @@ class Required {
 }
 
 /// Marks a field as optional in the generated widget.
+///
+/// **Deprecated:** Use nullable types instead (e.g., `String?`).
+@Deprecated('Use nullable types instead. String? → optional')
 class Optional {
   /// Optional documentation for the field.
   final String? doc;
@@ -36,6 +48,9 @@ class Optional {
 }
 
 /// Specifies a default value for an optional field.
+///
+/// **Deprecated:** Use constructor default values instead.
+@Deprecated('Use constructor default values instead: this.field = defaultValue')
 class Default {
   /// The default value as a string (will be parsed appropriately).
   final String value;
@@ -77,6 +92,9 @@ class ImageMapping {
 
 /// Marks an enum as a Variant type.
 ///
+/// **Deprecated:** Use @SyntaxComponent(variants: [...]) instead.
+/// Variants defined in @SyntaxComponent will automatically generate enums.
+///
 /// Enums marked with @Variant will have helper constructors generated
 /// for each value. For example:
 ///
@@ -86,6 +104,7 @@ class ImageMapping {
 /// ```
 ///
 /// Will generate: `AppButton.primary()`, `AppButton.secondary()`, etc.
+@Deprecated('Use @SyntaxComponent(variants: [...]) instead')
 class Variant {
   const Variant();
 }

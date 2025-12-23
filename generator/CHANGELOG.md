@@ -1,5 +1,57 @@
 # Changelog
 
+## 0.2.0-beta - 2025-12-23
+
+### 🎯 Major Features
+
+**Dynamic Design System (Custom Component Extensibility)**
+- **Any component is now fully integrated with the design system!**
+  - Add `supercard.meta.dart` → Generator creates `renderSuperCard()` in `DesignStyle`
+  - Automatically generates stub renderers (`MaterialSuperCardRenderer`, etc.)
+  - Your custom components work with Material/Cupertino/Neo out of the box
+- **`DesignSystemGenerator`**: New generator that dynamically builds:
+  - `design_style.dart` - Abstract base class with ALL render methods
+  - `*_style.dart` - Concrete style classes mixing in ALL renderers
+  - `*/material_renderer.dart` - Stub implementations for new components
+- **Zero Boilerplate**: Just define a `.meta.dart` file, run `build`, implement the stub
+
+**Convention-Based Meta Parsing (DX Improvements)**
+- **Non-nullable type = Required**: `final String label;` is required
+- **Nullable type = Optional**: `final String? hint;` is optional
+- **Constructor defaults = Defaults**: `final bool isLoading = false;` uses `false`
+- **Deprecated old annotations**: `@Required`, `@Optional`, `@Default` still work but deprecated
+
+**Unified Variant System**
+- **`@SyntaxComponent(variants: [...])`**: Define variants inline
+- **EnumGenerator**: Generates `ButtonVariant` enum from `variants: ['primary', 'secondary']`
+- **Output**: `generated/variants/button_variant.dart`
+
+### 🔧 Improvements
+
+**Better Default Value Handling**
+- Generator now respects `defaultValue` when determining nullability
+- Fixes `invalid_implementation_override` errors for optional params with defaults
+
+**Reduced Import Complexity**
+- `TextVariant` collision fixed (single source of truth)
+- Meta files only need `import 'package:syntaxify/syntaxify.dart';`
+
+### 📦 New Files
+
+| File                                              | Purpose                          |
+| ------------------------------------------------- | -------------------------------- |
+| `lib/src/generators/design_system_generator.dart` | Dynamic design system generation |
+| `lib/src/generators/enum_generator.dart`          | Generates variant enums          |
+| `lib/syntaxify/design_system/components/*/`       | Generated renderer stubs         |
+
+### 📊 Statistics
+
+- **283+ tests** passing
+- **7 components** × **3 styles** = **21 styled variants**
+- **Unlimited custom components** now possible
+
+---
+
 ## 0.1.0-alpha.10 - 2025-12-21
 
 ### 🎯 Major Features

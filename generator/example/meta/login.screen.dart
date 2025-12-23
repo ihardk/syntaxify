@@ -12,7 +12,7 @@ final loginScreen = ScreenDefinition(
     children: [
       App.text(
         text: 'Welcome Back',
-        variant: TextVariant.headlineMedium,
+        variant: 'headlineMedium',
       ),
       App.spacer(flex: 1),
       App.textField(

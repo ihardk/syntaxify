@@ -1,4 +1,5 @@
-import 'package:example/syntaxify/design_system/design_system.dart';
+import 'package:example/syntaxify/design_system/design_system.dart'
+    hide TextVariant;
 import 'package:syntaxify/syntaxify.dart';
 
 /// Home screen definition - main dashboard after login
@@ -9,11 +10,11 @@ final homeScreen = ScreenDefinition(
     children: [
       App.text(
         text: 'Welcome Back!',
-        variant: TextVariant.headlineMedium,
+        variant: 'headlineMedium',
       ),
       App.text(
         text: 'Here\'s your overview for today',
-        variant: TextVariant.bodyMedium,
+        variant: 'bodyMedium',
       ),
       App.spacer(size: SpacerSize.lg),
 
@@ -23,20 +24,20 @@ final homeScreen = ScreenDefinition(
         children: [
           App.column(
             children: [
-              App.text(text: '12', variant: TextVariant.headlineMedium),
-              App.text(text: 'Tasks', variant: TextVariant.labelSmall),
+              App.text(text: '12', variant: 'headlineMedium'),
+              App.text(text: 'Tasks', variant: 'labelSmall'),
             ],
           ),
           App.column(
             children: [
-              App.text(text: '5', variant: TextVariant.headlineMedium),
-              App.text(text: 'Completed', variant: TextVariant.labelSmall),
+              App.text(text: '5', variant: 'headlineMedium'),
+              App.text(text: 'Completed', variant: 'labelSmall'),
             ],
           ),
           App.column(
             children: [
-              App.text(text: '3', variant: TextVariant.headlineMedium),
-              App.text(text: 'Pending', variant: TextVariant.labelSmall),
+              App.text(text: '3', variant: 'headlineMedium'),
+              App.text(text: 'Pending', variant: 'labelSmall'),
             ],
           ),
         ],

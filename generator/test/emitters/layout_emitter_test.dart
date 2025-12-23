@@ -21,7 +21,7 @@ void main() {
     test('emits Text widget', () {
       final node = App.text(
         text: 'Hello World',
-        variant: TextVariant.headlineMedium,
+        variant: 'headlineMedium',
       );
 
       final code = emit(node);

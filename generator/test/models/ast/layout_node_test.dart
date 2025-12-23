@@ -39,7 +39,7 @@ void main() {
     test('instantiates TextNode', () {
       final node = App.text(
         text: 'Hello World',
-        variant: TextVariant.headlineMedium,
+        variant: 'headlineMedium',
       );
 
       node.map(
@@ -47,7 +47,7 @@ void main() {
           p.node.map(
             text: (t) {
               expect(t.text, equals('Hello World'));
-              expect(t.variant, equals(TextVariant.headlineMedium));
+              expect(t.variant, equals('headlineMedium'));
             },
             icon: (_) => fail('Expected text, got icon'),
             spacer: (_) => fail('Expected text, got spacer'),

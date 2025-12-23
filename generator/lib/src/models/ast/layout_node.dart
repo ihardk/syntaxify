@@ -111,28 +111,19 @@ sealed class App with _$App {
     String? id,
     String? visibleWhen,
     required List<App> children,
-    dynamic variant,
+    String? variant,
     String? padding,
     double? elevation,
-  }) {
-    // Handle Enum or String for variant
-    String? variantName;
-    if (variant is Enum) {
-      variantName = variant.name;
-    } else if (variant is String) {
-      variantName = variant;
-    }
-
-    return App.structural(
-      node: StructuralNode.card(
-        children: children,
-        variant: variantName,
-        padding: padding,
-        elevation: elevation,
-      ),
-      meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
-    );
-  }
+  }) =>
+      App.structural(
+        node: StructuralNode.card(
+          children: children,
+          variant: variant,
+          padding: padding,
+          elevation: elevation,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
 
   factory App.listView({
     String? id,
@@ -156,72 +147,51 @@ sealed class App with _$App {
     String? id,
     String? visibleWhen,
     required String text,
-    dynamic variant,
+    String? variant,
     SyntaxTextAlign? align,
     int? maxLines,
     SyntaxTextOverflow? overflow,
-  }) {
-    // Handle Enum or String for variant
-    String? variantName;
-    if (variant is Enum) {
-      variantName = variant.name;
-    } else if (variant is String) {
-      variantName = variant;
-    }
-
-    return App.primitive(
-      node: PrimitiveNode.text(
-        text: text,
-        variant: variantName != null
-            ? TextVariant.values.firstWhere((e) => e.name == variantName,
-                orElse: () => TextVariant.bodyMedium)
-            : null,
-        align: align,
-        maxLines: maxLines,
-        overflow: overflow,
-      ),
-      meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
-    );
-  }
+  }) =>
+      App.primitive(
+        node: PrimitiveNode.text(
+          text: text,
+          variant: variant,
+          align: align,
+          maxLines: maxLines,
+          overflow: overflow,
+        ),
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
 
   factory App.button({
     String? id,
     String? visibleWhen,
     required String label,
     String? onPressed,
-    dynamic variant,
+    String? variant,
     ButtonSize? size,
     String? icon,
     IconPosition? iconPosition,
     bool? isLoading,
     bool? isDisabled,
     bool? fullWidth,
-  }) {
-    // Handle Enum or String for variant
-    String? variantName;
-    if (variant is Enum) {
-      variantName = variant.name;
-    } else if (variant is String) {
-      variantName = variant;
-    }
-
-    return App.interactive(
-      node: InteractiveNode.button(
-        label: label,
-        onPressed: onPressed,
-        props: ButtonProps(
-          variant: variantName ?? "primary",
-          size: size,
-          icon: icon,
-          iconPosition: iconPosition,
-          isLoading: isLoading ?? false,
-          isDisabled: isDisabled ?? false,
-          fullWidth: fullWidth ?? false,
+  }) =>
+      App.interactive(
+        node: InteractiveNode.button(
+          label: label,
+          onPressed: onPressed,
+          props: ButtonProps(
+            variant: variant ?? 'primary',
+            size: size,
+            icon: icon,
+            iconPosition: iconPosition,
+            isLoading: isLoading ?? false,
+            isDisabled: isDisabled ?? false,
+            fullWidth: fullWidth ?? false,
+          ),
         ),
-      ),
-      meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
-    );
-  }
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
 
   factory App.textField({
     String? id,
@@ -240,39 +210,30 @@ sealed class App with _$App {
     String? errorText,
     int? maxLines,
     int? maxLength,
-    dynamic variant,
-  }) {
-    // Handle Enum or String for variant
-    String? variantName;
-    if (variant is Enum) {
-      variantName = variant.name;
-    } else if (variant is String) {
-      variantName = variant;
-    }
-
-    return App.interactive(
-      node: InteractiveNode.textField(
-        label: label,
-        binding: binding,
-        onChanged: onChanged,
-        onSubmitted: onSubmitted,
-        props: TextFieldProps(
-          hint: hint,
-          helperText: helperText,
-          prefixIcon: prefixIcon,
-          suffixIcon: suffixIcon,
-          keyboardType: keyboardType,
-          textInputAction: textInputAction,
-          obscureText: obscureText ?? false,
-          errorText: errorText,
-          maxLines: maxLines,
-          maxLength: maxLength,
-          variant: variantName,
+    String? variant,
+  }) =>
+      App.interactive(
+        node: InteractiveNode.textField(
+          label: label,
+          binding: binding,
+          onChanged: onChanged,
+          onSubmitted: onSubmitted,
+          props: TextFieldProps(
+            hint: hint,
+            helperText: helperText,
+            prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon,
+            keyboardType: keyboardType,
+            textInputAction: textInputAction,
+            obscureText: obscureText ?? false,
+            errorText: errorText,
+            maxLines: maxLines,
+            maxLength: maxLength,
+            variant: variant,
+          ),
         ),
-      ),
-      meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
-    );
-  }
+        meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
+      );
 
   factory App.icon({
     String? id,

@@ -212,7 +212,7 @@ void main() {
       test('accepts text with valid content', () {
         final node = App.text(
           text: 'Hello World',
-          variant: TextVariant.headlineMedium,
+          variant: 'headlineMedium',
         );
 
         final errors = validator.validate(node);

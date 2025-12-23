@@ -10,7 +10,7 @@ part 'primitive_node.g.dart';
 sealed class PrimitiveNode with _$PrimitiveNode {
   const factory PrimitiveNode.text({
     required String text,
-    TextVariant? variant,
+    String? variant,
     SyntaxTextAlign? align,
     int? maxLines,
     SyntaxTextOverflow? overflow,

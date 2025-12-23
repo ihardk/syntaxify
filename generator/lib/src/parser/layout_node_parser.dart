@@ -202,9 +202,16 @@ class AppParser {
 
   // Enum Parsers
 
-  TextVariant _parseTextVariant(analyzer.Expression? exp) {
-    return _parseEnum(
-        exp, 'TextVariant', TextVariant.values, TextVariant.bodyMedium);
+  String? _parseTextVariant(analyzer.Expression? exp) {
+    if (exp == null) return null;
+    if (exp is analyzer.PrefixedIdentifier) {
+      return exp.identifier.name;
+    } else if (exp is analyzer.SimpleIdentifier) {
+      return exp.name;
+    } else if (exp is analyzer.StringLiteral) {
+      return exp.stringValue;
+    }
+    return null;
   }
 
   ButtonSize? _parseButtonSize(analyzer.Expression? exp) {

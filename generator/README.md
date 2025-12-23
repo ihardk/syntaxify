@@ -281,15 +281,47 @@ Basic display elements without complex interaction.
 
 **7 interactive components × 3 styles = 21 styled variants!**
 
-### 🛠️ Custom Components (Plugin Support)
+### 🛠️ Custom Components (NEW in v0.2.0)
 
-You can define custom components (e.g., Card, Badge, Avatar), and Syntaxify will:
+You can define **any custom component** (e.g., Card, Avatar), and Syntaxify will:
 
-- ✅ Generate the component class
-- ✅ Create constructor and fields
-- ⚠️ Generate basic Container widget (not full renderer pattern yet)
+- ✅ Generate the component class (`AppCard`)
+- ✅ Add a `renderCard()` method to `DesignStyle`
+- ✅ Generate stub renderers (`MaterialCardRenderer`, etc.) that you can implement
 
-**Coming Soon:** Full renderer pattern for more components (Card, Badge, Avatar, Chip, etc.)
+**How It Works:**
+
+1. **Define your component** in `meta/card.meta.dart`:
+```dart
+@SyntaxComponent(
+  name: 'Card',
+  variants: ['elevated', 'outlined'],
+)
+class CardMeta {
+  final Widget child;
+  final CardVariant variant;
+}
+```
+
+2. **Run `syntaxify build`** → Generator creates:
+   - `lib/syntaxify/generated/components/app_card.dart`
+   - `lib/syntaxify/design_system/components/card/material_renderer.dart` (stub)
+   - Updates `DesignStyle` with `Widget renderCard(...)`
+
+3. **Implement the renderer** (optional - stubs work by default):
+```dart
+mixin MaterialCardRenderer on DesignStyle {
+  @override
+  Widget renderCard({required Widget child, required CardVariant variant}) {
+    return Card(
+      child: child,
+      elevation: variant == CardVariant.elevated ? 4 : 0,
+    );
+  }
+}
+```
+
+**Result:** Your custom component works with ALL design styles automatically!
 
 ---
 

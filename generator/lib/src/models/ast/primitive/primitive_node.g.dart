@@ -8,7 +8,7 @@ part of 'primitive_node.dart';
 
 TextNode _$TextNodeFromJson(Map<String, dynamic> json) => TextNode(
       text: json['text'] as String,
-      variant: $enumDecodeNullable(_$TextVariantEnumMap, json['variant']),
+      variant: json['variant'] as String?,
       align: $enumDecodeNullable(_$SyntaxTextAlignEnumMap, json['align']),
       maxLines: (json['maxLines'] as num?)?.toInt(),
       overflow:
@@ -18,21 +18,12 @@ TextNode _$TextNodeFromJson(Map<String, dynamic> json) => TextNode(
 
 Map<String, dynamic> _$TextNodeToJson(TextNode instance) => <String, dynamic>{
       'text': instance.text,
-      'variant': _$TextVariantEnumMap[instance.variant],
+      'variant': instance.variant,
       'align': _$SyntaxTextAlignEnumMap[instance.align],
       'maxLines': instance.maxLines,
       'overflow': _$SyntaxTextOverflowEnumMap[instance.overflow],
       'runtimeType': instance.$type,
     };
-
-const _$TextVariantEnumMap = {
-  TextVariant.displayLarge: 'displayLarge',
-  TextVariant.headlineMedium: 'headlineMedium',
-  TextVariant.titleMedium: 'titleMedium',
-  TextVariant.bodyLarge: 'bodyLarge',
-  TextVariant.bodyMedium: 'bodyMedium',
-  TextVariant.labelSmall: 'labelSmall',
-};
 
 const _$SyntaxTextAlignEnumMap = {
   SyntaxTextAlign.left: 'left',

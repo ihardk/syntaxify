@@ -14,6 +14,7 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$ScreenDefinition {
+  /// Screen identifier. If not provided, inferred from variable name.
   String get id;
   App get layout;
   App? get appBar;
@@ -286,11 +287,13 @@ extension ScreenDefinitionPatterns on ScreenDefinition {
 @JsonSerializable()
 class _ScreenDefinition implements ScreenDefinition {
   const _ScreenDefinition(
-      {required this.id, required this.layout, this.appBar, this.padding});
+      {this.id = '', required this.layout, this.appBar, this.padding});
   factory _ScreenDefinition.fromJson(Map<String, dynamic> json) =>
       _$ScreenDefinitionFromJson(json);
 
+  /// Screen identifier. If not provided, inferred from variable name.
   @override
+  @JsonKey()
   final String id;
   @override
   final App layout;

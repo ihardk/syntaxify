@@ -1,4 +1,5 @@
-import 'package:example/syntaxify/design_system/design_system.dart';
+import 'package:example/syntaxify/design_system/design_system.dart'
+    hide TextVariant;
 import 'package:syntaxify/syntaxify.dart';
 
 /// Registration screen definition
@@ -9,11 +10,11 @@ final registerScreen = ScreenDefinition(
     children: [
       App.text(
         text: 'Join Us Today',
-        variant: TextVariant.headlineMedium,
+        variant: 'headlineMedium',
       ),
       App.text(
         text: 'Create your account to get started',
-        variant: TextVariant.bodyMedium,
+        variant: 'bodyMedium',
       ),
       App.spacer(size: SpacerSize.lg),
       App.textField(

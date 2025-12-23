@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'package:syntaxify/src/core/interfaces/file_system.dart';
 import 'package:syntaxify/src/generators/generator_registry.dart';
+import 'package:syntaxify/src/generators/enum_generator.dart';
+import 'package:syntaxify/src/generators/design_system_generator.dart';
 
 import 'package:syntaxify/src/models/build_result.dart';
 import 'package:syntaxify/src/models/component_definition.dart';
@@ -215,6 +217,32 @@ class BuildAllUseCase {
       }
     }
 
+    // Generate variant enums for components with variants
+    final enumGenerator = EnumGenerator();
+    await fileSystem
+        .createDirectory(context.join(outputDir, 'generated', 'variants'));
+
+    for (final component in components) {
+      if (component.variants.isNotEmpty) {
+        try {
+          final componentName = component.explicitName ??
+              component.className.replaceAll('Meta', '');
+          final enumCode =
+              enumGenerator.generate(componentName, component.variants);
+          final fileName = '${_toSnakeCase(componentName)}_variant.dart';
+          final filePath =
+              context.join(outputDir, 'generated', 'variants', fileName);
+
+          await fileSystem.writeFile(filePath, enumCode);
+          generatedFiles.add('generated/variants/$fileName');
+          logger.success('Generated enum: generated/variants/$fileName');
+        } catch (e) {
+          warnings
+              .add('Could not generate enum for ${component.className}: $e');
+        }
+      }
+    }
+
     // Copy design system files (modular structure)
     if (designSystemDir != null) {
       // 1. Create design_system directory
@@ -413,6 +441,80 @@ class BuildAllUseCase {
       }
     }
 
+    // Generate dynamic design system files (DesignStyle, Styles, Renderer Stubs)
+    // This runs AFTER copying so we can overwrite/augment the static files
+    if (designSystemDir != null) {
+      final designGen = DesignSystemGenerator();
+      final standardComponents = {
+        'Button',
+        'Input',
+        'Text',
+        'Checkbox',
+        'Switch',
+        'Slider',
+        'Radio'
+      };
+
+      try {
+        // 1. Generate Main Library (design_system.dart)
+        final mainLibCode = designGen.generateMainLibrary(components);
+        await fileSystem.writeFile(
+            context.join(outputDir, 'design_system', 'design_system.dart'),
+            mainLibCode);
+        generatedFiles.add('design_system/design_system.dart');
+        logger.success('Generated: design_system/design_system.dart');
+
+        // 2. Generate Abstract DesignStyle
+        final designStyleCode = designGen.generateDesignStyle(components);
+        await fileSystem.writeFile(
+            context.join(outputDir, 'design_system', 'design_style.dart'),
+            designStyleCode);
+        generatedFiles.add('design_system/design_style.dart');
+        logger.success('Generated: design_system/design_style.dart');
+
+        // 3. Generate Concrete Styles (Material, Cupertino, Neo)
+        final styles = ['Material', 'Cupertino', 'Neo'];
+        for (final style in styles) {
+          final styleCode = designGen.generateStyleClass(style, components);
+          final fileName = '${style.toLowerCase()}_style.dart';
+          await fileSystem.writeFile(
+              context.join(outputDir, 'design_system', 'styles', fileName),
+              styleCode);
+          generatedFiles.add('design_system/styles/$fileName');
+          logger.success('Generated: design_system/styles/$fileName');
+        }
+
+        // 4. Generate Renderer Stubs for Custom Components
+        for (final component in components) {
+          final baseName = component.explicitName ??
+              component.className.replaceAll('Meta', '');
+          final cleanName =
+              baseName.startsWith('App') ? baseName.substring(3) : baseName;
+
+          if (standardComponents.contains(cleanName)) continue;
+
+          final folderName = _toSnakeCase(cleanName);
+          final componentDir = context.join(
+              outputDir, 'design_system', 'components', folderName);
+          await fileSystem.createDirectory(componentDir);
+
+          for (final style in styles) {
+            final stubCode = designGen.generateRendererStub(component, style);
+            final fileName = '${style.toLowerCase()}_renderer.dart';
+            await fileSystem.writeFile(
+                context.join(componentDir, fileName), stubCode);
+            generatedFiles
+                .add('design_system/components/$folderName/$fileName');
+            logger.success(
+                'Generated Stub: design_system/components/$folderName/$fileName');
+          }
+        }
+      } catch (e) {
+        logger.err('Failed to generate design system files: $e');
+        errors.add('Failed to generate design system files: $e');
+      }
+    }
+
     // Generate barrel file
     await _generateBarrelFile(outputDir, generatedFiles);
     generatedFiles.add('index.dart');
@@ -471,5 +573,15 @@ $exports
       p.posix.join(outputDir, 'index.dart'),
       content,
     );
+  }
+
+  /// Convert PascalCase to snake_case.
+  String _toSnakeCase(String input) {
+    return input
+        .replaceAllMapped(
+          RegExp('([A-Z])'),
+          (match) => '_${match.group(1)!.toLowerCase()}',
+        )
+        .replaceFirst('_', '');
   }
 }

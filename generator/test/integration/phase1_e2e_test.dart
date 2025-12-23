@@ -42,7 +42,7 @@ void main() {
             // Primitive: Text
             App.text(
               text: 'Hello World',
-              variant: TextVariant.headlineMedium,
+              variant: 'headlineMedium',
               align: SyntaxTextAlign.center,
             ),
 

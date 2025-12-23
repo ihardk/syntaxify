@@ -8,7 +8,7 @@ part of 'screen_definition.dart';
 
 _ScreenDefinition _$ScreenDefinitionFromJson(Map<String, dynamic> json) =>
     _ScreenDefinition(
-      id: json['id'] as String,
+      id: json['id'] as String? ?? '',
       layout: App.fromJson(json['layout'] as Map<String, dynamic>),
       appBar: json['appBar'] == null
           ? null

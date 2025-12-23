@@ -221,7 +221,7 @@ extension PrimitiveNodePatterns on PrimitiveNode {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String text, TextVariant? variant, SyntaxTextAlign? align,
+    TResult Function(String text, String? variant, SyntaxTextAlign? align,
             int? maxLines, SyntaxTextOverflow? overflow)?
         text,
     TResult Function(String name, IconSize? size, ColorSemantic? semantic)?
@@ -282,7 +282,7 @@ extension PrimitiveNodePatterns on PrimitiveNode {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String text, TextVariant? variant,
+    required TResult Function(String text, String? variant,
             SyntaxTextAlign? align, int? maxLines, SyntaxTextOverflow? overflow)
         text,
     required TResult Function(
@@ -341,7 +341,7 @@ extension PrimitiveNodePatterns on PrimitiveNode {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String text, TextVariant? variant, SyntaxTextAlign? align,
+    TResult? Function(String text, String? variant, SyntaxTextAlign? align,
             int? maxLines, SyntaxTextOverflow? overflow)?
         text,
     TResult? Function(String name, IconSize? size, ColorSemantic? semantic)?
@@ -402,7 +402,7 @@ class TextNode implements PrimitiveNode {
       _$TextNodeFromJson(json);
 
   final String text;
-  final TextVariant? variant;
+  final String? variant;
   final SyntaxTextAlign? align;
   final int? maxLines;
   final SyntaxTextOverflow? overflow;
@@ -457,7 +457,7 @@ abstract mixin class $TextNodeCopyWith<$Res>
   @useResult
   $Res call(
       {String text,
-      TextVariant? variant,
+      String? variant,
       SyntaxTextAlign? align,
       int? maxLines,
       SyntaxTextOverflow? overflow});
@@ -488,7 +488,7 @@ class _$TextNodeCopyWithImpl<$Res> implements $TextNodeCopyWith<$Res> {
       variant: freezed == variant
           ? _self.variant
           : variant // ignore: cast_nullable_to_non_nullable
-              as TextVariant?,
+              as String?,
       align: freezed == align
           ? _self.align
           : align // ignore: cast_nullable_to_non_nullable

@@ -180,8 +180,7 @@ class LayoutEmitter {
   Expression _emitText(TextNode node) {
     return refer('AppText').newInstance([], {
       'text': literalString(node.text),
-      if (node.variant != null)
-        'variant': refer('TextVariant.${node.variant!.name}'),
+      if (node.variant != null) 'variant': refer('TextVariant.${node.variant}'),
       if (node.align != null) 'align': refer('TextAlign.${node.align!.name}'),
       if (node.maxLines != null) 'maxLines': literalNum(node.maxLines!),
       if (node.overflow != null)
