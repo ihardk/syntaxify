@@ -11,21 +11,16 @@ import 'package:syntaxify/syntaxify.dart';
 class CheckboxMeta {
   /// Whether the checkbox is checked
   /// Maps to: App.checkbox(binding: ...) (wraps binding)
-  @Required()
   final bool value;
 
   /// Callback when checkbox value changes
   /// Maps to: App.checkbox(onChanged: ...)
-  @Optional()
   final ValueChanged<bool?>? onChanged;
 
   /// Whether the checkbox is enabled
-  @Optional()
-  @Default('true')
   final bool enabled;
 
   /// Active/checked color
-  @Optional()
   final Color? activeColor;
 
   const CheckboxMeta({

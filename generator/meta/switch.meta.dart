@@ -11,21 +11,16 @@ import 'package:syntaxify/syntaxify.dart';
 class SwitchMeta {
   /// Whether the switch is on
   /// Maps to: App.switchWidget(binding: ...) (wraps binding)
-  @Required()
   final bool value;
 
   /// Callback when switch value changes
   /// Maps to: App.switchWidget(onChanged: ...)
-  @Optional()
   final ValueChanged<bool>? onChanged;
 
   /// Whether the switch is enabled
-  @Optional()
-  @Default('true')
   final bool enabled;
 
   /// Active/on color
-  @Optional()
   final Color? activeColor;
 
   const SwitchMeta({

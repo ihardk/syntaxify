@@ -11,27 +11,22 @@ import 'package:syntaxify/syntaxify.dart';
 class TextMeta {
   /// The text content to display
   /// Maps to: App.text(text: ...)
-  @Required()
   final String text;
 
   /// Text variant (displayLarge, headlineMedium, bodyMedium, etc)
   /// Maps to: App.text(variant: ...)
-  @Optional()
   final TextVariant? variant;
 
   /// Text alignment
   /// Maps to: App.text(align: ...)
-  @Optional()
   final TextAlign? align;
 
   /// Maximum number of lines
   /// Maps to: App.text(maxLines: ...)
-  @Optional()
   final int? maxLines;
 
   /// Text overflow behavior
   /// Maps to: App.text(overflow: ...)
-  @Optional()
   final TextOverflow? overflow;
 
   const TextMeta({
