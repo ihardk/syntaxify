@@ -3,41 +3,7 @@ part of '../../design_system.dart';
 mixin CupertinoButtonRenderer on DesignStyle {
   @override
   ButtonTokens buttonTokens(ButtonVariant variant) {
-    switch (variant) {
-      case ButtonVariant.primary:
-        return const ButtonTokens(
-          radius: 100,
-          borderWidth: 0,
-          bgColor: Color(0xFF007AFF),
-          textColor: Colors.white,
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        );
-      case ButtonVariant.secondary:
-        return const ButtonTokens(
-          radius: 100,
-          borderWidth: 0,
-          bgColor: Color(0xFFE5E5EA),
-          textColor: Color(0xFF007AFF),
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        );
-      case ButtonVariant.outlined:
-        return const ButtonTokens(
-          radius: 100,
-          borderWidth: 1,
-          bgColor: Colors.transparent,
-          textColor: Color(0xFF007AFF),
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          borderColor: Color(0xFF007AFF),
-        );
-      case ButtonVariant.text:
-        return const ButtonTokens(
-          radius: 100,
-          borderWidth: 0,
-          bgColor: Colors.transparent,
-          textColor: Color(0xFF007AFF),
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        );
-    }
+    return ButtonTokens.fromFoundation(foundation, variant: variant);
   }
 
   @override

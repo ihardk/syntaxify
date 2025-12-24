@@ -2,12 +2,7 @@ part of '../../design_system.dart';
 
 mixin MaterialRadioRenderer on DesignStyle {
   @override
-  RadioTokens get radioTokens => const RadioTokens(
-        activeColor: Colors.blue,
-        inactiveColor: Colors.grey,
-        borderColor: Colors.grey,
-        borderWidth: 2.0,
-      );
+  RadioTokens get radioTokens => RadioTokens.fromFoundation(foundation);
 
   @override
   Widget renderRadio<T>({

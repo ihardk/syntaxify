@@ -2,11 +2,7 @@ part of '../../design_system.dart';
 
 mixin CupertinoToggleRenderer on DesignStyle {
   @override
-  ToggleTokens get toggleTokens => const ToggleTokens(
-        activeTrackColor: CupertinoColors.activeGreen,
-        inactiveTrackColor: CupertinoColors.systemGrey,
-        thumbColor: CupertinoColors.white,
-      );
+  ToggleTokens get toggleTokens => ToggleTokens.fromFoundation(foundation);
 
   @override
   Widget renderToggle({

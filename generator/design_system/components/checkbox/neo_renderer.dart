@@ -2,15 +2,7 @@ part of '../../design_system.dart';
 
 mixin NeoCheckboxRenderer on DesignStyle {
   @override
-  CheckboxTokens get checkboxTokens => const CheckboxTokens(
-        activeColor: Color(0xFFFFD700), // Gold
-        checkColor: Colors.black,
-        borderColor: Colors.black,
-        borderWidth: 3.0,
-        borderRadius: 0.0, // Sharp corners for neo
-        inactiveColor: Colors.white,
-        shadow: BoxShadow(offset: Offset(2, 2), color: Colors.black),
-      );
+  CheckboxTokens get checkboxTokens => CheckboxTokens.fromFoundation(foundation);
 
   @override
   Widget renderCheckbox({

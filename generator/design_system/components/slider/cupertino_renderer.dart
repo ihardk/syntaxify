@@ -2,14 +2,7 @@ part of '../../design_system.dart';
 
 mixin CupertinoSliderRenderer on DesignStyle {
   @override
-  SliderTokens get sliderTokens => const SliderTokens(
-        activeTrackColor: CupertinoColors.activeBlue,
-        inactiveTrackColor: CupertinoColors.systemGrey4,
-        thumbColor: CupertinoColors.white,
-        overlayColor: Color(0x1F007AFF), // blue with 12% alpha
-        trackHeight: 2.0,
-        thumbRadius: 14.0,
-      );
+  SliderTokens get sliderTokens => SliderTokens.fromFoundation(foundation);
 
   @override
   Widget renderSlider({

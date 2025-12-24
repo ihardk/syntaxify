@@ -2,13 +2,7 @@ part of '../../design_system.dart';
 
 mixin MaterialCheckboxRenderer on DesignStyle {
   @override
-  CheckboxTokens get checkboxTokens => const CheckboxTokens(
-        activeColor: Colors.blue,
-        checkColor: Colors.white,
-        borderColor: Colors.grey,
-        borderWidth: 2.0,
-        borderRadius: 4.0,
-      );
+  CheckboxTokens get checkboxTokens => CheckboxTokens.fromFoundation(foundation);
 
   @override
   Widget renderCheckbox({

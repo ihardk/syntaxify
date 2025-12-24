@@ -2,15 +2,7 @@ part of '../../design_system.dart';
 
 mixin NeoSliderRenderer on DesignStyle {
   @override
-  SliderTokens get sliderTokens => const SliderTokens(
-        activeTrackColor: Color(0xFFFFD700), // Gold
-        inactiveTrackColor: Colors.white,
-        thumbColor: Colors.white,
-        overlayColor: Color(0x1A000000), // black with 10% alpha
-        trackHeight: 8.0,
-        thumbRadius: 10.0,
-        thumbShadow: BoxShadow(offset: Offset(2, 2), color: Colors.black),
-      );
+  SliderTokens get sliderTokens => SliderTokens.fromFoundation(foundation);
 
   @override
   Widget renderSlider({

@@ -3,12 +3,7 @@ part of '../../design_system.dart';
 /// Note: Flutter doesn't have CupertinoRadio, so we use custom styled Radio
 mixin CupertinoRadioRenderer on DesignStyle {
   @override
-  RadioTokens get radioTokens => const RadioTokens(
-        activeColor: CupertinoColors.activeBlue,
-        inactiveColor: CupertinoColors.systemGrey4,
-        borderColor: CupertinoColors.systemGrey,
-        borderWidth: 1.0,
-      );
+  RadioTokens get radioTokens => RadioTokens.fromFoundation(foundation);
 
   @override
   Widget renderRadio<T>({

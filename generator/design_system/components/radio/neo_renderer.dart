@@ -2,13 +2,7 @@ part of '../../design_system.dart';
 
 mixin NeoRadioRenderer on DesignStyle {
   @override
-  RadioTokens get radioTokens => const RadioTokens(
-        activeColor: Color(0xFFFFD700), // Gold
-        inactiveColor: Colors.white,
-        borderColor: Colors.black,
-        borderWidth: 3.0,
-        shadow: BoxShadow(offset: Offset(2, 2), color: Colors.black),
-      );
+  RadioTokens get radioTokens => RadioTokens.fromFoundation(foundation);
 
   @override
   Widget renderRadio<T>({

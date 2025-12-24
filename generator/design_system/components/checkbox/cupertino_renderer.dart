@@ -2,13 +2,7 @@ part of '../../design_system.dart';
 
 mixin CupertinoCheckboxRenderer on DesignStyle {
   @override
-  CheckboxTokens get checkboxTokens => const CheckboxTokens(
-        activeColor: CupertinoColors.activeBlue,
-        checkColor: CupertinoColors.white,
-        borderColor: CupertinoColors.systemGrey,
-        borderWidth: 1.0,
-        borderRadius: 6.0,
-      );
+  CheckboxTokens get checkboxTokens => CheckboxTokens.fromFoundation(foundation);
 
   @override
   Widget renderCheckbox({

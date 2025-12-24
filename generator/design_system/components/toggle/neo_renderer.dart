@@ -2,14 +2,7 @@ part of '../../design_system.dart';
 
 mixin NeoToggleRenderer on DesignStyle {
   @override
-  ToggleTokens get toggleTokens => const ToggleTokens(
-        activeTrackColor: Color(0xFFFFD700), // Gold
-        inactiveTrackColor: Colors.white,
-        thumbColor: Colors.black,
-        trackBorderWidth: 3.0,
-        trackBorderColor: Colors.black,
-        shadow: BoxShadow(offset: Offset(2, 2), color: Colors.black),
-      );
+  ToggleTokens get toggleTokens => ToggleTokens.fromFoundation(foundation);
 
   @override
   Widget renderToggle({

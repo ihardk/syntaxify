@@ -2,14 +2,7 @@ part of '../../design_system.dart';
 
 mixin MaterialSliderRenderer on DesignStyle {
   @override
-  SliderTokens get sliderTokens => const SliderTokens(
-        activeTrackColor: Colors.blue,
-        inactiveTrackColor: Color(0x3D0000FF), // blue with 24% alpha
-        thumbColor: Colors.blue,
-        overlayColor: Color(0x1F0000FF), // blue with 12% alpha
-        trackHeight: 4.0,
-        thumbRadius: 10.0,
-      );
+  SliderTokens get sliderTokens => SliderTokens.fromFoundation(foundation);
 
   @override
   Widget renderSlider({

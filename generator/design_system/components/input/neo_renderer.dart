@@ -2,22 +2,7 @@ part of '../../design_system.dart';
 
 mixin NeoInputRenderer on DesignStyle {
   @override
-  InputTokens get inputTokens => const InputTokens(
-        textStyle: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w700,
-          color: Colors.black,
-          fontFamily: 'Courier', // Brutalist mono vibes
-        ),
-        hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
-        backgroundColor: Colors.white,
-        borderColor: Colors.black,
-        focusBorderColor: Colors.black,
-        errorColor: Colors.redAccent,
-        borderWidth: 3.0,
-        borderRadius: 0.0, // Sharp aesthetic
-        contentPadding: EdgeInsets.all(16),
-      );
+  InputTokens get inputTokens => InputTokens.fromFoundation(foundation);
 
   @override
   Widget renderInput({

@@ -2,11 +2,7 @@ part of '../../design_system.dart';
 
 mixin MaterialToggleRenderer on DesignStyle {
   @override
-  ToggleTokens get toggleTokens => const ToggleTokens(
-        activeTrackColor: Colors.blue,
-        inactiveTrackColor: Colors.grey,
-        thumbColor: Colors.white,
-      );
+  ToggleTokens get toggleTokens => ToggleTokens.fromFoundation(foundation);
 
   @override
   Widget renderToggle({
