@@ -4,6 +4,7 @@
 /// Used by DesignStyle implementations to provide style-specific tokens.
 
 import 'package:flutter/material.dart';
+import 'foundation/foundation_tokens.dart';
 
 /// Design tokens for the Toggle component
 class ToggleTokens {
@@ -22,4 +23,14 @@ class ToggleTokens {
     this.trackBorderColor,
     this.shadow,
   });
+
+  /// Create ToggleTokens from foundation tokens
+  factory ToggleTokens.fromFoundation(FoundationTokens foundation) {
+    return ToggleTokens(
+      activeTrackColor: foundation.colorPrimary,
+      inactiveTrackColor: foundation.colorSurfaceVariant,
+      thumbColor: foundation.colorOnPrimary,
+      trackBorderWidth: foundation.borderWidthNone,
+    );
+  }
 }

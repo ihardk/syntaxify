@@ -22,4 +22,7 @@ class NeoStyle extends DesignStyle
         NeoSliderRenderer,
         NeoRadioRenderer {
   const NeoStyle();
+
+  @override
+  FoundationTokens get foundation => neoFoundation;
 }

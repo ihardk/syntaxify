@@ -4,6 +4,7 @@
 /// Used by DesignStyle implementations to provide style-specific tokens.
 
 import 'package:flutter/material.dart';
+import 'foundation/foundation_tokens.dart';
 
 /// Design tokens for the Radio component
 class RadioTokens {
@@ -20,4 +21,14 @@ class RadioTokens {
     this.borderWidth = 2.0,
     this.shadow,
   });
+
+  /// Create RadioTokens from foundation tokens
+  factory RadioTokens.fromFoundation(FoundationTokens foundation) {
+    return RadioTokens(
+      activeColor: foundation.colorPrimary,
+      inactiveColor: foundation.colorSurfaceVariant,
+      borderColor: foundation.colorOutline,
+      borderWidth: foundation.borderWidthMedium,
+    );
+  }
 }

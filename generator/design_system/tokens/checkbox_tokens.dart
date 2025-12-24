@@ -4,6 +4,7 @@
 /// Used by DesignStyle implementations to provide style-specific tokens.
 
 import 'package:flutter/material.dart';
+import 'foundation/foundation_tokens.dart';
 
 /// Design tokens for the Checkbox component
 class CheckboxTokens {
@@ -24,4 +25,16 @@ class CheckboxTokens {
     this.inactiveColor,
     this.shadow,
   });
+
+  /// Create CheckboxTokens from foundation tokens
+  factory CheckboxTokens.fromFoundation(FoundationTokens foundation) {
+    return CheckboxTokens(
+      activeColor: foundation.colorPrimary,
+      checkColor: foundation.colorOnPrimary,
+      borderColor: foundation.colorOutline,
+      borderWidth: foundation.borderWidthMedium,
+      borderRadius: foundation.radiusSm,
+      inactiveColor: foundation.colorSurfaceVariant,
+    );
+  }
 }

@@ -4,6 +4,7 @@
 /// Used by DesignStyle implementations to provide style-specific tokens.
 
 import 'package:flutter/material.dart';
+import 'foundation/foundation_tokens.dart';
 
 /// Design tokens for the Slider component
 class SliderTokens {
@@ -24,4 +25,16 @@ class SliderTokens {
     this.thumbRadius = 10.0,
     this.thumbShadow,
   });
+
+  /// Create SliderTokens from foundation tokens
+  factory SliderTokens.fromFoundation(FoundationTokens foundation) {
+    return SliderTokens(
+      activeTrackColor: foundation.colorPrimary,
+      inactiveTrackColor: foundation.colorSurfaceVariant,
+      thumbColor: foundation.colorPrimary,
+      overlayColor: foundation.colorPrimary.withOpacity(0.12),
+      trackHeight: foundation.borderWidthMedium * 2,
+      thumbRadius: foundation.spacingSm + 2,
+    );
+  }
 }

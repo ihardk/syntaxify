@@ -36,6 +36,12 @@ sealed class DesignStyle {
   String get name =>
       runtimeType.toString().replaceAll('Style', '').toLowerCase();
 
+  /// Foundation design tokens (colors, typography, spacing, etc.)
+  ///
+  /// Single source of truth for all design primitives.
+  /// Component tokens reference these foundation values.
+  FoundationTokens get foundation;
+
   /// Get tokens for a button variant
   ButtonTokens buttonTokens(ButtonVariant variant);
 

@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:syntaxify/syntaxify.dart'; // For @Variant annotation
 
+// Foundation tokens
+import 'tokens/foundation/foundation_tokens.dart';
+
 import 'tokens/button_tokens.dart';
 import 'tokens/input_tokens.dart';
 import 'tokens/text_tokens.dart';
@@ -22,6 +25,7 @@ import '../generated/variants/button_variant.dart';
 import '../generated/variants/text_variant.dart';
 
 // Re-export for convenience
+export 'tokens/foundation/foundation_tokens.dart';
 export 'tokens/button_tokens.dart';
 export 'tokens/input_tokens.dart';
 export 'tokens/text_tokens.dart';
@@ -38,6 +42,13 @@ export '../generated/variants/text_variant.dart';
 // Part files - same library as sealed class
 part 'app_theme.dart';
 part 'design_style.dart';
+
+// Foundation tokens (parts)
+part 'tokens/foundation/material_foundation.dart';
+part 'tokens/foundation/cupertino_foundation.dart';
+part 'tokens/foundation/neo_foundation.dart';
+
+// Styles
 part 'styles/material_style.dart';
 part 'styles/cupertino_style.dart';
 part 'styles/neo_style.dart';
