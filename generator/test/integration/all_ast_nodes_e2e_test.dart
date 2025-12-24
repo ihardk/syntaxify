@@ -1,5 +1,4 @@
 import 'package:code_builder/code_builder.dart';
-import 'package:dart_style/dart_style.dart';
 import 'package:syntaxify/syntaxify.dart';
 import 'package:syntaxify/src/emitters/layout_emitter.dart';
 import 'package:test/test.dart';
@@ -10,12 +9,9 @@ import 'package:test/test.dart';
 /// AST Node → LayoutEmitter → code_builder Expression → Formatted Dart code
 void main() {
   late LayoutEmitter emitter;
-  late DartFormatter formatter;
 
   setUp(() {
     emitter = const LayoutEmitter();
-    formatter =
-        DartFormatter(languageVersion: DartFormatter.latestLanguageVersion);
   });
 
   String emit(App node) {

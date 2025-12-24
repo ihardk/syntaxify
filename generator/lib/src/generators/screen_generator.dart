@@ -3,6 +3,8 @@ import 'package:dart_style/dart_style.dart';
 import 'package:syntaxify/src/emitters/layout_emitter.dart';
 import 'package:syntaxify/src/models/ast/nodes.dart';
 import 'package:syntaxify/src/models/ast/custom/custom_node.dart';
+import 'package:syntaxify/src/visitors/binding_collector.dart';
+import 'package:syntaxify/src/visitors/controller_collector.dart';
 
 /// Generates a full Screen widget from a [ScreenDefinition].
 class ScreenGenerator {
@@ -17,10 +19,11 @@ class ScreenGenerator {
   /// [screen] The screen definition to generate code for.
   /// [packageName] Optional package name for import resolution.
   String generate(ScreenDefinition screen, {String? packageName}) {
-    // Collect callbacks and controllers
+    // Collect callbacks, controllers, and bindings using visitors
     final callbacks = _collectCallbacks(screen.layout);
-    final controllers = _collectControllers(screen.layout);
-    final needsStateful = controllers.isNotEmpty;
+    final controllers = ControllerCollector().visit(screen.layout);
+    final bindings = BindingCollector().visit(screen.layout);
+    final needsStateful = controllers.isNotEmpty || bindings.isNotEmpty;
 
     final library = Library((b) => b
       ..comments.addAll([
@@ -41,7 +44,7 @@ class ScreenGenerator {
         ],
       ])
       ..body.addAll(needsStateful
-          ? _buildStatefulScreen(screen, callbacks, controllers)
+          ? _buildStatefulScreen(screen, callbacks, controllers, bindings)
           : [_buildStatelessScreen(screen, callbacks)]));
 
     final emitter = DartEmitter(useNullSafetySyntax: true);
@@ -81,11 +84,12 @@ class ScreenGenerator {
         ..body = _buildBuildMethodBody(screen))));
   }
 
-  /// Build StatefulWidget screen (controllers needed)
+  /// Build StatefulWidget screen (controllers and/or bindings needed)
   List<Spec> _buildStatefulScreen(
     ScreenDefinition screen,
     Map<String, Reference> callbacks,
     List<ControllerInfo> controllers,
+    List<BindingInfo> bindings,
   ) {
     final className = '${_toPascalCase(screen.id)}Screen';
     final stateClassName = '_${className}State';
@@ -125,6 +129,11 @@ class ScreenGenerator {
         ..late = true
         ..modifier = FieldModifier.final$
         ..type = refer('TextEditingController'))))
+      // Binding state fields
+      ..fields.addAll(bindings.map((b) => Field((f) => f
+        ..name = b.fieldName
+        ..type = refer(b.type)
+        ..assignment = Code(b.defaultValue))))
       // initState
       ..methods.add(Method((m) => m
         ..annotations.add(refer('override'))
@@ -474,12 +483,4 @@ class ScreenGenerator {
                 : '')
             .join('');
   }
-}
-
-/// Info about a controller to be generated
-class ControllerInfo {
-  final String inputLabel;
-  final String fieldName;
-
-  ControllerInfo({required this.inputLabel, required this.fieldName});
 }

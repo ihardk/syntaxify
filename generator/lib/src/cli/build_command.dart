@@ -98,7 +98,7 @@ Examples:
   @override
   Future<int> run() async {
     final watch = argResults?['watch'] as bool? ?? false;
-    final dryRun = argResults?['dry-run'] as bool? ?? false;
+    // dryRun flag reserved for future use
     final component = argResults?['component'] as String?;
     final theme = argResults?['theme'] as String?;
 

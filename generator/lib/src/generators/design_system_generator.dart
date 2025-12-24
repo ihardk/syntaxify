@@ -13,8 +13,9 @@ class DesignSystemGenerator {
       DartFormatter(languageVersion: DartFormatter.latestLanguageVersion);
   final _emitter = DartEmitter(useNullSafetySyntax: true);
 
-  /// Standard components that have built-in renderers in the generator.
-  static const _standardComponents = {
+  /// Standard components are handled by pre-existing renderers.
+  /// Custom components (not in this list) get stub renderers generated.
+  static const standardComponents = {
     'Button',
     'Input',
     'Text',

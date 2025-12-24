@@ -186,6 +186,82 @@ class AppParser {
         final flex =
             (flexExp is analyzer.IntegerLiteral) ? flexExp.value : null;
         return App.spacer(flex: flex);
+      } else if (constructorName == 'checkbox') {
+        final bindingExp = getArg('binding');
+        final binding = (bindingExp is analyzer.StringLiteral)
+            ? bindingExp.stringValue
+            : '';
+        final labelExp = tryGetArg(argumentList, 'label');
+        final label =
+            (labelExp is analyzer.StringLiteral) ? labelExp.stringValue : null;
+        final onChangedExp = tryGetArg(argumentList, 'onChanged');
+        final onChanged = (onChangedExp is analyzer.StringLiteral)
+            ? onChangedExp.stringValue
+            : null;
+        return App.checkbox(
+          binding: binding ?? '',
+          label: label,
+          onChanged: onChanged,
+        );
+      } else if (constructorName == 'switchWidget') {
+        final bindingExp = getArg('binding');
+        final binding = (bindingExp is analyzer.StringLiteral)
+            ? bindingExp.stringValue
+            : '';
+        final labelExp = tryGetArg(argumentList, 'label');
+        final label =
+            (labelExp is analyzer.StringLiteral) ? labelExp.stringValue : null;
+        final onChangedExp = tryGetArg(argumentList, 'onChanged');
+        final onChanged = (onChangedExp is analyzer.StringLiteral)
+            ? onChangedExp.stringValue
+            : null;
+        return App.switchWidget(
+          binding: binding ?? '',
+          label: label,
+          onChanged: onChanged,
+        );
+      } else if (constructorName == 'slider') {
+        final bindingExp = getArg('binding');
+        final binding = (bindingExp is analyzer.StringLiteral)
+            ? bindingExp.stringValue
+            : '';
+        final minExp = tryGetArg(argumentList, 'min');
+        final min = (minExp is analyzer.DoubleLiteral)
+            ? minExp.value
+            : (minExp is analyzer.IntegerLiteral)
+                ? minExp.value?.toDouble()
+                : null;
+        final maxExp = tryGetArg(argumentList, 'max');
+        final max = (maxExp is analyzer.DoubleLiteral)
+            ? maxExp.value
+            : (maxExp is analyzer.IntegerLiteral)
+                ? maxExp.value?.toDouble()
+                : null;
+        final labelExp = tryGetArg(argumentList, 'label');
+        final label =
+            (labelExp is analyzer.StringLiteral) ? labelExp.stringValue : null;
+        return App.slider(
+          binding: binding ?? '',
+          min: min,
+          max: max,
+          label: label,
+        );
+      } else if (constructorName == 'radio') {
+        final bindingExp = getArg('binding');
+        final binding = (bindingExp is analyzer.StringLiteral)
+            ? bindingExp.stringValue
+            : '';
+        final valueExp = getArg('value');
+        final value =
+            (valueExp is analyzer.StringLiteral) ? valueExp.stringValue : '';
+        final labelExp = tryGetArg(argumentList, 'label');
+        final label =
+            (labelExp is analyzer.StringLiteral) ? labelExp.stringValue : null;
+        return App.radio(
+          binding: binding ?? '',
+          value: value ?? '',
+          label: label,
+        );
       }
     }
 

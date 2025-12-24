@@ -460,10 +460,11 @@ class LayoutEmitter {
   Expression _emitCheckbox(CheckboxNode node) {
     // If has label, wrap in Row for label + checkbox layout
     final checkbox = refer('AppCheckbox').newInstance([], {
-      'value': refer(node.binding),
+      'value': refer('_${node.binding}'),
       'onChanged': node.onChanged != null
           ? refer(variableMap[node.onChanged!] ?? node.onChanged!)
-          : refer('(value) {}'),
+          : refer(
+              '(value) => setState(() => _${node.binding} = value ?? false)'),
     });
 
     if (node.label != null) {
@@ -481,10 +482,10 @@ class LayoutEmitter {
   Expression _emitSwitch(SwitchNode node) {
     // If has label, wrap in Row for label + switch layout
     final switchWidget = refer('AppSwitch').newInstance([], {
-      'value': refer(node.binding),
+      'value': refer('_${node.binding}'),
       'onChanged': node.onChanged != null
           ? refer(variableMap[node.onChanged!] ?? node.onChanged!)
-          : refer('(value) {}'),
+          : refer('(value) => setState(() => _${node.binding} = value)'),
     });
 
     if (node.label != null) {
@@ -617,10 +618,10 @@ class LayoutEmitter {
 
   Expression _emitSlider(SliderNode node) {
     final slider = refer('AppSlider').newInstance([], {
-      'value': refer(node.binding),
+      'value': refer('_${node.binding}'),
       'onChanged': node.onChanged != null
           ? refer(variableMap[node.onChanged!] ?? node.onChanged!)
-          : refer('(value) {}'),
+          : refer('(value) => setState(() => _${node.binding} = value)'),
       if (node.min != null) 'min': literalNum(node.min!),
       if (node.max != null) 'max': literalNum(node.max!),
       if (node.divisions != null) 'divisions': literalNum(node.divisions!),

@@ -4,7 +4,6 @@
 /// Properties must match DesignStyle.renderButton() signature.
 library;
 
-import 'package:flutter/material.dart';
 import 'package:syntaxify/syntaxify.dart';
 
 @SyntaxComponent(description: 'A customizable button component')

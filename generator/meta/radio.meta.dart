@@ -4,7 +4,6 @@
 /// Properties must match DesignStyle.renderRadio<T>() signature.
 library;
 
-import 'package:flutter/material.dart';
 import 'package:syntaxify/syntaxify.dart';
 
 @SyntaxComponent(description: 'A design-system-aware radio button component')
