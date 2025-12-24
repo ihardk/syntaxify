@@ -62,14 +62,14 @@ Map<String, dynamic> _$CheckboxNodeToJson(CheckboxNode instance) =>
       'runtimeType': instance.$type,
     };
 
-SwitchNode _$SwitchNodeFromJson(Map<String, dynamic> json) => SwitchNode(
+ToggleNode _$ToggleNodeFromJson(Map<String, dynamic> json) => ToggleNode(
       binding: json['binding'] as String,
       label: json['label'] as String?,
       onChanged: json['onChanged'] as String?,
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$SwitchNodeToJson(SwitchNode instance) =>
+Map<String, dynamic> _$ToggleNodeToJson(ToggleNode instance) =>
     <String, dynamic>{
       'binding': instance.binding,
       'label': instance.label,

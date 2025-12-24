@@ -1,5 +1,5 @@
 name: syntaxify
-description: The Flutter UI Compiler. Define once, compile to any design system. , Build Your Next Flutter App Designs in Minutes, And Switch Design Systems in Seconds.
+description: The Flutter UI Compiler. Define once, compile to any design system. , Build Your Next Flutter App Designs in Minutes, And Toggle Design Systems in Seconds.
 version: 0.2.0-beta
 repository: https://github.com/ihardk/syntaxify
 issue_tracker: https://github.com/ihardk/syntaxify/issues

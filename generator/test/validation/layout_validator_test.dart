@@ -958,8 +958,8 @@ void main() {
         expect(errors.first.fieldName, equals('binding'));
       });
 
-      test('validates Switch with empty binding', () {
-        final node = App.switchWidget(
+      test('validates Toggle with empty binding', () {
+        final node = App.toggle(
           binding: '',
         );
 
@@ -1030,8 +1030,8 @@ void main() {
         expect(errors, isEmpty);
       });
 
-      test('accepts valid Switch', () {
-        final node = App.switchWidget(
+      test('accepts valid Toggle', () {
+        final node = App.toggle(
           binding: 'notificationsEnabled',
           label: 'Enable notifications',
         );

@@ -35,7 +35,7 @@ class MyButton extends StatelessWidget {
 **What if we could...**
 - ✅ Define the button ONCE
 - ✅ Render it differently based on a "style"
-- ✅ Switch styles with ONE line of code
+- ✅ Toggle styles with ONE line of code
 
 **That's what the renderer pattern solves!**
 
@@ -505,7 +505,7 @@ class MyApp extends StatelessWidget {
 
 ### Dynamic Switching
 
-Switch styles at runtime:
+Toggle styles at runtime:
 
 ```dart
 class MyApp extends StatefulWidget {
@@ -815,7 +815,7 @@ Widget renderButton({...}) {
 6. **Tokens** - Design values (colors, spacing, etc.)
 
 **Benefits:**
-- ✅ Switch entire app design in 1 line
+- ✅ Toggle entire app design in 1 line
 - ✅ Consistent design across all components
 - ✅ Easy to create custom styles
 - ✅ Platform-specific UX

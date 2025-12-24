@@ -1,6 +1,7 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:syntaxify/src/models/component_definition.dart';
+import 'package:syntaxify/src/utils/string_utils.dart';
 
 /// Generates the dynamic parts of the Design System.
 ///
@@ -20,7 +21,7 @@ class DesignSystemGenerator {
     'Input',
     'Text',
     'Checkbox',
-    'Switch',
+    'Toggle',
     'Slider',
     'Radio',
   };
@@ -71,7 +72,7 @@ class DesignSystemGenerator {
     // Renderer Parts
     for (final comp in components) {
       final baseName = _getBaseName(component: comp);
-      final folderName = _toSnakeCase(baseName);
+      final folderName = StringUtils.toSnakeCase(baseName);
 
       // Check if standard component (hardcoded paths for now to match strict directory structure)
       // Standard components use matching names: Button -> button, Input -> input
@@ -225,15 +226,6 @@ part of '../design_system.dart';
 
 $code
 ''');
-  }
-
-  String _toSnakeCase(String name) {
-    return name
-        .replaceAllMapped(
-          RegExp(r'[A-Z]'),
-          (match) => '_${match.group(0)!.toLowerCase()}',
-        )
-        .replaceAll(RegExp(r'^_'), '');
   }
 
   String _getBaseName({required ComponentDefinition component}) {

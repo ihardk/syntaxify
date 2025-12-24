@@ -19,8 +19,8 @@ InteractiveNode _$InteractiveNodeFromJson(Map<String, dynamic> json) {
       return TextFieldNode.fromJson(json);
     case 'checkbox':
       return CheckboxNode.fromJson(json);
-    case 'switchNode':
-      return SwitchNode.fromJson(json);
+    case 'toggleNode':
+      return ToggleNode.fromJson(json);
     case 'iconButton':
       return IconButtonNode.fromJson(json);
     case 'dropdown':
@@ -82,7 +82,7 @@ extension InteractiveNodePatterns on InteractiveNode {
     TResult Function(ButtonNode value)? button,
     TResult Function(TextFieldNode value)? textField,
     TResult Function(CheckboxNode value)? checkbox,
-    TResult Function(SwitchNode value)? switchNode,
+    TResult Function(ToggleNode value)? toggleNode,
     TResult Function(IconButtonNode value)? iconButton,
     TResult Function(DropdownNode value)? dropdown,
     TResult Function(RadioNode value)? radio,
@@ -97,8 +97,8 @@ extension InteractiveNodePatterns on InteractiveNode {
         return textField(_that);
       case CheckboxNode() when checkbox != null:
         return checkbox(_that);
-      case SwitchNode() when switchNode != null:
-        return switchNode(_that);
+      case ToggleNode() when toggleNode != null:
+        return toggleNode(_that);
       case IconButtonNode() when iconButton != null:
         return iconButton(_that);
       case DropdownNode() when dropdown != null:
@@ -130,7 +130,7 @@ extension InteractiveNodePatterns on InteractiveNode {
     required TResult Function(ButtonNode value) button,
     required TResult Function(TextFieldNode value) textField,
     required TResult Function(CheckboxNode value) checkbox,
-    required TResult Function(SwitchNode value) switchNode,
+    required TResult Function(ToggleNode value) toggleNode,
     required TResult Function(IconButtonNode value) iconButton,
     required TResult Function(DropdownNode value) dropdown,
     required TResult Function(RadioNode value) radio,
@@ -144,8 +144,8 @@ extension InteractiveNodePatterns on InteractiveNode {
         return textField(_that);
       case CheckboxNode():
         return checkbox(_that);
-      case SwitchNode():
-        return switchNode(_that);
+      case ToggleNode():
+        return toggleNode(_that);
       case IconButtonNode():
         return iconButton(_that);
       case DropdownNode():
@@ -174,7 +174,7 @@ extension InteractiveNodePatterns on InteractiveNode {
     TResult? Function(ButtonNode value)? button,
     TResult? Function(TextFieldNode value)? textField,
     TResult? Function(CheckboxNode value)? checkbox,
-    TResult? Function(SwitchNode value)? switchNode,
+    TResult? Function(ToggleNode value)? toggleNode,
     TResult? Function(IconButtonNode value)? iconButton,
     TResult? Function(DropdownNode value)? dropdown,
     TResult? Function(RadioNode value)? radio,
@@ -188,8 +188,8 @@ extension InteractiveNodePatterns on InteractiveNode {
         return textField(_that);
       case CheckboxNode() when checkbox != null:
         return checkbox(_that);
-      case SwitchNode() when switchNode != null:
-        return switchNode(_that);
+      case ToggleNode() when toggleNode != null:
+        return toggleNode(_that);
       case IconButtonNode() when iconButton != null:
         return iconButton(_that);
       case DropdownNode() when dropdown != null:
@@ -226,7 +226,7 @@ extension InteractiveNodePatterns on InteractiveNode {
             String binding, String? label, String? onChanged, bool? tristate)?
         checkbox,
     TResult Function(String binding, String? label, String? onChanged)?
-        switchNode,
+        toggleNode,
     TResult Function(
             String icon, String? onPressed, double? size, ColorSemantic? color)?
         iconButton,
@@ -251,8 +251,8 @@ extension InteractiveNodePatterns on InteractiveNode {
       case CheckboxNode() when checkbox != null:
         return checkbox(
             _that.binding, _that.label, _that.onChanged, _that.tristate);
-      case SwitchNode() when switchNode != null:
-        return switchNode(_that.binding, _that.label, _that.onChanged);
+      case ToggleNode() when toggleNode != null:
+        return toggleNode(_that.binding, _that.label, _that.onChanged);
       case IconButtonNode() when iconButton != null:
         return iconButton(_that.icon, _that.onPressed, _that.size, _that.color);
       case DropdownNode() when dropdown != null:
@@ -293,7 +293,7 @@ extension InteractiveNodePatterns on InteractiveNode {
             String binding, String? label, String? onChanged, bool? tristate)
         checkbox,
     required TResult Function(String binding, String? label, String? onChanged)
-        switchNode,
+        toggleNode,
     required TResult Function(
             String icon, String? onPressed, double? size, ColorSemantic? color)
         iconButton,
@@ -317,8 +317,8 @@ extension InteractiveNodePatterns on InteractiveNode {
       case CheckboxNode():
         return checkbox(
             _that.binding, _that.label, _that.onChanged, _that.tristate);
-      case SwitchNode():
-        return switchNode(_that.binding, _that.label, _that.onChanged);
+      case ToggleNode():
+        return toggleNode(_that.binding, _that.label, _that.onChanged);
       case IconButtonNode():
         return iconButton(_that.icon, _that.onPressed, _that.size, _that.color);
       case DropdownNode():
@@ -355,7 +355,7 @@ extension InteractiveNodePatterns on InteractiveNode {
             String binding, String? label, String? onChanged, bool? tristate)?
         checkbox,
     TResult? Function(String binding, String? label, String? onChanged)?
-        switchNode,
+        toggleNode,
     TResult? Function(
             String icon, String? onPressed, double? size, ColorSemantic? color)?
         iconButton,
@@ -379,8 +379,8 @@ extension InteractiveNodePatterns on InteractiveNode {
       case CheckboxNode() when checkbox != null:
         return checkbox(
             _that.binding, _that.label, _that.onChanged, _that.tristate);
-      case SwitchNode() when switchNode != null:
-        return switchNode(_that.binding, _that.label, _that.onChanged);
+      case ToggleNode() when toggleNode != null:
+        return toggleNode(_that.binding, _that.label, _that.onChanged);
       case IconButtonNode() when iconButton != null:
         return iconButton(_that.icon, _that.onPressed, _that.size, _that.color);
       case DropdownNode() when dropdown != null:
@@ -750,12 +750,12 @@ class _$CheckboxNodeCopyWithImpl<$Res> implements $CheckboxNodeCopyWith<$Res> {
 
 /// @nodoc
 @JsonSerializable()
-class SwitchNode implements InteractiveNode {
-  const SwitchNode(
+class ToggleNode implements InteractiveNode {
+  const ToggleNode(
       {required this.binding, this.label, this.onChanged, final String? $type})
-      : $type = $type ?? 'switchNode';
-  factory SwitchNode.fromJson(Map<String, dynamic> json) =>
-      _$SwitchNodeFromJson(json);
+      : $type = $type ?? 'toggleNode';
+  factory ToggleNode.fromJson(Map<String, dynamic> json) =>
+      _$ToggleNodeFromJson(json);
 
   final String binding;
   final String? label;
@@ -768,12 +768,12 @@ class SwitchNode implements InteractiveNode {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $SwitchNodeCopyWith<SwitchNode> get copyWith =>
-      _$SwitchNodeCopyWithImpl<SwitchNode>(this, _$identity);
+  $ToggleNodeCopyWith<ToggleNode> get copyWith =>
+      _$ToggleNodeCopyWithImpl<ToggleNode>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$SwitchNodeToJson(
+    return _$ToggleNodeToJson(
       this,
     );
   }
@@ -782,7 +782,7 @@ class SwitchNode implements InteractiveNode {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is SwitchNode &&
+            other is ToggleNode &&
             (identical(other.binding, binding) || other.binding == binding) &&
             (identical(other.label, label) || other.label == label) &&
             (identical(other.onChanged, onChanged) ||
@@ -795,26 +795,26 @@ class SwitchNode implements InteractiveNode {
 
   @override
   String toString() {
-    return 'InteractiveNode.switchNode(binding: $binding, label: $label, onChanged: $onChanged)';
+    return 'InteractiveNode.toggleNode(binding: $binding, label: $label, onChanged: $onChanged)';
   }
 }
 
 /// @nodoc
-abstract mixin class $SwitchNodeCopyWith<$Res>
+abstract mixin class $ToggleNodeCopyWith<$Res>
     implements $InteractiveNodeCopyWith<$Res> {
-  factory $SwitchNodeCopyWith(
-          SwitchNode value, $Res Function(SwitchNode) _then) =
-      _$SwitchNodeCopyWithImpl;
+  factory $ToggleNodeCopyWith(
+          ToggleNode value, $Res Function(ToggleNode) _then) =
+      _$ToggleNodeCopyWithImpl;
   @useResult
   $Res call({String binding, String? label, String? onChanged});
 }
 
 /// @nodoc
-class _$SwitchNodeCopyWithImpl<$Res> implements $SwitchNodeCopyWith<$Res> {
-  _$SwitchNodeCopyWithImpl(this._self, this._then);
+class _$ToggleNodeCopyWithImpl<$Res> implements $ToggleNodeCopyWith<$Res> {
+  _$ToggleNodeCopyWithImpl(this._self, this._then);
 
-  final SwitchNode _self;
-  final $Res Function(SwitchNode) _then;
+  final ToggleNode _self;
+  final $Res Function(ToggleNode) _then;
 
   /// Create a copy of InteractiveNode
   /// with the given fields replaced by the non-null parameter values.
@@ -824,7 +824,7 @@ class _$SwitchNodeCopyWithImpl<$Res> implements $SwitchNodeCopyWith<$Res> {
     Object? label = freezed,
     Object? onChanged = freezed,
   }) {
-    return _then(SwitchNode(
+    return _then(ToggleNode(
       binding: null == binding
           ? _self.binding
           : binding // ignore: cast_nullable_to_non_nullable

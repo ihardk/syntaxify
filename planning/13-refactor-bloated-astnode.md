@@ -79,7 +79,7 @@ const factory App.textField({
 ### 4. Will Scale Poorly
 
 **When adding more widgets:**
-- Card, Badge, Avatar, Chip, Switch, Checkbox, Radio, Slider, etc.
+- Card, Badge, Avatar, Chip, Toggle, Checkbox, Radio, Slider, etc.
 - Each adds ~250 lines to freezed file
 - Pattern matching becomes unwieldy
 - Emitter switches become massive

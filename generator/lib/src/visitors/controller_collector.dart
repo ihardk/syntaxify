@@ -52,7 +52,7 @@ class ControllerCollector extends AstVisitor<List<ControllerInfo>>
         ];
       },
       checkbox: (_) => [],
-      switchNode: (_) => [],
+      toggleNode: (_) => [],
       iconButton: (_) => [],
       dropdown: (_) => [],
       radio: (_) => [],

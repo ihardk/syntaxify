@@ -18,7 +18,7 @@ part of 'design_system.dart';
 /// | Input | [renderInput] |
 /// | Text | [renderText] |
 /// | Checkbox | [renderCheckbox] |
-/// | Switch | [renderSwitch] |
+/// | Toggle | [renderSwitch] |
 /// | Slider | [renderSlider] |
 /// | Radio | [renderRadio] |
 ///

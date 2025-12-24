@@ -57,7 +57,7 @@ class BindingCollector extends AstVisitor<List<BindingInfo>>
           defaultValue: 'false',
         ),
       ],
-      switchNode: (n) => [
+      toggleNode: (n) => [
         BindingInfo(
           bindingName: n.binding,
           fieldName: '_${n.binding}',

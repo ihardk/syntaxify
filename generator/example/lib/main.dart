@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return AppTheme(
       // 🎨 SYNTAXIFY: Design system wrapper
-      style: _currentStyle, // Switch between Material/Cupertino/Neo
+      style: _currentStyle, // Toggle between Material/Cupertino/Neo
       child: MaterialApp(
         // Native Flutter
         title: 'Syntaxify Demo',

@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import '../../design_system/design_system.dart';
 
-/// A design-system-aware Switch component.
+/// A design-system-aware Toggle component.
 ///
 /// This widget delegates rendering to [DesignStyle.renderSwitch].
 /// Properties are defined in the corresponding .meta.dart file.
@@ -21,10 +21,10 @@ class AppSwitch extends StatelessWidget {
     this.activeColor,
   });
 
-  /// Whether the switch is on Maps to: App.switchWidget(binding: ...) (wraps binding)
+  /// Whether the switch is on Maps to: App.toggle(binding: ...) (wraps binding)
   final bool value;
 
-  /// Callback when switch value changes Maps to: App.switchWidget(onChanged: ...)
+  /// Callback when switch value changes Maps to: App.toggle(onChanged: ...)
   final ValueChanged<bool>? onChanged;
 
   /// Whether the switch is enabled

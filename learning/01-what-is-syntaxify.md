@@ -92,7 +92,7 @@ That's it! This same code works with:
 - ✅ Cupertino Design (iOS)
 - ✅ Custom Design (Your brand)
 
-### How to Switch Styles
+### How to Toggle Styles
 
 **Material Design (Android):**
 ```dart
@@ -256,7 +256,7 @@ $ dart run syntaxify build
 **With Syntaxify:**
 ```
 100 screen definitions = 100 generated screens ✨
-Switch style in 1 line!
+Toggle style in 1 line!
 ```
 
 ### 2. Consistent Design 🎯
@@ -486,7 +486,7 @@ void main() {
 }
 ```
 
-### Step 4: Switch Styles
+### Step 4: Toggle Styles
 
 ```dart
 // Change to iOS style
@@ -568,7 +568,7 @@ dart run syntaxify build --component=AppButton
 
 - ✅ Define screens declaratively
 - ✅ Generate Flutter code
-- ✅ Switch design styles easily
+- ✅ Toggle design styles easily
 - ✅ Consistent, maintainable UI
 
 **Core ideas:**

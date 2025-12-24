@@ -14,7 +14,7 @@ class _ControlsTabState extends State<ControlsTab> {
   bool _checkbox2 = true;
   bool _checkbox3 = false;
 
-  // Switch state
+  // Toggle state
   bool _switch1 = false;
   bool _switch2 = true;
 

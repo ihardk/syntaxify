@@ -1,6 +1,6 @@
 # Syntaxify ⚡
 
-**The Flutter UI Compiler. Define once, compile to any design system. Build Your Next Flutter App Designs in Minutes, And Switch Design Systems in Seconds, throughout the app with Syntaxify.**
+**The Flutter UI Compiler. Define once, compile to any design system. Build Your Next Flutter App Designs in Minutes, And Toggle Design Systems in Seconds, throughout the app with Syntaxify.**
 
 > Stop writing repetitive UI code. Define components once, render in any design system.
 
@@ -40,7 +40,7 @@ final loginScreen = ScreenDefinition(
     // New Interactive Components
     App.row(children: [
         App.checkbox(label: 'Remember me', binding: 'rememberMe'),
-        App.switchNode(label: 'Dark Mode', binding: 'isDarkMode'),
+        App.toggleNode(label: 'Dark Mode', binding: 'isDarkMode'),
     ]),
     App.slider(min: 0, max: 100, binding: 'volume'),
     
@@ -209,7 +209,7 @@ Widget buildButton() {
 - 🏢 **Large Apps:** 100+ screens, 1000+ components
 - 👥 **Team Scale:** Multiple developers, changing requirements
 - 🔄 **Maintenance Nightmare:** "Change all buttons to rounded corners" = touching 500+ files
-- 💸 **Cost:** "Switch from Material to Cupertino" = rewriting the entire app
+- 💸 **Cost:** "Toggle from Material to Cupertino" = rewriting the entire app
 - 🎨 **Design Changes:** "Our designer wants a custom look" = building everything from scratch
 
 ### The Solution: Separation of WHAT and HOW
@@ -330,7 +330,7 @@ These nodes render using the active `DesignStyle` (Material/Cupertino/Neo).
 - **AppButton** (`App.button`) - With variants (primary, secondary, etc.)
 - **AppInput** (`App.textField`) - Text fields with validation
 - **AppCheckbox** (`App.checkbox`) - Tri-state checkboxes
-- **AppSwitch** (`App.switchWidget`) - Toggle switches
+- **AppSwitch** (`App.toggle`) - Toggle switches
 - **AppSlider** (`App.slider`) - Range sliders
 - **AppRadio** (`App.radio`) - Radio groups
 
@@ -680,7 +680,7 @@ For detailed API documentation, see **[API Reference](https://github.com/ihardk/
 2. **Build** - Run `dart run syntaxify build` to generate implementations
 3. **Use** - Import from `package:your_app/syntaxify/` and use
 4. **Customize** - Edit design system tokens in `lib/syntaxify/design_system/`
-5. **Switch Styles** - Change `AppTheme(style: ...)` to try different designs
+5. **Toggle Styles** - Change `AppTheme(style: ...)` to try different designs
 
 ### Understanding Generated Code
 
@@ -762,7 +762,7 @@ Having issues? See **[Troubleshooting Guide](https://github.com/ihardk/syntaxify
 **v0.1.0 (Current)**
 
 - ✅ Core architecture with renderer pattern
-- ✅ 7 components (Button, Text, Input, Checkbox, Switch, Slider, Radio)
+- ✅ 7 components (Button, Text, Input, Checkbox, Toggle, Slider, Radio)
 - ✅ 3 design styles (Material, Cupertino, Neo)
 - ✅ Screen generation
 - ✅ Configuration file (`syntaxify.yaml`)

@@ -11,13 +11,13 @@
 
 The rendering system uses a solid **renderer pattern** that separates WHAT (component definition) from HOW (visual rendering). The architecture is fundamentally sound but has some areas that could be improved.
 
-| Aspect | Rating | Status |
-|--------|--------|--------|
-| Architecture | ⭐⭐⭐⭐ | Good - Solid pattern |
-| Implementation | ⭐⭐⭐ | Decent - Some duplication |
-| Extensibility | ⭐⭐⭐ | Okay - Manual work needed |
-| Performance | ⭐⭐⭐⭐ | Good - Minimal overhead |
-| Type Safety | ⭐⭐⭐⭐⭐ | Excellent - Compile-time checks |
+| Aspect         | Rating | Status                          |
+| -------------- | ------ | ------------------------------- |
+| Architecture   | ⭐⭐⭐⭐   | Good - Solid pattern            |
+| Implementation | ⭐⭐⭐    | Decent - Some duplication       |
+| Extensibility  | ⭐⭐⭐    | Okay - Manual work needed       |
+| Performance    | ⭐⭐⭐⭐   | Good - Minimal overhead         |
+| Type Safety    | ⭐⭐⭐⭐⭐  | Excellent - Compile-time checks |
 
 ---
 
@@ -117,7 +117,7 @@ CupertinoStyle → CupertinoButton.filled
 NeoStyle → Custom gradient button
 ```
 
-**Benefit:** Switch entire app's design in one line:
+**Benefit:** Toggle entire app's design in one line:
 ```dart
 AppTheme(style: MaterialStyle(), ...)  // Material Design
 AppTheme(style: CupertinoStyle(), ...) // iOS native
@@ -322,7 +322,7 @@ if (isLoading) {
 
 ---
 
-### 4. Switch Statement Repetition ⚠️
+### 4. Toggle Statement Repetition ⚠️
 
 **Problem:** Every renderer has variant switch.
 
@@ -638,7 +638,7 @@ final buttonVariants = style.getComponent('button')?.variants;
 
 ### Improvement 4: Variant-Specific Tokens Strategy
 
-**Problem:** Switch statements repeated in every renderer.
+**Problem:** Toggle statements repeated in every renderer.
 
 **Solution:** Use variant-to-widget mapping.
 
@@ -914,12 +914,12 @@ ElevatedButton(
 AppButton.primary(label: 'Submit');
 ```
 
-| Aspect | Flutter Default | Syntaxify | Winner |
-|--------|----------------|-----------|---------|
-| Simplicity | ⭐⭐ | ⭐⭐⭐⭐⭐ | Syntaxify |
-| Multi-platform | ⭐⭐ (manual) | ⭐⭐⭐⭐⭐ (built-in) | Syntaxify |
-| Customization | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | Flutter |
-| Performance | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | Flutter |
+| Aspect         | Flutter Default | Syntaxify        | Winner    |
+| -------------- | --------------- | ---------------- | --------- |
+| Simplicity     | ⭐⭐              | ⭐⭐⭐⭐⭐            | Syntaxify |
+| Multi-platform | ⭐⭐ (manual)     | ⭐⭐⭐⭐⭐ (built-in) | Syntaxify |
+| Customization  | ⭐⭐⭐⭐⭐           | ⭐⭐⭐              | Flutter   |
+| Performance    | ⭐⭐⭐⭐⭐           | ⭐⭐⭐⭐             | Flutter   |
 
 ---
 
@@ -939,12 +939,12 @@ PlatformButton(
 AppButton.primary(onPressed: () {});
 ```
 
-| Aspect | flutter_platform_widgets | Syntaxify | Winner |
-|--------|-------------------------|-----------|---------|
-| API simplicity | ⭐⭐ | ⭐⭐⭐⭐⭐ | Syntaxify |
-| Custom styles | ❌ (Material/Cupertino only) | ✅ (unlimited) | Syntaxify |
-| Widget variety | ⭐⭐⭐⭐ | ⭐⭐⭐ | Platform widgets |
-| Maintenance | ⭐⭐⭐ | ⭐⭐⭐⭐ | Syntaxify |
+| Aspect         | flutter_platform_widgets    | Syntaxify     | Winner           |
+| -------------- | --------------------------- | ------------- | ---------------- |
+| API simplicity | ⭐⭐                          | ⭐⭐⭐⭐⭐         | Syntaxify        |
+| Custom styles  | ❌ (Material/Cupertino only) | ✅ (unlimited) | Syntaxify        |
+| Widget variety | ⭐⭐⭐⭐                        | ⭐⭐⭐           | Platform widgets |
+| Maintenance    | ⭐⭐⭐                         | ⭐⭐⭐⭐          | Syntaxify        |
 
 ---
 

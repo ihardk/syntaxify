@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE
 // Analyzed by Syntaxify
 
 import 'package:flutter/material.dart';
@@ -45,7 +45,7 @@ class _KitchenSinkScreenState extends State<KitchenSinkScreen> {
           SizedBox(height: 16.0),
           Row(
             children: [
-              Icon(Icons.star, size: 24),
+              Icon(AppIcons.star, size: 20.0),
               AppText(text: 'Rating: 5.0'),
             ],
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,7 +66,6 @@ class _KitchenSinkScreenState extends State<KitchenSinkScreen> {
             controller: _emailController,
             hint: 'Enter email',
             keyboardType: TextInputType.emailAddress,
-            onChanged: widget.onEmailChanged,
           ),
         ],
         mainAxisAlignment: MainAxisAlignment.center,

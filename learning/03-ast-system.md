@@ -134,7 +134,7 @@ This wrapper structure separates **metadata** (like `id` and `visibleWhen`) from
     *   `SizedBoxNode`, `ExpandedNode`
 3.  **InteractiveNode**: Elements that accept user input.
     *   `ButtonNode`, `TextFieldNode`, `CheckboxNode`
-    *   `SwitchNode`, `IconButtonNode`, `DropdownNode`
+    *   `ToggleNode`, `IconButtonNode`, `DropdownNode`
     *   `RadioNode`, `SliderNode`
 4.  **CustomNode**: Plugin-defined extensible nodes.
     *   `App.custom(type: 'Carousel', props: {...})`

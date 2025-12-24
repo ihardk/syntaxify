@@ -8,7 +8,7 @@ void main() {
   final emitter = DartEmitter(useNullSafetySyntax: true);
   final formatter =
       DartFormatter(languageVersion: DartFormatter.latestLanguageVersion);
-  const layoutEmitter = LayoutEmitter();
+  final layoutEmitter = LayoutEmitter();
 
   String emit(App node) {
     final expression = layoutEmitter.emit(node);
@@ -298,8 +298,8 @@ void main() {
       expect(code, contains("'Agree to terms'"));
     });
 
-    test('emits Switch with binding and label', () {
-      final node = App.switchWidget(
+    test('emits Toggle with binding and label', () {
+      final node = App.toggle(
         binding: 'isEnabled',
         label: 'Enable notifications',
         onChanged: 'onSwitchChanged',
@@ -307,7 +307,7 @@ void main() {
 
       final code = emit(node);
       expect(code, contains('AppSwitch('));
-      expect(code, contains('value: isEnabled'));
+      expect(code, contains('value: _isEnabled'));
       expect(code, contains('onChanged: onSwitchChanged'));
       expect(code, contains("'Enable notifications'"));
     });
@@ -337,7 +337,7 @@ void main() {
       );
 
       final code = emit(node);
-      expect(code, contains('DropdownButtonFormField('));
+      expect(code, contains('DropdownButton('));
       expect(code, contains('value: selectedOption'));
       expect(code, contains('items:'));
       expect(code, contains('DropdownMenuItem('));
@@ -357,7 +357,7 @@ void main() {
       );
 
       final code = emit(node);
-      expect(code, contains('AppRadio('));
+      expect(code, contains('Radio('));
       expect(code, contains("value: 'male'"));
       expect(code, contains('groupValue: selectedGender'));
       expect(code, contains('onChanged: onRadioChanged'));
@@ -376,7 +376,7 @@ void main() {
 
       final code = emit(node);
       expect(code, contains('AppSlider('));
-      expect(code, contains('value: volume'));
+      expect(code, contains('value: _volume'));
       expect(code, contains('min: 0'));
       expect(code, contains('max: 100'));
       expect(code, contains('divisions: 10'));

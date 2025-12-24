@@ -206,7 +206,7 @@ your_project/
 2. **Build** - Run `dart run syntaxify build` to generate implementations
 3. **Use** - Import from `package:your_app/syntaxify/` and use
 4. **Customize** - Edit design system tokens in `lib/syntaxify/design_system/`
-5. **Switch Styles** - Change `AppTheme(style: ...)` to try different designs
+5. **Toggle Styles** - Change `AppTheme(style: ...)` to try different designs
 
 ## Understanding Generated Code
 

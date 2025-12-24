@@ -23,7 +23,7 @@ Traditionally, this meant writing `if (Platform.isIOS)` logic inside every singl
 **Syntaxify solves this with a UI Compiler:**
 1.  **Define Intent**: Declare *what* you want (e.g., "A Login screen with email input and submit button").
 2.  **Compile**: The generator transforms your definition into production Flutter code.
-3.  **Inject Style**: Switch your entire app between Material, Cupertino, or custom styles in one line.
+3.  **Inject Style**: Toggle your entire app between Material, Cupertino, or custom styles in one line.
 
 ---
 

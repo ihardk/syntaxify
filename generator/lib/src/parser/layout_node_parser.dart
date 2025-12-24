@@ -1,9 +1,21 @@
 import 'package:analyzer/dart/ast/ast.dart' as analyzer;
 import 'package:syntaxify/src/models/ast/nodes.dart';
+import 'package:syntaxify/src/parser/strategies/strategies.dart';
 
 /// Helper class to parse Dart AST expressions into Syntaxify layout nodes.
-class AppParser {
-  const AppParser();
+///
+/// Uses the Strategy pattern to delegate parsing to specialized strategies
+/// for different node categories (structural, primitive, interactive).
+class AppParser implements ParseHelpers {
+  AppParser({List<NodeParseStrategy>? strategies})
+      : _strategies = strategies ??
+            [
+              StructuralNodeStrategy(),
+              PrimitiveNodeStrategy(),
+              InteractiveNodeStrategy(),
+            ];
+
+  final List<NodeParseStrategy> _strategies;
 
   ScreenDefinition parseScreenFromExpression(
       analyzer.Expression expression, String varName) {
@@ -63,211 +75,36 @@ class AppParser {
     }
 
     if (typeName == 'App' && argumentList != null) {
-      analyzer.Expression? getArg(String name) {
-        return argumentList!.arguments
-            .whereType<analyzer.NamedExpression>()
-            .firstWhere((e) => e.name.label.name == name,
-                orElse: () => throw 'Missing arg $name')
-            .expression;
-      }
-
-      if (constructorName == 'column') {
-        return App.column(children: _parseChildren(getArg('children')));
-      } else if (constructorName == 'row') {
-        return App.row(children: _parseChildren(getArg('children')));
-      } else if (constructorName == 'text') {
-        final textExp = getArg('text');
-        final text =
-            (textExp is analyzer.StringLiteral) ? textExp.stringValue : '';
-
-        final variantExp = tryGetArg(argumentList, 'variant');
-        final variant = _parseTextVariant(variantExp);
-
-        return App.text(text: text ?? '', variant: variant);
-      } else if (constructorName == 'button') {
-        // P0 Properties Implementation
-        final labelExp = getArg('label');
-        final label =
-            (labelExp is analyzer.StringLiteral) ? labelExp.stringValue : '';
-
-        // Added parsing for new properties
-        final variantExp = tryGetArg(argumentList, 'variant');
-        String? variant;
-        if (variantExp is analyzer.PrefixedIdentifier) {
-          variant = variantExp.identifier.name;
-        } else if (variantExp is analyzer.SimpleIdentifier) {
-          variant = variantExp.name;
+      // Strategy pattern: dispatch to appropriate strategy
+      for (final strategy in _strategies) {
+        if (strategy.canParse(constructorName)) {
+          return strategy.parse(constructorName, argumentList, this);
         }
-
-        final sizeExp = tryGetArg(argumentList, 'size');
-        final size = _parseButtonSize(sizeExp);
-
-        final iconExp = tryGetArg(argumentList, 'icon');
-        final icon =
-            (iconExp is analyzer.StringLiteral) ? iconExp.stringValue : null;
-
-        final onPressedExp = tryGetArg(argumentList, 'onPressed');
-        final onPressed = (onPressedExp is analyzer.StringLiteral)
-            ? onPressedExp.stringValue
-            : null;
-
-        final isDisabledExp = tryGetArg(argumentList, 'isDisabled');
-        final isDisabled = (isDisabledExp is analyzer.BooleanLiteral)
-            ? isDisabledExp.value
-            : null;
-
-        return App.button(
-          label: label ?? '',
-          variant: variant,
-          size: size,
-          icon: icon,
-          onPressed: onPressed,
-          isDisabled: isDisabled,
-        );
-      } else if (constructorName == 'textField') {
-        final labelExp = getArg('label');
-        // Added parsing for new properties
-        final hintExp = tryGetArg(argumentList, 'hint');
-        final obscureExp = tryGetArg(argumentList, 'obscureText');
-        final inputTypeExp = tryGetArg(argumentList, 'keyboardType');
-
-        // Added parsing for variant
-        final variantExp = tryGetArg(argumentList, 'variant');
-        String? variant;
-        if (variantExp is analyzer.PrefixedIdentifier) {
-          variant = variantExp.identifier.name;
-        } else if (variantExp is analyzer.SimpleIdentifier) {
-          variant = variantExp.name;
-        } else if (variantExp is analyzer.StringLiteral) {
-          variant = variantExp.stringValue;
-        }
-
-        return App.textField(
-          label: (labelExp as analyzer.StringLiteral).stringValue ?? '',
-          hint:
-              (hintExp is analyzer.StringLiteral) ? hintExp.stringValue : null,
-          obscureText:
-              (obscureExp is analyzer.BooleanLiteral) ? obscureExp.value : null,
-          keyboardType: _parseKeyboardType(inputTypeExp),
-          variant: variant,
-        );
-      } else if (constructorName == 'card') {
-        final variantExp = tryGetArg(argumentList, 'variant');
-        String? variant;
-        if (variantExp is analyzer.PrefixedIdentifier) {
-          variant = variantExp.identifier.name;
-        } else if (variantExp is analyzer.SimpleIdentifier) {
-          variant = variantExp.name;
-        } else if (variantExp is analyzer.StringLiteral) {
-          variant = variantExp.stringValue;
-        }
-
-        final paddingExp = tryGetArg(argumentList, 'padding');
-        final padding = (paddingExp is analyzer.StringLiteral)
-            ? paddingExp.stringValue
-            : null;
-
-        final elevationExp = tryGetArg(argumentList, 'elevation');
-        final elevation = (elevationExp is analyzer.DoubleLiteral)
-            ? elevationExp.value
-            : (elevationExp is analyzer.IntegerLiteral)
-                ? elevationExp.value?.toDouble()
-                : null;
-
-        return App.card(
-          children: _parseChildren(getArg('children')),
-          variant: variant,
-          padding: padding,
-          elevation: elevation,
-        );
-      } else if (constructorName == 'spacer') {
-        // Added parsing for flex
-        final flexExp = tryGetArg(argumentList, 'flex');
-        final flex =
-            (flexExp is analyzer.IntegerLiteral) ? flexExp.value : null;
-        return App.spacer(flex: flex);
-      } else if (constructorName == 'checkbox') {
-        final bindingExp = getArg('binding');
-        final binding = (bindingExp is analyzer.StringLiteral)
-            ? bindingExp.stringValue
-            : '';
-        final labelExp = tryGetArg(argumentList, 'label');
-        final label =
-            (labelExp is analyzer.StringLiteral) ? labelExp.stringValue : null;
-        final onChangedExp = tryGetArg(argumentList, 'onChanged');
-        final onChanged = (onChangedExp is analyzer.StringLiteral)
-            ? onChangedExp.stringValue
-            : null;
-        return App.checkbox(
-          binding: binding ?? '',
-          label: label,
-          onChanged: onChanged,
-        );
-      } else if (constructorName == 'switchWidget') {
-        final bindingExp = getArg('binding');
-        final binding = (bindingExp is analyzer.StringLiteral)
-            ? bindingExp.stringValue
-            : '';
-        final labelExp = tryGetArg(argumentList, 'label');
-        final label =
-            (labelExp is analyzer.StringLiteral) ? labelExp.stringValue : null;
-        final onChangedExp = tryGetArg(argumentList, 'onChanged');
-        final onChanged = (onChangedExp is analyzer.StringLiteral)
-            ? onChangedExp.stringValue
-            : null;
-        return App.switchWidget(
-          binding: binding ?? '',
-          label: label,
-          onChanged: onChanged,
-        );
-      } else if (constructorName == 'slider') {
-        final bindingExp = getArg('binding');
-        final binding = (bindingExp is analyzer.StringLiteral)
-            ? bindingExp.stringValue
-            : '';
-        final minExp = tryGetArg(argumentList, 'min');
-        final min = (minExp is analyzer.DoubleLiteral)
-            ? minExp.value
-            : (minExp is analyzer.IntegerLiteral)
-                ? minExp.value?.toDouble()
-                : null;
-        final maxExp = tryGetArg(argumentList, 'max');
-        final max = (maxExp is analyzer.DoubleLiteral)
-            ? maxExp.value
-            : (maxExp is analyzer.IntegerLiteral)
-                ? maxExp.value?.toDouble()
-                : null;
-        final labelExp = tryGetArg(argumentList, 'label');
-        final label =
-            (labelExp is analyzer.StringLiteral) ? labelExp.stringValue : null;
-        return App.slider(
-          binding: binding ?? '',
-          min: min,
-          max: max,
-          label: label,
-        );
-      } else if (constructorName == 'radio') {
-        final bindingExp = getArg('binding');
-        final binding = (bindingExp is analyzer.StringLiteral)
-            ? bindingExp.stringValue
-            : '';
-        final valueExp = getArg('value');
-        final value =
-            (valueExp is analyzer.StringLiteral) ? valueExp.stringValue : '';
-        final labelExp = tryGetArg(argumentList, 'label');
-        final label =
-            (labelExp is analyzer.StringLiteral) ? labelExp.stringValue : null;
-        return App.radio(
-          binding: binding ?? '',
-          value: value ?? '',
-          label: label,
-        );
       }
     }
 
     return App.column(children: []);
   }
 
+  // ─────────────────────────────────────────────────────────────────────
+  // ParseHelpers Implementation
+  // ─────────────────────────────────────────────────────────────────────
+
+  @override
+  List<App> parseChildren(analyzer.Expression? expression) {
+    if (expression is analyzer.ListLiteral) {
+      return expression.elements
+          .map((e) {
+            if (e is analyzer.Expression) return parseApp(e);
+            return null;
+          })
+          .whereType<App>()
+          .toList();
+    }
+    return [];
+  }
+
+  @override
   analyzer.Expression? tryGetArg(analyzer.ArgumentList args, String name) {
     final arg = args.arguments
         .whereType<analyzer.NamedExpression>()
@@ -276,10 +113,51 @@ class AppParser {
     return arg?.expression;
   }
 
-  // Enum Parsers
+  @override
+  analyzer.Expression getArg(analyzer.ArgumentList args, String name) {
+    return args.arguments
+        .whereType<analyzer.NamedExpression>()
+        .firstWhere((e) => e.name.label.name == name,
+            orElse: () => throw 'Missing arg $name')
+        .expression;
+  }
 
-  String? _parseTextVariant(analyzer.Expression? exp) {
-    if (exp == null) return null;
+  @override
+  String? parseString(analyzer.Expression? exp) {
+    if (exp is analyzer.StringLiteral) {
+      return exp.stringValue;
+    }
+    return null;
+  }
+
+  @override
+  bool? parseBool(analyzer.Expression? exp) {
+    if (exp is analyzer.BooleanLiteral) {
+      return exp.value;
+    }
+    return null;
+  }
+
+  @override
+  double? parseDouble(analyzer.Expression? exp) {
+    if (exp is analyzer.DoubleLiteral) {
+      return exp.value;
+    } else if (exp is analyzer.IntegerLiteral) {
+      return exp.value?.toDouble();
+    }
+    return null;
+  }
+
+  @override
+  int? parseInt(analyzer.Expression? exp) {
+    if (exp is analyzer.IntegerLiteral) {
+      return exp.value;
+    }
+    return null;
+  }
+
+  @override
+  String? parseIdentifier(analyzer.Expression? exp) {
     if (exp is analyzer.PrefixedIdentifier) {
       return exp.identifier.name;
     } else if (exp is analyzer.SimpleIdentifier) {
@@ -290,13 +168,14 @@ class AppParser {
     return null;
   }
 
-  ButtonSize? _parseButtonSize(analyzer.Expression? exp) {
+  @override
+  ButtonSize? parseButtonSize(analyzer.Expression? exp) {
     if (exp == null) return null;
-    return _parseEnum(exp, 'ButtonSize', ButtonSize.values,
-        ButtonSize.md); // heuristic default
+    return _parseEnum(exp, 'ButtonSize', ButtonSize.values, ButtonSize.md);
   }
 
-  KeyboardType? _parseKeyboardType(analyzer.Expression? exp) {
+  @override
+  KeyboardType? parseKeyboardType(analyzer.Expression? exp) {
     if (exp == null) return null;
     return _parseEnum(
         exp, 'KeyboardType', KeyboardType.values, KeyboardType.text);
@@ -314,18 +193,9 @@ class AppParser {
     return defaultValue;
   }
 
-  List<App> _parseChildren(analyzer.Expression? expression) {
-    if (expression is analyzer.ListLiteral) {
-      return expression.elements
-          .map((e) {
-            if (e is analyzer.Expression) return parseApp(e);
-            return null;
-          })
-          .whereType<App>()
-          .toList();
-    }
-    return [];
-  }
+  // ─────────────────────────────────────────────────────────────────────
+  // AppBar Parsing (kept in parser as it's a separate concern)
+  // ─────────────────────────────────────────────────────────────────────
 
   AppBarNode parseAppBar(analyzer.Expression expression) {
     analyzer.ArgumentList? argumentList;

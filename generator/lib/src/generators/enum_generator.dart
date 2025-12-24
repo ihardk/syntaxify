@@ -1,5 +1,6 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
+import 'package:syntaxify/src/utils/string_utils.dart';
 
 /// Generates enum files from component variant definitions.
 ///
@@ -22,7 +23,7 @@ class EnumGenerator {
       throw ArgumentError('Variants list cannot be empty');
     }
 
-    final enumName = '${_toPascalCase(componentName)}Variant';
+    final enumName = '${StringUtils.toPascalCase(componentName)}Variant';
 
     final enumSpec = Enum((b) => b
       ..name = enumName
@@ -44,23 +45,5 @@ class EnumGenerator {
     final code = library.accept(emitter).toString();
 
     return _formatter.format(code);
-  }
-
-  /// Convert a string to PascalCase.
-  String _toPascalCase(String input) {
-    if (input.isEmpty) return input;
-
-    // Handle snake_case
-    if (input.contains('_')) {
-      return input
-          .split('_')
-          .map((word) => word.isEmpty
-              ? ''
-              : '${word[0].toUpperCase()}${word.substring(1).toLowerCase()}')
-          .join();
-    }
-
-    // Already camelCase or PascalCase - just ensure first letter is uppercase
-    return '${input[0].toUpperCase()}${input.substring(1)}';
   }
 }

@@ -30,11 +30,11 @@ sealed class InteractiveNode with _$InteractiveNode {
     bool? tristate,
   }) = CheckboxNode;
 
-  const factory InteractiveNode.switchNode({
+  const factory InteractiveNode.toggleNode({
     required String binding,
     String? label,
     String? onChanged,
-  }) = SwitchNode;
+  }) = ToggleNode;
 
   const factory InteractiveNode.iconButton({
     required String icon,

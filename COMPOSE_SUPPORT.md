@@ -29,7 +29,7 @@ The current AST is **90% compatible** with Jetpack Compose. Here's what needs to
 | Button                    | ElevatedButton            | Button                    |
 | TextField                 | TextField                 | TextField                 |
 | Checkbox                  | Checkbox                  | Checkbox                  |
-| Switch                    | Switch                    | Switch                    |
+| Toggle                    | Toggle                    | Toggle                    |
 | Spacer                    | Spacer                    | Spacer                    |
 | SizedBox                  | SizedBox                  | Spacer(Modifier.size)     |
 | Expanded                  | Expanded                  | Box(Modifier.weight)      |

@@ -18,7 +18,7 @@ As an architect, I want generated screens to use `AppButton` and `AppInput` inst
 ## Spec Scope
 
 1.  **MetaParser Upgrade** - Expand parsing logic to cover all `P0` node properties (TextField `hint`, Button `onPressed`, etc).
-2.  **LayoutEmitter Refactor** - Switch from emitting `ElevatedButton`/`TextField` to `AppButton`/`AppInput`.
+2.  **LayoutEmitter Refactor** - Toggle from emitting `ElevatedButton`/`TextField` to `AppButton`/`AppInput`.
 3.  **Imports & Fields Management** - Ensure `ScreenGenerator` adds necessary imports and generates callback fields for actions.
 4.  **Enum Parsing** - Implement robust enum parsing for `KeyboardType`, `TextInputAction`, `MainAxisAlignment` etc.
 

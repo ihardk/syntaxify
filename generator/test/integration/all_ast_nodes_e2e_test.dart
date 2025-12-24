@@ -11,7 +11,7 @@ void main() {
   late LayoutEmitter emitter;
 
   setUp(() {
-    emitter = const LayoutEmitter();
+    emitter = LayoutEmitter();
   });
 
   String emit(App node) {
@@ -119,7 +119,7 @@ void main() {
           binding: 'isChecked',
           label: 'Accept terms',
         ),
-        App.switchWidget(
+        App.toggle(
           binding: 'isEnabled',
           label: 'Enable',
         ),
@@ -151,8 +151,8 @@ void main() {
       expect(code, contains('AppCheckbox('));
       expect(code, contains('AppSwitch('));
       expect(code, contains('IconButton('));
-      expect(code, contains('DropdownButtonFormField('));
-      expect(code, contains('AppRadio('));
+      expect(code, contains('DropdownButton('));
+      expect(code, contains('Radio('));
       expect(code, contains('AppSlider('));
     });
 
@@ -179,12 +179,12 @@ void main() {
           App.padding(
             padding: '16',
             child: App.column(children: [
-              App.switchWidget(
+              App.toggle(
                 binding: 'notifications',
                 label: 'Enable Notifications',
               ),
               App.divider(),
-              App.switchWidget(
+              App.toggle(
                 binding: 'darkMode',
                 label: 'Dark Mode',
               ),
@@ -247,7 +247,7 @@ void main() {
         App.button(label: 'Test'),
         App.textField(label: 'Test'),
         App.checkbox(binding: 'test'),
-        App.switchWidget(binding: 'test'),
+        App.toggle(binding: 'test'),
         App.iconButton(icon: 'test'),
         App.dropdown(binding: 'test', items: ['a', 'b']),
         App.radio(binding: 'test', value: 'a'),

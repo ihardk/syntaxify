@@ -6,7 +6,7 @@ import 'package:syntaxify/src/parser/layout_node_parser.dart';
 import 'package:test/test.dart';
 
 void main() {
-  const parser = AppParser();
+  final parser = AppParser();
 
   Expression parseExpression(String code) {
     final result = parseString(content: 'final x = $code;');
@@ -43,7 +43,7 @@ void main() {
             },
             textField: (_) => fail('Expected button'),
             checkbox: (_) => fail('Expected button'),
-            switchNode: (_) => fail('Expected button'),
+            toggleNode: (_) => fail('Expected button'),
             iconButton: (_) => fail('Expected button'),
             dropdown: (_) => fail('Expected button'),
             radio: (_) => fail('Expected button'),
@@ -81,7 +81,7 @@ void main() {
             },
             button: (_) => fail('Expected textField'),
             checkbox: (_) => fail('Expected textField'),
-            switchNode: (_) => fail('Expected textField'),
+            toggleNode: (_) => fail('Expected textField'),
             iconButton: (_) => fail('Expected textField'),
             dropdown: (_) => fail('Expected textField'),
             radio: (_) => fail('Expected textField'),
@@ -110,7 +110,7 @@ void main() {
             },
             textField: (_) => fail('Expected button'),
             checkbox: (_) => fail('Expected button'),
-            switchNode: (_) => fail('Expected button'),
+            toggleNode: (_) => fail('Expected button'),
             iconButton: (_) => fail('Expected button'),
             dropdown: (_) => fail('Expected button'),
             radio: (_) => fail('Expected button'),

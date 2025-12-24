@@ -265,7 +265,7 @@ void main() {
         // Verify Material uses ElevatedButton
         expect(find.byType(ElevatedButton), findsOneWidget);
 
-        // Switch to Neo
+        // Toggle to Neo
         styleNotifier.value = const NeoStyle();
         await tester.pumpAndSettle();
 

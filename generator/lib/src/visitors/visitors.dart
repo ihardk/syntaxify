@@ -7,3 +7,4 @@ library visitors;
 export 'ast_visitor.dart';
 export 'binding_collector.dart';
 export 'controller_collector.dart';
+export 'callback_collector.dart';

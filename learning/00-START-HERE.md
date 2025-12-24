@@ -150,7 +150,7 @@ Welcome! This learning guide will help you understand Syntaxify from the ground 
    - Syntaxify auto-rebuilds on save!
    - Press Ctrl+C to stop
 
-5. **Switch styles:**
+5. **Toggle styles:**
    - Open `example/lib/main.dart`
    - Change `MaterialStyle()` to `CupertinoStyle()`
    - Hot reload

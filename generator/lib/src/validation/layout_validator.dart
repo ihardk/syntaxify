@@ -70,7 +70,7 @@ class LayoutValidator {
       button: (n) => _validateButton(n, path),
       textField: (n) => _validateTextField(n, path),
       checkbox: (n) => _validateCheckbox(n, path),
-      switchNode: (n) => _validateSwitch(n, path),
+      toggleNode: (n) => _validateSwitch(n, path),
       iconButton: (n) => _validateIconButton(n, path),
       dropdown: (n) => _validateDropdown(n, path),
       radio: (n) => _validateRadio(n, path),
@@ -742,15 +742,15 @@ class LayoutValidator {
   }
 
   /// Validates a switch node.
-  List<ValidationError> _validateSwitch(SwitchNode node, String path) {
+  List<ValidationError> _validateSwitch(ToggleNode node, String path) {
     final errors = <ValidationError>[];
-    final nodePath = '$path.switch';
+    final nodePath = '$path.toggle';
 
     // Rule: binding must be valid identifier
     if (!_isValidDartIdentifier(node.binding)) {
       errors.add(ValidationError(
         type: ValidationErrorType.invalidIdentifier,
-        message: 'Switch binding must be a valid Dart identifier',
+        message: 'Toggle binding must be a valid Dart identifier',
         nodePath: nodePath,
         fieldName: 'binding',
         suggestion:
@@ -762,7 +762,7 @@ class LayoutValidator {
     if (node.onChanged != null && !_isValidDartIdentifier(node.onChanged!)) {
       errors.add(ValidationError(
         type: ValidationErrorType.invalidIdentifier,
-        message: 'Switch onChanged must be a valid Dart identifier',
+        message: 'Toggle onChanged must be a valid Dart identifier',
         nodePath: nodePath,
         fieldName: 'onChanged',
         suggestion:

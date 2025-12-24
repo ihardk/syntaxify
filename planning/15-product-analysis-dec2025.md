@@ -67,7 +67,7 @@ App (sealed class)
 │   ├── sizedBox, expanded
 ├── interactive/ (InteractiveNode)
 │   ├── button, textField
-│   ├── checkbox, switchNode, iconButton
+│   ├── checkbox, toggleNode, iconButton
 │   ├── dropdown, radio, slider
 ├── custom/ (CustomNode) - Plugin extensibility
 └── appBar

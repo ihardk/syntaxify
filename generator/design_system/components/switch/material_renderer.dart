@@ -8,7 +8,7 @@ mixin MaterialSwitchRenderer on DesignStyle {
     bool enabled = true,
     Color? activeColor,
   }) {
-    return Switch(
+    return Toggle(
       value: value,
       onChanged: enabled ? onChanged : null,
       activeColor: activeColor ?? Colors.blue,

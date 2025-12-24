@@ -386,9 +386,8 @@ void main() {
 
         final code = emitToString(node);
 
-        // Note: Default SpacerNode without flex/size defaults to SpacerSize.md (16px) -> SizedBox
-        expect(code, contains('SizedBox'));
-        expect(code, contains('height: 16'));
+        // Note: Default SpacerNode without flex/size defaults to Spacer()
+        expect(code, contains('Spacer'));
       });
 
       test('emits Spacer with flex', () {

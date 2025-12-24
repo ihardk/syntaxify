@@ -135,7 +135,7 @@ class OverviewTab extends StatelessWidget {
             icon: Icons.palette,
             title: 'Multi-Style Design System',
             description:
-                'One component API, three visual styles. Switch between Material, Cupertino, and Neo instantly!',
+                'One component API, three visual styles. Toggle between Material, Cupertino, and Neo instantly!',
           ),
           const SizedBox(height: 16),
           const _FeatureCard(
@@ -146,7 +146,8 @@ class OverviewTab extends StatelessWidget {
           ),
           const SizedBox(height: 32),
 
-          const AppText(text: 'Quick Start', variant: TextVariant.headlineMedium),
+          const AppText(
+              text: 'Quick Start', variant: TextVariant.headlineMedium),
           const SizedBox(height: 16),
           _buildQuickStartStep('1', 'Choose a design style above'),
           _buildQuickStartStep(

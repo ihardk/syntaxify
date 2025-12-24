@@ -369,7 +369,7 @@ sealed class App with _$App {
         meta: NodeMetadata(id: id, visibleWhen: visibleWhen),
       );
 
-  factory App.switchWidget({
+  factory App.toggle({
     String? id,
     String? visibleWhen,
     required String binding,
@@ -377,7 +377,7 @@ sealed class App with _$App {
     String? onChanged,
   }) =>
       App.interactive(
-        node: InteractiveNode.switchNode(
+        node: InteractiveNode.toggleNode(
           binding: binding,
           label: label,
           onChanged: onChanged,

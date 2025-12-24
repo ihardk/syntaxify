@@ -7,9 +7,15 @@ import 'package:mason_logger/mason_logger.dart';
 
 import 'package:syntaxify/src/models/component_definition.dart';
 import 'package:syntaxify/src/models/ast/nodes.dart';
+import 'package:syntaxify/src/parser/extractors/extractors.dart';
 import 'layout_node_parser.dart';
 
-/// Parses meta component files using the Dart analyzer
+/// Parses meta component files using the Dart analyzer.
+///
+/// Uses focused extractors for different concerns:
+/// - [ComponentExtractor] for @SyntaxComponent annotated classes
+/// - [EnumExtractor] for enum declarations
+/// - [PropertyExtractor] for field properties
 class MetaParser {
   MetaParser({required this.logger});
 
@@ -26,7 +32,7 @@ class MetaParser {
       final content = await file.readAsString();
       final unitResult = parseString(content: content);
 
-      final visitor = _AstNodeVisitor();
+      final visitor = _MetaVisitor();
       unitResult.unit.visitChildren(visitor);
 
       return visitor.component;
@@ -50,14 +56,12 @@ class MetaParser {
 
     await for (final entity in directory.list(recursive: true)) {
       if (entity is File && entity.path.endsWith('.dart')) {
-        // We now parse .dart files for Screens too, not just .meta.dart
-        // But for P0 optimization, let's look for .meta.dart OR .screen.dart
         if (entity.path.endsWith('.meta.dart') ||
             entity.path.endsWith('.screen.dart')) {
           final content = await entity.readAsString();
           final unitResult = parseString(content: content);
 
-          final visitor = _AstNodeVisitor();
+          final visitor = _MetaVisitor();
           unitResult.unit.visitChildren(visitor);
 
           if (visitor.component != null) {
@@ -75,196 +79,34 @@ class MetaParser {
   }
 }
 
-// ... (MetaParser class remains mostly same, just imports and delegation)
-// Actually we need to remove _AstNodeVisitor's internal methods and delegate.
+/// AST visitor that delegates extraction to focused extractors.
+class _MetaVisitor extends RecursiveAstVisitor<void> {
+  _MetaVisitor()
+      : _componentExtractor = ComponentExtractor(),
+        _enumExtractor = EnumExtractor(),
+        _nodeParser = AppParser();
 
-/// AST visitor that extracts meta component information
-class _AstNodeVisitor extends RecursiveAstVisitor<void> {
+  final ComponentExtractor _componentExtractor;
+  final EnumExtractor _enumExtractor;
+  final AppParser _nodeParser;
+
   ComponentDefinition? component;
   final screens = <ScreenDefinition>[];
   final enums = <ComponentEnum>[];
 
-  final _nodeParser = const AppParser();
-
   @override
   void visitEnumDeclaration(analyzer.EnumDeclaration node) {
-    final values = node.constants.map((c) => c.name.lexeme).toList();
-
-    enums.add(ComponentEnum(
-      name: node.name.lexeme,
-      values: values,
-      description: _extractDocComment(node),
-    ));
-
+    enums.add(_enumExtractor.extract(node));
     super.visitEnumDeclaration(node);
   }
 
   @override
-  void visitClassDeclaration(analyzer.ClassDeclaration classNode) {
-    // Check for @SyntaxComponent annotation
-    final metaAnnotation = classNode.metadata.where((annotation) {
-      final name = annotation.name.toSource();
-      return name == 'SyntaxComponent';
-    }).firstOrNull;
-
-    if (metaAnnotation != null) {
-      final properties = <ComponentProp>[];
-      final variants = <String>[];
-
-      // Extract explicit name and variants from annotation
-      String? explicitName;
-      final args = metaAnnotation.arguments?.arguments;
-      if (args != null) {
-        for (final arg in args) {
-          if (arg is analyzer.NamedExpression) {
-            final argName = arg.name.label.name;
-
-            if (argName == 'name') {
-              if (arg.expression is analyzer.StringLiteral) {
-                explicitName =
-                    (arg.expression as analyzer.StringLiteral).stringValue;
-              }
-            } else if (argName == 'variants') {
-              // Extract variants from @SyntaxComponent(variants: ['a', 'b', 'c'])
-              if (arg.expression is analyzer.ListLiteral) {
-                final listLiteral = arg.expression as analyzer.ListLiteral;
-                for (final element in listLiteral.elements) {
-                  if (element is analyzer.StringLiteral) {
-                    variants.add(element.stringValue ?? '');
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-
-      // Extract properties from class members
-      for (final member in classNode.members) {
-        if (member is analyzer.FieldDeclaration) {
-          for (final variable in member.fields.variables) {
-            final prop = _extractProperty(variable, member);
-            if (prop != null) {
-              properties.add(prop);
-            }
-
-            // Check for @Variant annotation
-            final variantAnnotation = member.metadata
-                .where(
-                  (a) => a.name.toSource() == 'Variant',
-                )
-                .firstOrNull;
-
-            if (variantAnnotation != null) {
-              final args = variantAnnotation.arguments?.arguments;
-              if (args != null && args.isNotEmpty) {
-                final listLiteral = args.first;
-                if (listLiteral is analyzer.ListLiteral) {
-                  for (final element in listLiteral.elements) {
-                    if (element is analyzer.StringLiteral) {
-                      variants.add(element.stringValue ?? '');
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-
-      // Extract type parameters (e.g., <T> from RadioMeta<T>)
-      final typeParameters = <String>[];
-      final typeParamList = classNode.typeParameters;
-      if (typeParamList != null) {
-        for (final typeParam in typeParamList.typeParameters) {
-          typeParameters.add(typeParam.name.lexeme);
-        }
-      }
-
-      component = ComponentDefinition(
-        name: _toSnakeCase(classNode.name.lexeme),
-        className: classNode.name.lexeme,
-        explicitName: explicitName,
-        properties: properties,
-        variants: variants,
-        description: _extractDocComment(classNode),
-        typeParameters: typeParameters,
-      );
+  void visitClassDeclaration(analyzer.ClassDeclaration node) {
+    final extracted = _componentExtractor.extract(node);
+    if (extracted != null) {
+      component = extracted;
     }
-
-    super.visitClassDeclaration(classNode);
-  }
-
-  ComponentProp? _extractProperty(analyzer.VariableDeclaration variable,
-      analyzer.FieldDeclaration declaration) {
-    // Check for explicit @Required or @Optional annotations first
-    final hasRequiredAnnotation = declaration.metadata.any(
-      (a) => a.name.toSource() == 'Required',
-    );
-    final hasOptionalAnnotation = declaration.metadata.any(
-      (a) => a.name.toSource() == 'Optional',
-    );
-
-    // Check for @Default annotation
-    String? defaultValue = variable.initializer?.toSource();
-    for (final annotation in declaration.metadata) {
-      if (annotation.name.toSource() == 'Default') {
-        final args = annotation.arguments?.arguments;
-        if (args != null && args.isNotEmpty) {
-          // Get the value from @Default('value')
-          final firstArg = args.first;
-          if (firstArg is analyzer.StringLiteral) {
-            defaultValue = firstArg.stringValue;
-          } else {
-            defaultValue = firstArg.toSource();
-          }
-        }
-      }
-    }
-
-    final typeNode = declaration.fields.type;
-    final typeName = typeNode?.toSource() ?? 'dynamic';
-
-    // Convention-based parsing:
-    // 1. If @Required annotation exists → required
-    // 2. If @Optional annotation exists → optional
-    // 3. Otherwise, use type nullability: String? → optional, String → required
-    bool isRequired;
-    if (hasRequiredAnnotation) {
-      isRequired = true;
-    } else if (hasOptionalAnnotation) {
-      isRequired = false;
-    } else {
-      // Convention: nullable type (ends with ?) means optional
-      isRequired = !typeName.endsWith('?');
-    }
-
-    return ComponentProp(
-      name: variable.name.lexeme,
-      type: typeName,
-      isRequired: isRequired,
-      defaultValue: defaultValue,
-      description: _extractDocComment(declaration),
-    );
-  }
-
-  String? _extractDocComment(analyzer.AnnotatedNode node) {
-    final comment = node.documentationComment;
-    if (comment == null) return null;
-
-    return comment.tokens
-        .map((t) => t.lexeme.replaceFirst('///', '').trim())
-        .where((s) => s.isNotEmpty)
-        .join(' ');
-  }
-
-  String _toSnakeCase(String input) {
-    return input
-        .replaceAllMapped(
-          RegExp('([A-Z])'),
-          (match) => '_${match.group(1)!.toLowerCase()}',
-        )
-        .replaceFirst('_', '');
+    super.visitClassDeclaration(node);
   }
 
   @override
@@ -293,6 +135,7 @@ class _AstNodeVisitor extends RecursiveAstVisitor<void> {
       final screen = _nodeParser.parseScreenFromExpression(expression, varName);
       screens.add(screen);
     } catch (e) {
+      // Log but don't fail - screen parsing errors shouldn't stop parsing
       print('Error parsing screen $varName: $e');
     }
   }

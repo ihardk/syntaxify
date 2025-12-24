@@ -25,7 +25,7 @@ flutter run
 
 ### Live Style Switching
 
-Switch between **3 design styles** in real-time:
+Toggle between **3 design styles** in real-time:
 
 - **Material** - Google's Material Design 3
 - **Cupertino** - Apple's iOS design language
@@ -93,7 +93,7 @@ dart run syntaxify build
 
 ```dart
 AppTheme(
-  style: MaterialStyle(),  // Switch to CupertinoStyle() or NeoStyle()
+  style: MaterialStyle(),  // Toggle to CupertinoStyle() or NeoStyle()
   child: MaterialApp(home: YourApp()),
 )
 ```

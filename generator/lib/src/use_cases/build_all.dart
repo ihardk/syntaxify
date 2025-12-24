@@ -22,6 +22,7 @@ import 'package:syntaxify/src/validation/layout_validator.dart';
 import 'package:syntaxify/src/models/validation_error.dart';
 import 'package:syntaxify/src/infrastructure/build_cache_manager.dart';
 import 'package:syntaxify/src/models/build_cache.dart';
+import 'package:syntaxify/src/utils/string_utils.dart';
 
 /// Use case for building all components.
 class BuildAllUseCase {
@@ -229,7 +230,8 @@ class BuildAllUseCase {
               component.className.replaceAll('Meta', '');
           final enumCode =
               enumGenerator.generate(componentName, component.variants);
-          final fileName = '${_toSnakeCase(componentName)}_variant.dart';
+          final fileName =
+              '${StringUtils.toSnakeCase(componentName)}_variant.dart';
           final filePath =
               context.join(outputDir, 'generated', 'variants', fileName);
 
@@ -450,7 +452,7 @@ class BuildAllUseCase {
         'Input',
         'Text',
         'Checkbox',
-        'Switch',
+        'Toggle',
         'Slider',
         'Radio'
       };
@@ -493,7 +495,7 @@ class BuildAllUseCase {
 
           if (standardComponents.contains(cleanName)) continue;
 
-          final folderName = _toSnakeCase(cleanName);
+          final folderName = StringUtils.toSnakeCase(cleanName);
           final componentDir = context.join(
               outputDir, 'design_system', 'components', folderName);
           await fileSystem.createDirectory(componentDir);
@@ -573,15 +575,5 @@ $exports
       p.posix.join(outputDir, 'index.dart'),
       content,
     );
-  }
-
-  /// Convert PascalCase to snake_case.
-  String _toSnakeCase(String input) {
-    return input
-        .replaceAllMapped(
-          RegExp('([A-Z])'),
-          (match) => '_${match.group(1)!.toLowerCase()}',
-        )
-        .replaceFirst('_', '');
   }
 }

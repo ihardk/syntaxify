@@ -85,7 +85,7 @@ Syntaxify uses a **renderer pattern** to separate WHAT (component definition) fr
 **AST Node Types (18+):**
 - **Structural**: Column, Row, Container, Card, ListView, Stack, GridView, Padding, Center
 - **Primitive**: Text, Icon, Spacer, Image, Divider, CircularProgressIndicator, SizedBox, Expanded
-- **Interactive**: Button, TextField, Checkbox, Switch, IconButton, Dropdown, Radio, Slider
+- **Interactive**: Button, TextField, Checkbox, Toggle, IconButton, Dropdown, Radio, Slider
 
 ---
 
