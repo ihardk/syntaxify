@@ -6,9 +6,9 @@
 
 ## Executive Summary
 
-I implemented a token-based theming system in two phases. While the implementation has **strong architectural foundations**, there is **1 critical gap** and **1 medium gap** that prevent full automation of token generation.
+I implemented a token-based theming system in two phases. While the implementation has **strong architectural foundations**, there are **2 critical gaps** and **1 medium gap** that prevent full automation and scalability.
 
-**Overall Assessment:** 🟡 **Partially Complete** - Infrastructure is solid, dynamic generation is working, but token file generation is missing.
+**Overall Assessment:** 🟡 **Partially Complete** - Infrastructure is solid, dynamic generation is working, but token file generation is missing and token architecture needs redesign for scalability.
 
 ---
 
@@ -163,6 +163,153 @@ NewComponentTokens get newComponentTokens => const NewComponentTokens(
 
 ---
 
+### **GAP #3: Scattered Token Architecture - No Centralized Style Guide**
+**Severity:** 🔴 **CRITICAL (Architectural)** - Not scalable for real design systems
+
+**Problem:**
+Current token architecture is **component-scoped** and **scattered** across multiple files. To implement a consistent style guide (typography, color palette, spacing system, etc.), developers must touch **every component token file**.
+
+**Current Architecture:**
+```
+tokens/
+├── button_tokens.dart      → activeColor: Colors.blue
+├── checkbox_tokens.dart    → activeColor: Colors.blue
+├── toggle_tokens.dart      → activeTrackColor: Colors.blue
+├── slider_tokens.dart      → activeTrackColor: Colors.blue
+├── radio_tokens.dart       → activeColor: Colors.blue
+├── input_tokens.dart       → focusColor: Colors.blue
+└── text_tokens.dart        → color: Colors.black87
+```
+
+**Issue:** Hardcoded values duplicated across files. To change brand color from blue to purple, developer must edit **6+ files**.
+
+**Industry Standard (Design Tokens):**
+```
+tokens/
+├── foundation/
+│   ├── colors.dart         → Define ONCE
+│   │   colorPrimary: Color(0xFF6200EE)
+│   │   colorOnPrimary: Color(0xFFFFFFFF)
+│   │   colorSurface: Color(0xFFFFFFFF)
+│   │
+│   ├── typography.dart     → Define ONCE
+│   │   headlineLarge: TextStyle(fontSize: 32, fontWeight: 700)
+│   │   bodyMedium: TextStyle(fontSize: 14, fontWeight: 400)
+│   │
+│   ├── spacing.dart        → Define ONCE
+│   │   spacingXs: 4.0
+│   │   spacingMd: 16.0
+│   │   spacingXl: 32.0
+│   │
+│   └── elevation.dart      → Define ONCE
+│       shadowSm: BoxShadow(...)
+│       shadowMd: BoxShadow(...)
+│
+└── components/
+    ├── button_tokens.dart   → REFERENCES foundation
+    │   activeColor: tokens.colorPrimary  ✅
+    │   textStyle: tokens.bodyMedium      ✅
+    │   padding: EdgeInsets.all(tokens.spacingMd)  ✅
+    │
+    └── checkbox_tokens.dart → REFERENCES foundation
+        activeColor: tokens.colorPrimary  ✅
+```
+
+**Benefits of Centralized Tokens:**
+1. **Single Source of Truth** - Change brand color in ONE place
+2. **Consistency** - All components use same color palette
+3. **Theming** - Easy to create dark mode, brand variants
+4. **Design-Dev Handoff** - Maps directly to Figma design tokens
+5. **Scalability** - Add new components without duplicating values
+
+**Example Usage:**
+```dart
+// Foundation tokens (ONCE)
+class FoundationTokens {
+  // Color system
+  final Color colorPrimary;
+  final Color colorOnPrimary;
+  final Color colorSurface;
+
+  // Typography scale
+  final TextStyle headlineLarge;
+  final TextStyle bodyMedium;
+
+  // Spacing scale
+  final double spacingXs;
+  final double spacingMd;
+
+  // Elevation system
+  final BoxShadow shadowMd;
+
+  const FoundationTokens({...});
+}
+
+// Material foundation
+const materialFoundation = FoundationTokens(
+  colorPrimary: Color(0xFF6200EE),
+  bodyMedium: TextStyle(fontSize: 14),
+  spacingMd: 16.0,
+  // ...
+);
+
+// Component tokens REFERENCE foundation
+class ButtonTokens {
+  final Color activeColor;
+  final TextStyle textStyle;
+  final EdgeInsets padding;
+
+  const ButtonTokens({
+    required this.activeColor,
+    required this.textStyle,
+    required this.padding,
+  });
+
+  // Factory using foundation tokens
+  factory ButtonTokens.fromFoundation(FoundationTokens foundation) {
+    return ButtonTokens(
+      activeColor: foundation.colorPrimary,      // ✅ Reference
+      textStyle: foundation.bodyMedium,          // ✅ Reference
+      padding: EdgeInsets.all(foundation.spacingMd),  // ✅ Reference
+    );
+  }
+}
+```
+
+**What Needs to Change:**
+1. **Create foundation token system** (colors, typography, spacing, elevation)
+2. **Refactor component tokens** to reference foundation tokens
+3. **Update TokenGenerator** to generate foundation-aware component tokens
+4. **Update renderers** to use foundation-based tokens
+5. **Enable theming** by swapping foundation tokens
+
+**Impact:**
+- Current: To change brand color → Edit 6+ files
+- Proposed: To change brand color → Edit 1 file (foundation/colors.dart)
+
+**Real-World Example:**
+```dart
+// Change entire app theme in ONE file
+const lightFoundation = FoundationTokens(
+  colorPrimary: Color(0xFF6200EE),  // Purple
+  colorSurface: Color(0xFFFFFFFF),  // White
+);
+
+const darkFoundation = FoundationTokens(
+  colorPrimary: Color(0xFFBB86FC),  // Light purple
+  colorSurface: Color(0xFF121212),  // Dark gray
+);
+
+// All components automatically adapt!
+```
+
+**References:**
+- Material Design 3 Token System: https://m3.material.io/foundations/design-tokens
+- Figma Design Tokens: https://www.figma.com/community/plugin/888356646278934516/design-tokens
+- W3C Design Tokens Community Group: https://www.w3.org/community/design-tokens/
+
+---
+
 ## 🟡 Minor Issues
 
 ### **Issue #4: No Tests**
@@ -211,12 +358,13 @@ The `19-automatic-token-generation-dec2025.md` document describes the system as 
 | **Exports added to design_system.dart** | Dynamic | Dynamic | ✅ WORKING |
 | **DesignStyle token getters** | Dynamic | Dynamic | ✅ WORKING |
 | **Renderer token stubs** | Generated | Manual | ❌ GAP #2 |
+| **Foundation token system** | Centralized | Scattered | ❌ GAP #3 |
 | **TokenGenerator class** | Created | Created | ✅ Done |
 | **Inference logic** | Implemented | Implemented | ✅ Done |
 | **Documentation** | Written | Written | ✅ Done |
 
-**Working:** 6/8 features (75%)
-**Not Working:** 2/8 features (25%)
+**Working:** 6/9 features (67%)
+**Not Working:** 3/9 features (33%)
 
 ---
 
@@ -288,61 +436,222 @@ ${baseName}Tokens get $tokenMethodName => const ${baseName}Tokens(
 
 ---
 
-### **Fix #3: Add Tests**
+### **Fix #3: Implement Centralized Foundation Token System** (Critical - Architectural)
+**Files to create:**
+1. `lib/syntaxify/design_system/tokens/foundation/foundation_tokens.dart`
+2. `lib/syntaxify/design_system/tokens/foundation/colors.dart`
+3. `lib/syntaxify/design_system/tokens/foundation/typography.dart`
+4. `lib/syntaxify/design_system/tokens/foundation/spacing.dart`
+5. `lib/syntaxify/design_system/tokens/foundation/elevation.dart`
+
+**Architecture:**
+```dart
+// 1. Foundation token system
+class FoundationTokens {
+  // Color system (Material Design 3 inspired)
+  final Color colorPrimary;
+  final Color colorOnPrimary;
+  final Color colorSecondary;
+  final Color colorSurface;
+  final Color colorError;
+
+  // Typography scale
+  final TextStyle displayLarge;
+  final TextStyle headlineMedium;
+  final TextStyle bodyLarge;
+  final TextStyle bodyMedium;
+  final TextStyle labelSmall;
+
+  // Spacing scale (8dp grid)
+  final double spacingXs;   // 4dp
+  final double spacingSm;   // 8dp
+  final double spacingMd;   // 16dp
+  final double spacingLg;   // 24dp
+  final double spacingXl;   // 32dp
+
+  // Elevation/Shadow system
+  final BoxShadow shadowSm;
+  final BoxShadow shadowMd;
+  final BoxShadow shadowLg;
+
+  // Border radius scale
+  final double radiusSm;    // 4dp
+  final double radiusMd;    // 8dp
+  final double radiusLg;    // 16dp
+
+  const FoundationTokens({
+    required this.colorPrimary,
+    required this.colorOnPrimary,
+    required this.colorSecondary,
+    required this.colorSurface,
+    required this.colorError,
+    required this.displayLarge,
+    required this.headlineMedium,
+    required this.bodyLarge,
+    required this.bodyMedium,
+    required this.labelSmall,
+    required this.spacingXs,
+    required this.spacingSm,
+    required this.spacingMd,
+    required this.spacingLg,
+    required this.spacingXl,
+    required this.shadowSm,
+    required this.shadowMd,
+    required this.shadowLg,
+    required this.radiusSm,
+    required this.radiusMd,
+    required this.radiusLg,
+  });
+}
+
+// 2. Refactor component tokens to accept foundation
+class ButtonTokens {
+  final Color activeColor;
+  final Color disabledColor;
+  final TextStyle textStyle;
+  final EdgeInsets padding;
+  final double borderRadius;
+  final BoxShadow? shadow;
+
+  const ButtonTokens({
+    required this.activeColor,
+    required this.disabledColor,
+    required this.textStyle,
+    required this.padding,
+    required this.borderRadius,
+    this.shadow,
+  });
+
+  // Factory that uses foundation tokens
+  factory ButtonTokens.fromFoundation(FoundationTokens foundation) {
+    return ButtonTokens(
+      activeColor: foundation.colorPrimary,
+      disabledColor: foundation.colorSurface,
+      textStyle: foundation.bodyMedium,
+      padding: EdgeInsets.symmetric(
+        horizontal: foundation.spacingMd,
+        vertical: foundation.spacingSm,
+      ),
+      borderRadius: foundation.radiusMd,
+      shadow: foundation.shadowSm,
+    );
+  }
+}
+
+// 3. Update DesignStyle to include foundation
+abstract class DesignStyle {
+  // Foundation tokens (NEW)
+  FoundationTokens get foundation;
+
+  // Component tokens (use foundation.fromFoundation factories)
+  ButtonTokens get buttonTokens;
+  CheckboxTokens get checkboxTokens;
+  // ...
+}
+
+// 4. Concrete styles provide foundation + component tokens
+class MaterialStyle extends DesignStyle {
+  @override
+  FoundationTokens get foundation => const FoundationTokens(
+    colorPrimary: Color(0xFF6200EE),
+    colorOnPrimary: Color(0xFFFFFFFF),
+    // ... Material Design 3 tokens
+  );
+
+  @override
+  ButtonTokens get buttonTokens => ButtonTokens.fromFoundation(foundation);
+
+  @override
+  CheckboxTokens get checkboxTokens => CheckboxTokens.fromFoundation(foundation);
+}
+```
+
+**Migration Strategy:**
+1. Create foundation token classes
+2. Add `.fromFoundation()` factories to existing component token classes
+3. Update MaterialStyle, CupertinoStyle, NeoStyle to use factories
+4. Update TokenGenerator to generate foundation-aware component tokens
+5. Deprecate hardcoded values in component tokens
+
+**Benefits:**
+- Change brand color: Edit 1 line instead of 6+ files
+- Create dark mode: Swap foundation tokens
+- Consistent spacing/typography across all components
+- Matches industry standards (Material Design 3, Figma tokens)
+
+---
+
+### **Fix #4: Add Tests**
 **Required test files:**
 1. `test/generators/token_generator_test.dart`
 2. `test/generators/design_system_generator_test.dart` (verify dynamic generation)
 3. `test/integration/token_generation_e2e_test.dart`
+4. `test/tokens/foundation_tokens_test.dart` (NEW - test foundation system)
 
 ---
 
 ## 📝 Recommended Action Plan
 
-### **Phase 1: Critical Fix** (Required for full automation)
+### **Phase 1: Critical Fixes** (Required for functionality)
 1. ✅ Integrate TokenGenerator into build pipeline (Fix #1)
-2. ✅ Test with example component
+2. ✅ Implement centralized foundation token system (Fix #3)
+3. ✅ Test with example component
 
-**Note:** DesignSystemGenerator IS already integrated and working!
-
-**Estimated Time:** 1-2 hours
-
-### **Phase 2: Quality Improvements** (Important for production)
-1. Add unit tests for TokenGenerator
-2. Add integration tests
-3. Handle edge cases (no tokens, conflicts, etc.)
-4. Update documentation to match reality
-
-**Estimated Time:** 3-4 hours
-
-### **Phase 3: Nice-to-Have** (Future enhancement)
-1. Renderer stub generation
-2. Token migration tool
-3. Validation system
+**Priority:** Fix #3 should be done BEFORE Fix #1, so generated tokens are foundation-aware from the start.
 
 **Estimated Time:** 4-6 hours
+
+### **Phase 2: Quality Improvements** (Important for production)
+1. Add unit tests for TokenGenerator (Fix #4)
+2. Add foundation token tests
+3. Add integration tests
+4. Handle edge cases (no tokens, conflicts, etc.)
+5. Update documentation to match reality
+
+**Estimated Time:** 4-5 hours
+
+### **Phase 3: Nice-to-Have** (Future enhancement)
+1. Renderer stub generation (Fix #2)
+2. Token migration tool for existing projects
+3. Validation system for token consistency
+4. Figma token import/export
+
+**Estimated Time:** 6-8 hours
 
 ---
 
 ## 🎯 Conclusion
 
-### **Architectural Quality: A**
-The design is solid, follows best practices, and integrates well with existing patterns.
+### **Architectural Quality: B**
+The design is good and follows existing patterns, but lacks **scalable token architecture**. Current component-scoped tokens don't align with industry standards (Material Design 3, Figma tokens) which use centralized foundation tokens.
 
-### **Implementation Completeness: B-**
-75% of the system is functional (6/8 features working). DesignSystemGenerator IS integrated. Only TokenGenerator invocation is missing.
+### **Implementation Completeness: C+**
+67% of the system is functional (6/9 features working). DesignSystemGenerator IS integrated, but missing:
+- TokenGenerator invocation (functional gap)
+- Foundation token system (architectural gap)
 
-### **Overall: Partially Complete**
-The **infrastructure is excellent** and **mostly integrated**. The DesignSystemGenerator dynamic generation IS working (verified at build_all.dart:462-475). Only TokenGenerator invocation is missing. With Fix #1 applied, the system would be fully functional.
+### **Overall: Partially Complete with Architectural Limitations**
+The **infrastructure is solid** and **mostly integrated**. The DesignSystemGenerator dynamic generation IS working (verified at build_all.dart:462-475). However, the token architecture needs **redesign** before scaling:
+
+**Critical Issues:**
+1. **Gap #1 (Functional):** TokenGenerator not invoked - blocks automation
+2. **Gap #3 (Architectural):** Scattered tokens - not scalable for real projects
+
+**Recommendation:** Implement Fix #3 (foundation tokens) BEFORE Fix #1 (TokenGenerator) to avoid generating legacy token structure.
 
 ---
 
 ## 💡 Lessons Learned
 
 1. **Infrastructure ≠ Integration** - Building TokenGenerator doesn't mean it's called
-2. **Verify Integration** - DesignSystemGenerator WAS integrated (found at build_all.dart:462), but initial review missed this
-3. **Read Build Pipeline Thoroughly** - Deeper investigation revealed dynamic generation IS working
-4. **Test Early** - Should have tested the full pipeline before committing
-5. **Self-Review Requires Multiple Passes** - Initial findings can be incorrect; verify before finalizing
+2. **Research Industry Standards First** - Should have studied Material Design 3 tokens, Figma design tokens, W3C standards before implementing
+3. **Scalability from Day 1** - Component-scoped tokens work for 7 components, fail at scale (20+ components, multiple themes)
+4. **Centralized > Scattered** - Foundation tokens (single source of truth) beat component-scoped tokens (duplicated values)
+5. **Verify Integration** - DesignSystemGenerator WAS integrated (found at build_all.dart:462), but initial review missed this
+6. **Read Build Pipeline Thoroughly** - Deeper investigation revealed dynamic generation IS working
+7. **Test Early** - Should have tested the full pipeline before committing
+8. **Self-Review Requires Multiple Passes** - Initial findings can be incorrect; verify before finalizing
+9. **User Feedback is Critical** - User identified architectural gap that self-review missed
 
 ---
 
@@ -360,21 +669,36 @@ The **infrastructure is excellent** and **mostly integrated**. The DesignSystemG
 
 ## ❌ What I Missed
 
-1. **Only 1 critical gap:** Not calling TokenGenerator in the build pipeline
-2. **Initial self-review error:** Incorrectly stated DesignSystemGenerator wasn't integrated (it IS)
-3. Testing the end-to-end flow before committing
-4. Verifying TokenGenerator invocation
+1. **Critical functional gap:** Not calling TokenGenerator in the build pipeline
+2. **Critical architectural gap:** Scattered token architecture - not following industry standards for design systems
+3. **Initial self-review error:** Incorrectly stated DesignSystemGenerator wasn't integrated (it IS)
+4. **Scalability concern:** Component-scoped tokens require editing multiple files for theme changes
+5. Testing the end-to-end flow before committing
+6. Verifying TokenGenerator invocation
+7. Researching industry standards (Material Design 3 tokens, Figma design tokens) before implementing
 
 ---
 
-## 🔄 Correction to Initial Review
+## 🔄 Corrections to Initial Review
 
+### **Correction #1: DesignSystemGenerator Integration**
 **Initial Finding (INCORRECT):** "Gap #2: DesignSystemGenerator not integrated"
 
 **Corrected Finding:** DesignSystemGenerator IS integrated at build_all.dart:462-475. Dynamic generation of design_system.dart and design_style.dart is WORKING.
 
-**Actual Gap:** Only TokenGenerator invocation is missing (Gap #1).
+### **Correction #2: Token Architecture (User-Identified)**
+**User Observation:** "Tokens are scattered. If font, typography, and other style guide needs to be implemented, then dev needs to touch multiple files. Can we have a single style guide that defines everything?"
+
+**Finding:** User is CORRECT. Current architecture has **critical scalability flaw**:
+- Component-scoped tokens (button_tokens.dart, checkbox_tokens.dart, etc.)
+- Duplicated values across files (Colors.blue appears in 6+ files)
+- No centralized foundation/primitives
+- Doesn't match industry standards (Material Design 3, Figma tokens)
+
+**Impact:** Added Gap #3 (Critical - Architectural)
 
 ---
 
-**Next Steps:** Apply Fix #1 to integrate TokenGenerator invocation.
+**Next Steps:**
+1. Apply Fix #3 FIRST (foundation token system)
+2. Then apply Fix #1 (TokenGenerator invocation) - so it generates foundation-aware tokens
