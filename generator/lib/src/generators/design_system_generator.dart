@@ -44,6 +44,11 @@ class DesignSystemGenerator {
     buffer.writeln("import 'package:syntaxify/syntaxify.dart';");
     buffer.writeln();
 
+    // Foundation tokens
+    buffer.writeln('// Foundation tokens');
+    buffer.writeln("import 'tokens/foundation/foundation_tokens.dart';");
+    buffer.writeln();
+
     // Token imports (Dynamic - generated for all components)
     buffer.writeln('// Token imports');
     for (final comp in components) {
@@ -66,6 +71,11 @@ class DesignSystemGenerator {
       }
       buffer.writeln();
     }
+
+    // Re-export foundation tokens for convenience
+    buffer.writeln('// Re-export foundation tokens');
+    buffer.writeln("export 'tokens/foundation/foundation_tokens.dart';");
+    buffer.writeln();
 
     // Token exports (Dynamic - generated for all components)
     buffer.writeln('// Token exports');
@@ -91,6 +101,15 @@ class DesignSystemGenerator {
     // Core Parts
     buffer.writeln("part 'app_theme.dart';");
     buffer.writeln("part 'design_style.dart';");
+    buffer.writeln();
+
+    // Foundation tokens (parts)
+    buffer.writeln("part 'tokens/foundation/material_foundation.dart';");
+    buffer.writeln("part 'tokens/foundation/cupertino_foundation.dart';");
+    buffer.writeln("part 'tokens/foundation/neo_foundation.dart';");
+    buffer.writeln();
+
+    // Styles
     buffer.writeln("part 'styles/material_style.dart';");
     buffer.writeln("part 'styles/cupertino_style.dart';");
     buffer.writeln("part 'styles/neo_style.dart';");
@@ -132,6 +151,18 @@ class DesignSystemGenerator {
         ..lambda = true
         ..body = Code(
             "runtimeType.toString().replaceAll('Style', '').toLowerCase()")));
+
+      // Foundation design tokens getter
+      c.methods.add(Method((m) => m
+        ..name = 'foundation'
+        ..type = MethodType.getter
+        ..returns = refer('FoundationTokens')
+        ..docs.addAll([
+          '/// Foundation design tokens (colors, typography, spacing, etc.)',
+          '///',
+          '/// Single source of truth for all design primitives.',
+          '/// Component tokens reference these foundation values.',
+        ])));
 
       // Add token accessor methods for ALL components (dynamic)
       for (final comp in components) {
@@ -211,16 +242,42 @@ $code
     final name = _getBaseName(component: component);
     final rendererName = '$style${name}Renderer';
 
+    final tokenMethodName =
+        '${name[0].toLowerCase()}${name.substring(1)}Tokens';
+    final hasVariants = component.variants.isNotEmpty;
+
     final cls = Mixin((c) {
       c
         ..name = rendererName
-        ..on = refer('DesignStyle')
-        ..methods.add(Method((m) {
-          m
-            ..name = 'render$name'
-            ..annotations.add(refer('override'))
-            ..returns = refer('Widget')
-            ..optionalParameters.addAll(component.properties.map((prop) {
+        ..on = refer('DesignStyle');
+
+      // Add token accessor override
+      if (hasVariants) {
+        c.methods.add(Method((m) => m
+          ..name = tokenMethodName
+          ..annotations.add(refer('override'))
+          ..returns = refer('${name}Tokens')
+          ..requiredParameters.add(Parameter((p) => p
+            ..name = 'variant'
+            ..type = refer('${name}Variant')))
+          ..body = Code(
+              'return ${name}Tokens.fromFoundation(foundation, variant: variant);')));
+      } else {
+        c.methods.add(Method((m) => m
+          ..name = tokenMethodName
+          ..type = MethodType.getter
+          ..annotations.add(refer('override'))
+          ..returns = refer('${name}Tokens')
+          ..lambda = true
+          ..body = Code('${name}Tokens.fromFoundation(foundation)')));
+      }
+
+      c.methods.add(Method((m) {
+        m
+          ..name = 'render$name'
+          ..annotations.add(refer('override'))
+          ..returns = refer('Widget')
+          ..optionalParameters.addAll(component.properties.map((prop) {
               final isNullable = !prop.isRequired &&
                   prop.defaultValue == null &&
                   !prop.type.endsWith('?');
@@ -274,6 +331,16 @@ $code
         ..name = className
         ..extend = refer('DesignStyle')
         ..constructors.add(Constructor((ctor) => ctor..constant = true));
+
+      // Override foundation getter
+      final foundationVarName = '${styleName.toLowerCase()}Foundation';
+      c.methods.add(Method((m) => m
+        ..name = 'foundation'
+        ..type = MethodType.getter
+        ..returns = refer('FoundationTokens')
+        ..annotations.add(refer('override'))
+        ..lambda = true
+        ..body = Code(foundationVarName)));
 
       for (final comp in components) {
         final baseName = _getBaseName(component: comp);

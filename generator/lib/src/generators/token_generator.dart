@@ -40,11 +40,15 @@ class TokenGenerator {
     final library = Library(
       (b) => b
         ..comments.addAll(_generateHeader(tokenClassName))
-        ..directives.add(Directive.import('package:flutter/material.dart'))
+        ..directives.addAll([
+          Directive.import('package:flutter/material.dart'),
+          Directive.import('foundation/foundation_tokens.dart'),
+        ])
         ..body.add(_generateTokenClass(
           tokenClassName,
           baseName,
           tokenProperties,
+          component,
         )),
     );
 
@@ -214,13 +218,17 @@ class TokenGenerator {
     String className,
     String componentName,
     List<TokenProperty> properties,
+    ComponentDefinition component,
   ) {
     return Class(
       (b) => b
         ..name = className
         ..docs.add('/// Design tokens for the $componentName component')
         ..fields.addAll(properties.map(_generateField))
-        ..constructors.add(_generateConstructor(properties)),
+        ..constructors.addAll([
+          _generateConstructor(properties),
+          _generateFromFoundationFactory(className, componentName, properties, component),
+        ]),
     );
   }
 
@@ -254,5 +262,143 @@ class TokenGenerator {
           ),
         ),
     );
+  }
+
+  /// Generate .fromFoundation() factory constructor.
+  ///
+  /// Creates tokens from foundation primitives with smart property mapping.
+  /// Handles both simple (no variants) and variant-aware components.
+  Constructor _generateFromFoundationFactory(
+    String className,
+    String componentName,
+    List<TokenProperty> properties,
+    ComponentDefinition component,
+  ) {
+    final hasVariants = component.variants.isNotEmpty;
+    final variantParam = hasVariants ? ', {required ${componentName}Variant variant}' : '';
+
+    // Generate smart property mapping from foundation tokens
+    final propertyMappings = properties.map((prop) {
+      return '${prop.name}: ${_mapToFoundation(prop.name, componentName)}';
+    }).join(',\n        ');
+
+    return Constructor(
+      (b) => b
+        ..factory = true
+        ..name = 'fromFoundation'
+        ..docs.add('/// Create ${className} from foundation design tokens')
+        ..requiredParameters.add(
+          Parameter(
+            (p) => p
+              ..name = 'foundation'
+              ..type = refer('FoundationTokens'),
+          ),
+        )
+        ..optionalParameters.addAll(
+          hasVariants
+              ? [
+                  Parameter(
+                    (p) => p
+                      ..name = 'variant'
+                      ..named = true
+                      ..required = true
+                      ..type = refer('${componentName}Variant'),
+                  ),
+                ]
+              : [],
+        )
+        ..body = Code('''
+      return $className(
+        $propertyMappings,
+      );
+    '''),
+    );
+  }
+
+  /// Map a token property name to the appropriate foundation token.
+  ///
+  /// Uses naming patterns to intelligently select foundation primitives:
+  /// - activeColor -> colorPrimary
+  /// - borderWidth -> borderWidthMedium
+  /// - borderRadius -> radiusMd
+  String _mapToFoundation(String propName, String componentName) {
+    final lowerName = propName.toLowerCase();
+
+    // Color mappings
+    if (lowerName.contains('active') && lowerName.contains('color')) {
+      return 'foundation.colorPrimary';
+    }
+    if (lowerName.contains('inactive') && lowerName.contains('color')) {
+      return 'foundation.colorSurfaceVariant';
+    }
+    if (lowerName.contains('check') && lowerName.contains('color')) {
+      return 'foundation.colorOnPrimary';
+    }
+    if (lowerName.contains('thumb') && lowerName.contains('color')) {
+      return 'foundation.colorOnPrimary';
+    }
+    if (lowerName.contains('border') && lowerName.contains('color')) {
+      return 'foundation.colorOutline';
+    }
+    if (lowerName.contains('track') && lowerName.contains('color')) {
+      if (lowerName.contains('inactive')) {
+        return 'foundation.colorSurfaceVariant';
+      }
+      return 'foundation.colorPrimary';
+    }
+    if (lowerName.contains('overlay') && lowerName.contains('color')) {
+      return 'foundation.colorPrimary.withOpacity(0.12)';
+    }
+    if (lowerName.contains('text') && lowerName.contains('color')) {
+      return 'foundation.colorOnSurface';
+    }
+    if (lowerName.contains('background') && lowerName.contains('color')) {
+      return 'foundation.colorSurface';
+    }
+    if (lowerName.contains('error') && lowerName.contains('color')) {
+      return 'foundation.colorError';
+    }
+    if (lowerName.contains('focus') && lowerName.contains('color')) {
+      return 'foundation.colorPrimary';
+    }
+    if (lowerName.endsWith('color')) {
+      return 'foundation.colorPrimary';
+    }
+
+    // Size/dimension mappings
+    if (lowerName.contains('borderwidth')) {
+      return 'foundation.borderWidthMedium';
+    }
+    if (lowerName.contains('borderradius') || lowerName == 'radius') {
+      return 'foundation.radiusSm';
+    }
+    if (lowerName.contains('trackheight')) {
+      return 'foundation.borderWidthMedium * 2';
+    }
+    if (lowerName.contains('thumbradius')) {
+      return 'foundation.spacingSm + 2';
+    }
+    if (lowerName.contains('padding')) {
+      return 'EdgeInsets.symmetric(horizontal: foundation.spacingMd, vertical: foundation.spacingSm)';
+    }
+    if (lowerName.contains('margin')) {
+      return 'EdgeInsets.all(foundation.spacingSm)';
+    }
+
+    // TextStyle mappings
+    if (lowerName.contains('textstyle')) {
+      return 'foundation.bodyMedium.copyWith(color: foundation.colorOnSurface)';
+    }
+    if (lowerName.contains('hintstyle')) {
+      return 'foundation.bodyMedium.copyWith(color: foundation.colorOnSurfaceVariant)';
+    }
+
+    // Default fallback based on type
+    if (lowerName.contains('width') || lowerName.contains('height') || lowerName.contains('size')) {
+      return 'foundation.spacingMd';
+    }
+
+    // Generic fallback
+    return 'foundation.colorPrimary';
   }
 }
