@@ -4,6 +4,20 @@ Common issues and solutions when using Syntaxify.
 
 ## Common Errors
 
+### Analysis Errors in `meta/` Folder
+
+**Cause:** Files in `meta/` use Syntaxify's custom DSL which triggers Dart analysis errors (e.g., *Undefined name 'App'*, *Target of URI doesn't exist*).
+
+**Fix:** Exclude the `meta` directory from analysis in your project's `analysis_options.yaml`:
+
+```yaml
+analyzer:
+  exclude:
+    - meta/**
+```
+
+---
+
 ### Error: "Member not found: 'headline'"
 
 **Cause:** Using outdated enum value from old examples.

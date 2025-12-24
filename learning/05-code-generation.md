@@ -558,37 +558,78 @@ class AppButton extends StatelessWidget {
 
 ---
 
-## Step 5: Emission
+## Step 5: Emission (Strategy Pattern)
 
-**Code:** `lib/src/emitters/code_emitter.dart`
+**Code:** `lib/src/emitters/layout_emitter.dart`
 
-Converts `code_builder` structures to formatted strings.
+The emission system uses the **Strategy Pattern** for maintainability. Instead of one large file, node emission is split into focused strategy classes:
+
+```
+lib/src/emitters/
+├── layout_emitter.dart          # Main orchestrator
+└── strategies/
+    ├── node_emit_strategy.dart  # Base interface + EmitContext
+    ├── structural_emitter.dart  # Column, Row, Container, etc.
+    ├── primitive_emitter.dart   # Text, Icon, Image, etc.
+    ├── interactive_emitter.dart # Button, TextField, etc.
+    └── strategies.dart          # Barrel export
+```
+
+### Strategy Pattern
 
 ```dart
-class CodeEmitter {
-  String emit(Library library) {
-    // Use DartEmitter from code_builder
-    final emitter = DartEmitter(
-      allocator: Allocator(),  // Manages imports
-      orderDirectives: true,   // Sort imports
-      useNullSafetySyntax: true,
+abstract class NodeEmitStrategy {
+  Expression emit(dynamic node, EmitContext context);
+}
+
+class LayoutEmitter {
+  final StructuralEmitStrategy _structuralStrategy;
+  final PrimitiveEmitStrategy _primitiveStrategy;
+  final InteractiveEmitStrategy _interactiveStrategy;
+
+  Expression emit(App node) {
+    final context = EmitContext(
+      emitChild: emit,
+      controllerMap: controllerMap,
     );
 
-    // Convert to string
-    final code = library.accept(emitter).toString();
-
-    // Format with dart_style
-    final formatter = DartFormatter();
-    return formatter.format(code);
+    return node.map(
+      structural: (n) => _structuralStrategy.emit(n.node, context),
+      primitive: (n) => _primitiveStrategy.emit(n.node, context),
+      interactive: (n) => _interactiveStrategy.emit(n.node, context),
+      custom: (n) => _emitCustom(n.node),
+      appBar: (n) => _emitAppBar(n),
+    );
   }
 }
 ```
 
-**What it does:**
-- Converts code_builder structures to strings
-- Manages imports automatically
-- Formats code using `dart_style`
-- Ensures consistent formatting
+**Benefits:**
+- ✅ Each strategy handles one category of nodes
+- ✅ Easy to test strategies in isolation
+- ✅ Easy to add new node types
+- ✅ Strategies can be injected for testing
+
+### EmitContext
+
+Shared context for recursive emission:
+
+```dart
+class EmitContext {
+  final Expression Function(App node) emitChild;  // Recursive
+  final Map<String, String> controllerMap;        // TextControllers
+  final Map<String, String> variableMap;          // Scoped variables
+}
+```
+
+### Formatting
+
+After emission, code is formatted with `dart_style`:
+
+```dart
+final formatter = DartFormatter();
+return formatter.format(code);
+```
 
 ---
 

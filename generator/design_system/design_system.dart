@@ -13,17 +13,23 @@ import 'tokens/input_tokens.dart';
 import 'tokens/text_tokens.dart';
 import 'app_icons.dart';
 
+// Import generated variants
+import '../generated/variants/button_variant.dart';
+import '../generated/variants/text_variant.dart';
+
 // Re-export for convenience
 export 'tokens/button_tokens.dart';
 export 'tokens/input_tokens.dart';
 export 'tokens/text_tokens.dart';
 export 'app_icons.dart';
-export 'package:syntaxify/syntaxify.dart' show TextVariant;
+
+// Export generated variants
+export '../generated/variants/button_variant.dart';
+export '../generated/variants/text_variant.dart';
 
 // Part files - same library as sealed class
 part 'app_theme.dart';
 part 'design_style.dart';
-part 'variants.dart';
 part 'styles/material_style.dart';
 part 'styles/cupertino_style.dart';
 part 'styles/neo_style.dart';
@@ -46,9 +52,9 @@ part 'components/checkbox/material_renderer.dart';
 part 'components/checkbox/cupertino_renderer.dart';
 part 'components/checkbox/neo_renderer.dart';
 
-part 'components/switch/material_renderer.dart';
-part 'components/switch/cupertino_renderer.dart';
-part 'components/switch/neo_renderer.dart';
+part 'components/toggle/material_renderer.dart';
+part 'components/toggle/cupertino_renderer.dart';
+part 'components/toggle/neo_renderer.dart';
 
 part 'components/slider/material_renderer.dart';
 part 'components/slider/cupertino_renderer.dart';

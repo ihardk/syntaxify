@@ -120,7 +120,7 @@
   - [x] Improved error reporting with `mason_logger`
 - [x] **Design System Expansion**
   - [x] 7 components × 3 styles (Material/Cupertino/Neo)
-  - [x] AppCheckbox, AppSwitch, AppSlider, AppRadio wrappers
+  - [x] AppCheckbox, AppToggle, AppSlider, AppRadio wrappers
   - [x] 12 new renderer files created
 - [x] **DartDoc Coverage**
   - [x] All public APIs documented

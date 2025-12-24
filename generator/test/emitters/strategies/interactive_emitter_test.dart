@@ -46,12 +46,12 @@ void main() {
       expect(result, contains('AppCheckbox'));
     });
 
-    test('emits AppSwitch widget', () {
+    test('emits AppToggle widget', () {
       final context = createContext();
       final node = InteractiveNode.toggleNode(binding: 'isDarkMode');
       final result = emitToString(strategy.emit(node, context));
 
-      expect(result, contains('AppSwitch'));
+      expect(result, contains('AppToggle'));
     });
 
     test('emits AppSlider widget', () {

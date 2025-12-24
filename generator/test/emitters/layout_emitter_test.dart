@@ -293,7 +293,7 @@ void main() {
 
       final code = emit(node);
       expect(code, contains('AppCheckbox('));
-      expect(code, contains('value: isChecked'));
+      expect(code, contains('value: _isChecked'));
       expect(code, contains('onChanged: onCheckboxChanged'));
       expect(code, contains("'Agree to terms'"));
     });
@@ -306,7 +306,7 @@ void main() {
       );
 
       final code = emit(node);
-      expect(code, contains('AppSwitch('));
+      expect(code, contains('AppToggle('));
       expect(code, contains('value: _isEnabled'));
       expect(code, contains('onChanged: onSwitchChanged'));
       expect(code, contains("'Enable notifications'"));
@@ -338,14 +338,13 @@ void main() {
 
       final code = emit(node);
       expect(code, contains('DropdownButton('));
-      expect(code, contains('value: selectedOption'));
+      expect(code, contains('value: _selectedOption'));
       expect(code, contains('items:'));
       expect(code, contains('DropdownMenuItem('));
       expect(code, contains("'Option 1'"));
       expect(code, contains("'Option 2'"));
       expect(code, contains("'Option 3'"));
-      expect(code, contains('InputDecoration('));
-      expect(code, contains("labelText: 'Select an option'"));
+      expect(code, contains("hint: Text('Select an option')"));
     });
 
     test('emits Radio with binding and value', () {
@@ -359,7 +358,7 @@ void main() {
       final code = emit(node);
       expect(code, contains('Radio('));
       expect(code, contains("value: 'male'"));
-      expect(code, contains('groupValue: selectedGender'));
+      expect(code, contains('groupValue: _selectedGender'));
       expect(code, contains('onChanged: onRadioChanged'));
       expect(code, contains("'Male'"));
     });
@@ -380,7 +379,8 @@ void main() {
       expect(code, contains('min: 0'));
       expect(code, contains('max: 100'));
       expect(code, contains('divisions: 10'));
-      expect(code, contains("label: 'Volume'"));
+      // Label is emitted as a Text widget in a Column wrapper, not passed to AppSlider
+      expect(code, contains("Text('Volume')"));
       expect(code, contains('onChanged: onSliderChanged'));
     });
   });

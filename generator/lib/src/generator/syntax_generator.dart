@@ -9,9 +9,7 @@ import 'package:syntaxify/src/models/build_result.dart';
 import 'package:syntaxify/src/plugins/default_plugin.dart';
 import 'package:syntaxify/src/parser/meta_parser.dart';
 import 'package:syntaxify/src/parser/token_parser.dart';
-import 'package:syntaxify/src/parser/enum_parser.dart';
 import 'package:syntaxify/src/use_cases/build_all.dart';
-import 'package:file/local.dart' as file_pkg;
 
 /// Main Syntaxify generator - orchestrates the build process.
 ///
@@ -45,7 +43,6 @@ class SyntaxGenerator {
 
   late final MetaParser _metaParser = MetaParser(logger: logger);
   late final TokenParser _tokenParser = TokenParser(logger: logger);
-  late final EnumParser _enumParser = EnumParser();
 
   /// Build components from meta definitions.
   Future<BuildResult> build({
@@ -90,16 +87,24 @@ class SyntaxGenerator {
       final tokens = await _tokenParser.parseDirectory(tokensDir);
       logger.info('Found ${tokens.length} token definition(s)');
 
-      // Parse @Variant enums from design system for dynamic helper constructors
-      final designDir =
-          file_pkg.LocalFileSystem().directory(designSystemDirectory);
-      final variantEnums = await _enumParser.parseVariantEnums(designDir);
+      // Build variant enums map from component definitions
+      // Each component with variants produces {ComponentName}Variant enum
+      final variantEnums = <String, List<String>>{};
+      for (final comp in components) {
+        if (comp.variants.isNotEmpty) {
+          final baseName =
+              comp.explicitName ?? comp.className.replaceAll('Meta', '');
+          final cleanName =
+              baseName.startsWith('App') ? baseName.substring(3) : baseName;
+          variantEnums['${cleanName}Variant'] = comp.variants;
+        }
+      }
       if (variantEnums.isNotEmpty) {
         logger.info(
-            'Found ${variantEnums.length} @Variant enum(s): ${variantEnums.keys.join(', ')}');
+            'Found ${variantEnums.length} variant enum(s): ${variantEnums.keys.join(', ')}');
       }
 
-      // Create registry with parsed variant enums
+      // Create registry with variant enums from component definitions
       final buildRegistry = GeneratorRegistry(variantEnums: variantEnums)
         ..registerPlugin(DefaultPlugin());
 

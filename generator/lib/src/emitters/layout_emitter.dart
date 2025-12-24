@@ -18,7 +18,7 @@ import 'package:syntaxify/src/emitters/strategies/strategies.dart';
 ///
 /// ## Design System Integration
 ///
-/// Interactive nodes emit App wrapper components (`AppCheckbox`, `AppSwitch`,
+/// Interactive nodes emit App wrapper components (`AppCheckbox`, `AppToggle`,
 /// etc.) that delegate rendering to the active design style (Material,
 /// Cupertino, or Neo).
 ///

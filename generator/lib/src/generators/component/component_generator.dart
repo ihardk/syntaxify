@@ -132,13 +132,15 @@ class ComponentGenerator implements IComponentGenerator {
       ComponentDefinition component) {
     final constructors = <Constructor>[];
 
-    // Find variant properties (types ending with 'Variant')
+    // Find variant properties (types ending with 'Variant' or 'Variant?')
     for (final prop in component.properties) {
-      if (!prop.type.endsWith('Variant')) continue;
+      // Strip nullable suffix for matching
+      final baseType = prop.type.replaceAll('?', '');
+      if (!baseType.endsWith('Variant')) continue;
 
-      // Get variant enum name (e.g., ButtonVariant)
-      final variantType = prop.type;
-      // Get variant values from the enum (we'll need to hardcode known ones for now)
+      // Get variant enum name (e.g., ButtonVariant, TextVariant)
+      final variantType = baseType;
+      // Get variant values from the component definition
       final variantValues = _getVariantValues(variantType);
 
       for (final variantValue in variantValues) {
@@ -289,12 +291,19 @@ return AppTheme.of(context).style.$renderMethodName(
   }
 
   Code _getDefaultValueCode(ComponentProp prop) {
-    // If the type is an enum (present in variantEnums), prefix with type name
-    // e.g. 'primary' -> 'ButtonVariant.primary'
+    final defaultValue = prop.defaultValue!;
+
+    // If the type is an enum (present in variantEnums), ensure prefix
+    // But check if already prefixed to avoid double-prefixing
     if (variantEnums.containsKey(prop.type)) {
-      return Code('${prop.type}.${prop.defaultValue}');
+      // If already has the full prefix, use as-is
+      if (defaultValue.contains('.')) {
+        return Code(defaultValue);
+      }
+      // Otherwise add the prefix: e.g. 'primary' -> 'ButtonVariant.primary'
+      return Code('${prop.type}.$defaultValue');
     }
     // Otherwise return raw value (bools, numbers)
-    return Code(prop.defaultValue!);
+    return Code(defaultValue);
   }
 }

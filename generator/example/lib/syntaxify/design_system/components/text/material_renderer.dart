@@ -2,43 +2,73 @@ part of '../../design_system.dart';
 
 mixin MaterialTextRenderer on DesignStyle {
   @override
-  TextTokens get textTokens => const TextTokens(
-        displayLarge: TextStyle(
+  TextTokens textTokens(TextVariant variant) {
+    switch (variant) {
+      case TextVariant.displayLarge:
+        return const TextTokens(
+          style: TextStyle(fontSize: 57, fontWeight: FontWeight.w400),
+          color: Colors.black87,
           fontSize: 57,
           fontWeight: FontWeight.w400,
           letterSpacing: -0.25,
           height: 1.12,
-        ),
-        headlineMedium: TextStyle(
+        );
+      case TextVariant.headlineMedium:
+        return const TextTokens(
+          style: TextStyle(fontSize: 28, fontWeight: FontWeight.w400),
+          color: Colors.black87,
           fontSize: 28,
           fontWeight: FontWeight.w400,
+          letterSpacing: 0,
           height: 1.29,
-        ),
-        titleMedium: TextStyle(
+        );
+      case TextVariant.titleMedium:
+        return const TextTokens(
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          color: Colors.black87,
           fontSize: 16,
           fontWeight: FontWeight.w500,
           letterSpacing: 0.15,
           height: 1.50,
-        ),
-        bodyLarge: TextStyle(
+        );
+      case TextVariant.bodyLarge:
+        return const TextTokens(
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+          color: Colors.black87,
           fontSize: 16,
           fontWeight: FontWeight.w400,
           letterSpacing: 0.5,
           height: 1.50,
-        ),
-        bodyMedium: TextStyle(
+        );
+      case TextVariant.bodyMedium:
+        return const TextTokens(
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+          color: Colors.black87,
           fontSize: 14,
           fontWeight: FontWeight.w400,
           letterSpacing: 0.25,
           height: 1.43,
-        ),
-        labelSmall: TextStyle(
+        );
+      case TextVariant.labelMedium:
+        return const TextTokens(
+          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+          color: Colors.black87,
+          fontSize: 12,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 0.5,
+          height: 1.33,
+        );
+      case TextVariant.labelSmall:
+        return const TextTokens(
+          style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
+          color: Colors.black87,
           fontSize: 11,
           fontWeight: FontWeight.w500,
           letterSpacing: 0.5,
           height: 1.45,
-        ),
-      );
+        );
+    }
+  }
 
   @override
   Widget renderText({
@@ -48,33 +78,16 @@ mixin MaterialTextRenderer on DesignStyle {
     int? maxLines,
     TextOverflow? overflow,
   }) {
-    TextStyle? style;
-    if (variant != null) {
-      switch (variant) {
-        case TextVariant.displayLarge:
-          style = textTokens.displayLarge;
-          break;
-        case TextVariant.headlineMedium:
-          style = textTokens.headlineMedium;
-          break;
-        case TextVariant.titleMedium:
-          style = textTokens.titleMedium;
-          break;
-        case TextVariant.bodyLarge:
-          style = textTokens.bodyLarge;
-          break;
-        case TextVariant.bodyMedium:
-          style = textTokens.bodyMedium;
-          break;
-        case TextVariant.labelSmall:
-          style = textTokens.labelSmall;
-          break;
-      }
-    }
+    final effectiveVariant = variant ?? TextVariant.bodyMedium;
+    final tokens = textTokens(effectiveVariant);
 
     return Text(
       text,
-      style: style,
+      style: tokens.style.copyWith(
+        color: tokens.color,
+        letterSpacing: tokens.letterSpacing,
+        height: tokens.height,
+      ),
       textAlign: align,
       maxLines: maxLines,
       overflow: overflow,

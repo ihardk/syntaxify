@@ -1,24 +1,15 @@
-/// Cupertino Design Style (Apple)
+/// Cupertino Style
 part of '../design_system.dart';
 
-// =============================================================================
-// CUPERTINO STYLE CLASS
-// =============================================================================
-
-/// Cupertino Design style (Apple)
-///
-/// Implements Apple Human Interface Guidelines with:
-/// - Pill-shaped buttons (full radius)
-/// - iOS-native widgets (CupertinoButton, CupertinoTextField)
-/// - System colors (CupertinoColors)
 class CupertinoStyle extends DesignStyle
     with
         CupertinoButtonRenderer,
-        CupertinoInputRenderer,
-        CupertinoTextRenderer,
         CupertinoCheckboxRenderer,
-        CupertinoSwitchRenderer,
+        CupertinoInputRenderer,
+        CupertinoRadioRenderer,
         CupertinoSliderRenderer,
-        CupertinoRadioRenderer {
+        CupertinoSuperCardRenderer,
+        CupertinoTextRenderer,
+        CupertinoToggleRenderer {
   const CupertinoStyle();
 }

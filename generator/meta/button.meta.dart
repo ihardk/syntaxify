@@ -4,9 +4,13 @@
 /// Properties must match DesignStyle.renderButton() signature.
 library;
 
+import 'package:flutter/material.dart';
 import 'package:syntaxify/syntaxify.dart';
 
-@SyntaxComponent(description: 'A customizable button component')
+@SyntaxComponent(
+  description: 'A customizable button component',
+  variants: ['primary', 'secondary', 'outlined', 'text'],
+)
 class ButtonMeta {
   /// The button label text
   /// Maps to: App.button(label: ...)
@@ -23,10 +27,14 @@ class ButtonMeta {
 
   /// Whether the button shows loading state
   /// Maps to: App.button(isLoading: ...)
+  @Optional()
+  @Default('false')
   final bool isLoading;
 
   /// Whether the button is disabled
   /// Maps to: App.button(isDisabled: ...)
+  @Optional()
+  @Default('false')
   final bool isDisabled;
 
   const ButtonMeta({

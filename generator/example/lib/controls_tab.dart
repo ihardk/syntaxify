@@ -104,7 +104,7 @@ class _ControlsTabState extends State<ControlsTab> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text('Notifications'),
-                    AppSwitch(
+                    AppToggle(
                       value: _switch1,
                       onChanged: (v) => setState(() => _switch1 = v),
                     ),
@@ -115,9 +115,10 @@ class _ControlsTabState extends State<ControlsTab> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text('Dark Mode (Demo)'),
-                    AppSwitch(
+                    AppToggle(
                       value: _switch2,
                       onChanged: (v) => setState(() => _switch2 = v),
+                      enabled: true,
                     ),
                   ],
                 ),

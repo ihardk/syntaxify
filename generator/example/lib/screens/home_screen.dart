@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE
 // Analyzed by Syntaxify
 
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
             text: 'Here\'s your overview for today',
             variant: TextVariant.bodyMedium,
           ),
-          SizedBox(height: 16.0),
+          Spacer(),
           Row(
             children: [
               Column(
@@ -53,23 +53,23 @@ class HomeScreen extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 16.0),
+          Spacer(),
           AppButton(
             label: 'View All Tasks',
             onPressed: navigateToTasks,
             variant: ButtonVariant.primary,
           ),
-          SizedBox(height: 16.0),
+          Spacer(),
           AppButton(
             label: 'Add New Task',
             onPressed: addNewTask,
-            variant: ButtonVariant.primary,
+            variant: ButtonVariant.outlined,
           ),
-          SizedBox(height: 16.0),
+          Spacer(),
           AppButton(
             label: 'Settings',
             onPressed: openSettings,
-            variant: ButtonVariant.primary,
+            variant: ButtonVariant.text,
           ),
         ],
       ),

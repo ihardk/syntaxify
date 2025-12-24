@@ -1,24 +1,15 @@
-/// Material Design Style (Google)
+/// Material Style
 part of '../design_system.dart';
 
-// =============================================================================
-// MATERIAL STYLE CLASS
-// =============================================================================
-
-/// Material Design style (Google)
-///
-/// Implements Google's Material Design language with:
-/// - Rounded corners (8dp radius)
-/// - Filled and outlined button variants
-/// - Native Material widgets (ElevatedButton, FilledButton, OutlinedButton)
 class MaterialStyle extends DesignStyle
     with
         MaterialButtonRenderer,
-        MaterialInputRenderer,
-        MaterialTextRenderer,
         MaterialCheckboxRenderer,
-        MaterialSwitchRenderer,
+        MaterialInputRenderer,
+        MaterialRadioRenderer,
         MaterialSliderRenderer,
-        MaterialRadioRenderer {
+        MaterialSuperCardRenderer,
+        MaterialTextRenderer,
+        MaterialToggleRenderer {
   const MaterialStyle();
 }

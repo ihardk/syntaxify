@@ -149,7 +149,7 @@ void main() {
       expect(code, contains('AppButton('));
       expect(code, contains('AppInput('));
       expect(code, contains('AppCheckbox('));
-      expect(code, contains('AppSwitch('));
+      expect(code, contains('AppToggle('));
       expect(code, contains('IconButton('));
       expect(code, contains('DropdownButton('));
       expect(code, contains('Radio('));
@@ -211,7 +211,7 @@ void main() {
       expect(code, contains('Column('));
       expect(code, contains('Container('));
       expect(code, contains('Row('));
-      expect(code, contains('AppSwitch('));
+      expect(code, contains('AppToggle('));
       expect(code, contains('AppSlider('));
       expect(code, contains('AppButton('));
       expect(code, contains('Divider('));

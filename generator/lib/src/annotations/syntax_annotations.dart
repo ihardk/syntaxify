@@ -59,11 +59,11 @@ class Default {
 }
 
 /// Marks a field as internal state (not a constructor parameter).
-class State {
+class ComponentState {
   /// Possible state values.
   final List<String> values;
 
-  const State(this.values);
+  const ComponentState(this.values);
 }
 
 /// Marks a class as an Icon Registry.

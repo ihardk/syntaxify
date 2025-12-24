@@ -87,6 +87,9 @@ class InteractiveEmitStrategy implements NodeEmitStrategy {
         'prefixIcon': refer('Icons.${props!.prefixIcon!}'),
       if (props?.suffixIcon != null)
         'suffixIcon': refer('Icons.${props!.suffixIcon!}'),
+      if (node.onChanged != null)
+        'onChanged':
+            refer(context.variableMap[node.onChanged!] ?? node.onChanged!),
     });
   }
 
@@ -112,7 +115,7 @@ class InteractiveEmitStrategy implements NodeEmitStrategy {
   }
 
   Expression _emitSwitch(ToggleNode node, EmitContext context) {
-    final toggle = refer('AppSwitch').newInstance([], {
+    final toggle = refer('AppToggle').newInstance([], {
       'value': refer('_${node.binding}'),
       'onChanged': node.onChanged != null
           ? refer(context.variableMap[node.onChanged!] ?? node.onChanged!)

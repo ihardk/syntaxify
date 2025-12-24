@@ -45,7 +45,7 @@ mixin NeoButtonRenderer on DesignStyle {
   @override
   Widget renderButton({
     required String label,
-    required ButtonVariant variant,
+    ButtonVariant variant = ButtonVariant.primary,
     VoidCallback? onPressed,
     bool isLoading = false,
     bool isDisabled = false,

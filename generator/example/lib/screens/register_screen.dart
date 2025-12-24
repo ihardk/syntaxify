@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE
 // Analyzed by Syntaxify
 
 import 'package:flutter/material.dart';
@@ -54,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             text: 'Create your account to get started',
             variant: TextVariant.bodyMedium,
           ),
-          SizedBox(height: 16.0),
+          Spacer(),
           AppInput(
             label: 'Full Name',
             controller: _fullNameController,
@@ -78,17 +78,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
             hint: 'Confirm your password',
             obscureText: true,
           ),
-          SizedBox(height: 16.0),
+          Spacer(),
           AppButton(
             label: 'Create Account',
             onPressed: widget.handleRegister,
             variant: ButtonVariant.primary,
           ),
-          SizedBox(height: 16.0),
+          Spacer(),
           AppButton(
             label: 'Already have an account? Sign In',
             onPressed: widget.navigateToLogin,
-            variant: ButtonVariant.primary,
+            variant: ButtonVariant.secondary,
           ),
         ],
       ),

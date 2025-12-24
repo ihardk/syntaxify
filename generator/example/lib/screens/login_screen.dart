@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE
 // Analyzed by Syntaxify
 
 import 'package:flutter/material.dart';
@@ -19,6 +19,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   late final TextEditingController _passwordController;
 
+  bool _rememberMe = false;
+
+  bool _isDarkMode = false;
+
+  double _volume = 0.0;
+
   @override
   void initState() {
     super.initState();
@@ -36,10 +42,10 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: AppText(text: 'Login')),
       body: Column(
         children: [
-          AppText(text: 'Welcome Back', variant: TextVariant.headlineMedium),
-          Spacer(flex: 1),
+          AppText(text: 'Welcome', variant: TextVariant.headlineMedium),
           AppInput(
             label: 'Email',
             controller: _emailController,
@@ -50,9 +56,35 @@ class _LoginScreenState extends State<LoginScreen> {
             controller: _passwordController,
             obscureText: true,
           ),
-          Spacer(flex: 1),
+          Row(
+            children: [
+              AppCheckbox(
+                value: _rememberMe,
+                onChanged: (value) =>
+                    setState(() => _rememberMe = value ?? false),
+              ),
+              SizedBox(width: 8),
+              Text('Remember me'),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Dark Mode'),
+              AppToggle(
+                value: _isDarkMode,
+                onChanged: (value) => setState(() => _isDarkMode = value),
+              ),
+            ],
+          ),
+          AppSlider(
+            value: _volume,
+            onChanged: (value) => setState(() => _volume = value),
+            min: 0.0,
+            max: 100.0,
+          ),
           AppButton(
-            label: 'Sign In',
+            label: 'Login',
             onPressed: widget.handleLogin,
             variant: ButtonVariant.primary,
           ),

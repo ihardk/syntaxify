@@ -191,36 +191,70 @@ AppProfileCard.expanded(userName: 'Hardik')
 
 Syntaxify uses design tokens for consistent styling across components.
 
-### Button Tokens
+### Token Patterns
+
+Tokens can be variant-based (method) or single-set (getter):
+
+```dart
+// Variant-based tokens - returns different tokens per variant
+ButtonTokens buttonTokens(ButtonVariant variant);
+TextTokens textTokens(TextVariant variant);
+
+// Single-set tokens - one token set for the component
+InputTokens get inputTokens;
+```
+
+### ButtonTokens
 
 Located in `lib/syntaxify/design_system/tokens/button_tokens.dart`:
 
-- Colors (primary, secondary, surface)
-- Padding and spacing
-- Border radius
-- Typography
+```dart
+class ButtonTokens {
+  final double radius;
+  final double borderWidth;
+  final Color bgColor;
+  final Color textColor;
+  final EdgeInsets padding;
+  final Color? borderColor;
+}
+```
 
-### Input Tokens
+### TextTokens
+
+Located in `lib/syntaxify/design_system/tokens/text_tokens.dart`:
+
+```dart
+class TextTokens {
+  final TextStyle style;
+  final Color color;
+  final double fontSize;
+  final FontWeight fontWeight;
+  final double letterSpacing;
+  final double? height;
+}
+```
+
+### InputTokens
 
 Located in `lib/syntaxify/design_system/tokens/input_tokens.dart`:
 
-- Border colors and widths
-- Focus states
-- Error states
-- Hint text styling
+```dart
+class InputTokens {
+  final TextStyle textStyle;
+  final TextStyle hintStyle;
+  final Color backgroundColor;
+  final Color borderColor;
+  final Color focusBorderColor;
+  final Color errorColor;
+  final double borderWidth;
+  final double borderRadius;
+  final EdgeInsets contentPadding;
+}
+```
 
 ### Customizing Tokens
 
-Edit the token files to customize the design system without creating a new style:
-
-```dart
-// button_tokens.dart
-class ButtonTokens {
-  static const primaryColor = Color(0xFF6200EE);
-  static const borderRadius = 12.0;
-  static const padding = EdgeInsets.symmetric(horizontal: 24, vertical: 16);
-}
-```
+Edit the token files to customize the design system without creating a new style.
 
 ---
 

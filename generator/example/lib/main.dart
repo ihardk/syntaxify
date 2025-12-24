@@ -590,7 +590,7 @@ class ScreensTab extends StatelessWidget {
           // Code Preview
           const AppText(
             text: 'What\'s Inside login.screen.dart?',
-            variant: TextVariant.headlineMedium,
+            variant: TextVariant.labelMedium,
           ),
           const SizedBox(height: 8),
           const AppText(

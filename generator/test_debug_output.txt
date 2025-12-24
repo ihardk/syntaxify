@@ -66,6 +66,7 @@ class _KitchenSinkScreenState extends State<KitchenSinkScreen> {
             controller: _emailController,
             hint: 'Enter email',
             keyboardType: TextInputType.emailAddress,
+            onChanged: widget.onEmailChanged,
           ),
         ],
         mainAxisAlignment: MainAxisAlignment.center,

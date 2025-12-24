@@ -1,13 +1,14 @@
 /// Toggle component specification
 ///
-/// Defines the API surface for the AppSwitch widget.
-/// Properties must match DesignStyle.renderSwitch() signature.
+/// Defines the API surface for the AppToggle widget.
+/// Properties must match DesignStyle.renderToggle() signature.
 library;
 
+import 'package:flutter/material.dart';
 import 'package:syntaxify/syntaxify.dart';
 
 @SyntaxComponent(description: 'A design-system-aware switch component')
-class SwitchMeta {
+class ToggleMeta {
   /// Whether the switch is on
   /// Maps to: App.toggle(binding: ...) (wraps binding)
   final bool value;
@@ -22,7 +23,7 @@ class SwitchMeta {
   /// Active/on color
   final Color? activeColor;
 
-  const SwitchMeta({
+  const ToggleMeta({
     required this.value,
     this.onChanged,
     this.enabled = true,

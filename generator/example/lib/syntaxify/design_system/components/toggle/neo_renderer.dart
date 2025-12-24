@@ -1,8 +1,8 @@
 part of '../../design_system.dart';
 
-mixin NeoSwitchRenderer on DesignStyle {
+mixin NeoToggleRenderer on DesignStyle {
   @override
-  Widget renderSwitch({
+  Widget renderToggle({
     required bool value,
     ValueChanged<bool>? onChanged,
     bool enabled = true,

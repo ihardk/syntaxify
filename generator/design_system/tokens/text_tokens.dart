@@ -7,19 +7,19 @@ import 'package:flutter/material.dart';
 
 /// Design tokens for the Text component
 class TextTokens {
-  final TextStyle displayLarge;
-  final TextStyle headlineMedium;
-  final TextStyle titleMedium;
-  final TextStyle bodyLarge;
-  final TextStyle bodyMedium;
-  final TextStyle labelSmall;
+  final TextStyle style;
+  final Color color;
+  final double fontSize;
+  final FontWeight fontWeight;
+  final double letterSpacing;
+  final double? height;
 
   const TextTokens({
-    required this.displayLarge,
-    required this.headlineMedium,
-    required this.titleMedium,
-    required this.bodyLarge,
-    required this.bodyMedium,
-    required this.labelSmall,
+    required this.style,
+    required this.color,
+    required this.fontSize,
+    required this.fontWeight,
+    this.letterSpacing = 0.0,
+    this.height,
   });
 }

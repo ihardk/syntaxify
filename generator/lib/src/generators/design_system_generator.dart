@@ -51,19 +51,40 @@ class DesignSystemGenerator {
     buffer.writeln("import 'app_icons.dart';");
     buffer.writeln();
 
+    // Import generated variants
+    final componentsWithVariants =
+        components.where((c) => c.variants.isNotEmpty).toList();
+    if (componentsWithVariants.isNotEmpty) {
+      buffer.writeln('// Import generated variants');
+      for (final comp in componentsWithVariants) {
+        final baseName = _getBaseName(component: comp);
+        final fileName = '${StringUtils.toSnakeCase(baseName)}_variant.dart';
+        buffer.writeln("import '../generated/variants/$fileName';");
+      }
+      buffer.writeln();
+    }
+
     // Exports
     buffer.writeln("export 'tokens/button_tokens.dart';");
     buffer.writeln("export 'tokens/input_tokens.dart';");
     buffer.writeln("export 'tokens/text_tokens.dart';");
     buffer.writeln("export 'app_icons.dart';");
-    buffer
-        .writeln("export 'package:syntaxify/syntaxify.dart' show TextVariant;");
     buffer.writeln();
+
+    // Export generated variants
+    if (componentsWithVariants.isNotEmpty) {
+      buffer.writeln('// Export generated variants');
+      for (final comp in componentsWithVariants) {
+        final baseName = _getBaseName(component: comp);
+        final fileName = '${StringUtils.toSnakeCase(baseName)}_variant.dart';
+        buffer.writeln("export '../generated/variants/$fileName';");
+      }
+      buffer.writeln();
+    }
 
     // Core Parts
     buffer.writeln("part 'app_theme.dart';");
     buffer.writeln("part 'design_style.dart';");
-    buffer.writeln("part 'variants.dart';");
     buffer.writeln("part 'styles/material_style.dart';");
     buffer.writeln("part 'styles/cupertino_style.dart';");
     buffer.writeln("part 'styles/neo_style.dart';");
@@ -106,6 +127,32 @@ class DesignSystemGenerator {
         ..body = Code(
             "runtimeType.toString().replaceAll('Style', '').toLowerCase()")));
 
+      // Add token accessor methods for standard components
+      // buttonTokens for Button component
+      c.methods.add(Method((m) => m
+        ..name = 'buttonTokens'
+        ..returns = refer('ButtonTokens')
+        ..docs.add('/// Get tokens for a button variant')
+        ..requiredParameters.add(Parameter((p) => p
+          ..name = 'variant'
+          ..type = refer('ButtonVariant')))));
+
+      // inputTokens getter for Input component
+      c.methods.add(Method((m) => m
+        ..name = 'inputTokens'
+        ..type = MethodType.getter
+        ..returns = refer('InputTokens')
+        ..docs.add('/// Get tokens for input component')));
+
+      // textTokens for Text component
+      c.methods.add(Method((m) => m
+        ..name = 'textTokens'
+        ..returns = refer('TextTokens')
+        ..docs.add('/// Get tokens for a text variant')
+        ..requiredParameters.add(Parameter((p) => p
+          ..name = 'variant'
+          ..type = refer('TextVariant')))));
+
       for (final comp in components) {
         c.methods.add(_generateRenderSignature(comp));
       }
@@ -133,11 +180,16 @@ $code
           final isNullable = !prop.isRequired &&
               prop.defaultValue == null &&
               !prop.type.endsWith('?');
-          return Parameter((p) => p
-            ..name = prop.name
-            ..named = true
-            ..required = prop.isRequired
-            ..type = refer(prop.type + (isNullable ? '?' : '')));
+          return Parameter((p) {
+            p
+              ..name = prop.name
+              ..named = true
+              ..required = prop.isRequired
+              ..type = refer(prop.type + (isNullable ? '?' : ''));
+            if (prop.defaultValue != null) {
+              p.defaultTo = Code(prop.defaultValue!);
+            }
+          });
         }));
 
       // Add type parameters if generic
@@ -165,11 +217,16 @@ $code
               final isNullable = !prop.isRequired &&
                   prop.defaultValue == null &&
                   !prop.type.endsWith('?');
-              return Parameter((p) => p
-                ..name = prop.name
-                ..named = true
-                ..required = prop.isRequired
-                ..type = refer(prop.type + (isNullable ? '?' : '')));
+              return Parameter((p) {
+                p
+                  ..name = prop.name
+                  ..named = true
+                  ..required = prop.isRequired
+                  ..type = refer(prop.type + (isNullable ? '?' : ''));
+                if (prop.defaultValue != null) {
+                  p.defaultTo = Code(prop.defaultValue!);
+                }
+              });
             }))
             ..body = Code('''
     // STUB: Implement me!

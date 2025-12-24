@@ -42,7 +42,7 @@ sealed class DesignStyle {
   /// Render a button widget (HOW)
   Widget renderButton({
     required String label,
-    required ButtonVariant variant,
+    ButtonVariant variant = ButtonVariant.primary,
     VoidCallback? onPressed,
     bool isLoading = false,
     bool isDisabled = false,
@@ -68,8 +68,8 @@ sealed class DesignStyle {
     TextInputType? keyboardType,
   });
 
-  /// Get tokens for text component
-  TextTokens get textTokens;
+  /// Get tokens for a text variant
+  TextTokens textTokens(TextVariant variant);
 
   /// Render a text widget (HOW)
   Widget renderText({

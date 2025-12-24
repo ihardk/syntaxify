@@ -162,24 +162,25 @@ Defines what every style MUST implement.
 ```dart
 // generator/design_system/design_style.dart
 sealed class DesignStyle {
-  // Token getters (colors, spacing, etc.)
-  ButtonTokens buttonTokens(ButtonVariant variant);
-  InputTokens get inputTokens;
-  TextTokens get textTokens;
+  // Token getters (variant-based or simple getters)
+  ButtonTokens buttonTokens(ButtonVariant variant);  // Per-variant tokens
+  TextTokens textTokens(TextVariant variant);        // Per-variant tokens  
+  InputTokens get inputTokens;                       // Single token set
 
   // Render methods (7 components)
   Widget renderButton({...});     // Buttons with variants
   Widget renderInput({...});      // Text fields
-  Widget renderText({...});       // Typography
+  Widget renderText({...});       // Typography with variants
   Widget renderCheckbox({...});   // Checkboxes
-  Widget renderSwitch({...});     // Toggles
+  Widget renderToggle({...});     // Toggles
   Widget renderSlider({...});     // Range sliders
   Widget renderRadio<T>({...});   // Radio buttons
 }
 ```
 
 **This is the contract:**
-- Every style MUST provide these tokens
+- Each style provides tokens for specific variants (Button, Text)
+- InputTokens is a simple getter (single token set)
 - Every style MUST implement all 7 render methods
 
 ### 4. Concrete Styles (HOW)

@@ -65,6 +65,61 @@ class ComponentExtractor {
       }
     }
 
+    // Analyze constructor for defaults and required parameters
+    final constructorDefaults = <String, String>{};
+    final constructorRequired = <String>{};
+
+    for (final member in classNode.members) {
+      if (member is analyzer.ConstructorDeclaration &&
+          (member.name == null || member.name!.lexeme.isEmpty)) {
+        for (final param in member.parameters.parameters) {
+          final paramName = param.name?.lexeme;
+          if (paramName == null) continue;
+
+          // Check for default value
+          if (param is analyzer.DefaultFormalParameter) {
+            if (param.defaultValue != null) {
+              constructorDefaults[paramName] = param.defaultValue!.toSource();
+            }
+          }
+
+          // Check for 'required' keyword
+          var p = param;
+          if (p is analyzer.DefaultFormalParameter) {
+            p = p.parameter;
+          }
+
+          if (p is analyzer.NormalFormalParameter) {
+            if (p.requiredKeyword != null) {
+              constructorRequired.add(paramName);
+            }
+          }
+        }
+      }
+    }
+
+    // Update properties with constructor information
+    final updatedProperties = properties.map((prop) {
+      var isRequired = prop.isRequired;
+      String? defaultValue = prop.defaultValue;
+
+      if (constructorDefaults.containsKey(prop.name)) {
+        defaultValue = constructorDefaults[prop.name];
+        isRequired = false;
+      }
+
+      if (constructorRequired.contains(prop.name)) {
+        isRequired = true;
+      } else if (defaultValue != null) {
+        isRequired = false;
+      }
+
+      return prop.copyWith(
+        isRequired: isRequired,
+        defaultValue: defaultValue,
+      );
+    }).toList();
+
     // Extract type parameters
     final typeParameters = <String>[];
     final typeParamList = classNode.typeParameters;
@@ -78,7 +133,7 @@ class ComponentExtractor {
       name: StringUtils.toSnakeCase(classNode.name.lexeme),
       className: classNode.name.lexeme,
       explicitName: explicitName,
-      properties: properties,
+      properties: updatedProperties,
       variants: variants,
       description: _propertyExtractor.extractDocComment(classNode),
       typeParameters: typeParameters,

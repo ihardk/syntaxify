@@ -85,27 +85,6 @@ enum SyntaxAxis {
   vertical
 }
 
-/// Text typography variants following Material Design 3.
-enum TextVariant {
-  /// Large display text for hero sections.
-  displayLarge,
-
-  /// Medium headline for section headers.
-  headlineMedium,
-
-  /// Medium title for card headers.
-  titleMedium,
-
-  /// Large body text for content.
-  bodyLarge,
-
-  /// Medium body text for secondary content.
-  bodyMedium,
-
-  /// Small label for captions and hints.
-  labelSmall
-}
-
 /// Text horizontal alignment.
 /// Text horizontal alignment.
 enum SyntaxTextAlign {

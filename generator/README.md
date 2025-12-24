@@ -40,7 +40,7 @@ final loginScreen = ScreenDefinition(
     // New Interactive Components
     App.row(children: [
         App.checkbox(label: 'Remember me', binding: 'rememberMe'),
-        App.toggleNode(label: 'Dark Mode', binding: 'isDarkMode'),
+        App.toggle(label: 'Dark Mode', binding: 'isDarkMode'),
     ]),
     App.slider(min: 0, max: 100, binding: 'volume'),
     
@@ -130,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Dark Mode'),
-              AppSwitch(
+              AppToggle(
                 value: _isDarkMode,
                 onChanged: (value) {
                   setState(() {
@@ -330,7 +330,7 @@ These nodes render using the active `DesignStyle` (Material/Cupertino/Neo).
 - **AppButton** (`App.button`) - With variants (primary, secondary, etc.)
 - **AppInput** (`App.textField`) - Text fields with validation
 - **AppCheckbox** (`App.checkbox`) - Tri-state checkboxes
-- **AppSwitch** (`App.toggle`) - Toggle switches
+- **AppToggle** (`App.toggle`) - Toggle switches
 - **AppSlider** (`App.slider`) - Range sliders
 - **AppRadio** (`App.radio`) - Radio groups
 
@@ -664,7 +664,7 @@ For detailed API documentation, see **[API Reference](https://github.com/ihardk/
 | `AppText`     | Typography with 6 text style variants        |
 | `AppInput`    | Text fields with keyboard types & validation |
 | `AppCheckbox` | Checkboxes with design-aware styling         |
-| `AppSwitch`   | Toggle switches                              |
+| `AppToggle`   | Toggle switches                              |
 | `AppSlider`   | Range sliders with custom themes             |
 | `AppRadio`    | Radio buttons                                |
 

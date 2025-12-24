@@ -2,56 +2,39 @@
 part of 'design_system.dart';
 
 /// Base sealed class for all design styles.
-///
-/// Each style implementation provides render methods that define HOW
-/// components look in that style. The Syntaxify design system supports
-/// three built-in styles:
-/// - [MaterialStyle] - Google Material Design
-/// - [CupertinoStyle] - Apple Human Interface Guidelines
-/// - [NeoStyle] - Neo-brutalism with sharp corners and bold colors
-///
-/// ## Supported Components (7)
-///
-/// | Component | Render Method |
-/// |-----------|---------------|
-/// | Button | [renderButton] |
-/// | Input | [renderInput] |
-/// | Text | [renderText] |
-/// | Checkbox | [renderCheckbox] |
-/// | Toggle | [renderSwitch] |
-/// | Slider | [renderSlider] |
-/// | Radio | [renderRadio] |
-///
-/// ## Adding a New Style
-///
-/// 1. Create a new file in `styles/` folder
-/// 2. Add `part of 'design_system.dart';` at top
-/// 3. Create mixins for each component renderer
-/// 4. Create a style class that extends `DesignStyle` with all mixins
-/// 5. Add the part file to `design_system.dart`
 sealed class DesignStyle {
   const DesignStyle();
 
-  /// Style identifier (uses class name automatically)
   String get name =>
       runtimeType.toString().replaceAll('Style', '').toLowerCase();
 
   /// Get tokens for a button variant
   ButtonTokens buttonTokens(ButtonVariant variant);
 
-  /// Render a button widget (HOW)
+  /// Get tokens for input component
+  InputTokens get inputTokens;
+
+  /// Get tokens for a text variant
+  TextTokens textTokens(TextVariant variant);
+
+  /// Render a Button widget
   Widget renderButton({
     required String label,
-    required ButtonVariant variant,
+    ButtonVariant variant = ButtonVariant.primary,
     VoidCallback? onPressed,
     bool isLoading = false,
     bool isDisabled = false,
   });
 
-  /// Get tokens for input component
-  InputTokens get inputTokens;
+  /// Render a Checkbox widget
+  Widget renderCheckbox({
+    required bool value,
+    ValueChanged<bool?>? onChanged,
+    bool enabled = true,
+    Color? activeColor,
+  });
 
-  /// Render an input widget (HOW)
+  /// Render a Input widget
   Widget renderInput({
     required TextEditingController? controller,
     String? label,
@@ -68,37 +51,16 @@ sealed class DesignStyle {
     TextInputType? keyboardType,
   });
 
-  /// Get tokens for text component
-  TextTokens get textTokens;
-
-  /// Render a text widget (HOW)
-  Widget renderText({
-    required String text,
-    TextVariant? variant,
-    TextAlign? align,
-    int? maxLines,
-    TextOverflow? overflow,
-  });
-
-  // --- Interactive Component Renderers ---
-
-  /// Render a checkbox widget
-  Widget renderCheckbox({
-    required bool value,
-    ValueChanged<bool?>? onChanged,
+  /// Render a Radio widget
+  Widget renderRadio<T>({
+    required T value,
+    required T? groupValue,
+    ValueChanged<T?>? onChanged,
     bool enabled = true,
     Color? activeColor,
   });
 
-  /// Render a switch widget
-  Widget renderSwitch({
-    required bool value,
-    ValueChanged<bool>? onChanged,
-    bool enabled = true,
-    Color? activeColor,
-  });
-
-  /// Render a slider widget
+  /// Render a Slider widget
   Widget renderSlider({
     required double value,
     ValueChanged<double>? onChanged,
@@ -108,11 +70,22 @@ sealed class DesignStyle {
     String? label,
   });
 
-  /// Render a radio widget
-  Widget renderRadio<T>({
-    required T value,
-    required T? groupValue,
-    ValueChanged<T?>? onChanged,
+  /// Render a SuperCard widget
+  Widget renderSuperCard({bool value = true});
+
+  /// Render a Text widget
+  Widget renderText({
+    required String text,
+    TextVariant? variant,
+    TextAlign? align,
+    int? maxLines,
+    TextOverflow? overflow,
+  });
+
+  /// Render a Toggle widget
+  Widget renderToggle({
+    required bool value,
+    ValueChanged<bool>? onChanged,
     bool enabled = true,
     Color? activeColor,
   });
