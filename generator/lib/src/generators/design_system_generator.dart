@@ -44,10 +44,13 @@ class DesignSystemGenerator {
     buffer.writeln("import 'package:syntaxify/syntaxify.dart';");
     buffer.writeln();
 
-    // Token imports (Standard)
-    buffer.writeln("import 'tokens/button_tokens.dart';");
-    buffer.writeln("import 'tokens/input_tokens.dart';");
-    buffer.writeln("import 'tokens/text_tokens.dart';");
+    // Token imports (Dynamic - generated for all components)
+    buffer.writeln('// Token imports');
+    for (final comp in components) {
+      final baseName = _getBaseName(component: comp);
+      final tokenFileName = '${StringUtils.toSnakeCase(baseName)}_tokens.dart';
+      buffer.writeln("import 'tokens/$tokenFileName';");
+    }
     buffer.writeln("import 'app_icons.dart';");
     buffer.writeln();
 
@@ -64,10 +67,13 @@ class DesignSystemGenerator {
       buffer.writeln();
     }
 
-    // Exports
-    buffer.writeln("export 'tokens/button_tokens.dart';");
-    buffer.writeln("export 'tokens/input_tokens.dart';");
-    buffer.writeln("export 'tokens/text_tokens.dart';");
+    // Token exports (Dynamic - generated for all components)
+    buffer.writeln('// Token exports');
+    for (final comp in components) {
+      final baseName = _getBaseName(component: comp);
+      final tokenFileName = '${StringUtils.toSnakeCase(baseName)}_tokens.dart';
+      buffer.writeln("export 'tokens/$tokenFileName';");
+    }
     buffer.writeln("export 'app_icons.dart';");
     buffer.writeln();
 
@@ -127,32 +133,33 @@ class DesignSystemGenerator {
         ..body = Code(
             "runtimeType.toString().replaceAll('Style', '').toLowerCase()")));
 
-      // Add token accessor methods for standard components
-      // buttonTokens for Button component
-      c.methods.add(Method((m) => m
-        ..name = 'buttonTokens'
-        ..returns = refer('ButtonTokens')
-        ..docs.add('/// Get tokens for a button variant')
-        ..requiredParameters.add(Parameter((p) => p
-          ..name = 'variant'
-          ..type = refer('ButtonVariant')))));
+      // Add token accessor methods for ALL components (dynamic)
+      for (final comp in components) {
+        final baseName = _getBaseName(component: comp);
+        final tokenMethodName =
+            '${baseName[0].toLowerCase()}${baseName.substring(1)}Tokens';
 
-      // inputTokens getter for Input component
-      c.methods.add(Method((m) => m
-        ..name = 'inputTokens'
-        ..type = MethodType.getter
-        ..returns = refer('InputTokens')
-        ..docs.add('/// Get tokens for input component')));
+        // Check if component has variants (then token method takes variant param)
+        if (comp.variants.isNotEmpty) {
+          final variantEnumName = '${baseName}Variant';
+          c.methods.add(Method((m) => m
+            ..name = tokenMethodName
+            ..returns = refer('${baseName}Tokens')
+            ..docs.add('/// Get tokens for a $baseName variant')
+            ..requiredParameters.add(Parameter((p) => p
+              ..name = 'variant'
+              ..type = refer(variantEnumName)))));
+        } else {
+          // No variants - simple getter
+          c.methods.add(Method((m) => m
+            ..name = tokenMethodName
+            ..type = MethodType.getter
+            ..returns = refer('${baseName}Tokens')
+            ..docs.add('/// Get tokens for $baseName component')));
+        }
+      }
 
-      // textTokens for Text component
-      c.methods.add(Method((m) => m
-        ..name = 'textTokens'
-        ..returns = refer('TextTokens')
-        ..docs.add('/// Get tokens for a text variant')
-        ..requiredParameters.add(Parameter((p) => p
-          ..name = 'variant'
-          ..type = refer('TextVariant')))));
-
+      // Add render methods for ALL components
       for (final comp in components) {
         c.methods.add(_generateRenderSignature(comp));
       }
