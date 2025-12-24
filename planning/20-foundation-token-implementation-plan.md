@@ -18,7 +18,7 @@ This plan implements a centralized, scalable foundation token system for the Syn
 
 **Impact:** Reduces theme changes from editing 6+ files to editing 1 file. Enables dark mode, brand variants, and design system handoff with Figma.
 
-**Estimated Timeline:** 25 days (5 weeks) including testing and documentation
+**Estimated Timeline:** 8-12 hours (1-2 focused coding sessions)
 
 ---
 
@@ -671,35 +671,102 @@ Add method to DesignSystemGenerator to auto-generate renderer token stubs.
 
 ## Phase 7: Rollout Timeline
 
-### Week 1: Foundation Infrastructure
-- Day 1-2: Create FoundationTokens class
-- Day 3: Implement materialFoundation
-- Day 4: Implement cupertinoFoundation
-- Day 5: Implement neoFoundation
+### **Realistic Timeline: 1-2 Focused Sessions (8-12 hours)**
 
-### Week 2: Component Token Migration
-- Day 1-2: Migrate button, checkbox, toggle tokens
-- Day 3-4: Migrate slider, radio, input, text tokens
-- Day 5: Add .fromFoundation() factories
+Most of this work is straightforward copy-paste with pattern following. Can be done in 1-2 coding sessions:
 
-### Week 3: Renderer Migration
-- Day 1-2: Migrate Material renderers (7 files)
-- Day 3: Migrate Cupertino renderers (7 files)
-- Day 4: Migrate Neo renderers (7 files)
-- Day 5: Update style classes
+### **Session 1: Foundation & Migration (4-6 hours)**
 
-### Week 4: Generator Integration
-- Day 1-2: Update DesignSystemGenerator
-- Day 3: Update TokenGenerator
-- Day 4-5: Integrate into build pipeline
+**Hour 1: Foundation Infrastructure (1-1.5 hours)**
+- Create `foundation_tokens.dart` base class (30 min)
+- Create `material_foundation.dart` with Material Design 3 values (20 min)
+- Create `cupertino_foundation.dart` with iOS values (20 min)
+- Create `neo_foundation.dart` with brutalist values (20 min)
 
-### Week 5: Testing & Documentation
-- Day 1-2: Write unit tests
-- Day 3: Write integration tests
-- Day 4: Manual testing and bug fixes
-- Day 5: Documentation and examples
+**Hour 2-3: Component Token Migration (2-3 hours)**
+- Add `.fromFoundation()` factory to button_tokens.dart (pattern reference - 30 min)
+- Repeat pattern for 6 remaining token files (20 min each = 2 hours)
+- Update design_system.dart imports/exports (15 min)
 
-**Total Estimated Time:** 25 days (5 weeks)
+**Hour 4-5: Renderer Migration (2-3 hours)**
+- Update MaterialButtonRenderer to use foundation (pattern reference - 20 min)
+- Update remaining 6 Material renderers (10 min each = 1 hour)
+- Update 7 Cupertino renderers (10 min each = 1 hour)
+- Update 7 Neo renderers (10 min each = 1 hour)
+- Update MaterialStyle/CupertinoStyle/NeoStyle classes (15 min)
+
+**Hour 6: Initial Testing (30 min)**
+- Build example app
+- Quick visual check of all 3 styles
+- Fix any immediate issues
+
+### **Session 2: Generator Integration & Testing (4-6 hours)**
+
+**Hour 1-2: Generator Updates (1-2 hours)**
+- Update DesignSystemGenerator for foundation support (45 min)
+- Update TokenGenerator with .fromFoundation() generation (45 min)
+- Update design_style.dart generator code (30 min)
+
+**Hour 3: Build Pipeline Integration (1 hour)**
+- Add TokenGenerator invocation in build_all.dart (20 min)
+- Test generation flow (20 min)
+- Handle edge cases (20 min)
+
+**Hour 4-5: Testing (1-2 hours)**
+- Run existing test suite (ensure no regressions)
+- Add foundation token unit tests (30 min)
+- Manual testing in example app (30 min)
+- Test all 3 styles (Material, Cupertino, Neo) (30 min)
+
+**Hour 6: Polish & Commit (1 hour)**
+- Clean up any TODOs
+- Update documentation
+- Create comprehensive commit
+- Final verification
+
+---
+
+### **Alternative: Incremental Approach (3-4 sessions)**
+
+If you prefer smaller, reviewable PRs:
+
+**Session 1 (2-3 hours):** Foundation infrastructure only
+- Create 4 foundation token files
+- Add foundation getter to DesignStyle
+- **Commit & Push**
+
+**Session 2 (2-3 hours):** Component token migration
+- Add .fromFoundation() factories to 7 token files
+- **Commit & Push**
+
+**Session 3 (2-3 hours):** Renderer migration
+- Update all 21 renderers to use foundation
+- Update 3 style classes
+- **Commit & Push**
+
+**Session 4 (2-3 hours):** Generator integration & testing
+- Update generators
+- Integrate into build pipeline
+- Full testing
+- **Commit & Push**
+
+---
+
+### **Recommended Approach**
+
+**Single focused session (8-10 hours)** is best because:
+- Changes are tightly coupled (foundation → tokens → renderers)
+- Easier to test as a cohesive unit
+- Less context switching
+- Single atomic commit
+
+**Original 5-week estimate was overly conservative** and assumed:
+- Part-time work (1-2 hours/day)
+- Lots of review/discussion cycles
+- Learning curve for patterns
+- Multiple stakeholder approvals
+
+For a focused implementation session: **8-12 hours total**
 
 ---
 
