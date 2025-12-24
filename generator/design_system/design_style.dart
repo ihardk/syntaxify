@@ -80,6 +80,20 @@ sealed class DesignStyle {
     TextOverflow? overflow,
   });
 
+  // --- Interactive Component Tokens ---
+
+  /// Get tokens for checkbox component
+  CheckboxTokens get checkboxTokens;
+
+  /// Get tokens for toggle component
+  ToggleTokens get toggleTokens;
+
+  /// Get tokens for slider component
+  SliderTokens get sliderTokens;
+
+  /// Get tokens for radio component
+  RadioTokens get radioTokens;
+
   // --- Interactive Component Renderers ---
 
   /// Render a checkbox widget
