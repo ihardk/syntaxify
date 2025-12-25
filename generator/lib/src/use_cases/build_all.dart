@@ -6,6 +6,7 @@ import 'package:syntaxify/src/core/interfaces/file_system.dart';
 import 'package:syntaxify/src/generators/generator_registry.dart';
 import 'package:syntaxify/src/generators/enum_generator.dart';
 import 'package:syntaxify/src/generators/design_system_generator.dart';
+import 'package:syntaxify/src/generators/token_generator.dart';
 
 import 'package:syntaxify/src/models/build_result.dart';
 import 'package:syntaxify/src/models/component_definition.dart';
@@ -432,6 +433,45 @@ class BuildAllUseCase {
         }
       } catch (e) {
         warnings.add('Failed to copy foundation tokens: $e');
+      }
+
+      // Generate token files for components (using TokenGenerator)
+      final tokenGenerator = TokenGenerator();
+      for (final component in components) {
+        try {
+          final baseName = component.explicitName ??
+              component.className.replaceAll('Meta', '');
+          final cleanName =
+              baseName.startsWith('App') ? baseName.substring(3) : baseName;
+          final tokenFileName =
+              '${StringUtils.toSnakeCase(cleanName)}_tokens.dart';
+          final tokenPath = context.join(
+            designSystemDir,
+            'tokens',
+            tokenFileName,
+          );
+
+          // Check if token file already exists (don't overwrite manual files)
+          if (!await fileSystem.exists(tokenPath)) {
+            logger.info('Generating tokens: $tokenFileName');
+
+            // Generate token code
+            final tokenCode = tokenGenerator.generate(component);
+            if (tokenCode != null) {
+              // Write to design system directory
+              await fileSystem.writeFile(tokenPath, tokenCode);
+              logger.success('Generated: tokens/$tokenFileName');
+            } else {
+              logger.detail(
+                  'Skipped: $tokenFileName (no token-worthy properties)');
+            }
+          } else {
+            logger.detail('Token file exists: $tokenFileName (not regenerating)');
+          }
+        } catch (e) {
+          logger.warn('Failed to generate tokens for ${component.className}: $e');
+          warnings.add('Failed to generate tokens for ${component.className}: $e');
+        }
       }
 
       // Explicitly copy shared tokens
