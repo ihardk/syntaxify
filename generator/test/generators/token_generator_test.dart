@@ -1,7 +1,6 @@
 import 'package:test/test.dart';
 import 'package:syntaxify/src/generators/token_generator.dart';
 import 'package:syntaxify/src/models/component_definition.dart';
-import 'package:syntaxify/src/models/component_property.dart';
 
 void main() {
   group('TokenGenerator', () {
@@ -14,14 +13,14 @@ void main() {
     group('generate()', () {
       test('generates token class with foundation import', () {
         final component = ComponentDefinition(
-          className: 'TestCardMeta',
+          name: 'TestCard', className: 'TestCardMeta',
           properties: [
-            ComponentProperty(
+            ComponentProp(
               name: 'backgroundColor',
               type: 'Color',
               isRequired: false,
             ),
-            ComponentProperty(
+            ComponentProp(
               name: 'borderRadius',
               type: 'double',
               isRequired: false,
@@ -34,7 +33,8 @@ void main() {
         final result = generator.generate(component);
 
         expect(result, isNotNull);
-        expect(result, contains('import \'foundation/foundation_tokens.dart\''));
+        expect(
+            result, contains('import \'foundation/foundation_tokens.dart\''));
         expect(result, contains('class TestCardTokens'));
         expect(result, contains('final Color backgroundColor'));
         expect(result, contains('final double borderRadius'));
@@ -42,9 +42,9 @@ void main() {
 
       test('generates .fromFoundation() factory', () {
         final component = ComponentDefinition(
-          className: 'TestCardMeta',
+          name: 'TestCard', className: 'TestCardMeta',
           properties: [
-            ComponentProperty(
+            ComponentProp(
               name: 'backgroundColor',
               type: 'Color',
               isRequired: false,
@@ -63,9 +63,9 @@ void main() {
 
       test('handles variant-aware components', () {
         final component = ComponentDefinition(
-          className: 'TestButtonMeta',
+          name: 'TestButton', className: 'TestButtonMeta',
           properties: [
-            ComponentProperty(
+            ComponentProp(
               name: 'bgColor',
               type: 'Color',
               isRequired: true,
@@ -83,14 +83,14 @@ void main() {
 
       test('returns null for components with no token properties', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(
+            ComponentProp(
               name: 'label',
               type: 'String',
               isRequired: true,
             ),
-            ComponentProperty(
+            ComponentProp(
               name: 'onPressed',
               type: 'VoidCallback?',
               isRequired: false,
@@ -108,19 +108,19 @@ void main() {
 
       test('filters out callback properties', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(
+            ComponentProp(
               name: 'bgColor',
               type: 'Color',
               isRequired: true,
             ),
-            ComponentProperty(
+            ComponentProp(
               name: 'onPressed',
               type: 'VoidCallback?',
               isRequired: false,
             ),
-            ComponentProperty(
+            ComponentProp(
               name: 'onChanged',
               type: 'ValueChanged<String>?',
               isRequired: false,
@@ -140,24 +140,24 @@ void main() {
 
       test('filters out state properties', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(
+            ComponentProp(
               name: 'bgColor',
               type: 'Color',
               isRequired: true,
             ),
-            ComponentProperty(
+            ComponentProp(
               name: 'value',
               type: 'bool',
               isRequired: true,
             ),
-            ComponentProperty(
+            ComponentProp(
               name: 'enabled',
               type: 'bool',
               isRequired: false,
             ),
-            ComponentProperty(
+            ComponentProp(
               name: 'label',
               type: 'String',
               isRequired: false,
@@ -180,9 +180,9 @@ void main() {
     group('Smart Property Mapping', () {
       test('maps activeColor to colorPrimary', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(
+            ComponentProp(
               name: 'activeColor',
               type: 'Color',
               isRequired: true,
@@ -199,9 +199,9 @@ void main() {
 
       test('maps inactiveColor to colorSurfaceVariant', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(
+            ComponentProp(
               name: 'inactiveColor',
               type: 'Color',
               isRequired: false,
@@ -218,9 +218,9 @@ void main() {
 
       test('maps backgroundColor to colorSurface', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(
+            ComponentProp(
               name: 'backgroundColor',
               type: 'Color',
               isRequired: false,
@@ -237,9 +237,9 @@ void main() {
 
       test('maps borderColor to colorOutline', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(
+            ComponentProp(
               name: 'borderColor',
               type: 'Color',
               isRequired: false,
@@ -256,9 +256,9 @@ void main() {
 
       test('maps errorColor to colorError', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(
+            ComponentProp(
               name: 'errorColor',
               type: 'Color',
               isRequired: false,
@@ -275,9 +275,9 @@ void main() {
 
       test('maps borderWidth to borderWidthMedium', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(
+            ComponentProp(
               name: 'borderWidth',
               type: 'double',
               isRequired: false,
@@ -294,9 +294,9 @@ void main() {
 
       test('maps borderRadius to radiusSm', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(
+            ComponentProp(
               name: 'borderRadius',
               type: 'double',
               isRequired: false,
@@ -313,9 +313,9 @@ void main() {
 
       test('maps radius to radiusSm', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(
+            ComponentProp(
               name: 'radius',
               type: 'double',
               isRequired: false,
@@ -332,9 +332,9 @@ void main() {
 
       test('maps padding to EdgeInsets with foundation spacing', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(
+            ComponentProp(
               name: 'padding',
               type: 'EdgeInsets',
               isRequired: false,
@@ -353,9 +353,9 @@ void main() {
 
       test('maps textStyle to bodyMedium', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(
+            ComponentProp(
               name: 'textStyle',
               type: 'TextStyle',
               isRequired: false,
@@ -373,9 +373,9 @@ void main() {
 
       test('maps hintStyle to bodyMedium with colorOnSurfaceVariant', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(
+            ComponentProp(
               name: 'hintStyle',
               type: 'TextStyle',
               isRequired: false,
@@ -393,13 +393,18 @@ void main() {
 
       test('handles multiple properties with correct mappings', () {
         final component = ComponentDefinition(
-          className: 'CustomCardMeta',
+          name: 'CustomCard', className: 'CustomCardMeta',
           properties: [
-            ComponentProperty(name: 'backgroundColor', type: 'Color', isRequired: false),
-            ComponentProperty(name: 'borderColor', type: 'Color', isRequired: false),
-            ComponentProperty(name: 'borderWidth', type: 'double', isRequired: false),
-            ComponentProperty(name: 'borderRadius', type: 'double', isRequired: false),
-            ComponentProperty(name: 'padding', type: 'EdgeInsets', isRequired: false),
+            ComponentProp(
+                name: 'backgroundColor', type: 'Color', isRequired: false),
+            ComponentProp(
+                name: 'borderColor', type: 'Color', isRequired: false),
+            ComponentProp(
+                name: 'borderWidth', type: 'double', isRequired: false),
+            ComponentProp(
+                name: 'borderRadius', type: 'double', isRequired: false),
+            ComponentProp(
+                name: 'padding', type: 'EdgeInsets', isRequired: false),
           ],
           typeParameters: [],
           variants: [],
@@ -418,9 +423,9 @@ void main() {
     group('Generated Code Structure', () {
       test('includes proper imports', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(name: 'bgColor', type: 'Color', isRequired: true),
+            ComponentProp(name: 'bgColor', type: 'Color', isRequired: true),
           ],
           typeParameters: [],
           variants: [],
@@ -429,14 +434,15 @@ void main() {
         final result = generator.generate(component);
 
         expect(result, contains('import \'package:flutter/material.dart\''));
-        expect(result, contains('import \'foundation/foundation_tokens.dart\''));
+        expect(
+            result, contains('import \'foundation/foundation_tokens.dart\''));
       });
 
       test('generates const constructor', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(name: 'bgColor', type: 'Color', isRequired: true),
+            ComponentProp(name: 'bgColor', type: 'Color', isRequired: true),
           ],
           typeParameters: [],
           variants: [],
@@ -450,10 +456,11 @@ void main() {
 
       test('generates proper field declarations', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(name: 'bgColor', type: 'Color', isRequired: true),
-            ComponentProperty(name: 'borderRadius', type: 'double?', isRequired: false),
+            ComponentProp(name: 'bgColor', type: 'Color', isRequired: true),
+            ComponentProp(
+                name: 'borderRadius', type: 'double?', isRequired: false),
           ],
           typeParameters: [],
           variants: [],
@@ -467,9 +474,9 @@ void main() {
 
       test('formats code with dart_style', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(name: 'bgColor', type: 'Color', isRequired: true),
+            ComponentProp(name: 'bgColor', type: 'Color', isRequired: true),
           ],
           typeParameters: [],
           variants: [],
@@ -486,9 +493,9 @@ void main() {
     group('Edge Cases', () {
       test('handles component with App prefix', () {
         final component = ComponentDefinition(
-          className: 'AppCardMeta',
+          name: 'AppCard', className: 'AppCardMeta',
           properties: [
-            ComponentProperty(name: 'bgColor', type: 'Color', isRequired: true),
+            ComponentProp(name: 'bgColor', type: 'Color', isRequired: true),
           ],
           typeParameters: [],
           variants: [],
@@ -502,10 +509,10 @@ void main() {
 
       test('handles explicit name', () {
         final component = ComponentDefinition(
-          className: 'MyCustomComponentMeta',
+          name: 'MyCustomComponent', className: 'MyCustomComponentMeta',
           explicitName: 'SuperCard',
           properties: [
-            ComponentProperty(name: 'bgColor', type: 'Color', isRequired: true),
+            ComponentProp(name: 'bgColor', type: 'Color', isRequired: true),
           ],
           typeParameters: [],
           variants: [],
@@ -518,9 +525,10 @@ void main() {
 
       test('handles optional properties', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(name: 'bgColor', type: 'Color?', isRequired: false),
+            ComponentProp(
+                name: 'bgColor', type: 'Color?', isRequired: false),
           ],
           typeParameters: [],
           variants: [],
@@ -535,9 +543,9 @@ void main() {
 
       test('handles required properties', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(name: 'bgColor', type: 'Color', isRequired: true),
+            ComponentProp(name: 'bgColor', type: 'Color', isRequired: true),
           ],
           typeParameters: [],
           variants: [],
@@ -550,9 +558,9 @@ void main() {
 
       test('handles default values', () {
         final component = ComponentDefinition(
-          className: 'TestMeta',
+          name: 'Test', className: 'TestMeta',
           properties: [
-            ComponentProperty(
+            ComponentProp(
               name: 'borderWidth',
               type: 'double',
               isRequired: false,

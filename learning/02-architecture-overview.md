@@ -183,11 +183,17 @@ class ButtonGenerator {
 ```dart
 // Example: layout_emitter.dart
 class LayoutEmitter {
+  final StructuralEmitStrategy _structuralStrategy;
+  final PrimitiveEmitStrategy _primitiveStrategy;
+  final InteractiveEmitStrategy _interactiveStrategy;
+
   Expression emit(App node) {
     return node.map(
-      column: (n) => _emitColumn(n),
-      button: (n) => _emitButton(n),
-      text: (n) => _emitText(n),
+      structural: (n) => _structuralStrategy.emit(n.node, context),
+      primitive: (n) => _primitiveStrategy.emit(n.node, context),
+      interactive: (n) => _interactiveStrategy.emit(n.node, context),
+      custom: (n) => _emitCustom(n.node),
+      appBar: (n) => _emitAppBar(n),
     );
   }
 }
@@ -273,15 +279,21 @@ Defines the contract all styles must implement.
 
 ```dart
 // generator/design_system/design_style.dart
-abstract class DesignStyle {
+sealed class DesignStyle {
+  const DesignStyle();
+
+  // Foundation tokens (single source of truth)
+  FoundationTokens get foundation;
+
   // Token getters
-  ButtonTokens get buttonTokens;
-  TextTokens get textTokens;
+  ButtonTokens buttonTokens(ButtonVariant variant);
+  InputTokens get inputTokens;
+  TextTokens textTokens(TextVariant variant);
 
   // Render methods
-  Widget renderButton({...});
-  Widget renderText({...});
-  Widget renderInput({...});
+  Widget renderButton({required String label, ...});
+  Widget renderText({required String text, ...});
+  Widget renderInput({required TextEditingController? controller, ...});
 }
 ```
 
@@ -542,9 +554,11 @@ Walking the AST tree to emit code.
 
 ```dart
 node.map(
-  column: (n) => visitColumn(n),
-  button: (n) => visitButton(n),
-  text: (n) => visitText(n),
+  structural: (n) => visitStructural(n),
+  primitive: (n) => visitPrimitive(n),
+  interactive: (n) => visitInteractive(n),
+  custom: (n) => visitCustom(n),
+  appBar: (n) => visitAppBar(n),
 );
 ```
 
