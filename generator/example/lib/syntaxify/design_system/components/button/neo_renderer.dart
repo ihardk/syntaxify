@@ -3,43 +3,7 @@ part of '../../design_system.dart';
 mixin NeoButtonRenderer on DesignStyle {
   @override
   ButtonTokens buttonTokens(ButtonVariant variant) {
-    switch (variant) {
-      case ButtonVariant.primary:
-        return const ButtonTokens(
-          radius: 0,
-          borderWidth: 3,
-          bgColor: Color(0xFFFFD700), // Gold
-          textColor: Colors.black,
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          borderColor: Colors.black,
-        );
-      case ButtonVariant.secondary:
-        return const ButtonTokens(
-          radius: 0,
-          borderWidth: 3,
-          bgColor: Color(0xFFFF6B6B), // Coral
-          textColor: Colors.black,
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          borderColor: Colors.black,
-        );
-      case ButtonVariant.outlined:
-        return const ButtonTokens(
-          radius: 0,
-          borderWidth: 3,
-          bgColor: Colors.white,
-          textColor: Colors.black,
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          borderColor: Colors.black,
-        );
-      case ButtonVariant.text:
-        return const ButtonTokens(
-          radius: 0,
-          borderWidth: 0,
-          bgColor: Colors.transparent,
-          textColor: Colors.black,
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        );
-    }
+    return ButtonTokens.fromFoundation(foundation, variant: variant);
   }
 
   @override

@@ -2,17 +2,7 @@ part of '../../design_system.dart';
 
 mixin MaterialInputRenderer on DesignStyle {
   @override
-  InputTokens get inputTokens => const InputTokens(
-        textStyle: TextStyle(fontSize: 16, color: Colors.black87),
-        hintStyle: TextStyle(fontSize: 16, color: Colors.black54),
-        backgroundColor: Colors.transparent,
-        borderColor: Colors.black54,
-        focusBorderColor: Colors.blue,
-        errorColor: Colors.red,
-        borderWidth: 1.0,
-        borderRadius: 4.0,
-        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-      );
+  InputTokens get inputTokens => InputTokens.fromFoundation(foundation);
 
   @override
   Widget renderInput({

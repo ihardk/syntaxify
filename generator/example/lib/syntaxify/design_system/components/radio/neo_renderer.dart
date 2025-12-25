@@ -2,6 +2,9 @@ part of '../../design_system.dart';
 
 mixin NeoRadioRenderer on DesignStyle {
   @override
+  RadioTokens get radioTokens => RadioTokens.fromFoundation(foundation);
+
+  @override
   Widget renderRadio<T>({
     required T value,
     required T? groupValue,
@@ -10,6 +13,7 @@ mixin NeoRadioRenderer on DesignStyle {
     Color? activeColor,
   }) {
     final isSelected = value == groupValue;
+    final tokens = radioTokens;
 
     return GestureDetector(
       onTap: enabled ? () => onChanged?.call(value) : null,
@@ -17,18 +21,19 @@ mixin NeoRadioRenderer on DesignStyle {
         width: 24,
         height: 24,
         decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: Colors.black, width: 3),
-          boxShadow: enabled
-              ? const [BoxShadow(offset: Offset(2, 2), color: Colors.black)]
-              : null,
+          color: tokens.inactiveColor,
+          border: Border.all(
+            color: tokens.borderColor,
+            width: tokens.borderWidth,
+          ),
+          boxShadow: enabled && tokens.shadow != null ? [tokens.shadow!] : null,
         ),
         child: isSelected
             ? Center(
                 child: Container(
                   width: 12,
                   height: 12,
-                  color: activeColor ?? const Color(0xFFFFD700),
+                  color: activeColor ?? tokens.activeColor,
                 ),
               )
             : null,

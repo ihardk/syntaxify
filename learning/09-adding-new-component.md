@@ -122,16 +122,24 @@ dart run build_runner build --delete-conflicting-outputs
 
 ## Step 3: Create Design Tokens
 
-Define the design values for the card.
+Design tokens define the visual properties. With Foundation Tokens, most tokens are **auto-generated** by `TokenGenerator`.
 
-### Create Token Class
+### Option A: Auto-Generated (Recommended)
+
+When you run `dart run syntaxify build`, the `TokenGenerator` automatically creates token files based on your meta properties. For a Card with `backgroundColor`, `borderRadius`, etc., it generates:
 
 ```dart
-// generator/design_system/tokens/card_tokens.dart
-part of '../design_system.dart';
+// lib/syntaxify/design_system/tokens/card_tokens.dart (AUTO-GENERATED)
+import 'foundation/foundation_tokens.dart';
 
-/// Design tokens for card components
 class CardTokens {
+  final Color backgroundColor;
+  final Color borderColor;
+  final double borderWidth;
+  final double borderRadius;
+  final EdgeInsets padding;
+  final double elevation;
+
   const CardTokens({
     required this.backgroundColor,
     required this.borderColor,
@@ -139,29 +147,56 @@ class CardTokens {
     required this.borderRadius,
     required this.padding,
     required this.elevation,
-    this.shadowColor,
   });
 
-  /// Background color of the card
-  final Color backgroundColor;
+  /// Create from foundation tokens (smart property mapping)
+  factory CardTokens.fromFoundation(FoundationTokens foundation) {
+    return CardTokens(
+      backgroundColor: foundation.colorSurface,      // Auto-mapped
+      borderColor: foundation.colorOutline,          // Auto-mapped
+      borderWidth: foundation.borderWidthThin,       // Auto-mapped
+      borderRadius: foundation.radiusMd,             // Auto-mapped
+      padding: EdgeInsets.symmetric(
+        horizontal: foundation.spacingMd,
+        vertical: foundation.spacingSm,
+      ),
+      elevation: foundation.elevationLevel2,
+    );
+  }
+}
+```
 
-  /// Border color
-  final Color borderColor;
+### Option B: Manual Token File
 
-  /// Border width
-  final double borderWidth;
+If you need custom mappings, create manually:
 
-  /// Border radius
-  final double borderRadius;
+```dart
+// generator/design_system/tokens/card_tokens.dart
+import 'foundation/foundation_tokens.dart';
 
-  /// Internal padding
-  final EdgeInsetsGeometry padding;
+class CardTokens {
+  // ... same fields ...
 
-  /// Card elevation (shadow depth)
-  final double elevation;
-
-  /// Shadow color (optional)
-  final Color? shadowColor;
+  factory CardTokens.fromFoundation(
+    FoundationTokens foundation, {
+    CardVariant variant = CardVariant.elevated,
+  }) {
+    switch (variant) {
+      case CardVariant.elevated:
+        return CardTokens(
+          backgroundColor: foundation.colorSurface,
+          elevation: foundation.elevationLevel2,
+          // ...
+        );
+      case CardVariant.outlined:
+        return CardTokens(
+          backgroundColor: Colors.transparent,
+          borderWidth: foundation.borderWidthMedium,
+          elevation: 0,
+          // ...
+        );
+    }
+  }
 }
 ```
 
@@ -170,15 +205,14 @@ class CardTokens {
 ```dart
 // generator/design_system/design_style.dart
 
-abstract class DesignStyle {
-  // ... existing token getters
+sealed class DesignStyle {
+  // Foundation access
+  FoundationTokens get foundation;
 
-  /// Card component tokens
+  // Token getter using foundation
   CardTokens get cardTokens;
 
-  // ... existing render methods
-
-  /// Render a card component
+  // Render method
   Widget renderCard({
     String? title,
     String? subtitle,
@@ -198,20 +232,12 @@ Create the Material Design implementation.
 ### Create Renderer File
 
 ```dart
-// generator/design_system/styles/material/card_renderer.dart
+// generator/design_system/components/card/material_renderer.dart
 part of '../../design_system.dart';
 
 mixin MaterialCardRenderer on DesignStyle {
   @override
-  CardTokens get cardTokens => const CardTokens(
-    backgroundColor: Colors.white,
-    borderColor: Colors.transparent,
-    borderWidth: 0,
-    borderRadius: 12,
-    padding: EdgeInsets.all(16),
-    elevation: 2,
-    shadowColor: Colors.black26,
-  );
+  CardTokens get cardTokens => CardTokens.fromFoundation(foundation);
 
   @override
   Widget renderCard({
@@ -232,23 +258,19 @@ mixin MaterialCardRenderer on DesignStyle {
           if (title != null)
             Text(
               title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: foundation.titleMedium,  // Use foundation typography
             ),
           if (title != null && subtitle != null)
-            const SizedBox(height: 4),
+            SizedBox(height: foundation.spacingXs),  // Use foundation spacing
           if (subtitle != null)
             Text(
               subtitle,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
+              style: foundation.bodySmall.copyWith(
+                color: foundation.colorOnSurfaceVariant,
               ),
             ),
           if ((title != null || subtitle != null) && child != null)
-            const SizedBox(height: 12),
+            SizedBox(height: foundation.spacingSm),
           if (child != null) child,
         ],
       ),
@@ -256,7 +278,6 @@ mixin MaterialCardRenderer on DesignStyle {
 
     return Card(
       elevation: tokens.elevation,
-      shadowColor: tokens.shadowColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(tokens.borderRadius),
       ),
@@ -272,6 +293,7 @@ mixin MaterialCardRenderer on DesignStyle {
   }
 }
 ```
+
 
 ### Add Mixin to MaterialStyle
 

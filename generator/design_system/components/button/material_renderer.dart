@@ -3,41 +3,7 @@ part of '../../design_system.dart';
 mixin MaterialButtonRenderer on DesignStyle {
   @override
   ButtonTokens buttonTokens(ButtonVariant variant) {
-    switch (variant) {
-      case ButtonVariant.primary:
-        return const ButtonTokens(
-          radius: 8,
-          borderWidth: 0,
-          bgColor: Colors.blue,
-          textColor: Colors.white,
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        );
-      case ButtonVariant.secondary:
-        return const ButtonTokens(
-          radius: 8,
-          borderWidth: 0,
-          bgColor: Colors.grey,
-          textColor: Colors.white,
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        );
-      case ButtonVariant.outlined:
-        return const ButtonTokens(
-          radius: 8,
-          borderWidth: 2,
-          bgColor: Colors.transparent,
-          textColor: Colors.blue,
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          borderColor: Colors.blue,
-        );
-      case ButtonVariant.text:
-        return const ButtonTokens(
-          radius: 8,
-          borderWidth: 0,
-          bgColor: Colors.transparent,
-          textColor: Colors.blue,
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        );
-    }
+    return ButtonTokens.fromFoundation(foundation, variant: variant);
   }
 
   @override

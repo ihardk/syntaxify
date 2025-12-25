@@ -21,4 +21,7 @@ class CupertinoStyle extends DesignStyle
         CupertinoSliderRenderer,
         CupertinoRadioRenderer {
   const CupertinoStyle();
+
+  @override
+  FoundationTokens get foundation => cupertinoFoundation;
 }

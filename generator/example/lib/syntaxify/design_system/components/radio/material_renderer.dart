@@ -2,6 +2,9 @@ part of '../../design_system.dart';
 
 mixin MaterialRadioRenderer on DesignStyle {
   @override
+  RadioTokens get radioTokens => RadioTokens.fromFoundation(foundation);
+
+  @override
   Widget renderRadio<T>({
     required T value,
     required T? groupValue,
@@ -9,11 +12,13 @@ mixin MaterialRadioRenderer on DesignStyle {
     bool enabled = true,
     Color? activeColor,
   }) {
+    final tokens = radioTokens;
+
     return Radio<T>(
       value: value,
       groupValue: groupValue,
       onChanged: enabled ? onChanged : null,
-      activeColor: activeColor ?? Colors.blue,
+      activeColor: activeColor ?? tokens.activeColor,
     );
   }
 }

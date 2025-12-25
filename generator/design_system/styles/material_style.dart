@@ -21,4 +21,7 @@ class MaterialStyle extends DesignStyle
         MaterialSliderRenderer,
         MaterialRadioRenderer {
   const MaterialStyle();
+
+  @override
+  FoundationTokens get foundation => materialFoundation;
 }

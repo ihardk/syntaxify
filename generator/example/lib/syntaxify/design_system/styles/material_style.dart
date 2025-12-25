@@ -12,4 +12,7 @@ class MaterialStyle extends DesignStyle
         MaterialTextRenderer,
         MaterialToggleRenderer {
   const MaterialStyle();
+
+  @override
+  FoundationTokens get foundation => materialFoundation;
 }

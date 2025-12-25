@@ -2,6 +2,9 @@ part of '../../design_system.dart';
 
 mixin CupertinoSliderRenderer on DesignStyle {
   @override
+  SliderTokens get sliderTokens => SliderTokens.fromFoundation(foundation);
+
+  @override
   Widget renderSlider({
     required double value,
     ValueChanged<double>? onChanged,
@@ -10,13 +13,16 @@ mixin CupertinoSliderRenderer on DesignStyle {
     int? divisions,
     String? label,
   }) {
+    final tokens = sliderTokens;
+
     return CupertinoSlider(
       value: value,
       onChanged: onChanged ?? (_) {},
       min: min,
       max: max,
       divisions: divisions,
-      activeColor: CupertinoColors.activeBlue,
+      activeColor: tokens.activeTrackColor,
+      thumbColor: tokens.thumbColor,
     );
   }
 }

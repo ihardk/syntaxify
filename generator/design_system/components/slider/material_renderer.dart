@@ -2,6 +2,9 @@ part of '../../design_system.dart';
 
 mixin MaterialSliderRenderer on DesignStyle {
   @override
+  SliderTokens get sliderTokens => SliderTokens.fromFoundation(foundation);
+
+  @override
   Widget renderSlider({
     required double value,
     ValueChanged<double>? onChanged,
@@ -10,6 +13,8 @@ mixin MaterialSliderRenderer on DesignStyle {
     int? divisions,
     String? label,
   }) {
+    final tokens = sliderTokens;
+
     return Slider(
       value: value,
       onChanged: onChanged,
@@ -17,8 +22,9 @@ mixin MaterialSliderRenderer on DesignStyle {
       max: max,
       divisions: divisions,
       label: label,
-      activeColor: Colors.blue,
-      inactiveColor: Colors.blue.withValues(alpha: 0.3),
+      activeColor: tokens.activeTrackColor,
+      inactiveColor: tokens.inactiveTrackColor,
+      thumbColor: tokens.thumbColor,
     );
   }
 }

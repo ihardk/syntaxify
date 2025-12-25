@@ -300,6 +300,31 @@ class ScreenGenerator {
 - Changing renderer structure
 - Modifying render method signatures
 
+#### `token_generator.dart`
+
+**What it is:**
+- Generates token classes from component properties
+- Creates `.fromFoundation()` factory methods
+- Smart property mapping (activeColor → colorPrimary, etc.)
+
+**When to modify:**
+- Adding new property-to-foundation mappings
+- Changing token class structure
+- Supporting new property types
+
+**Smart mapping example:**
+```dart
+class TokenGenerator {
+  String _mapToFoundation(String propName, String componentName) {
+    if (propName.contains('backgroundColor')) 
+      return 'foundation.colorSurface';
+    if (propName.contains('borderRadius')) 
+      return 'foundation.radiusMd';
+    // ...
+  }
+}
+```
+
 ---
 
 ### Emitters (`lib/src/emitters/`)
@@ -548,9 +573,9 @@ class AppTheme extends InheritedWidget {
 #### `design_style.dart`
 
 **What it is:**
-- Abstract base class for all styles
+- Sealed base class for all styles
 - Defines contract all styles must implement
-- Declares token getters and render methods
+- Declares foundation getter, token getters, and render methods
 
 **When to modify:**
 - Adding new component types
@@ -559,16 +584,21 @@ class AppTheme extends InheritedWidget {
 
 **Pattern:**
 ```dart
-abstract class DesignStyle {
-  // Token getters
-  ButtonTokens get buttonTokens;
-  TextTokens get textTokens;
-  // Add new token getters here
+sealed class DesignStyle {
+  const DesignStyle();
+
+  // Foundation tokens (single source of truth)
+  FoundationTokens get foundation;
+
+  // Token getters (some take variant parameter)
+  ButtonTokens buttonTokens(ButtonVariant variant);
+  InputTokens get inputTokens;
+  TextTokens textTokens(TextVariant variant);
 
   // Render methods
-  Widget renderButton({...});
-  Widget renderText({...});
-  // Add new render methods here
+  Widget renderButton({required String label, ...});
+  Widget renderInput({required TextEditingController? controller, ...});
+  Widget renderText({required String text, ...});
 }
 ```
 
