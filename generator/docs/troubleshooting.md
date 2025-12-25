@@ -110,6 +110,55 @@ AppTheme(
 
 ---
 
+## Token System Issues
+
+### Error: "Undefined class 'Color'" in foundation_tokens.dart
+
+**Cause:** Foundation tokens file uses wrong directive.
+
+**Fix:** The `foundation_tokens.dart` in generator's bundled assets should use `import` not `part of`:
+
+```dart
+// ✅ Correct - uses import for Flutter types
+import 'package:flutter/material.dart';
+```
+
+---
+
+### Error: "Foundation token directory not found"
+
+**Cause:** Fresh project build - no foundation tokens exist yet.
+
+**Fix:** This is handled automatically by the bundled asset fallback. If issue persists:
+
+1. Run `syntaxify init` to scaffold the design system
+2. Or manually copy from generator package's `design_system/tokens/foundation/`
+
+---
+
+### Error: "Undefined class 'SuperCardTokens'" (Custom Components)
+
+**Cause:** Custom component has no token-worthy properties (like colors, sizes, shadows), so token file wasn't generated.
+
+**Fix:** Token files are now generated for ALL components as scaffolds. If missing:
+
+1. Delete existing token file (if corrupt)
+2. Run `syntaxify build` to regenerate
+3. Token file will be created with empty scaffold
+
+---
+
+### Error: Windows path issues (backslashes in paths)
+
+**Cause:** Windows uses `\` but the generator uses POSIX paths internally.
+
+**Fix:** This is handled automatically with path normalization. If you see mixed separators:
+
+1. Clear build cache
+2. Run `syntaxify build --force`
+
+---
+
 ## Build Issues
 
 ### Build takes too long
@@ -184,3 +233,4 @@ void _switchStyle(DesignStyle style) {
 - [Getting Started](getting_started.md) - Installation & setup
 - [API Reference](api-reference.md) - Component usage
 - [Design System](design-system.md) - Architecture details
+- [Issues Log](ISSUES.md) - Documented issues and resolutions

@@ -2,6 +2,10 @@ part of '../../design_system.dart';
 
 mixin NeoSuperCardRenderer on DesignStyle {
   @override
+  SuperCardTokens get superCardTokens =>
+      SuperCardTokens.fromFoundation(foundation);
+
+  @override
   Widget renderSuperCard({bool value = true}) {
     // STUB: Implement me!
     return Container(

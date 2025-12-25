@@ -405,31 +405,44 @@ class BuildAllUseCase {
           .createDirectory(context.join(outputDir, 'design_system', 'tokens'));
 
       // Copy foundation token directory (Critical for centralized token system)
+      // Priority: 1) Project's custom tokens, 2) Package bundled tokens
       try {
-        final foundationTokenDir =
+        var foundationTokenDir =
             Directory(context.join(designSystemDir, 'tokens', 'foundation'));
+
+        // Fallback to package bundled design_system if project dir doesn't exist
+        if (!await foundationTokenDir.exists()) {
+          final packageFoundationDir = _getPackageBundledFoundationDir();
+          if (await packageFoundationDir.exists()) {
+            foundationTokenDir = packageFoundationDir;
+            logger.detail(
+                'Using package bundled foundation tokens from: ${foundationTokenDir.path}');
+          }
+        }
+
         if (await foundationTokenDir.exists()) {
-          final destFoundationDir = context.join(
-              outputDir, 'design_system', 'tokens', 'foundation');
+          final destFoundationDir =
+              context.join(outputDir, 'design_system', 'tokens', 'foundation');
           await fileSystem.createDirectory(destFoundationDir);
 
           // Copy all foundation token files
           await for (final entity in foundationTokenDir.list(
               recursive: false, followLinks: false)) {
             if (entity is File && entity.path.endsWith('.dart')) {
-              final fileName = context.basename(entity.path);
+              // Normalize path separators for cross-platform compatibility
+              final normalizedPath = entity.path.replaceAll('\\', '/');
+              final fileName = context.basename(normalizedPath);
               final destPath = context.join(destFoundationDir, fileName);
 
-              await fileSystem.copyFile(entity.path, destPath);
-              generatedFiles
-                  .add('design_system/tokens/foundation/$fileName');
-              logger.success(
-                  'Copied: design_system/tokens/foundation/$fileName');
+              await fileSystem.copyFile(normalizedPath, destPath);
+              generatedFiles.add('design_system/tokens/foundation/$fileName');
+              logger
+                  .success('Copied: design_system/tokens/foundation/$fileName');
             }
           }
         } else {
           warnings.add(
-              'Foundation token directory not found at ${foundationTokenDir.path}');
+              'Foundation token directory not found in project or package');
         }
       } catch (e) {
         warnings.add('Failed to copy foundation tokens: $e');
@@ -455,22 +468,20 @@ class BuildAllUseCase {
           if (!await fileSystem.exists(tokenPath)) {
             logger.info('Generating tokens: $tokenFileName');
 
-            // Generate token code
+            // Generate token code (always generates, even for empty scaffold)
             final tokenCode = tokenGenerator.generate(component);
-            if (tokenCode != null) {
-              // Write to design system directory
-              await fileSystem.writeFile(tokenPath, tokenCode);
-              logger.success('Generated: tokens/$tokenFileName');
-            } else {
-              logger.detail(
-                  'Skipped: $tokenFileName (no token-worthy properties)');
-            }
+            // Write to design system directory
+            await fileSystem.writeFile(tokenPath, tokenCode);
+            logger.success('Generated: tokens/$tokenFileName');
           } else {
-            logger.detail('Token file exists: $tokenFileName (not regenerating)');
+            logger
+                .detail('Token file exists: $tokenFileName (not regenerating)');
           }
         } catch (e) {
-          logger.warn('Failed to generate tokens for ${component.className}: $e');
-          warnings.add('Failed to generate tokens for ${component.className}: $e');
+          logger
+              .warn('Failed to generate tokens for ${component.className}: $e');
+          warnings
+              .add('Failed to generate tokens for ${component.className}: $e');
         }
       }
 
@@ -646,5 +657,48 @@ $exports
       p.posix.join(outputDir, 'index.dart'),
       content,
     );
+  }
+
+  /// Get the package's bundled foundation token directory.
+  ///
+  /// Uses Platform.script to find the syntaxify package root, then
+  /// navigates to design_system/tokens/foundation/.
+  ///
+  /// This is used as a fallback when the project doesn't have
+  /// custom foundation tokens yet.
+  Directory _getPackageBundledFoundationDir() {
+    // Platform.script gives us the path to the running script
+    // For a pub package, this will be in .dart_tool/pub/bin/syntaxify/...
+    // We need to find the package root (where design_system/ lives)
+    final scriptPath = Platform.script.toFilePath().replaceAll('\\', '/');
+
+    // Strategy 1: Check if we're in a development environment (monorepo)
+    // Look for 'generator/design_system' in the path hierarchy
+    var current = scriptPath;
+    for (var i = 0; i < 20; i++) {
+      final parent = p.posix.dirname(current);
+      if (parent == current) break;
+
+      // Check if this directory contains design_system/tokens/foundation
+      final foundationDir = Directory(p.posix
+          .join(parent, 'generator', 'design_system', 'tokens', 'foundation'));
+      if (foundationDir.existsSync()) {
+        return foundationDir;
+      }
+
+      // Also check direct design_system (for when run from generator/)
+      final directFoundationDir = Directory(
+          p.posix.join(parent, 'design_system', 'tokens', 'foundation'));
+      if (directFoundationDir.existsSync()) {
+        return directFoundationDir;
+      }
+
+      current = parent;
+    }
+
+    // Strategy 2: Return expected location (may not exist)
+    // This handles the case when running from pub global activate
+    return Directory(p.posix.join(p.posix.dirname(p.posix.dirname(scriptPath)),
+        'design_system', 'tokens', 'foundation'));
   }
 }

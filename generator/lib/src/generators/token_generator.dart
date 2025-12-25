@@ -25,14 +25,14 @@ class TokenGenerator {
 
   /// Generate a token class file for a component.
   ///
-  /// Returns the generated Dart code as a string, or null if no tokens needed.
-  String? generate(ComponentDefinition component) {
+  /// Returns the generated Dart code as a string.
+  /// Always generates a token file (even if empty) to provide a scaffold
+  /// for custom components that users can fill in.
+  String generate(ComponentDefinition component) {
     final tokenProperties = _inferTokenProperties(component);
 
-    // Only generate token file if there are token-worthy properties
-    if (tokenProperties.isEmpty) {
-      return null;
-    }
+    // Always generate token file - provides scaffold for custom components
+    // even if no properties are inferred from naming patterns
 
     final baseName = _getBaseName(component);
     final tokenClassName = '${baseName}Tokens';
@@ -293,6 +293,13 @@ class TokenGenerator {
       return '${prop.name}: ${_mapToFoundation(prop.name, componentName)}';
     }).join(',\n        ');
 
+    // Only include property mappings if there are any
+    final bodyContent = properties.isEmpty
+        ? 'return $className();'
+        : '''return $className(
+        $propertyMappings,
+      );''';
+
     return Constructor(
       (b) => b
         ..factory = true
@@ -318,11 +325,7 @@ class TokenGenerator {
                 ]
               : [],
         )
-        ..body = Code('''
-      return $className(
-        $propertyMappings,
-      );
-    '''),
+        ..body = Code(bodyContent),
     );
   }
 

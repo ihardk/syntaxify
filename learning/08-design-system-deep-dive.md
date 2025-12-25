@@ -332,10 +332,47 @@ AppTheme(
 
 ---
 
+## Known Issues & Resolutions
+
+These issues have been identified and resolved. Documented here for reference.
+
+### Issue: `foundation_tokens.dart` Uses `part of` Instead of `import`
+
+**Problem:** The file declared `part of '../../design_system.dart';` but was being imported directly, causing "Undefined class 'Color'" errors.
+
+**Resolution:** Changed to `import 'package:flutter/material.dart';` so it can be imported as a standalone file.
+
+---
+
+### Issue: Fresh Project Missing Foundation Tokens
+
+**Problem:** On first build, `designSystemDir/tokens/foundation/` doesn't exist, causing "Foundation token directory not found" warning.
+
+**Resolution:** Added fallback to generator package's bundled `design_system/tokens/foundation/` using `_getPackageBundledFoundationDir()` in `build_all.dart`.
+
+---
+
+### Issue: Custom Components Don't Get Token Files
+
+**Problem:** TokenGenerator returned `null` when no properties matched token patterns (color, size, shadow), so custom components like SuperCard got no token file.
+
+**Resolution:** Changed `TokenGenerator.generate()` to always return a stub token file, even with empty properties. This provides a scaffold users can fill in.
+
+---
+
+### Issue: Windows Path Separators
+
+**Problem:** `entity.path` on Windows uses backslashes, but `p.posix.join()` uses forward slashes, causing malformed paths.
+
+**Resolution:** Added path normalization (`path.replaceAll('\\', '/')`) in `LocalFileSystem` and `build_all.dart`.
+
+---
+
 ## Related Resources
 
 - **[FOUNDATION_TOKENS_README.md](file:///d:/Workspace/syntaxify/generator/FOUNDATION_TOKENS_README.md)** - Complete implementation guide
 - **[FOUNDATION_TOKENS_QUICK_REF.md](file:///d:/Workspace/syntaxify/generator/FOUNDATION_TOKENS_QUICK_REF.md)** - Cheat sheet
+- **[ISSUES.md](file:///d:/Workspace/syntaxify/generator/docs/ISSUES.md)** - Documented bug fixes
 - **[04-renderer-pattern.md](04-renderer-pattern.md)** - WHAT vs HOW separation
 - **[05-code-generation.md](05-code-generation.md)** - Code generation pipeline
 
