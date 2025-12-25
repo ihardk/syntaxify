@@ -403,6 +403,37 @@ class BuildAllUseCase {
       await fileSystem
           .createDirectory(context.join(outputDir, 'design_system', 'tokens'));
 
+      // Copy foundation token directory (Critical for centralized token system)
+      try {
+        final foundationTokenDir =
+            Directory(context.join(designSystemDir, 'tokens', 'foundation'));
+        if (await foundationTokenDir.exists()) {
+          final destFoundationDir = context.join(
+              outputDir, 'design_system', 'tokens', 'foundation');
+          await fileSystem.createDirectory(destFoundationDir);
+
+          // Copy all foundation token files
+          await for (final entity in foundationTokenDir.list(
+              recursive: false, followLinks: false)) {
+            if (entity is File && entity.path.endsWith('.dart')) {
+              final fileName = context.basename(entity.path);
+              final destPath = context.join(destFoundationDir, fileName);
+
+              await fileSystem.copyFile(entity.path, destPath);
+              generatedFiles
+                  .add('design_system/tokens/foundation/$fileName');
+              logger.success(
+                  'Copied: design_system/tokens/foundation/$fileName');
+            }
+          }
+        } else {
+          warnings.add(
+              'Foundation token directory not found at ${foundationTokenDir.path}');
+        }
+      } catch (e) {
+        warnings.add('Failed to copy foundation tokens: $e');
+      }
+
       // Explicitly copy shared tokens
       try {
         final iconTokenPath =
