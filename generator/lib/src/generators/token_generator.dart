@@ -2,7 +2,6 @@ import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:syntaxify/src/models/component_definition.dart';
 import 'package:syntaxify/src/models/token_definition.dart';
-import 'package:syntaxify/src/utils/string_utils.dart';
 
 /// Generates design token classes for components.
 ///
@@ -285,8 +284,6 @@ class TokenGenerator {
     ComponentDefinition component,
   ) {
     final hasVariants = component.variants.isNotEmpty;
-    final variantParam =
-        hasVariants ? ', {required ${componentName}Variant variant}' : '';
 
     // Generate smart property mapping from foundation tokens
     final propertyMappings = properties.map((prop) {

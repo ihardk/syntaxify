@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.0-beta - 2025-12-23
+## 0.2.0 - 2025-12-26
 
 ### 🎯 Major Features
 
@@ -25,6 +25,24 @@
 - **`@SyntaxComponent(variants: [...])`**: Define variants inline
 - **EnumGenerator**: Generates `ButtonVariant` enum from `variants: ['primary', 'secondary']`
 - **Output**: `generated/variants/button_variant.dart`
+
+**Package Name Substitution** (New)
+- `syntaxify init` now automatically detects your package name from `pubspec.yaml`
+- Replaces `$packageName` in generated templates with your actual package name
+- Ensures generated code imports correctly out of the box
+
+### 🔧 Improvements
+
+**Dependency Updates**
+- Updated all dependencies to latest major versions (`analyzer ^7.x`, `dart_style ^3.x`) for better stability and performance.
+
+**Better Default Value Handling**
+- Generator now respects `defaultValue` when determining nullability
+- Fixes `invalid_implementation_override` errors for optional params with defaults
+
+**Reduced Import Complexity**
+- `TextVariant` collision fixed (single source of truth)
+- Meta files only need `import 'package:syntaxify/syntaxify.dart';`
 
 ### 🔧 Improvements
 
