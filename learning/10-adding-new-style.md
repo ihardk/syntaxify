@@ -23,6 +23,7 @@ A complete design style that renders all components with:
 ## Prerequisites
 
 - ✅ You've read [04-renderer-pattern.md](04-renderer-pattern.md)
+- ✅ You've read [08-design-system-deep-dive.md](08-design-system-deep-dive.md) (Foundation Tokens)
 - ✅ Understanding of design tokens
 - ✅ Familiarity with Flutter widgets
 
@@ -58,6 +59,11 @@ class GlassmorphismStyle extends DesignStyle
          GlassmorphismInputRenderer,
          GlassmorphismAppBarRenderer {
   const GlassmorphismStyle();
+
+  /// Custom foundation for Glassmorphism (optional)
+  /// Or override foundation getter with custom values
+  @override
+  FoundationTokens get foundation => glassmorphismFoundation;
 }
 ```
 

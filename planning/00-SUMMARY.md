@@ -40,6 +40,16 @@ Analyzed 12 reported issues across the syntaxify codebase. Found that **5 issues
 - **Action:** None needed
 - **File:** `planning/02-action-wiring-implementation.md`
 
+#### Token System Bugs (Dec 2025) ✅
+**Status:** RESOLVED
+- **Bug #1:** `foundation_tokens.dart` used `part of` instead of `import` → Color undefined
+- **Bug #2:** Windows path separators causing malformed paths
+- **Bug #3:** Fresh project missing foundation tokens (no bundled fallback)
+- **Bug #4:** Custom components got no token file when no properties matched
+- **Bug #5:** Empty properties list caused syntax error in generated code
+- **Action:** All fixed in `token_generator.dart`, `build_all.dart`, `local_file_system.dart`
+- **File:** `planning/19-automatic-token-generation-dec2025.md`, `generator/docs/ISSUES.md`
+
 ---
 
 ### ⚠️ PARTIALLY IMPLEMENTED (Needs Completion)

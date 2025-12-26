@@ -30,7 +30,9 @@ class LocalFileSystem implements FileSystem {
 
   @override
   Future<void> createDirectory(String dirPath) async {
-    final dir = io.Directory(dirPath);
+    // Normalize path separators for cross-platform compatibility
+    final normalizedPath = dirPath.replaceAll('\\', '/');
+    final dir = io.Directory(normalizedPath);
     if (!await dir.exists()) {
       await dir.create(recursive: true);
     }
@@ -58,7 +60,9 @@ class LocalFileSystem implements FileSystem {
   @override
   Future<void> copyFile(String source, String destination) async {
     final srcFile = io.File(source);
-    await srcFile.copy(destination);
+    // Normalize path separators for cross-platform compatibility
+    final normalizedDest = destination.replaceAll('\\', '/');
+    await srcFile.copy(normalizedDest);
   }
 
   @override

@@ -12,4 +12,7 @@ class NeoStyle extends DesignStyle
         NeoTextRenderer,
         NeoToggleRenderer {
   const NeoStyle();
+
+  @override
+  FoundationTokens get foundation => neoFoundation;
 }

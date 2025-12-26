@@ -4,6 +4,7 @@
 /// Used by DesignStyle implementations to provide style-specific tokens.
 
 import 'package:flutter/material.dart';
+import 'foundation/foundation_tokens.dart';
 
 /// Design tokens for the Input component
 class InputTokens {
@@ -28,4 +29,22 @@ class InputTokens {
     required this.borderRadius,
     required this.contentPadding,
   });
+
+  /// Create InputTokens from foundation tokens
+  factory InputTokens.fromFoundation(FoundationTokens foundation) {
+    return InputTokens(
+      textStyle: foundation.bodyMedium.copyWith(color: foundation.colorOnSurface),
+      hintStyle: foundation.bodyMedium.copyWith(color: foundation.colorOnSurfaceVariant),
+      backgroundColor: foundation.colorSurface,
+      borderColor: foundation.colorOutline,
+      focusBorderColor: foundation.colorPrimary,
+      errorColor: foundation.colorError,
+      borderWidth: foundation.borderWidthThin,
+      borderRadius: foundation.radiusMd,
+      contentPadding: EdgeInsets.symmetric(
+        horizontal: foundation.spacingMd,
+        vertical: foundation.spacingSm,
+      ),
+    );
+  }
 }

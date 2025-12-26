@@ -48,9 +48,9 @@ Welcome! This learning guide will help you understand Syntaxify from the ground 
    - Code emission
 
 8. **[Design System Deep Dive](08-design-system-deep-dive.md)** 🎨
-   - Tokens and styles
-   - Implementing renderers
-   - Creating custom styles
+   - Foundation Tokens architecture
+   - TokenGenerator and smart mapping
+   - Creating custom design systems
 
 ### Practical Guides
 

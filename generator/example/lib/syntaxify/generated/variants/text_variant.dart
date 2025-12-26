@@ -8,8 +8,8 @@ enum TextVariant {
   displayLarge,
   headlineMedium,
   titleMedium,
-  bodyMedium,
   bodyLarge,
+  bodyMedium,
   labelMedium,
   labelSmall,
 }

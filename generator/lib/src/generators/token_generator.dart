@@ -2,7 +2,6 @@ import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:syntaxify/src/models/component_definition.dart';
 import 'package:syntaxify/src/models/token_definition.dart';
-import 'package:syntaxify/src/utils/string_utils.dart';
 
 /// Generates design token classes for components.
 ///
@@ -25,14 +24,14 @@ class TokenGenerator {
 
   /// Generate a token class file for a component.
   ///
-  /// Returns the generated Dart code as a string, or null if no tokens needed.
-  String? generate(ComponentDefinition component) {
+  /// Returns the generated Dart code as a string.
+  /// Always generates a token file (even if empty) to provide a scaffold
+  /// for custom components that users can fill in.
+  String generate(ComponentDefinition component) {
     final tokenProperties = _inferTokenProperties(component);
 
-    // Only generate token file if there are token-worthy properties
-    if (tokenProperties.isEmpty) {
-      return null;
-    }
+    // Always generate token file - provides scaffold for custom components
+    // even if no properties are inferred from naming patterns
 
     final baseName = _getBaseName(component);
     final tokenClassName = '${baseName}Tokens';
@@ -126,7 +125,9 @@ class TokenGenerator {
   /// Check if a property should become a token based on naming/type
   bool _isTokenProperty(String name, String type) {
     // Color properties
-    if (name.contains('Color') || name.contains('color') || type.contains('Color')) {
+    if (name.contains('Color') ||
+        name.contains('color') ||
+        type.contains('Color')) {
       return true;
     }
 
@@ -156,7 +157,8 @@ class TokenGenerator {
     // Explicit type checks
     if (type.contains('BoxShadow') ||
         type.contains('EdgeInsets') ||
-        type.contains('Border')) {
+        type.contains('Border') ||
+        type.contains('TextStyle')) {
       return true;
     }
 
@@ -187,7 +189,14 @@ class TokenGenerator {
       return 'EdgeInsets?';
     }
 
-    if (name.toLowerCase().contains('border')) {
+    // borderRadius should be double, not Border
+    if (name.toLowerCase().contains('radius')) {
+      return type.endsWith('?') ? 'double?' : 'double';
+    }
+
+    // border (without radius) should be Border type
+    if (name.toLowerCase().contains('border') &&
+        !name.toLowerCase().contains('radius')) {
       return 'Border?';
     }
 
@@ -227,7 +236,8 @@ class TokenGenerator {
         ..fields.addAll(properties.map(_generateField))
         ..constructors.addAll([
           _generateConstructor(properties),
-          _generateFromFoundationFactory(className, componentName, properties, component),
+          _generateFromFoundationFactory(
+              className, componentName, properties, component),
         ]),
     );
   }
@@ -255,9 +265,8 @@ class TokenGenerator {
                 ..named = true
                 ..required = !prop.type.endsWith('?')
                 ..toThis = true
-                ..defaultTo = prop.defaultValue != null
-                    ? Code(prop.defaultValue!)
-                    : null,
+                ..defaultTo =
+                    prop.defaultValue != null ? Code(prop.defaultValue!) : null,
             ),
           ),
         ),
@@ -275,12 +284,18 @@ class TokenGenerator {
     ComponentDefinition component,
   ) {
     final hasVariants = component.variants.isNotEmpty;
-    final variantParam = hasVariants ? ', {required ${componentName}Variant variant}' : '';
 
     // Generate smart property mapping from foundation tokens
     final propertyMappings = properties.map((prop) {
       return '${prop.name}: ${_mapToFoundation(prop.name, componentName)}';
     }).join(',\n        ');
+
+    // Only include property mappings if there are any
+    final bodyContent = properties.isEmpty
+        ? 'return $className();'
+        : '''return $className(
+        $propertyMappings,
+      );''';
 
     return Constructor(
       (b) => b
@@ -307,11 +322,7 @@ class TokenGenerator {
                 ]
               : [],
         )
-        ..body = Code('''
-      return $className(
-        $propertyMappings,
-      );
-    '''),
+        ..body = Code(bodyContent),
     );
   }
 
@@ -325,11 +336,12 @@ class TokenGenerator {
     final lowerName = propName.toLowerCase();
 
     // Color mappings
-    if (lowerName.contains('active') && lowerName.contains('color')) {
-      return 'foundation.colorPrimary';
-    }
+    // Check inactive BEFORE active since "inactive" contains "active"
     if (lowerName.contains('inactive') && lowerName.contains('color')) {
       return 'foundation.colorSurfaceVariant';
+    }
+    if (lowerName.contains('active') && lowerName.contains('color')) {
+      return 'foundation.colorPrimary';
     }
     if (lowerName.contains('check') && lowerName.contains('color')) {
       return 'foundation.colorOnPrimary';
@@ -394,7 +406,9 @@ class TokenGenerator {
     }
 
     // Default fallback based on type
-    if (lowerName.contains('width') || lowerName.contains('height') || lowerName.contains('size')) {
+    if (lowerName.contains('width') ||
+        lowerName.contains('height') ||
+        lowerName.contains('size')) {
       return 'foundation.spacingMd';
     }
 

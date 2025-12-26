@@ -4,13 +4,15 @@
 /// Properties must match DesignStyle.renderButton() signature.
 library;
 
-import 'package:example/syntaxify/design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:syntaxify/syntaxify.dart';
 
+import 'package:example/syntaxify/design_system/design_system.dart';
+
 @SyntaxComponent(
-    description: 'A customizable button component',
-    variants: ['primary', 'secondary', 'outlined', 'text'])
+  description: 'A customizable button component',
+  variants: ['primary', 'secondary', 'outlined', 'text'],
+)
 class ButtonMeta {
   /// The button label text
   /// Maps to: App.button(label: ...)

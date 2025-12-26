@@ -2,6 +2,9 @@ part of '../../design_system.dart';
 
 mixin NeoSliderRenderer on DesignStyle {
   @override
+  SliderTokens get sliderTokens => SliderTokens.fromFoundation(foundation);
+
+  @override
   Widget renderSlider({
     required double value,
     ValueChanged<double>? onChanged,
@@ -10,15 +13,17 @@ mixin NeoSliderRenderer on DesignStyle {
     int? divisions,
     String? label,
   }) {
+    final tokens = sliderTokens;
+
     return SliderTheme(
       data: SliderThemeData(
-        activeTrackColor: const Color(0xFFFFD700),
-        inactiveTrackColor: Colors.white,
-        thumbColor: Colors.black,
-        trackHeight: 8,
-        thumbShape: const _NeoThumbShape(),
-        trackShape: const _NeoTrackShape(),
-        overlayColor: Colors.black.withValues(alpha: 0.1),
+        activeTrackColor: tokens.activeTrackColor,
+        inactiveTrackColor: tokens.inactiveTrackColor,
+        thumbColor: tokens.thumbColor,
+        trackHeight: tokens.trackHeight,
+        thumbShape: _NeoThumbShape(tokens: tokens),
+        trackShape: _NeoTrackShape(tokens: tokens),
+        overlayColor: tokens.overlayColor,
       ),
       child: Slider(
         value: value,
@@ -33,10 +38,15 @@ mixin NeoSliderRenderer on DesignStyle {
 }
 
 class _NeoThumbShape extends SliderComponentShape {
-  const _NeoThumbShape();
+  const _NeoThumbShape({required this.tokens});
+
+  final SliderTokens tokens;
 
   @override
-  Size getPreferredSize(bool isEnabled, bool isDiscrete) => const Size(20, 20);
+  Size getPreferredSize(bool isEnabled, bool isDiscrete) {
+    final size = tokens.thumbRadius * 2;
+    return Size(size, size);
+  }
 
   @override
   void paint(
@@ -54,13 +64,21 @@ class _NeoThumbShape extends SliderComponentShape {
     required Size sizeWithOverflow,
   }) {
     final canvas = context.canvas;
-    final rect = Rect.fromCenter(center: center, width: 20, height: 20);
+    final size = tokens.thumbRadius * 2;
+    final rect = Rect.fromCenter(center: center, width: size, height: size);
 
-    // Shadow
-    canvas.drawRect(
-        rect.shift(const Offset(2, 2)), Paint()..color = Colors.black);
+    // Shadow (if provided)
+    if (tokens.thumbShadow != null) {
+      final shadow = tokens.thumbShadow!;
+      canvas.drawRect(
+        rect.shift(shadow.offset),
+        Paint()..color = shadow.color,
+      );
+    }
+
     // Fill
-    canvas.drawRect(rect, Paint()..color = Colors.white);
+    canvas.drawRect(rect, Paint()..color = sliderTheme.thumbColor!);
+
     // Border
     canvas.drawRect(
         rect,
@@ -72,7 +90,9 @@ class _NeoThumbShape extends SliderComponentShape {
 }
 
 class _NeoTrackShape extends SliderTrackShape {
-  const _NeoTrackShape();
+  const _NeoTrackShape({required this.tokens});
+
+  final SliderTokens tokens;
 
   @override
   Rect getPreferredRect({
@@ -82,7 +102,7 @@ class _NeoTrackShape extends SliderTrackShape {
     bool isEnabled = true,
     bool isDiscrete = false,
   }) {
-    final trackHeight = sliderTheme.trackHeight ?? 8;
+    final trackHeight = tokens.trackHeight;
     final trackLeft = offset.dx + 10;
     final trackTop = offset.dy + (parentBox.size.height - trackHeight) / 2;
     final trackWidth = parentBox.size.width - 20;
@@ -107,11 +127,12 @@ class _NeoTrackShape extends SliderTrackShape {
     final canvas = context.canvas;
 
     // Track background
-    canvas.drawRect(trackRect, Paint()..color = Colors.white);
+    canvas.drawRect(
+        trackRect, Paint()..color = sliderTheme.inactiveTrackColor!);
     // Active portion
     final activeRect = Rect.fromLTRB(
         trackRect.left, trackRect.top, thumbCenter.dx, trackRect.bottom);
-    canvas.drawRect(activeRect, Paint()..color = const Color(0xFFFFD700));
+    canvas.drawRect(activeRect, Paint()..color = sliderTheme.activeTrackColor!);
     // Border
     canvas.drawRect(
         trackRect,

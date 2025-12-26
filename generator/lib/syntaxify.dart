@@ -1,7 +1,6 @@
 /// Syntaxify UI code generator
 ///
 /// Produces production-ready Flutter widgets from design tokens.
-library syntaxify;
 
 // Package Configuration (Single Source of Truth)
 export 'src/config/package_config.dart';

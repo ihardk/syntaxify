@@ -3,6 +3,7 @@ import 'dart:isolate';
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as path;
+import 'package:yaml/yaml.dart';
 
 /// Default syntaxify.yaml content for new projects.
 const String _defaultConfigYaml = '''
@@ -65,6 +66,24 @@ class InitCommand extends Command<int> {
         return ExitCode.config.code;
       }
 
+      // Try reading package name from pubspec.yaml
+      String? packageName;
+      final pubspecFile = File(path.join(cwd, 'pubspec.yaml'));
+      if (pubspecFile.existsSync()) {
+        try {
+          final pubspecContent = pubspecFile.readAsStringSync();
+          final yaml = loadYaml(pubspecContent);
+          packageName = yaml['name']?.toString();
+        } catch (_) {
+          // ignore
+        }
+      }
+
+      if (packageName == null) {
+        logger.warn('Could not determine package name from pubspec.yaml.');
+        packageName = 'example'; // Fallback
+      }
+
       // 1. Scaffold meta/
       var metaSource = Directory(path.join(generatorRoot, 'meta'));
       if (!metaSource.existsSync()) {
@@ -82,6 +101,7 @@ class InitCommand extends Command<int> {
         destination: Directory(path.join(cwd, 'meta')),
         force: force,
         logger: logger,
+        packageName: packageName,
       );
 
       // 2. Scaffold lib/syntaxify/design_system/
@@ -91,6 +111,7 @@ class InitCommand extends Command<int> {
             Directory(path.join(cwd, 'lib', 'syntaxify', 'design_system')),
         force: force,
         logger: logger,
+        packageName: packageName,
       );
 
       // 3. Create syntaxify.yaml config file
@@ -158,6 +179,7 @@ class InitCommand extends Command<int> {
     required Directory destination,
     required bool force,
     required Logger logger,
+    required String packageName,
   }) async {
     if (!source.existsSync()) {
       logger.warn('Source directory missing: ${source.path}');
@@ -183,7 +205,22 @@ class InitCommand extends Command<int> {
           destFile.parent.createSync(recursive: true);
         }
 
-        entity.copySync(destFile.path);
+        // Perform substitution for known text files
+        if (entity.path.endsWith('.dart') ||
+            entity.path.endsWith('.yaml') ||
+            entity.path.endsWith('.md')) {
+          try {
+            final content = entity.readAsStringSync();
+            final updatedContent =
+                content.replaceAll('\$packageName', packageName);
+            destFile.writeAsStringSync(updatedContent);
+          } catch (e) {
+            // Fallback to direct copy if read fails
+            entity.copySync(destFile.path);
+          }
+        } else {
+          entity.copySync(destFile.path);
+        }
       }
     }
   }

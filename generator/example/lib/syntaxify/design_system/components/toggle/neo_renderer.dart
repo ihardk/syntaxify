@@ -2,24 +2,33 @@ part of '../../design_system.dart';
 
 mixin NeoToggleRenderer on DesignStyle {
   @override
+  ToggleTokens get toggleTokens => ToggleTokens.fromFoundation(foundation);
+
+  @override
   Widget renderToggle({
     required bool value,
     ValueChanged<bool>? onChanged,
     bool enabled = true,
     Color? activeColor,
   }) {
+    final tokens = toggleTokens;
+
     return GestureDetector(
       onTap: enabled ? () => onChanged?.call(!value) : null,
       child: Container(
         width: 56,
         height: 28,
         decoration: BoxDecoration(
-          color:
-              value ? (activeColor ?? const Color(0xFFFFD700)) : Colors.white,
-          border: Border.all(color: Colors.black, width: 3),
-          boxShadow: enabled
-              ? const [BoxShadow(offset: Offset(2, 2), color: Colors.black)]
+          color: value
+              ? (activeColor ?? tokens.activeTrackColor)
+              : tokens.inactiveTrackColor,
+          border: tokens.trackBorderColor != null
+              ? Border.all(
+                  color: tokens.trackBorderColor!,
+                  width: tokens.trackBorderWidth,
+                )
               : null,
+          boxShadow: enabled && tokens.shadow != null ? [tokens.shadow!] : null,
         ),
         child: AnimatedAlign(
           duration: const Duration(milliseconds: 150),
@@ -29,8 +38,13 @@ mixin NeoToggleRenderer on DesignStyle {
             height: 20,
             margin: const EdgeInsets.symmetric(horizontal: 2),
             decoration: BoxDecoration(
-              color: Colors.black,
-              border: Border.all(color: Colors.black, width: 2),
+              color: tokens.thumbColor,
+              border: tokens.trackBorderColor != null
+                  ? Border.all(
+                      color: tokens.trackBorderColor!,
+                      width: tokens.trackBorderWidth,
+                    )
+                  : null,
             ),
           ),
         ),

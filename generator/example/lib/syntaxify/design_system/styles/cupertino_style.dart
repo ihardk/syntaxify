@@ -12,4 +12,7 @@ class CupertinoStyle extends DesignStyle
         CupertinoTextRenderer,
         CupertinoToggleRenderer {
   const CupertinoStyle();
+
+  @override
+  FoundationTokens get foundation => cupertinoFoundation;
 }

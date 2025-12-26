@@ -404,7 +404,7 @@ mixin MaterialCardRenderer on DesignStyle {
 ```yaml
 # pubspec.yaml
 dev_dependencies:
-  syntaxify: ^0.1.0-alpha.1
+  syntaxify: ^0.2.0
 ```
 
 Then run:
@@ -421,11 +421,10 @@ dev_dependencies:
   syntaxify:
     git:
       url: https://github.com/ihardk/syntaxify.git
-      ref: v0.1.0
+      ref: v0.2.0
       path: generator
 ```
 
-> ⚠️ **Alpha Release**: This package is in alpha. API may change. See [CHANGELOG](https://pub.dev/packages/syntaxify/changelog) for updates.
 
 **Optional: Global Installation**
 
@@ -759,7 +758,7 @@ Having issues? See **[Troubleshooting Guide](https://github.com/ihardk/syntaxify
 
 ## 🗺️ Roadmap
 
-**v0.1.0 (Current)**
+**v0.2.0 (Current)**
 
 - ✅ Core architecture with renderer pattern
 - ✅ 7 components (Button, Text, Input, Checkbox, Toggle, Slider, Radio)
@@ -770,9 +769,9 @@ Having issues? See **[Troubleshooting Guide](https://github.com/ihardk/syntaxify
 - ✅ Dry run mode (`--dry-run`)
 - ✅ 303 tests passing
 
-**v0.2.0 (Next)**
+**v0.3.0 (Next)**
 
-- 🔄 More components: Card, Badge, Avatar, Chip
+- 🔄 More components 
 - 🔄 Golden tests for visual regression
 - 🔄 Improved error messages
 

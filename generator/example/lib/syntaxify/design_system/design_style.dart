@@ -8,14 +8,35 @@ sealed class DesignStyle {
   String get name =>
       runtimeType.toString().replaceAll('Style', '').toLowerCase();
 
-  /// Get tokens for a button variant
+  /// Foundation design tokens (colors, typography, spacing, etc.)
+  ///
+  /// Single source of truth for all design primitives.
+  /// Component tokens reference these foundation values.
+  FoundationTokens get foundation;
+
+  /// Get tokens for a Button variant
   ButtonTokens buttonTokens(ButtonVariant variant);
 
-  /// Get tokens for input component
+  /// Get tokens for Checkbox component
+  CheckboxTokens get checkboxTokens;
+
+  /// Get tokens for Input component
   InputTokens get inputTokens;
 
-  /// Get tokens for a text variant
+  /// Get tokens for Radio component
+  RadioTokens get radioTokens;
+
+  /// Get tokens for Slider component
+  SliderTokens get sliderTokens;
+
+  /// Get tokens for SuperCard component
+  SuperCardTokens get superCardTokens;
+
+  /// Get tokens for a Text variant
   TextTokens textTokens(TextVariant variant);
+
+  /// Get tokens for Toggle component
+  ToggleTokens get toggleTokens;
 
   /// Render a Button widget
   Widget renderButton({

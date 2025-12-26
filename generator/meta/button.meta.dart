@@ -7,6 +7,8 @@ library;
 import 'package:flutter/material.dart';
 import 'package:syntaxify/syntaxify.dart';
 
+import 'package:$packageName/syntaxify/design_system/design_system.dart';
+
 @SyntaxComponent(
   description: 'A customizable button component',
   variants: ['primary', 'secondary', 'outlined', 'text'],

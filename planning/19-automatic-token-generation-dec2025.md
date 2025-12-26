@@ -266,25 +266,25 @@ System works for 7 components or 700 components.
 
 ### Included Properties
 
-| Pattern | Inferred Type | Example |
-|---------|---------------|---------|
-| `*color` or `*Color` | `Color` | activeColor, backgroundColor |
-| `*width`, `*height` | `double` | borderWidth, trackHeight |
-| `*radius` | `double` | borderRadius, thumbRadius |
-| `*spacing`, `*padding`, `*margin` | `double` or `EdgeInsets` | padding, spacing |
-| `shadow*` or `*shadow` | `BoxShadow?` | shadow, boxShadow |
-| `border*` | `Border?` or `double` | border, borderWidth |
-| `elevation` | `double` | elevation |
+| Pattern                           | Inferred Type            | Example                      |
+| --------------------------------- | ------------------------ | ---------------------------- |
+| `*color` or `*Color`              | `Color`                  | activeColor, backgroundColor |
+| `*width`, `*height`               | `double`                 | borderWidth, trackHeight     |
+| `*radius`                         | `double`                 | borderRadius, thumbRadius    |
+| `*spacing`, `*padding`, `*margin` | `double` or `EdgeInsets` | padding, spacing             |
+| `shadow*` or `*shadow`            | `BoxShadow?`             | shadow, boxShadow            |
+| `border*`                         | `Border?` or `double`    | border, borderWidth          |
+| `elevation`                       | `double`                 | elevation                    |
 
 ### Excluded Properties
 
-| Type | Reason | Examples |
-|------|--------|----------|
-| Callbacks | Not styling | VoidCallback, ValueChanged |
-| State | Not styling | value, enabled, loading |
-| Content | Not styling | label, text, icon, hint |
-| Controllers | Not styling | controller, focusNode |
-| Config | Not styling | min, max, divisions |
+| Type        | Reason      | Examples                   |
+| ----------- | ----------- | -------------------------- |
+| Callbacks   | Not styling | VoidCallback, ValueChanged |
+| State       | Not styling | value, enabled, loading    |
+| Content     | Not styling | label, text, icon, hint    |
+| Controllers | Not styling | controller, focusNode      |
+| Config      | Not styling | min, max, divisions        |
 
 ## Future Enhancements
 
@@ -349,3 +349,36 @@ Help migrate existing hardcoded values to token system.
 > **"Define the component ONCE, tokens generated AUTOMATICALLY"**
 
 No more manual token file creation, import management, or getter declarations. The system infers visual styling properties and generates the complete token infrastructure automatically.
+
+---
+
+## Resolved Bugs (Dec 2025)
+
+The following bugs were identified and fixed during token system validation:
+
+### Bug #1: `foundation_tokens.dart` Import Issue
+- **Problem:** File used `part of` but was imported directly → "Undefined class Color" 
+- **Fix:** Changed to `import 'package:flutter/material.dart';`
+- **File:** `generator/design_system/tokens/foundation/foundation_tokens.dart`
+
+### Bug #2: Windows Path Separator Issue
+- **Problem:** `entity.path` uses backslashes, `p.posix.join` uses forward slashes → malformed paths
+- **Fix:** Normalize all paths with `path.replaceAll('\\', '/')`
+- **Files:** `local_file_system.dart`, `build_all.dart`
+
+### Bug #3: Fresh Project Missing Foundation Tokens
+- **Problem:** First build → `designSystemDir/tokens/foundation/` doesn't exist
+- **Fix:** Added `_getPackageBundledFoundationDir()` fallback in `build_all.dart`
+
+### Bug #4: Custom Components Get No Token File
+- **Problem:** `TokenGenerator.generate()` returned null when no properties matched patterns
+- **Fix:** Always generate stub token file (even empty) → provides scaffold for users
+- **File:** `token_generator.dart` - removed `if (tokenProperties.isEmpty) return null;`
+
+### Bug #5: Empty Properties Cause Syntax Error
+- **Problem:** Empty `properties` generated `ClassName(,);` with trailing comma
+- **Fix:** Conditional body generation in `_generateFromFoundationFactory()`
+- **File:** `token_generator.dart`
+
+**Full Details:** See [ISSUES.md](file:///d:/Workspace/syntaxify/generator/docs/ISSUES.md)
+
