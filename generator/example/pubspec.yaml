@@ -47,10 +47,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
   syntaxify:
-    git:
-      url: https://github.com/ihardk/syntaxify.git
-      path: generator
-      ref: v0.2.0
+    path: ../../generator
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
