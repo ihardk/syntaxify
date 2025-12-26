@@ -4,6 +4,30 @@
 
 ### 🎯 Major Features
 
+**Token Generator (Issue #3)**
+- **`TokenGenerator`**: Generates design tokens from your meta files
+- **Output**: `generated/tokens/*.dart` with token classes
+- **Usage**: Run `syntaxify build` to generate tokens
+- **DX Impact**: Tokens are automatically generated when you run `build`
+
+### 📦 New Files
+
+| File                                        | Purpose                 |
+| ------------------------------------------- | ----------------------- |
+| `lib/src/generators/token_generator.dart`   | Token generation logic  |
+| `lib/syntaxify/design_system/tokens/*.dart` | Generated token classes |
+
+### 📊 Statistics
+
+- **+100 lines** for token generator implementation
+- **172 tests** passing
+- **Stage 5** of roadmap reached
+
+
+## 0.2.0-beta - 2025-12-23
+
+### 🎯 Major Features
+
 **Dynamic Design System (Custom Component Extensibility)**
 - **Any component is now fully integrated with the design system!**
   - Add `supercard.meta.dart` → Generator creates `renderSuperCard()` in `DesignStyle`
