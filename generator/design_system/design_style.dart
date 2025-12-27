@@ -136,4 +136,29 @@ sealed class DesignStyle {
     bool enabled = true,
     Color? activeColor,
   });
+
+  /// Get tokens for a card variant
+  CardTokens cardTokens(CardVariant variant);
+
+  /// Render a card widget
+  Widget renderCard({
+    required Widget child,
+    CardVariant variant = CardVariant.elevated,
+    double? elevation,
+    EdgeInsets? padding,
+    Color? backgroundColor,
+    Color? borderColor,
+    double borderWidth = 1.0,
+  });
+
+  /// Get tokens for icon component
+  IconTokens get iconTokens;
+
+  /// Render an icon widget
+  Widget renderIcon({
+    required String name,
+    double? size,
+    Color? color,
+    String? semanticLabel,
+  });
 }

@@ -19,7 +19,9 @@ class CupertinoStyle extends DesignStyle
         CupertinoCheckboxRenderer,
         CupertinoSwitchRenderer,
         CupertinoSliderRenderer,
-        CupertinoRadioRenderer {
+        CupertinoRadioRenderer,
+        CupertinoCardRenderer,
+        IconRenderer {
   const CupertinoStyle();
 
   @override

@@ -20,7 +20,9 @@ class NeoStyle extends DesignStyle
         NeoCheckboxRenderer,
         NeoSwitchRenderer,
         NeoSliderRenderer,
-        NeoRadioRenderer {
+        NeoRadioRenderer,
+        NeoCardRenderer,
+        IconRenderer {
   const NeoStyle();
 
   @override

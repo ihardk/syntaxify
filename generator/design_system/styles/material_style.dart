@@ -19,7 +19,9 @@ class MaterialStyle extends DesignStyle
         MaterialCheckboxRenderer,
         MaterialSwitchRenderer,
         MaterialSliderRenderer,
-        MaterialRadioRenderer {
+        MaterialRadioRenderer,
+        MaterialCardRenderer,
+        IconRenderer {
   const MaterialStyle();
 
   @override
