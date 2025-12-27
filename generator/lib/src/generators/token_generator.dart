@@ -207,11 +207,12 @@ class TokenGenerator {
   String _getBaseName(ComponentDefinition component) {
     final name =
         component.explicitName ?? component.className.replaceAll('Meta', '');
-    final base = name.startsWith('App') ? name.substring(3) : name;
-    if (base.isEmpty) {
+    // Keep the full name - don't strip 'App' prefix
+    // Components like AppBar should generate app_bar_tokens.dart not bar_tokens.dart
+    if (name.isEmpty) {
       throw Exception('Component name cannot be empty');
     }
-    return base;
+    return name;
   }
 
   List<String> _generateHeader(String className) {

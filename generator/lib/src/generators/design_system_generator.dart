@@ -278,21 +278,21 @@ $code
           ..annotations.add(refer('override'))
           ..returns = refer('Widget')
           ..optionalParameters.addAll(component.properties.map((prop) {
-              final isNullable = !prop.isRequired &&
-                  prop.defaultValue == null &&
-                  !prop.type.endsWith('?');
-              return Parameter((p) {
-                p
-                  ..name = prop.name
-                  ..named = true
-                  ..required = prop.isRequired
-                  ..type = refer(prop.type + (isNullable ? '?' : ''));
-                if (prop.defaultValue != null) {
-                  p.defaultTo = Code(prop.defaultValue!);
-                }
-              });
-            }))
-            ..body = Code('''
+            final isNullable = !prop.isRequired &&
+                prop.defaultValue == null &&
+                !prop.type.endsWith('?');
+            return Parameter((p) {
+              p
+                ..name = prop.name
+                ..named = true
+                ..required = prop.isRequired
+                ..type = refer(prop.type + (isNullable ? '?' : ''));
+              if (prop.defaultValue != null) {
+                p.defaultTo = Code(prop.defaultValue!);
+              }
+            });
+          }))
+          ..body = Code('''
     // STUB: Implement me!
     return Container(
       padding: const EdgeInsets.all(16),
@@ -310,7 +310,7 @@ $code
       ),
     );
 ''');
-        }));
+      }));
     });
 
     final code = cls.accept(_emitter).toString();
@@ -362,6 +362,8 @@ $code
   String _getBaseName({required ComponentDefinition component}) {
     final name =
         component.explicitName ?? component.className.replaceAll('Meta', '');
-    return name.startsWith('App') ? name.substring(3) : name;
+    // Keep the full name - don't strip 'App' prefix
+    // Components like AppBar should generate app_bar_tokens.dart not bar_tokens.dart
+    return name;
   }
 }

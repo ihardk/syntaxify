@@ -1,31 +1,27 @@
+import 'dart:io';
+
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
-import 'dart:io';
 
 import 'package:syntaxify/src/core/interfaces/file_system.dart';
 import 'package:syntaxify/src/generators/generator_registry.dart';
-import 'package:syntaxify/src/generators/enum_generator.dart';
-import 'package:syntaxify/src/generators/design_system_generator.dart';
-import 'package:syntaxify/src/generators/token_generator.dart';
-
 import 'package:syntaxify/src/models/build_result.dart';
 import 'package:syntaxify/src/models/component_definition.dart';
 import 'package:syntaxify/src/models/token_definition.dart';
-import 'package:code_builder/code_builder.dart';
-import 'package:dart_style/dart_style.dart';
-import 'package:syntaxify/src/use_cases/generate_component.dart';
-import 'package:syntaxify/src/parser/registry_parser.dart';
-import 'package:syntaxify/src/generators/registry/icon_registry_generator.dart';
-import 'package:syntaxify/src/generators/registry/image_registry_generator.dart';
-import 'package:syntaxify/src/use_cases/generate_screen.dart';
 import 'package:syntaxify/src/models/ast/screen_definition.dart';
-import 'package:syntaxify/src/validation/layout_validator.dart';
-import 'package:syntaxify/src/models/validation_error.dart';
-import 'package:syntaxify/src/infrastructure/build_cache_manager.dart';
-import 'package:syntaxify/src/models/build_cache.dart';
-import 'package:syntaxify/src/utils/string_utils.dart';
+import 'package:syntaxify/src/infrastructure/repositories/project_repository.dart';
+import 'package:syntaxify/src/infrastructure/repositories/cache_repository.dart';
+import 'package:syntaxify/src/services/component_generation_service.dart';
+import 'package:syntaxify/src/services/screen_generation_service.dart';
+import 'package:syntaxify/src/services/design_system_service.dart';
 
 /// Use case for building all components.
+///
+/// This is the main orchestrator for the build pipeline. It delegates
+/// to specialized services for different aspects of code generation:
+/// - ComponentGenerationService: Handles component code generation
+/// - ScreenGenerationService: Handles screen code generation
+/// - DesignSystemService: Handles design system file operations
 class BuildAllUseCase {
   BuildAllUseCase({
     required this.fileSystem,
@@ -37,24 +33,13 @@ class BuildAllUseCase {
   final GeneratorRegistry registry;
   final Logger logger;
 
-  late final _generateComponent = GenerateComponentUseCase(
-    fileSystem: fileSystem,
-    registry: registry,
-  );
-  late final _generateScreen = GenerateScreenUseCase(
-    fileSystem: fileSystem,
-    registry: registry,
-  );
-  final _validator = const LayoutValidator();
-
   /// Execute the full build process.
   ///
-  /// This orchestrates the entire build pipeline:
-  /// 1. Validates all screen definitions.
-  /// 2. Checks build cache to skip unchanged files (incremental build).
-  /// 3. Generates component code.
-  /// 4. Generates screen code.
-  /// 5. Updates the registry and build cache.
+  /// This orchestrates the entire build pipeline using a service-layer architecture:
+  /// 1. Initialize repositories (ProjectRepository, CacheRepository)
+  /// 2. Create services (ComponentGenerationService, ScreenGenerationService, DesignSystemService)
+  /// 3. Generate components, screens, and design system files
+  /// 4. Collect results and update build cache
   ///
   /// [components] List of parsed component definitions.
   /// [screens] List of parsed screen definitions.
@@ -74,540 +59,166 @@ class BuildAllUseCase {
     bool enableCache = true,
     bool forceRebuild = false,
   }) async {
-    final metaDirectory = Directory(metaDirectoryPath);
     final stopwatch = Stopwatch()..start();
     final generatedFiles = <String>[];
     final errors = <String>[];
     final warnings = <String>[];
 
-    // Initialize build cache
-    BuildCacheManager? cacheManager;
-    BuildCache cache = BuildCache.empty();
-    final cacheUpdates = <String, CacheEntry>{};
-
     // Use posix style for consistent internal paths (forward slashes)
-    // especially for imports and memory file system tests
     final context = p.posix;
 
-    if (enableCache && !forceRebuild) {
-      cacheManager = BuildCacheManager(
-        fileSystem: fileSystem,
-        cacheFilePath:
-            context.join(outputDir, BuildCacheManager.defaultCacheFileName),
-      );
-      cache = await cacheManager.loadCache();
-      logger.detail('Loaded build cache with ${cache.entries.length} entries');
-    } else if (forceRebuild) {
+    // Initialize repositories
+    final projectRepo = ProjectRepository(
+      fileSystem: fileSystem,
+      projectRoot: Directory.current.path,
+      pathContext: context,
+    );
+
+    final cacheRepo = await CacheRepository.create(
+      fileSystem: fileSystem,
+      cacheFilePath: context.join(outputDir, '.build_cache.json'),
+      enableCache: enableCache && !forceRebuild,
+    );
+
+    if (forceRebuild) {
       logger.detail('Force rebuild enabled, skipping cache');
+    } else if (enableCache) {
+      logger.detail('Loaded build cache with ${cacheRepo.entryCount} entries');
     }
 
-    // Create output directories
-    await fileSystem
-        .createDirectory(context.join(outputDir, 'generated', 'components'));
+    // Create services
+    final componentService = ComponentGenerationService(
+      projectRepo: projectRepo,
+      cacheRepo: cacheRepo,
+      generatorRegistry: registry,
+      logger: logger,
+    );
 
-    // Read package name from pubspec.yaml for screen imports
-    String? packageName;
-    try {
-      final pubspecPath = 'pubspec.yaml';
-      if (await fileSystem.exists(pubspecPath)) {
-        final content = await fileSystem.readFile(pubspecPath);
-        final nameMatch =
-            RegExp(r'^name:\s*(.+)$', multiLine: true).firstMatch(content);
-        if (nameMatch != null) {
-          packageName = nameMatch.group(1)?.trim();
+    final screenService = ScreenGenerationService(
+      projectRepo: projectRepo,
+      cacheRepo: cacheRepo,
+      generatorRegistry: registry,
+      logger: logger,
+    );
+
+    final designSystemService = DesignSystemService(
+      projectRepo: projectRepo,
+      fileSystem: fileSystem,
+      logger: logger,
+    );
+
+    // Ensure output directories exist
+    await projectRepo.ensureOutputDirectories(outputDir);
+
+    // Read package name for screen imports
+    final packageName = await projectRepo.getPackageName();
+
+    // Generate screens
+    final screenResults = await screenService.generateAllScreens(
+      screens: screens,
+      outputDir: outputDir,
+      packageName: packageName,
+      enableCache: enableCache && !forceRebuild,
+    );
+
+    // Collect screen results
+    for (final result in screenResults) {
+      if (result.isValidationFailed) {
+        errors.addAll(result.errors);
+        warnings.addAll(result.warnings);
+      } else if (result.isSuccess && !result.isSkipped) {
+        if (result.filePath != null) {
+          generatedFiles.add(result.filePath!);
         }
+        warnings.addAll(result.warnings);
       }
-    } catch (e) {
-      logger.warn('Could not read package name from pubspec.yaml: $e');
     }
 
-    // Generate screens to lib/screens/ (editable)
-    for (final screen in screens) {
+    // Generate components
+    final componentResults = await componentService.generateAllComponents(
+      components: components,
+      tokens: tokens,
+      outputDir: outputDir,
+      enableCache: enableCache && !forceRebuild,
+    );
+
+    // Collect component results
+    for (final result in componentResults) {
+      if (result.isSuccess && !result.isSkipped) {
+        generatedFiles.addAll(result.filesGenerated);
+      } else if (!result.isSuccess) {
+        errors.add(
+            result.error ?? 'Unknown error generating ${result.componentName}');
+      }
+    }
+
+    // Generate enum variants
+    final enumResults = await componentService.generateEnumVariants(
+      components: components,
+      outputDir: outputDir,
+    );
+
+    // Collect enum results
+    for (final result in enumResults) {
+      if (result.isSuccess && result.filePath != null) {
+        generatedFiles.add(result.filePath!);
+      } else if (!result.isSuccess) {
+        warnings.add(result.error ??
+            'Failed to generate enum for ${result.componentName}');
+      }
+    }
+
+    // Generate design system files
+    if (designSystemDir != null) {
       try {
-        logger.info('Validating Screen: ${screen.id}');
-
-        // Validate screen layout
-        final validationErrors = _validator.validate(
-          screen.layout,
-          'screens/${screen.id}',
-        );
-
-        // Also validate appBar if present
-        if (screen.appBar != null) {
-          validationErrors.addAll(_validator.validate(
-            screen.appBar!,
-            'screens/${screen.id}.appBar',
-          ));
-        }
-
-        // Collect validation errors and warnings
-        for (final error in validationErrors) {
-          final message =
-              '${screen.id}: ${error.message} (${error.nodePath ?? "unknown"})';
-
-          if (error.severity == ErrorSeverity.error) {
-            logger.err('  ✗ $message');
-            if (error.suggestion != null) {
-              logger.detail('    💡 ${error.suggestion}');
-            }
-            errors.add(message);
-          } else if (error.severity == ErrorSeverity.warning) {
-            logger.warn('  ⚠ $message');
-            if (error.suggestion != null) {
-              logger.detail('    💡 ${error.suggestion}');
-            }
-            warnings.add(message);
-          } else {
-            logger.info('  ℹ $message');
-            if (error.suggestion != null) {
-              logger.detail('    💡 ${error.suggestion}');
-            }
-          }
-        }
-
-        // Only generate if no critical errors
-        final hasErrors =
-            validationErrors.any((e) => e.severity == ErrorSeverity.error);
-        if (hasErrors) {
-          logger.err('Skipping screen ${screen.id} due to validation errors');
-          continue;
-        }
-
-        logger.info('Generating Screen: ${screen.id}');
-        final filePath = await _generateScreen.execute(
-          screen: screen,
+        // Copy design system files
+        final copiedFiles = await designSystemService.copyDesignSystemFiles(
+          sourceDir: designSystemDir,
           outputDir: outputDir,
-          packageName: packageName,
         );
-        if (filePath != null) {
-          generatedFiles.add(filePath);
-          logger.success('Generated: $filePath');
-        } else {
-          logger.detail(
-              'Skipped: screens/${screen.id}_screen.dart (already exists)');
-        }
-      } catch (e) {
-        logger.err('Failed to generate screen ${screen.id}: $e');
-        errors.add('Failed to generate screen ${screen.id}: $e');
-      }
-    }
+        generatedFiles.addAll(copiedFiles);
 
-    // Generate each component
-    for (final component in components) {
-      try {
-        logger.info('Generating: ${component.className}');
-
-        final matchingTokens = tokens
-            .where(
-              (t) =>
-                  t.componentName.toLowerCase() ==
-                  component.className.replaceAll('Meta', '').toLowerCase(),
-            )
-            .firstOrNull;
-
-        final filePath = await _generateComponent.execute(
-          component: component,
-          outputDir: context.join(outputDir, 'generated'),
-          tokens: matchingTokens,
+        // Generate design system code
+        final designSystemFiles =
+            await designSystemService.generateDesignSystemCode(
+          components: components,
+          outputDir: outputDir,
         );
+        generatedFiles.addAll(designSystemFiles);
 
-        generatedFiles.add('generated/$filePath');
-        logger.success('Generated: generated/$filePath');
-      } catch (e) {
-        logger.err('Failed to generate ${component.className}: $e');
-        errors.add('Failed to generate ${component.className}: $e');
-      }
-    }
+        // Handle tokens
+        final tokenFiles = await designSystemService.handleTokens(
+          components: components,
+          designSystemDir: designSystemDir,
+          outputDir: outputDir,
+        );
+        generatedFiles.addAll(tokenFiles);
 
-    // Generate variant enums for components with variants
-    final enumGenerator = EnumGenerator();
-    await fileSystem
-        .createDirectory(context.join(outputDir, 'generated', 'variants'));
-
-    for (final component in components) {
-      if (component.variants.isNotEmpty) {
-        try {
-          final componentName = component.explicitName ??
-              component.className.replaceAll('Meta', '');
-          final enumCode =
-              enumGenerator.generate(componentName, component.variants);
-          final fileName =
-              '${StringUtils.toSnakeCase(componentName)}_variant.dart';
-          final filePath =
-              context.join(outputDir, 'generated', 'variants', fileName);
-
-          await fileSystem.writeFile(filePath, enumCode);
-          generatedFiles.add('generated/variants/$fileName');
-          logger.success('Generated enum: generated/variants/$fileName');
-        } catch (e) {
-          warnings
-              .add('Could not generate enum for ${component.className}: $e');
-        }
-      }
-    }
-
-    // Copy design system files (modular structure)
-    if (designSystemDir != null) {
-      // 1. Create design_system directory
-      await fileSystem
-          .createDirectory(context.join(outputDir, 'design_system'));
-      await fileSystem
-          .createDirectory(context.join(outputDir, 'design_system', 'styles'));
-
-      // Core design system files (Source: design_system/ -> Dest: design_system/)
-      final designSystemFiles = [
-        'design_system.dart',
-        'app_theme.dart',
-        'design_style.dart',
-        'variants.dart',
-      ];
-
-      for (final file in designSystemFiles) {
-        try {
-          final srcPath = context.join(designSystemDir, file);
-          if (await fileSystem.exists(srcPath)) {
-            final destPath = context.join(outputDir, 'design_system', file);
-            await fileSystem.copyFile(srcPath, destPath);
-            generatedFiles.add('design_system/$file');
-            logger.success('Copied: design_system/$file');
-          }
-        } catch (e) {
-          warnings.add('Could not copy $file: $e');
-        }
-      }
-
-      // Style implementation files (Source: design_system/styles/ -> Dest: design_system/styles/)
-      // Style implementation files
-      final styleFiles = [
-        'material_style.dart',
-        'cupertino_style.dart',
-        'neo_style.dart',
-      ];
-
-      for (final file in styleFiles) {
-        try {
-          final srcPath = context.join(designSystemDir, 'styles', file);
-          if (await fileSystem.exists(srcPath)) {
-            final destPath =
-                context.join(outputDir, 'design_system', 'styles', file);
-            await fileSystem.copyFile(srcPath, destPath);
-            generatedFiles.add('design_system/styles/$file');
-            logger.success('Copied: design_system/styles/$file');
-          }
-        } catch (e) {
-          warnings.add('Could not copy $file: $e');
-        }
-      }
-
-      // Copy components recursively (Source: design_system/components/ -> Dest: design_system/components/)
-      // Uses dart:io Directory for recursion as FileSystem abstraction doesn't support it easily
-      try {
-        final componentsDir =
-            Directory(context.join(designSystemDir, 'components'));
-        if (await componentsDir.exists()) {
-          final destComponentsDir =
-              context.join(outputDir, 'design_system', 'components');
-          await fileSystem.createDirectory(destComponentsDir);
-
-          await for (final entity
-              in componentsDir.list(recursive: true, followLinks: false)) {
-            if (entity is File) {
-              // Normalize path to posix
-              final relPath = p
-                  .relative(entity.path, from: componentsDir.path)
-                  .replaceAll(p.separator, '/');
-              final destPath = context.join(destComponentsDir, relPath);
-
-              // Create parent directory if needed
-              final parentDir = context.dirname(destPath);
-              await fileSystem.createDirectory(parentDir);
-
-              await fileSystem.copyFile(entity.path, destPath);
-              generatedFiles.add('design_system/components/$relPath');
-              logger.success('Copied: design_system/components/$relPath');
-            }
-          }
-        }
-      } catch (e) {
-        warnings.add('Failed to copy components directory: $e');
-      }
-
-      // HANDLE APP ICONS (Generate or Copy)
-      try {
-        final registryParser = RegistryParser(logger: logger);
-        final registryDefs = await registryParser.parseDirectory(metaDirectory);
-
-        // Separate icon and image registries
-        final iconRegistries =
-            registryDefs.where((r) => r.type == RegistryType.icon).toList();
-        final imageRegistries =
-            registryDefs.where((r) => r.type == RegistryType.image).toList();
-
-        // Generate AppIcons if icon registry exists
-        if (iconRegistries.isNotEmpty) {
-          final iconGen = IconRegistryGenerator();
-          final lib = iconGen.build(iconRegistries.first);
-          final emitter = DartEmitter(
-              allocator: Allocator.simplePrefixing(), orderDirectives: true);
-          final content = lib.accept(emitter).toString();
-
-          await fileSystem.writeFile(
-            context.join(outputDir, 'design_system', 'app_icons.dart'),
-            DartFormatter(languageVersion: DartFormatter.latestLanguageVersion)
-                .format(content),
-          );
-          generatedFiles.add('design_system/app_icons.dart');
-          logger.success('Generated: design_system/app_icons.dart');
-        } else {
-          // Fallback: Copy if exists in source
-          final srcPath = context.join(designSystemDir, 'app_icons.dart');
-          if (await fileSystem.exists(srcPath)) {
-            final destPath =
-                context.join(outputDir, 'design_system', 'app_icons.dart');
-            await fileSystem.copyFile(srcPath, destPath);
-            generatedFiles.add('design_system/app_icons.dart');
-            logger.success('Copied: design_system/app_icons.dart (Fallback)');
-          }
-        }
-
-        // Generate AppImages if image registry exists
-        if (imageRegistries.isNotEmpty) {
-          final imageGen = ImageRegistryGenerator();
-          final lib = imageGen.build(imageRegistries.first);
-          final emitter = DartEmitter(
-              allocator: Allocator.simplePrefixing(), orderDirectives: true);
-          final content = lib.accept(emitter).toString();
-
-          await fileSystem.writeFile(
-            context.join(outputDir, 'design_system', 'app_images.dart'),
-            DartFormatter(languageVersion: DartFormatter.latestLanguageVersion)
-                .format(content),
-          );
-          generatedFiles.add('design_system/app_images.dart');
-          logger.success('Generated: design_system/app_images.dart');
-        } else {
-          // Fallback: Copy if exists in source
-          final srcPath = context.join(designSystemDir, 'app_images.dart');
-          if (await fileSystem.exists(srcPath)) {
-            final destPath =
-                context.join(outputDir, 'design_system', 'app_images.dart');
-            await fileSystem.copyFile(srcPath, destPath);
-            generatedFiles.add('design_system/app_images.dart');
-            logger.success('Copied: design_system/app_images.dart (Fallback)');
-          }
-        }
-      } catch (e) {
-        warnings.add('Failed to handle AppIcons: $e');
-      }
-
-      // Copy token files (Source: design_system/tokens/ -> Dest: design_system/tokens/)
-      await fileSystem
-          .createDirectory(context.join(outputDir, 'design_system', 'tokens'));
-
-      // Copy foundation token directory (Critical for centralized token system)
-      // Priority: 1) Project's custom tokens, 2) Package bundled tokens
-      try {
-        var foundationTokenDir =
-            Directory(context.join(designSystemDir, 'tokens', 'foundation'));
-
-        // Fallback to package bundled design_system if project dir doesn't exist
-        if (!await foundationTokenDir.exists()) {
-          final packageFoundationDir = _getPackageBundledFoundationDir();
-          if (await packageFoundationDir.exists()) {
-            foundationTokenDir = packageFoundationDir;
-            logger.detail(
-                'Using package bundled foundation tokens from: ${foundationTokenDir.path}');
-          }
-        }
-
-        if (await foundationTokenDir.exists()) {
-          final destFoundationDir =
-              context.join(outputDir, 'design_system', 'tokens', 'foundation');
-          await fileSystem.createDirectory(destFoundationDir);
-
-          // Copy all foundation token files
-          await for (final entity in foundationTokenDir.list(
-              recursive: false, followLinks: false)) {
-            if (entity is File && entity.path.endsWith('.dart')) {
-              // Normalize path separators for cross-platform compatibility
-              final normalizedPath = entity.path.replaceAll('\\', '/');
-              final fileName = context.basename(normalizedPath);
-              final destPath = context.join(destFoundationDir, fileName);
-
-              await fileSystem.copyFile(normalizedPath, destPath);
-              generatedFiles.add('design_system/tokens/foundation/$fileName');
-              logger
-                  .success('Copied: design_system/tokens/foundation/$fileName');
-            }
-          }
-        } else {
-          warnings.add(
-              'Foundation token directory not found in project or package');
-        }
-      } catch (e) {
-        warnings.add('Failed to copy foundation tokens: $e');
-      }
-
-      // Generate token files for components (using TokenGenerator)
-      final tokenGenerator = TokenGenerator();
-      for (final component in components) {
-        try {
-          final baseName = component.explicitName ??
-              component.className.replaceAll('Meta', '');
-          final cleanName =
-              baseName.startsWith('App') ? baseName.substring(3) : baseName;
-          final tokenFileName =
-              '${StringUtils.toSnakeCase(cleanName)}_tokens.dart';
-          final tokenPath = context.join(
-            designSystemDir,
-            'tokens',
-            tokenFileName,
-          );
-
-          // Check if token file already exists (don't overwrite manual files)
-          if (!await fileSystem.exists(tokenPath)) {
-            logger.info('Generating tokens: $tokenFileName');
-
-            // Generate token code (always generates, even for empty scaffold)
-            final tokenCode = tokenGenerator.generate(component);
-            // Write to design system directory
-            await fileSystem.writeFile(tokenPath, tokenCode);
-            logger.success('Generated: tokens/$tokenFileName');
-          } else {
-            logger
-                .detail('Token file exists: $tokenFileName (not regenerating)');
-          }
-        } catch (e) {
-          logger
-              .warn('Failed to generate tokens for ${component.className}: $e');
-          warnings
-              .add('Failed to generate tokens for ${component.className}: $e');
-        }
-      }
-
-      // Explicitly copy shared tokens
-      try {
-        final iconTokenPath =
-            context.join(designSystemDir, 'tokens', 'icon_token.dart');
-        if (await fileSystem.exists(iconTokenPath)) {
-          final destPath = context.join(
-              outputDir, 'design_system', 'tokens', 'icon_token.dart');
-          await fileSystem.copyFile(iconTokenPath, destPath);
-          generatedFiles.add('design_system/tokens/icon_token.dart');
-          logger.success('Copied: design_system/tokens/icon_token.dart');
-        }
-      } catch (e) {
-        warnings.add('Could not copy icon_token.dart: $e');
-      }
-
-      for (final token in tokens) {
-        try {
-          final componentName = token.componentName.toLowerCase();
-          final srcPath = context.join(
-              designSystemDir, 'tokens', '${componentName}_tokens.dart');
-          final destPath = context.join(
-            outputDir,
-            'design_system',
-            'tokens',
-            '${componentName}_tokens.dart',
-          );
-
-          if (await fileSystem.exists(srcPath)) {
-            await fileSystem.copyFile(srcPath, destPath);
-            generatedFiles
-                .add('design_system/tokens/${componentName}_tokens.dart');
-            logger.success(
-                'Copied: design_system/tokens/${componentName}_tokens.dart');
-          }
-        } catch (e) {
-          warnings.add('Could not copy token file for ${token.componentName}');
-        }
-      }
-    }
-
-    // Generate dynamic design system files (DesignStyle, Styles, Renderer Stubs)
-    // This runs AFTER copying so we can overwrite/augment the static files
-    if (designSystemDir != null) {
-      final designGen = DesignSystemGenerator();
-      final standardComponents = {
-        'Button',
-        'Input',
-        'Text',
-        'Checkbox',
-        'Toggle',
-        'Slider',
-        'Radio'
-      };
-
-      try {
-        // 1. Generate Main Library (design_system.dart)
-        final mainLibCode = designGen.generateMainLibrary(components);
-        await fileSystem.writeFile(
-            context.join(outputDir, 'design_system', 'design_system.dart'),
-            mainLibCode);
-        generatedFiles.add('design_system/design_system.dart');
-        logger.success('Generated: design_system/design_system.dart');
-
-        // 2. Generate Abstract DesignStyle
-        final designStyleCode = designGen.generateDesignStyle(components);
-        await fileSystem.writeFile(
-            context.join(outputDir, 'design_system', 'design_style.dart'),
-            designStyleCode);
-        generatedFiles.add('design_system/design_style.dart');
-        logger.success('Generated: design_system/design_style.dart');
-
-        // 3. Generate Concrete Styles (Material, Cupertino, Neo)
-        final styles = ['Material', 'Cupertino', 'Neo'];
-        for (final style in styles) {
-          final styleCode = designGen.generateStyleClass(style, components);
-          final fileName = '${style.toLowerCase()}_style.dart';
-          await fileSystem.writeFile(
-              context.join(outputDir, 'design_system', 'styles', fileName),
-              styleCode);
-          generatedFiles.add('design_system/styles/$fileName');
-          logger.success('Generated: design_system/styles/$fileName');
-        }
-
-        // 4. Generate Renderer Stubs for Custom Components
-        for (final component in components) {
-          final baseName = component.explicitName ??
-              component.className.replaceAll('Meta', '');
-          final cleanName =
-              baseName.startsWith('App') ? baseName.substring(3) : baseName;
-
-          if (standardComponents.contains(cleanName)) continue;
-
-          final folderName = StringUtils.toSnakeCase(cleanName);
-          final componentDir = context.join(
-              outputDir, 'design_system', 'components', folderName);
-          await fileSystem.createDirectory(componentDir);
-
-          for (final style in styles) {
-            final stubCode = designGen.generateRendererStub(component, style);
-            final fileName = '${style.toLowerCase()}_renderer.dart';
-            await fileSystem.writeFile(
-                context.join(componentDir, fileName), stubCode);
-            generatedFiles
-                .add('design_system/components/$folderName/$fileName');
-            logger.success(
-                'Generated Stub: design_system/components/$folderName/$fileName');
-          }
-        }
-      } catch (e) {
+        // Generate registries
+        final registryFiles = await designSystemService.generateRegistries(
+          metaDirectoryPath: metaDirectoryPath,
+          outputDir: outputDir,
+          designSystemDir: designSystemDir,
+        );
+        generatedFiles.addAll(registryFiles);
+      } catch (e, stackTrace) {
         logger.err('Failed to generate design system files: $e');
+        logger.detail('Stack trace: $stackTrace');
         errors.add('Failed to generate design system files: $e');
       }
     }
 
     // Generate barrel file
-    await _generateBarrelFile(outputDir, generatedFiles);
+    await projectRepo.saveBarrelFile(
+      outputDir: outputDir,
+      files: generatedFiles,
+    );
     generatedFiles.add('index.dart');
 
     // Save build cache
-    if (cacheManager != null && cacheUpdates.isNotEmpty) {
-      cache = await cacheManager.updateCache(cache, cacheUpdates);
-      await cacheManager.saveCache(cache);
-      logger.detail('Saved build cache with ${cache.entries.length} entries');
+    if (enableCache && !forceRebuild) {
+      await cacheRepo.save();
+      logger.detail('Saved build cache with ${cacheRepo.entryCount} entries');
     }
 
     stopwatch.stop();
@@ -619,86 +230,5 @@ class BuildAllUseCase {
       warnings: warnings,
       errors: errors,
     );
-  }
-
-  Future<void> _generateBarrelFile(
-    String outputDir,
-    List<String> files,
-  ) async {
-    // Exclude part files that are already exported by design_system.dart
-    // Also exclude screens since they're navigated to, not imported
-    final exports = files
-        .where((f) => f.endsWith('.dart') && !f.endsWith('index.dart'))
-        .where((f) {
-          // Only export design_system.dart from the design_system directory
-          if (f.startsWith('design_system/')) {
-            return f == 'design_system/design_system.dart';
-          }
-          // Don't export screens - they're navigated to, not imported
-          if (f.startsWith('screens/')) {
-            return false;
-          }
-          return true;
-        })
-        .map((f) => "export '$f';")
-        .join('\n');
-
-    final content = '''
-// ============================================
-// GENERATED BY SYNTAXIFY v0.1.0-alpha.10
-// DO NOT MODIFY - Regenerated on build
-// Barrel file exporting all generated code
-// ============================================
-
-$exports
-''';
-
-    await fileSystem.writeFile(
-      p.posix.join(outputDir, 'index.dart'),
-      content,
-    );
-  }
-
-  /// Get the package's bundled foundation token directory.
-  ///
-  /// Uses Platform.script to find the syntaxify package root, then
-  /// navigates to design_system/tokens/foundation/.
-  ///
-  /// This is used as a fallback when the project doesn't have
-  /// custom foundation tokens yet.
-  Directory _getPackageBundledFoundationDir() {
-    // Platform.script gives us the path to the running script
-    // For a pub package, this will be in .dart_tool/pub/bin/syntaxify/...
-    // We need to find the package root (where design_system/ lives)
-    final scriptPath = Platform.script.toFilePath().replaceAll('\\', '/');
-
-    // Strategy 1: Check if we're in a development environment (monorepo)
-    // Look for 'generator/design_system' in the path hierarchy
-    var current = scriptPath;
-    for (var i = 0; i < 20; i++) {
-      final parent = p.posix.dirname(current);
-      if (parent == current) break;
-
-      // Check if this directory contains design_system/tokens/foundation
-      final foundationDir = Directory(p.posix
-          .join(parent, 'generator', 'design_system', 'tokens', 'foundation'));
-      if (foundationDir.existsSync()) {
-        return foundationDir;
-      }
-
-      // Also check direct design_system (for when run from generator/)
-      final directFoundationDir = Directory(
-          p.posix.join(parent, 'design_system', 'tokens', 'foundation'));
-      if (directFoundationDir.existsSync()) {
-        return directFoundationDir;
-      }
-
-      current = parent;
-    }
-
-    // Strategy 2: Return expected location (may not exist)
-    // This handles the case when running from pub global activate
-    return Directory(p.posix.join(p.posix.dirname(p.posix.dirname(scriptPath)),
-        'design_system', 'tokens', 'foundation'));
   }
 }
