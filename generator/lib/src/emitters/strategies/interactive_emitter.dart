@@ -135,13 +135,12 @@ class InteractiveEmitStrategy implements NodeEmitStrategy {
   }
 
   Expression _emitIconButton(IconButtonNode node, EmitContext context) {
-    return refer('IconButton').newInstance([], {
-      'icon':
-          refer('Icon').newInstance([refer('AppIcons').property(node.icon)]),
+    return refer('AppIconButton').newInstance([], {
+      'icon': literalString(node.icon),
       'onPressed': node.onPressed != null
           ? refer(context.variableMap[node.onPressed!] ?? node.onPressed!)
           : literalNull,
-      if (node.size != null) 'iconSize': literalNum(node.size!),
+      if (node.size != null) 'size': literalNum(node.size!),
       if (node.color != null) 'color': _emitColorSemantic(node.color!),
     });
   }

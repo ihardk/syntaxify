@@ -199,4 +199,18 @@ sealed class DesignStyle {
     Color? backgroundColor,
     double strokeWidth = 4.0,
   });
+
+  /// Get tokens for an icon button variant
+  IconButtonTokens iconButtonTokens(IconButtonVariant variant);
+
+  /// Render an icon button widget
+  Widget renderIconButton({
+    required String icon,
+    VoidCallback? onPressed,
+    IconButtonVariant variant = IconButtonVariant.standard,
+    double size = 24.0,
+    Color? color,
+    bool isDisabled = false,
+    String? tooltip,
+  });
 }
