@@ -1,0 +1,705 @@
+# Text Component Build Execution Trace
+
+Complete step-by-step execution trace of `syntaxify build` for Text component.
+
+---
+
+## Command: `syntaxify build`
+
+**Working directory:** `/generator/example/`
+**Meta source:** `meta/text.meta.dart`
+**Output:** `lib/syntaxify/`
+
+---
+
+## Execution Flow
+
+### 1️⃣ Entry Point: `bin/syntaxify.dart:main()`
+
+```dart
+CommandRunner('syntaxify', ...)
+  ..addCommand(BuildCommand(logger: logger))
+
+await runner.run(['build'])  // User runs: syntaxify build
+```
+
+**→ Delegates to:** `BuildCommand.run()`
+
+---
+
+### 2️⃣ CLI: `lib/src/cli/build_command.dart:run()`
+
+```dart
+// Lines 123-126: Resolve paths
+final metaDir = 'meta'
+final outputDir = 'lib/syntaxify'
+final tokensDir = 'lib/syntaxify/design_system'
+final designSystemDir = '/path/to/generator/design_system'
+
+// Line 191: Create generator
+final generator = SyntaxGenerator(
+  metaDirectory: 'meta',
+  tokensDirectory: 'lib/syntaxify/design_system',
+  designSystemDirectory: '/generator/design_system',
+  outputDirectory: 'lib/syntaxify',
+  logger: logger,
+)
+
+// Line 199: Execute build
+final result = await generator.build()
+```
+
+**→ Delegates to:** `SyntaxGenerator.build()`
+
+---
+
+### 3️⃣ Generator: `lib/src/generator/syntax_generator.dart:build()`
+
+```dart
+// Parse all meta files
+final components = await componentParser.parseDirectory(Directory('meta'));
+// Returns: [ButtonMeta, TextMeta, CardMeta, ...]
+
+final screens = await screenParser.parseDirectory(Directory('meta'));
+// Returns: [LoginScreen, HomeScreen, ...]
+
+// Execute build pipeline
+final result = await buildAllUseCase.execute(
+  components: components,  // Including TextMeta
+  screens: screens,
+  tokens: tokens,
+  outputDir: 'lib/syntaxify',
+  metaDirectoryPath: 'meta',
+  designSystemDir: '/generator/design_system',
+)
+```
+
+**→ Delegates to:** `BuildAllUseCase.execute()`
+
+---
+
+### 4️⃣ Build Pipeline: `lib/src/use_cases/build_all.dart:execute()`
+
+This is the **main orchestrator**. Let me trace the Text component through each phase:
+
+#### Phase 1: Generate Components (Lines 138-153)
+
+```dart
+final componentResults = await componentService.generateAllComponents(
+  components: components,  // [ButtonMeta, TextMeta, ...]
+  tokens: tokens,
+  outputDir: 'lib/syntaxify',
+  enableCache: true,
+)
+```
+
+**For TextMeta:**
+
+```dart
+// componentService.generateComponent()
+_generateComponent.execute(
+  component: TextMeta,
+  outputDir: 'lib/syntaxify/generated',
+  tokens: null,
+)
+```
+
+**Generates:**
+- ✅ `lib/syntaxify/generated/components/app_text.dart`
+
+**Content:**
+```dart
+class AppText extends StatelessWidget {
+  const AppText({
+    required this.text,
+    this.variant,
+    this.align,
+    this.maxLines,
+    this.overflow,
+  });
+
+  // 7 named constructors from variants array
+  const AppText.displayLarge({required this.text, ...})
+      : variant = TextVariant.displayLarge;
+
+  const AppText.headlineMedium({required this.text, ...})
+      : variant = TextVariant.headlineMedium;
+
+  // ... bodyLarge, bodyMedium, labelMedium, labelSmall
+
+  @override
+  Widget build(BuildContext context) {
+    return AppTheme.of(context).style.renderText(
+      text: text,
+      variant: variant,
+      align: align,
+      maxLines: maxLines,
+      overflow: overflow,
+    );
+  }
+}
+```
+
+---
+
+#### Phase 2: Generate Enum Variants (Lines 156-169)
+
+```dart
+final enumResults = await componentService.generateEnumVariants(
+  components: components,
+  outputDir: 'lib/syntaxify',
+)
+```
+
+**Code execution in `component_generation_service.dart:127-170`:**
+
+```dart
+for (final component in components) {
+  if (component.variants.isEmpty) continue;
+
+  // For TextMeta:
+  // component.variants = ['displayLarge', 'headlineMedium', 'titleMedium',
+  //                       'bodyLarge', 'bodyMedium', 'labelMedium', 'labelSmall']
+
+  final componentName = component.className.replaceAll('Meta', '');
+  // componentName = 'Text'
+
+  final enumCode = _enumGenerator.generate(
+    'Text',
+    ['displayLarge', 'headlineMedium', 'titleMedium', 'bodyLarge',
+     'bodyMedium', 'labelMedium', 'labelSmall'],
+  );
+
+  final fileName = 'text_variant.dart';
+
+  await _projectRepo.saveEnumVariant(
+    fileName: 'text_variant.dart',
+    code: enumCode,
+    outputDir: 'lib/syntaxify',
+  );
+}
+```
+
+**EnumGenerator.generate() execution:**
+
+```dart
+// lib/src/generators/enum_generator.dart:21-49
+String generate('Text', ['displayLarge', ...]) {
+  final enumName = 'TextVariant';
+
+  final enumSpec = Enum((b) => b
+    ..name = 'TextVariant'
+    ..docs.add('/// Variants for Text component.')
+    ..values.addAll([
+      EnumValue((vb) => vb..name = 'displayLarge'),
+      EnumValue((vb) => vb..name = 'headlineMedium'),
+      // ... all 7 variants
+    ]));
+
+  return formatter.format('''
+    // GENERATED CODE - DO NOT MODIFY BY HAND
+    // Generated by Syntaxify EnumGenerator
+
+    enum TextVariant {
+      displayLarge,
+      headlineMedium,
+      titleMedium,
+      bodyLarge,
+      bodyMedium,
+      labelMedium,
+      labelSmall,
+    }
+  ''');
+}
+```
+
+**ProjectRepository.saveEnumVariant() execution:**
+
+```dart
+// lib/src/infrastructure/repositories/project_repository.dart:151-167
+Future<void> saveEnumVariant({
+  required String fileName,     // 'text_variant.dart'
+  required String code,          // enum code from above
+  required String outputDir,     // 'lib/syntaxify'
+}) async {
+  final dirPath = _pathContext.join(
+    'lib/syntaxify',
+    'design_system',     // ❌ BUG: Should be 'generated'
+    'variants'
+  );
+  // dirPath = 'lib/syntaxify/design_system/variants'
+  // WRONG! Should be: 'lib/syntaxify/generated/variants'
+
+  await _fileSystem.createDirectory(dirPath);
+
+  final filePath = _pathContext.join(dirPath, 'text_variant.dart');
+  // filePath = 'lib/syntaxify/design_system/variants/text_variant.dart'
+
+  await _fileSystem.writeFile(filePath, code);
+}
+```
+
+**🐛 BUG DISCOVERED:**
+- **Currently saves to:** `lib/syntaxify/design_system/variants/text_variant.dart`
+- **Should save to:** `lib/syntaxify/generated/variants/text_variant.dart`
+
+**Actual location in example app:**
+```bash
+$ ls generator/example/lib/syntaxify/generated/variants/
+text_variant.dart  # ✅ Here (from old build before bug)
+```
+
+---
+
+#### Phase 3: Copy Design System Files (Lines 175-178)
+
+```dart
+final copiedFiles = await designSystemService.copyDesignSystemFiles(
+  sourceDir: '/generator/design_system',
+  outputDir: 'lib/syntaxify',
+)
+```
+
+**Copies from template to user project:**
+
+| Source (Template) | Destination (User Project) | Notes |
+|-------------------|----------------------------|-------|
+| `/generator/design_system/components/text/material_renderer.dart` | `lib/syntaxify/design_system/components/text/material_renderer.dart` | Full implementation |
+| `/generator/design_system/components/text/cupertino_renderer.dart` | `lib/syntaxify/design_system/components/text/cupertino_renderer.dart` | Full implementation |
+| `/generator/design_system/components/text/neo_renderer.dart` | `lib/syntaxify/design_system/components/text/neo_renderer.dart` | Full implementation |
+| `/generator/design_system/design_system.dart` | `lib/syntaxify/design_system/design_system.dart` | Core library |
+| `/generator/design_system/app_theme.dart` | `lib/syntaxify/design_system/app_theme.dart` | Theme provider |
+| `/generator/design_system/design_style.dart` | `lib/syntaxify/design_system/design_style.dart` | Base sealed class |
+| `/generator/design_system/styles/*.dart` | `lib/syntaxify/design_system/styles/*.dart` | Material/Cupertino/Neo |
+
+**Key files for Text component:**
+
+```dart
+// Copied: components/text/material_renderer.dart
+part of '../../design_system.dart';
+
+mixin MaterialTextRenderer on DesignStyle {
+  @override
+  TextTokens textTokens(TextVariant variant) {
+    return TextTokens.fromFoundation(foundation, variant: variant);
+  }
+
+  @override
+  Widget renderText({required String text, TextVariant? variant, ...}) {
+    final effectiveVariant = variant ?? TextVariant.bodyMedium;
+    final tokens = textTokens(effectiveVariant);
+
+    return Text(
+      text,
+      style: tokens.style.copyWith(
+        color: tokens.color,
+        letterSpacing: tokens.letterSpacing,
+      ),
+      textAlign: align,
+      maxLines: maxLines,
+      overflow: overflow,
+    );
+  }
+}
+```
+
+---
+
+#### Phase 4: Generate Design System Code (Lines 182-186)
+
+```dart
+final designSystemFiles = await designSystemService.generateDesignSystemCode(
+  components: components,  // All components including Text
+  outputDir: 'lib/syntaxify',
+)
+```
+
+**Generates 4 files:**
+
+1. **`design_system.dart`** - Main library with imports
+
+```dart
+library design_system;
+
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
+// Foundation tokens
+import 'tokens/foundation/foundation_tokens.dart';
+
+// Component tokens
+import 'tokens/text_tokens.dart';
+import 'tokens/button_tokens.dart';
+// ... all components
+
+// Import variants
+import 'variants/text_variant.dart';  // ❌ WRONG PATH
+// Should be: import '../generated/variants/text_variant.dart';
+
+// Part files
+part 'app_theme.dart';
+part 'design_style.dart';
+part 'components/text/material_renderer.dart';
+part 'components/text/cupertino_renderer.dart';
+part 'components/text/neo_renderer.dart';
+// ... all renderers
+```
+
+**🐛 SECOND BUG:** Import path is wrong (expects variants in `design_system/variants/`)
+
+2. **`design_style.dart`** - Sealed class with render methods
+
+```dart
+part of 'design_system.dart';
+
+sealed class DesignStyle {
+  const DesignStyle();
+
+  String get name => runtimeType.toString().replaceAll('Style', '').toLowerCase();
+
+  FoundationTokens get foundation;
+
+  // Token accessor for Text (takes variant parameter)
+  TextTokens textTokens(TextVariant variant);
+
+  // Render method for Text
+  Widget renderText({
+    required String text,
+    TextVariant? variant,
+    TextAlign? align,
+    int? maxLines,
+    TextOverflow? overflow,
+  });
+
+  // ... methods for all components
+}
+```
+
+3. **`styles/material_style.dart`** - Material implementation
+
+```dart
+part of '../design_system.dart';
+
+class MaterialStyle extends DesignStyle
+    with
+        MaterialTextRenderer,
+        MaterialButtonRenderer,
+        MaterialCardRenderer,
+        // ... all Material renderers
+{
+  const MaterialStyle();
+
+  @override
+  FoundationTokens get foundation => materialFoundation;
+}
+```
+
+4. **`styles/cupertino_style.dart`** - Cupertino implementation
+5. **`styles/neo_style.dart`** - Neo implementation
+
+---
+
+#### Phase 5: Handle Tokens (Lines 190-195)
+
+```dart
+final tokenFiles = await designSystemService.handleTokens(
+  components: components,
+  designSystemDir: '/generator/design_system',
+  outputDir: 'lib/syntaxify',
+)
+```
+
+**Copies token files with import path updates:**
+
+| Source (Template) | Destination | Import Change |
+|-------------------|-------------|---------------|
+| `/generator/design_system/tokens/text_tokens.dart` | `lib/syntaxify/design_system/tokens/text_tokens.dart` | `../variants/` → `../../generated/variants/` |
+| `/generator/design_system/tokens/foundation/foundation_tokens.dart` | `lib/syntaxify/design_system/tokens/foundation/foundation_tokens.dart` | No change |
+| `/generator/design_system/tokens/foundation/material_foundation.dart` | `lib/syntaxify/design_system/tokens/foundation/material_foundation.dart` | No change |
+
+**Key file: `text_tokens.dart` (after copy with path fix)**
+
+```dart
+import 'package:flutter/material.dart';
+import 'foundation/foundation_tokens.dart';
+import '../../generated/variants/text_variant.dart';  // ✅ UPDATED during copy
+
+class TextTokens {
+  final TextStyle style;
+  final Color color;
+  final double fontSize;
+  final FontWeight fontWeight;
+  final double letterSpacing;
+  final double? height;
+
+  const TextTokens({...});
+
+  /// Create TextTokens from foundation tokens
+  factory TextTokens.fromFoundation(
+    FoundationTokens foundation, {
+    required TextVariant variant,
+  }) {
+    final TextStyle baseStyle;
+    switch (variant) {
+      case TextVariant.displayLarge:
+        baseStyle = foundation.displayLarge;  // ← Foundation token!
+        break;
+      case TextVariant.headlineMedium:
+        baseStyle = foundation.headlineMedium;
+        break;
+      case TextVariant.titleMedium:
+        baseStyle = foundation.titleMedium;
+        break;
+      case TextVariant.bodyMedium:
+        baseStyle = foundation.bodyMedium;
+        break;
+      case TextVariant.bodyLarge:
+        baseStyle = foundation.bodyLarge;
+        break;
+      case TextVariant.labelMedium:
+        baseStyle = foundation.labelMedium;
+        break;
+      case TextVariant.labelSmall:
+        baseStyle = foundation.labelSmall;
+        break;
+    }
+
+    return TextTokens(
+      style: baseStyle.copyWith(color: foundation.colorOnSurface),
+      color: foundation.colorOnSurface,
+      fontSize: baseStyle.fontSize ?? 14,
+      fontWeight: baseStyle.fontWeight ?? FontWeight.normal,
+      letterSpacing: baseStyle.letterSpacing ?? 0.0,
+      height: baseStyle.height,
+    );
+  }
+}
+```
+
+**Foundation tokens (Material):**
+
+```dart
+// tokens/foundation/material_foundation.dart
+final materialFoundation = FoundationTokens(
+  // Colors
+  colorPrimary: Color(0xFF6750A4),
+  colorOnSurface: Color(0xFF1C1B1F),
+  // ...
+
+  // Typography (Material Design 3)
+  displayLarge: TextStyle(fontSize: 57, fontWeight: FontWeight.w400),
+  headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.w400),
+  titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+  bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+  bodyMedium: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+  labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+  labelSmall: TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
+  // ...
+);
+```
+
+---
+
+## Final File Structure
+
+After `syntaxify build` completes:
+
+```
+generator/example/lib/syntaxify/
+├── generated/                                    # AUTO-GENERATED
+│   ├── components/
+│   │   └── app_text.dart                        # ✅ Generated wrapper component
+│   └── variants/
+│       └── text_variant.dart                     # ✅ Generated enum (SHOULD BE HERE)
+│                                                 # ❌ BUG: Currently saves to design_system/variants/
+├── design_system/                                # COPIED from templates
+│   ├── design_system.dart                        # Generated library file
+│   ├── design_style.dart                         # Generated sealed class
+│   ├── app_theme.dart                            # Copied
+│   ├── tokens/
+│   │   ├── text_tokens.dart                      # Copied (import updated)
+│   │   └── foundation/
+│   │       ├── foundation_tokens.dart            # Copied
+│   │       ├── material_foundation.dart          # Copied
+│   │       ├── cupertino_foundation.dart         # Copied
+│   │       └── neo_foundation.dart               # Copied
+│   ├── components/text/
+│   │   ├── material_renderer.dart                # Copied (full implementation)
+│   │   ├── cupertino_renderer.dart               # Copied (full implementation)
+│   │   └── neo_renderer.dart                     # Copied (full implementation)
+│   └── styles/
+│       ├── material_style.dart                   # Generated (mixes in renderers)
+│       ├── cupertino_style.dart                  # Generated
+│       └── neo_style.dart                        # Generated
+└── index.dart                                    # Generated barrel file
+```
+
+---
+
+## Runtime Execution Flow
+
+When user writes:
+```dart
+AppText.bodyMedium(text: 'Hello World')
+```
+
+**Execution trace:**
+
+```
+1. AppText.bodyMedium() constructor
+   ↓ Sets variant = TextVariant.bodyMedium
+
+2. AppText.build(context)
+   ↓
+   AppTheme.of(context).style
+   ↓ Returns MaterialStyle (or CupertinoStyle/NeoStyle based on theme)
+
+3. MaterialStyle.renderText(
+     text: 'Hello World',
+     variant: TextVariant.bodyMedium,
+     align: null,
+     maxLines: null,
+     overflow: null,
+   )
+   ↓ (MaterialTextRenderer mixin)
+
+4. final effectiveVariant = TextVariant.bodyMedium
+   final tokens = textTokens(TextVariant.bodyMedium)
+   ↓
+
+5. MaterialTextRenderer.textTokens(TextVariant.bodyMedium)
+   ↓
+   TextTokens.fromFoundation(foundation, variant: bodyMedium)
+   ↓
+
+6. switch (TextVariant.bodyMedium) {
+     case TextVariant.bodyMedium:
+       baseStyle = foundation.bodyMedium;  // TextStyle(fontSize: 14, ...)
+   }
+   ↓
+
+7. foundation.bodyMedium
+   ↓ (MaterialStyle.foundation)
+   materialFoundation.bodyMedium
+   ↓
+   TextStyle(fontSize: 14, fontWeight: FontWeight.w400)
+   ↓
+
+8. return TextTokens(
+     style: TextStyle(fontSize: 14, color: #1C1B1F),
+     color: #1C1B1F,
+     fontSize: 14,
+     fontWeight: FontWeight.w400,
+     letterSpacing: 0.0,
+   )
+   ↓
+
+9. Text(
+     'Hello World',
+     style: TextStyle(fontSize: 14, color: #1C1B1F, ...),
+   )
+```
+
+---
+
+## Summary: What Comes From Where
+
+### FROM Generator Package (Templates - Copied)
+
+1. ✅ **Renderer implementations**
+   - `components/text/material_renderer.dart`
+   - `components/text/cupertino_renderer.dart`
+   - `components/text/neo_renderer.dart`
+
+2. ✅ **Token files**
+   - `tokens/text_tokens.dart` (import path updated)
+   - `tokens/foundation/*.dart`
+
+3. ✅ **Design system structure**
+   - `app_theme.dart`
+   - Core library files
+
+### GENERATED (Not in generator package)
+
+1. ✅ **Variant enums**
+   - `generated/variants/text_variant.dart` (from meta `variants: []` array)
+
+2. ✅ **Component wrappers**
+   - `generated/components/app_text.dart` (from meta properties)
+
+3. ✅ **Integration files**
+   - `design_system.dart` (library with imports)
+   - `design_style.dart` (sealed class with render methods)
+   - `styles/*.dart` (style classes with mixin composition)
+
+### Foundation Token Flow
+
+```
+Meta file variants: ['displayLarge', 'bodyMedium', ...]
+  ↓
+Variant enum: TextVariant.bodyMedium
+  ↓
+Token accessor: textTokens(TextVariant.bodyMedium)
+  ↓
+Token factory: TextTokens.fromFoundation(foundation, variant: bodyMedium)
+  ↓
+Foundation lookup: foundation.bodyMedium → TextStyle(fontSize: 14, ...)
+  ↓
+Component tokens: TextTokens(style: ..., color: ..., fontSize: 14, ...)
+  ↓
+Renderer: Uses tokens to create Text widget
+```
+
+---
+
+## Bugs Found
+
+### Bug #1: Variant Save Path (CRITICAL)
+
+**File:** `lib/src/infrastructure/repositories/project_repository.dart:157`
+
+**Current (wrong):**
+```dart
+final dirPath = _pathContext.join(outputDir, 'design_system', 'variants');
+// Saves to: lib/syntaxify/design_system/variants/text_variant.dart
+```
+
+**Should be:**
+```dart
+final dirPath = _pathContext.join(outputDir, 'generated', 'variants');
+// Should save to: lib/syntaxify/generated/variants/text_variant.dart
+```
+
+**Impact:** Variants are saved to wrong location, breaking imports.
+
+### Bug #2: Design System Import Path (CRITICAL)
+
+**File:** `lib/src/generators/design_system_generator.dart:77`
+
+**Current (wrong):**
+```dart
+buffer.writeln("import 'variants/$fileName';");
+// Generates: import 'variants/text_variant.dart';
+```
+
+**Should be:**
+```dart
+buffer.writeln("import '../generated/variants/$fileName';");
+// Should generate: import '../generated/variants/text_variant.dart';
+```
+
+**Impact:** Generated design_system.dart has broken imports.
+
+---
+
+## Correct Architecture
+
+1. **Meta files** → Drive generation (source of truth)
+2. **Variants** → GENERATED to `generated/variants/` from meta `variants: []` array
+3. **Components** → GENERATED to `generated/components/` from meta properties
+4. **Tokens** → COPIED from templates (import paths updated to point to generated variants)
+5. **Renderers** → COPIED from templates (full implementations for standard components)
+6. **Foundation** → COPIED from templates (design system primitives)
+7. **Integration** → GENERATED (design_system.dart, design_style.dart, styles/*.dart)
+
+**Everything is driven by meta files. The compiler generates code, not copies it.**
