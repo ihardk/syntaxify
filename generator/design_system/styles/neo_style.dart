@@ -26,7 +26,8 @@ class NeoStyle extends DesignStyle
         NeoDividerRenderer,
         NeoImageRenderer,
         NeoProgressIndicatorRenderer,
-        NeoIconButtonRenderer {
+        NeoIconButtonRenderer,
+        NeoDropdownRenderer {
   const NeoStyle();
 
   @override

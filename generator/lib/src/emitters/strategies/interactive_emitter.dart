@@ -148,21 +148,20 @@ class InteractiveEmitStrategy implements NodeEmitStrategy {
   Expression _emitDropdown(DropdownNode node, EmitContext context) {
     final items = literalList(
       node.items
-          .map((item) => refer('DropdownMenuItem').newInstance([], {
+          .map((item) => refer('DropdownItem').newInstance([], {
                 'value': literalString(item),
-                'child': refer('Text').newInstance([literalString(item)]),
+                'label': literalString(item),
               }))
           .toList(),
     );
 
-    return refer('DropdownButton').newInstance([], {
+    return refer('AppDropdown').newInstance([], {
       'value': refer('_${node.binding}'),
       'items': items,
       'onChanged': node.onChanged != null
           ? refer(context.variableMap[node.onChanged!] ?? node.onChanged!)
           : refer('(value) => setState(() => _${node.binding} = value)'),
-      if (node.label != null)
-        'hint': refer('Text').newInstance([literalString(node.label!)]),
+      if (node.label != null) 'label': literalString(node.label!),
     });
   }
 

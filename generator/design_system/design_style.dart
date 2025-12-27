@@ -213,4 +213,19 @@ sealed class DesignStyle {
     bool isDisabled = false,
     String? tooltip,
   });
+
+  /// Get tokens for a dropdown variant
+  DropdownTokens dropdownTokens(DropdownVariant variant);
+
+  /// Render a dropdown widget
+  Widget renderDropdown<T>({
+    required T? value,
+    required List<DropdownItem<T>> items,
+    required ValueChanged<T?>? onChanged,
+    DropdownVariant variant = DropdownVariant.standard,
+    String? label,
+    String? hint,
+    bool enabled = true,
+    String? errorText,
+  });
 }

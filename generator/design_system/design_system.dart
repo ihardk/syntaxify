@@ -24,6 +24,8 @@ import 'tokens/divider_tokens.dart';
 import 'tokens/image_tokens.dart';
 import 'tokens/progress_indicator_tokens.dart';
 import 'tokens/icon_button_tokens.dart';
+import 'tokens/dropdown_tokens.dart';
+import 'models/dropdown_item.dart';
 import 'app_icons.dart';
 
 // Import generated variants
@@ -33,6 +35,7 @@ import '../generated/variants/card_variant.dart';
 import '../generated/variants/divider_orientation.dart';
 import '../generated/variants/progress_indicator_variant.dart';
 import '../generated/variants/icon_button_variant.dart';
+import 'variants/dropdown_variant.dart';
 
 // Re-export for convenience
 export 'tokens/foundation/foundation_tokens.dart';
@@ -49,6 +52,8 @@ export 'tokens/divider_tokens.dart';
 export 'tokens/image_tokens.dart';
 export 'tokens/progress_indicator_tokens.dart';
 export 'tokens/icon_button_tokens.dart';
+export 'tokens/dropdown_tokens.dart';
+export 'models/dropdown_item.dart';
 export 'app_icons.dart';
 
 // Export generated variants
@@ -58,6 +63,7 @@ export '../generated/variants/card_variant.dart';
 export '../generated/variants/divider_orientation.dart';
 export '../generated/variants/progress_indicator_variant.dart';
 export '../generated/variants/icon_button_variant.dart';
+export 'variants/dropdown_variant.dart';
 
 // Part files - same library as sealed class
 part 'app_theme.dart';
@@ -124,3 +130,7 @@ part 'components/progress_indicator/neo_renderer.dart';
 part 'components/icon_button/material_renderer.dart';
 part 'components/icon_button/cupertino_renderer.dart';
 part 'components/icon_button/neo_renderer.dart';
+
+part 'components/dropdown/material_renderer.dart';
+part 'components/dropdown/cupertino_renderer.dart';
+part 'components/dropdown/neo_renderer.dart';

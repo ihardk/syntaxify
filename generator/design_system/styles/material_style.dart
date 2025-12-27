@@ -25,7 +25,8 @@ class MaterialStyle extends DesignStyle
         MaterialDividerRenderer,
         MaterialImageRenderer,
         MaterialProgressIndicatorRenderer,
-        MaterialIconButtonRenderer {
+        MaterialIconButtonRenderer,
+        MaterialDropdownRenderer {
   const MaterialStyle();
 
   @override
