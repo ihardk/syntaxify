@@ -20,12 +20,14 @@ import 'tokens/slider_tokens.dart';
 import 'tokens/radio_tokens.dart';
 import 'tokens/card_tokens.dart';
 import 'tokens/icon_tokens.dart';
+import 'tokens/divider_tokens.dart';
 import 'app_icons.dart';
 
 // Import generated variants
 import '../generated/variants/button_variant.dart';
 import '../generated/variants/text_variant.dart';
 import '../generated/variants/card_variant.dart';
+import '../generated/variants/divider_orientation.dart';
 
 // Re-export for convenience
 export 'tokens/foundation/foundation_tokens.dart';
@@ -38,12 +40,14 @@ export 'tokens/slider_tokens.dart';
 export 'tokens/radio_tokens.dart';
 export 'tokens/card_tokens.dart';
 export 'tokens/icon_tokens.dart';
+export 'tokens/divider_tokens.dart';
 export 'app_icons.dart';
 
 // Export generated variants
 export '../generated/variants/button_variant.dart';
 export '../generated/variants/text_variant.dart';
 export '../generated/variants/card_variant.dart';
+export '../generated/variants/divider_orientation.dart';
 
 // Part files - same library as sealed class
 part 'app_theme.dart';
@@ -94,3 +98,7 @@ part 'components/card/cupertino_renderer.dart';
 part 'components/card/neo_renderer.dart';
 
 part 'components/icon/icon_renderer.dart';
+
+part 'components/divider/material_renderer.dart';
+part 'components/divider/cupertino_renderer.dart';
+part 'components/divider/neo_renderer.dart';

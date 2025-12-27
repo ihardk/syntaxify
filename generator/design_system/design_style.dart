@@ -161,4 +161,16 @@ sealed class DesignStyle {
     Color? color,
     String? semanticLabel,
   });
+
+  /// Get tokens for divider component
+  DividerTokens get dividerTokens;
+
+  /// Render a divider widget
+  Widget renderDivider({
+    DividerOrientation orientation = DividerOrientation.horizontal,
+    double? thickness,
+    Color? color,
+    double indent = 0.0,
+    double endIndent = 0.0,
+  });
 }
