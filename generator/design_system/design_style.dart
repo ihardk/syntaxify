@@ -173,4 +173,18 @@ sealed class DesignStyle {
     double indent = 0.0,
     double endIndent = 0.0,
   });
+
+  /// Get tokens for image component
+  ImageTokens get imageTokens;
+
+  /// Render an image widget
+  Widget renderImage({
+    required String src,
+    double? width,
+    double? height,
+    BoxFit? fit,
+    Widget? placeholder,
+    Widget? errorWidget,
+    double borderRadius = 0.0,
+  });
 }

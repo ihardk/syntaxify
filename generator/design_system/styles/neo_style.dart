@@ -23,7 +23,8 @@ class NeoStyle extends DesignStyle
         NeoRadioRenderer,
         NeoCardRenderer,
         IconRenderer,
-        NeoDividerRenderer {
+        NeoDividerRenderer,
+        NeoImageRenderer {
   const NeoStyle();
 
   @override

@@ -22,7 +22,8 @@ class MaterialStyle extends DesignStyle
         MaterialRadioRenderer,
         MaterialCardRenderer,
         IconRenderer,
-        MaterialDividerRenderer {
+        MaterialDividerRenderer,
+        MaterialImageRenderer {
   const MaterialStyle();
 
   @override

@@ -22,7 +22,8 @@ class CupertinoStyle extends DesignStyle
         CupertinoRadioRenderer,
         CupertinoCardRenderer,
         IconRenderer,
-        CupertinoDividerRenderer {
+        CupertinoDividerRenderer,
+        CupertinoImageRenderer {
   const CupertinoStyle();
 
   @override

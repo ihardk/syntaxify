@@ -37,9 +37,8 @@ class PrimitiveEmitStrategy implements NodeEmitStrategy {
   }
 
   Expression _emitIcon(IconNode node, EmitContext context) {
-    return refer('Icon').newInstance([
-      refer('AppIcons').property(node.name),
-    ], {
+    return refer('AppIcon').newInstance([], {
+      'name': literalString(node.name),
       if (node.size != null) 'size': literalNum(_getIconSize(node.size)),
     });
   }
@@ -94,21 +93,8 @@ class PrimitiveEmitStrategy implements NodeEmitStrategy {
   }
 
   Expression _emitImage(ImageNode node, EmitContext context) {
-    final isAsset = !node.src.startsWith('http');
-
-    if (isAsset) {
-      return refer('Image').property('asset').call([
-        literalString(node.src),
-      ], {
-        if (node.width != null) 'width': literalNum(node.width!),
-        if (node.height != null) 'height': literalNum(node.height!),
-        if (node.fit != null) 'fit': refer('BoxFit.${node.fit!.name}'),
-      });
-    }
-
-    return refer('Image').property('network').call([
-      literalString(node.src),
-    ], {
+    return refer('AppImage').newInstance([], {
+      'src': literalString(node.src),
       if (node.width != null) 'width': literalNum(node.width!),
       if (node.height != null) 'height': literalNum(node.height!),
       if (node.fit != null) 'fit': refer('BoxFit.${node.fit!.name}'),
@@ -116,7 +102,7 @@ class PrimitiveEmitStrategy implements NodeEmitStrategy {
   }
 
   Expression _emitDivider(DividerNode node, EmitContext context) {
-    return refer('Divider').newInstance([], {
+    return refer('AppDivider').newInstance([], {
       if (node.thickness != null) 'thickness': literalNum(node.thickness!),
       if (node.indent != null) 'indent': literalNum(node.indent!),
       if (node.endIndent != null) 'endIndent': literalNum(node.endIndent!),

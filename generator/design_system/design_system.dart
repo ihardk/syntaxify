@@ -21,6 +21,7 @@ import 'tokens/radio_tokens.dart';
 import 'tokens/card_tokens.dart';
 import 'tokens/icon_tokens.dart';
 import 'tokens/divider_tokens.dart';
+import 'tokens/image_tokens.dart';
 import 'app_icons.dart';
 
 // Import generated variants
@@ -41,6 +42,7 @@ export 'tokens/radio_tokens.dart';
 export 'tokens/card_tokens.dart';
 export 'tokens/icon_tokens.dart';
 export 'tokens/divider_tokens.dart';
+export 'tokens/image_tokens.dart';
 export 'app_icons.dart';
 
 // Export generated variants
@@ -102,3 +104,7 @@ part 'components/icon/icon_renderer.dart';
 part 'components/divider/material_renderer.dart';
 part 'components/divider/cupertino_renderer.dart';
 part 'components/divider/neo_renderer.dart';
+
+part 'components/image/material_renderer.dart';
+part 'components/image/cupertino_renderer.dart';
+part 'components/image/neo_renderer.dart';
