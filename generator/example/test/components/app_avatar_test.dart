@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:syntaxify/src/design_system/design_system.dart';
+import 'package:syntaxify/example/syntaxify/design_system/design_system.dart';
 
 void main() {
   group('AppAvatar', () {
@@ -110,7 +110,8 @@ void main() {
       expect(find.byType(AppAvatar), findsOneWidget);
     });
 
-    testWidgets('renders default icon when no initials or image', (tester) async {
+    testWidgets('renders default icon when no initials or image',
+        (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: AppTheme(

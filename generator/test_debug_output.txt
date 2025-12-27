@@ -45,7 +45,7 @@ class _KitchenSinkScreenState extends State<KitchenSinkScreen> {
           SizedBox(height: 16.0),
           Row(
             children: [
-              Icon(AppIcons.star, size: 20.0),
+              AppIcon(name: 'star', size: 20.0),
               AppText(text: 'Rating: 5.0'),
             ],
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
