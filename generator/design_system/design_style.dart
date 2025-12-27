@@ -228,4 +228,16 @@ sealed class DesignStyle {
     bool enabled = true,
     String? errorText,
   });
+
+  /// Get tokens for a tab bar variant
+  TabBarTokens tabBarTokens(TabBarVariant variant);
+
+  /// Render a tab bar widget
+  Widget renderTabBar({
+    required List<TabBarItem> tabs,
+    required int currentIndex,
+    required ValueChanged<int> onTabChange,
+    TabBarVariant variant = TabBarVariant.primary,
+    bool isScrollable = false,
+  });
 }
