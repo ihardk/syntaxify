@@ -240,4 +240,63 @@ sealed class DesignStyle {
     TabBarVariant variant = TabBarVariant.primary,
     bool isScrollable = false,
   });
+
+  /// Get tokens for a bottom nav variant
+  BottomNavTokens bottomNavTokens(BottomNavVariant variant);
+
+  /// Render a bottom navigation bar widget
+  Widget renderBottomNav({
+    required List<BottomNavItem> items,
+    required int currentIndex,
+    required ValueChanged<int> onTap,
+    BottomNavVariant variant = BottomNavVariant.standard,
+    bool showLabels = true,
+  });
+
+  /// Get tokens for an app bar variant
+  AppBarTokens appBarTokens(AppBarVariant variant);
+
+  /// Render an app bar widget
+  PreferredSizeWidget renderAppBar({
+    required String title,
+    AppBarVariant variant = AppBarVariant.primary,
+    String? leading,
+    List<String>? actions,
+    bool centerTitle = false,
+  });
+
+  /// Get tokens for a chip variant
+  ChipTokens chipTokens(ChipVariant variant);
+
+  /// Render a chip widget
+  Widget renderChip({
+    required String label,
+    ChipVariant variant = ChipVariant.filled,
+    String? icon,
+    VoidCallback? onDeleted,
+    bool selected = false,
+  });
+
+  /// Get tokens for a badge variant
+  BadgeTokens badgeTokens(BadgeVariant variant);
+
+  /// Render a badge widget
+  Widget renderBadge({
+    required Widget child,
+    BadgeVariant variant = BadgeVariant.count,
+    int? count,
+    bool showBadge = true,
+  });
+
+  /// Get tokens for an avatar variant
+  AvatarTokens avatarTokens(AvatarVariant variant);
+
+  /// Render an avatar widget
+  Widget renderAvatar({
+    AvatarVariant variant = AvatarVariant.circle,
+    String? imageSrc,
+    String? initials,
+    double size = 40.0,
+    Color? backgroundColor,
+  });
 }

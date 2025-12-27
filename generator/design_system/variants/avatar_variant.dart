@@ -1,0 +1,4 @@
+enum AvatarVariant {
+  circle,
+  square,
+}

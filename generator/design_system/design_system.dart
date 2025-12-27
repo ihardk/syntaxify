@@ -26,8 +26,14 @@ import 'tokens/progress_indicator_tokens.dart';
 import 'tokens/icon_button_tokens.dart';
 import 'tokens/dropdown_tokens.dart';
 import 'tokens/tab_bar_tokens.dart';
+import 'tokens/bottom_nav_tokens.dart';
+import 'tokens/app_bar_tokens.dart';
+import 'tokens/chip_tokens.dart';
+import 'tokens/badge_tokens.dart';
+import 'tokens/avatar_tokens.dart';
 import 'models/dropdown_item.dart';
 import 'models/tab_bar_item.dart';
+import 'models/bottom_nav_item.dart';
 import 'app_icons.dart';
 
 // Import generated variants
@@ -39,6 +45,11 @@ import '../generated/variants/progress_indicator_variant.dart';
 import '../generated/variants/icon_button_variant.dart';
 import 'variants/dropdown_variant.dart';
 import 'variants/tab_bar_variant.dart';
+import 'variants/bottom_nav_variant.dart';
+import 'variants/app_bar_variant.dart';
+import 'variants/chip_variant.dart';
+import 'variants/badge_variant.dart';
+import 'variants/avatar_variant.dart';
 
 // Re-export for convenience
 export 'tokens/foundation/foundation_tokens.dart';
@@ -57,8 +68,14 @@ export 'tokens/progress_indicator_tokens.dart';
 export 'tokens/icon_button_tokens.dart';
 export 'tokens/dropdown_tokens.dart';
 export 'tokens/tab_bar_tokens.dart';
+export 'tokens/bottom_nav_tokens.dart';
+export 'tokens/app_bar_tokens.dart';
+export 'tokens/chip_tokens.dart';
+export 'tokens/badge_tokens.dart';
+export 'tokens/avatar_tokens.dart';
 export 'models/dropdown_item.dart';
 export 'models/tab_bar_item.dart';
+export 'models/bottom_nav_item.dart';
 export 'app_icons.dart';
 
 // Export generated variants
@@ -70,6 +87,11 @@ export '../generated/variants/progress_indicator_variant.dart';
 export '../generated/variants/icon_button_variant.dart';
 export 'variants/dropdown_variant.dart';
 export 'variants/tab_bar_variant.dart';
+export 'variants/bottom_nav_variant.dart';
+export 'variants/app_bar_variant.dart';
+export 'variants/chip_variant.dart';
+export 'variants/badge_variant.dart';
+export 'variants/avatar_variant.dart';
 
 // Part files - same library as sealed class
 part 'app_theme.dart';
@@ -144,3 +166,23 @@ part 'components/dropdown/neo_renderer.dart';
 part 'components/tab_bar/material_renderer.dart';
 part 'components/tab_bar/cupertino_renderer.dart';
 part 'components/tab_bar/neo_renderer.dart';
+
+part 'components/bottom_nav/material_renderer.dart';
+part 'components/bottom_nav/cupertino_renderer.dart';
+part 'components/bottom_nav/neo_renderer.dart';
+
+part 'components/app_bar/material_renderer.dart';
+part 'components/app_bar/cupertino_renderer.dart';
+part 'components/app_bar/neo_renderer.dart';
+
+part 'components/chip/material_renderer.dart';
+part 'components/chip/cupertino_renderer.dart';
+part 'components/chip/neo_renderer.dart';
+
+part 'components/badge/material_renderer.dart';
+part 'components/badge/cupertino_renderer.dart';
+part 'components/badge/neo_renderer.dart';
+
+part 'components/avatar/material_renderer.dart';
+part 'components/avatar/cupertino_renderer.dart';
+part 'components/avatar/neo_renderer.dart';
