@@ -156,6 +156,44 @@ void main() {
       expect(code, contains('AppSlider('));
     });
 
+    test('builds screen with custom nodes', () {
+      // Test custom node for plugin extensibility
+      final layout = App.column(children: [
+        App.custom(
+          CustomNode(
+            type: 'SuperCard',
+            props: {
+              'title': 'Custom Component',
+              'color': 'blue',
+            },
+            children: [
+              App.text(text: 'Custom child content'),
+            ],
+          ),
+        ),
+        App.custom(
+          CustomNode(
+            type: 'Carousel',
+            props: {
+              'autoPlay': true,
+              'interval': 3000,
+            },
+            children: [
+              App.image(src: 'slide1.jpg'),
+              App.image(src: 'slide2.jpg'),
+            ],
+          ),
+        ),
+      ]);
+
+      final code = emit(layout);
+
+      // Verify custom nodes are emitted
+      expect(code, contains('Column('));
+      expect(code, contains('SuperCard'));
+      expect(code, contains('Carousel'));
+    });
+
     test('builds complex nested layout with mixed nodes', () {
       // Complex real-world screen
       final layout = App.column(
@@ -220,9 +258,9 @@ void main() {
     test('LayoutValidator validates all node types without errors', () {
       final validator = LayoutValidator();
 
-      // Create nodes of each type and validate
+      // Create nodes of each type and validate - all 26 node types
       final nodes = [
-        // Structural
+        // Structural (9 nodes)
         App.column(children: [App.text(text: 'Test')]),
         App.row(children: [App.text(text: 'Test')]),
         App.container(child: App.text(text: 'Test')),
@@ -233,7 +271,7 @@ void main() {
         App.padding(padding: '16', child: App.text(text: 'Test')),
         App.center(child: App.text(text: 'Test')),
 
-        // Primitive
+        // Primitive (8 nodes)
         App.text(text: 'Test'),
         App.icon(name: 'star'),
         App.spacer(size: SpacerSize.md),
@@ -243,7 +281,7 @@ void main() {
         App.sizedBox(width: 10),
         App.expanded(child: App.text(text: 'Test')),
 
-        // Interactive
+        // Interactive (8 nodes)
         App.button(label: 'Test'),
         App.textField(label: 'Test'),
         App.checkbox(binding: 'test'),
@@ -252,6 +290,15 @@ void main() {
         App.dropdown(binding: 'test', items: ['a', 'b']),
         App.radio(binding: 'test', value: 'a'),
         App.slider(binding: 'test'),
+
+        // Custom (1 node)
+        App.custom(
+          CustomNode(
+            type: 'CustomComponent',
+            props: {'prop': 'value'},
+            children: [App.text(text: 'Test')],
+          ),
+        ),
       ];
 
       for (final node in nodes) {
