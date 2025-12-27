@@ -160,7 +160,7 @@ void main() {
       // Test custom node for plugin extensibility
       final layout = App.column(children: [
         App.custom(
-          CustomNode(
+          node: CustomNode(
             type: 'SuperCard',
             props: {
               'title': 'Custom Component',
@@ -172,7 +172,7 @@ void main() {
           ),
         ),
         App.custom(
-          CustomNode(
+          node: CustomNode(
             type: 'Carousel',
             props: {
               'autoPlay': true,
@@ -293,7 +293,7 @@ void main() {
 
         // Custom (1 node)
         App.custom(
-          CustomNode(
+          node: CustomNode(
             type: 'CustomComponent',
             props: {'prop': 'value'},
             children: [App.text(text: 'Test')],
