@@ -105,6 +105,52 @@ class DesignSystemService {
       }
     }
 
+    // Copy models recursively (DropdownItem, TabBarItem, BottomNavItem, etc.)
+    final modelsDir = Directory(_pathContext.join(sourceDir, 'models'));
+    if (await modelsDir.exists()) {
+      final destModelsDir =
+          _pathContext.join(outputDir, 'design_system', 'models');
+      await _fileSystem.createDirectory(destModelsDir);
+
+      await for (final entity
+          in modelsDir.list(recursive: true, followLinks: false)) {
+        if (entity is File) {
+          final relPath = p
+              .relative(entity.path, from: modelsDir.path)
+              .replaceAll(p.separator, '/');
+          final destPath = _pathContext.join(destModelsDir, relPath);
+          final parentDir = _pathContext.dirname(destPath);
+          await _fileSystem.createDirectory(parentDir);
+          await _fileSystem.copyFile(entity.path, destPath);
+          filesGenerated.add('design_system/models/$relPath');
+          _logger.success('Copied: design_system/models/$relPath');
+        }
+      }
+    }
+
+    // Copy tokens recursively (overwrite existing to get latest source templates)
+    final tokensDir = Directory(_pathContext.join(sourceDir, 'tokens'));
+    if (await tokensDir.exists()) {
+      final destTokensDir =
+          _pathContext.join(outputDir, 'design_system', 'tokens');
+      await _fileSystem.createDirectory(destTokensDir);
+
+      await for (final entity
+          in tokensDir.list(recursive: true, followLinks: false)) {
+        if (entity is File) {
+          final relPath = p
+              .relative(entity.path, from: tokensDir.path)
+              .replaceAll(p.separator, '/');
+          final destPath = _pathContext.join(destTokensDir, relPath);
+          final parentDir = _pathContext.dirname(destPath);
+          await _fileSystem.createDirectory(parentDir);
+          await _fileSystem.copyFile(entity.path, destPath);
+          filesGenerated.add('design_system/tokens/$relPath');
+          _logger.success('Copied: design_system/tokens/$relPath');
+        }
+      }
+    }
+
     return filesGenerated;
   }
 
@@ -146,7 +192,8 @@ class DesignSystemService {
       _logger.success('Generated: design_system/styles/$fileName');
     }
 
-    // Renderer stubs for custom components
+    // Renderer stubs for custom components only
+    // These are components that have full template implementations - don't generate stubs for them
     final standardComponents = {
       'Button',
       'Input',
@@ -154,17 +201,34 @@ class DesignSystemService {
       'Checkbox',
       'Toggle',
       'Slider',
-      'Radio'
+      'Radio',
+      'Card',
+      'Icon',
+      'Divider',
+      'Image',
+      'ProgressIndicator',
+      'IconButton',
+      'Dropdown',
+      'TabBar',
+      'BottomNav',
+      'AppBar',
+      'Chip',
+      'Badge',
+      'Avatar',
     };
     for (final component in components) {
-      final baseName =
+      var baseName =
           component.explicitName ?? component.className.replaceAll('Meta', '');
-      final cleanName =
-          baseName.startsWith('App') ? baseName.substring(3) : baseName;
+      // Strip generic type parameters (e.g., Dropdown<T> → Dropdown)
+      if (baseName.contains('<')) {
+        baseName = baseName.substring(0, baseName.indexOf('<'));
+      }
+      // Keep full name - don't strip 'App' prefix
+      // AppBar should create app_bar/ folder, not bar/
 
-      if (standardComponents.contains(cleanName)) continue;
+      if (standardComponents.contains(baseName)) continue;
 
-      final folderName = StringUtils.toSnakeCase(cleanName);
+      final folderName = StringUtils.toSnakeCase(baseName);
       final componentDir = _pathContext.join(
           outputDir, 'design_system', 'components', folderName);
       await _fileSystem.createDirectory(componentDir);
@@ -255,34 +319,10 @@ class DesignSystemService {
       _logger.warn('Could not copy icon_token.dart: $e');
     }
 
-    // Copy existing component token files from designSystemDir to outputDir
-    for (final component in components) {
-      try {
-        final baseName = component.explicitName ??
-            component.className.replaceAll('Meta', '');
-        final cleanName =
-            baseName.startsWith('App') ? baseName.substring(3) : baseName;
-        final tokenFileName =
-            '${StringUtils.toSnakeCase(cleanName)}_tokens.dart';
-        final srcPath =
-            _pathContext.join(designSystemDir, 'tokens', tokenFileName);
-        final destPath = _pathContext.join(
-          outputDir,
-          'design_system',
-          'tokens',
-          tokenFileName,
-        );
-
-        if (await _fileSystem.exists(srcPath)) {
-          await _fileSystem.copyFile(srcPath, destPath);
-          filesGenerated.add('design_system/tokens/$tokenFileName');
-          _logger.success('Copied: design_system/tokens/$tokenFileName');
-        }
-      } catch (e) {
-        _logger
-            .warn('Could not copy token file for ${component.className}: $e');
-      }
-    }
+    // Note: Component token files are already copied from source templates
+    // in copyDesignSystemFiles(). Don't copy from project folder here as
+    // that would overwrite fresh source copies with potentially outdated
+    // project-specific versions.
 
     return filesGenerated;
   }

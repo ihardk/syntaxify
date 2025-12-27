@@ -154,7 +154,7 @@ class ProjectRepository {
     required String outputDir,
   }) async {
     try {
-      final dirPath = _pathContext.join(outputDir, 'generated', 'variants');
+      final dirPath = _pathContext.join(outputDir, 'design_system', 'variants');
       await _fileSystem.createDirectory(dirPath);
 
       final filePath = _pathContext.join(dirPath, fileName);

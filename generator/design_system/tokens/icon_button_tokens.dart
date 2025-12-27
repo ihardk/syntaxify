@@ -5,7 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'foundation/foundation_tokens.dart';
-import '../../generated/variants/icon_button_variant.dart';
+import '../variants/icon_button_variant.dart';
 
 /// Design tokens for the IconButton component
 class IconButtonTokens {

@@ -278,18 +278,6 @@ enum SpacerSize {
   flex
 }
 
-/// Card style variants.
-enum CardVariant {
-  /// Elevated card with shadow.
-  elevated,
-
-  /// Outlined card with border.
-  outlined,
-
-  /// Filled card with background.
-  filled
-}
-
 /// Container semantic background.
 enum ContainerSemantic {
   /// Surface background.

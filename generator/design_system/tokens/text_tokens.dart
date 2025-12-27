@@ -5,7 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'foundation/foundation_tokens.dart';
-import '../../generated/variants/text_variant.dart';
+import '../variants/text_variant.dart';
 
 /// Design tokens for the Text component
 class TextTokens {

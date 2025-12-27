@@ -5,7 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'foundation/foundation_tokens.dart';
-import '../../generated/variants/button_variant.dart';
+import '../variants/button_variant.dart';
 
 /// Design tokens for the Button component
 class ButtonTokens {

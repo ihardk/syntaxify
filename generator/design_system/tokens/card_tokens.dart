@@ -5,7 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'foundation/foundation_tokens.dart';
-import '../../generated/variants/card_variant.dart';
+import '../variants/card_variant.dart';
 
 /// Design tokens for the Card component
 class CardTokens {

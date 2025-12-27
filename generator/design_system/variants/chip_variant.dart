@@ -1,4 +1,0 @@
-enum ChipVariant {
-  filled,
-  outlined,
-}

@@ -1,4 +1,0 @@
-enum AppBarVariant {
-  primary,
-  transparent,
-}

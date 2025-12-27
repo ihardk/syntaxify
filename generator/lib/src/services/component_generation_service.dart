@@ -149,7 +149,7 @@ class ComponentGenerationService {
           outputDir: outputDir,
         );
 
-        final relativePath = 'generated/variants/$fileName';
+        final relativePath = 'design_system/variants/$fileName';
         _logger.success('Generated enum: $relativePath');
 
         results.add(EnumGenerationResult.success(

@@ -157,4 +157,11 @@ class FoundationTokens {
     required this.borderWidthMedium,
     required this.borderWidthThick,
   });
+
+  // ========== CONVENIENCE ELEVATION GETTERS ==========
+  // These map the size-based naming to level-based properties
+  double get elevationSm => elevationLevel1;
+  double get elevationMd => elevationLevel2;
+  double get elevationLg => elevationLevel3;
+  double get elevationXl => elevationLevel4;
 }

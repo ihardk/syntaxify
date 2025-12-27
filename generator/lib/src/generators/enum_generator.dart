@@ -23,7 +23,8 @@ class EnumGenerator {
       throw ArgumentError('Variants list cannot be empty');
     }
 
-    final enumName = '${StringUtils.toPascalCase(componentName)}Variant';
+    // componentName is already in PascalCase (e.g., 'Button', 'AppBar')
+    final enumName = '${componentName}Variant';
 
     final enumSpec = Enum((b) => b
       ..name = enumName

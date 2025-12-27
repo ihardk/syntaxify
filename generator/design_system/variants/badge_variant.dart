@@ -1,4 +1,0 @@
-enum BadgeVariant {
-  dot,
-  count,
-}

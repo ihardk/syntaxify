@@ -59,15 +59,22 @@ class DesignSystemGenerator {
     buffer.writeln("import 'app_icons.dart';");
     buffer.writeln();
 
-    // Import generated variants
+    // Import models (DropdownItem, TabBarItem, BottomNavItem, etc.)
+    buffer.writeln('// Import models');
+    buffer.writeln("import 'models/dropdown_item.dart';");
+    buffer.writeln("import 'models/tab_bar_item.dart';");
+    buffer.writeln("import 'models/bottom_nav_item.dart';");
+    buffer.writeln();
+
+    // Import variants
     final componentsWithVariants =
         components.where((c) => c.variants.isNotEmpty).toList();
     if (componentsWithVariants.isNotEmpty) {
-      buffer.writeln('// Import generated variants');
+      buffer.writeln('// Import variants');
       for (final comp in componentsWithVariants) {
         final baseName = _getBaseName(component: comp);
         final fileName = '${StringUtils.toSnakeCase(baseName)}_variant.dart';
-        buffer.writeln("import '../generated/variants/$fileName';");
+        buffer.writeln("import 'variants/$fileName';");
       }
       buffer.writeln();
     }
@@ -87,13 +94,20 @@ class DesignSystemGenerator {
     buffer.writeln("export 'app_icons.dart';");
     buffer.writeln();
 
-    // Export generated variants
+    // Export models (DropdownItem, TabBarItem, BottomNavItem, etc.)
+    buffer.writeln('// Export models');
+    buffer.writeln("export 'models/dropdown_item.dart';");
+    buffer.writeln("export 'models/tab_bar_item.dart';");
+    buffer.writeln("export 'models/bottom_nav_item.dart';");
+    buffer.writeln();
+
+    // Export variants
     if (componentsWithVariants.isNotEmpty) {
-      buffer.writeln('// Export generated variants');
+      buffer.writeln('// Export variants');
       for (final comp in componentsWithVariants) {
         final baseName = _getBaseName(component: comp);
         final fileName = '${StringUtils.toSnakeCase(baseName)}_variant.dart';
-        buffer.writeln("export '../generated/variants/$fileName';");
+        buffer.writeln("export 'variants/$fileName';");
       }
       buffer.writeln();
     }
