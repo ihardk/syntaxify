@@ -22,6 +22,7 @@ import 'tokens/card_tokens.dart';
 import 'tokens/icon_tokens.dart';
 import 'tokens/divider_tokens.dart';
 import 'tokens/image_tokens.dart';
+import 'tokens/progress_indicator_tokens.dart';
 import 'app_icons.dart';
 
 // Import generated variants
@@ -29,6 +30,7 @@ import '../generated/variants/button_variant.dart';
 import '../generated/variants/text_variant.dart';
 import '../generated/variants/card_variant.dart';
 import '../generated/variants/divider_orientation.dart';
+import '../generated/variants/progress_indicator_variant.dart';
 
 // Re-export for convenience
 export 'tokens/foundation/foundation_tokens.dart';
@@ -43,6 +45,7 @@ export 'tokens/card_tokens.dart';
 export 'tokens/icon_tokens.dart';
 export 'tokens/divider_tokens.dart';
 export 'tokens/image_tokens.dart';
+export 'tokens/progress_indicator_tokens.dart';
 export 'app_icons.dart';
 
 // Export generated variants
@@ -50,6 +53,7 @@ export '../generated/variants/button_variant.dart';
 export '../generated/variants/text_variant.dart';
 export '../generated/variants/card_variant.dart';
 export '../generated/variants/divider_orientation.dart';
+export '../generated/variants/progress_indicator_variant.dart';
 
 // Part files - same library as sealed class
 part 'app_theme.dart';
@@ -108,3 +112,7 @@ part 'components/divider/neo_renderer.dart';
 part 'components/image/material_renderer.dart';
 part 'components/image/cupertino_renderer.dart';
 part 'components/image/neo_renderer.dart';
+
+part 'components/progress_indicator/material_renderer.dart';
+part 'components/progress_indicator/cupertino_renderer.dart';
+part 'components/progress_indicator/neo_renderer.dart';

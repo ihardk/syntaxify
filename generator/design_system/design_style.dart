@@ -187,4 +187,16 @@ sealed class DesignStyle {
     Widget? errorWidget,
     double borderRadius = 0.0,
   });
+
+  /// Get tokens for progress indicator component
+  ProgressIndicatorTokens get progressIndicatorTokens;
+
+  /// Render a progress indicator widget
+  Widget renderProgressIndicator({
+    ProgressIndicatorVariant variant = ProgressIndicatorVariant.circular,
+    double? value,
+    Color? color,
+    Color? backgroundColor,
+    double strokeWidth = 4.0,
+  });
 }

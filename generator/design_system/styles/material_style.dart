@@ -23,7 +23,8 @@ class MaterialStyle extends DesignStyle
         MaterialCardRenderer,
         IconRenderer,
         MaterialDividerRenderer,
-        MaterialImageRenderer {
+        MaterialImageRenderer,
+        MaterialProgressIndicatorRenderer {
   const MaterialStyle();
 
   @override

@@ -23,7 +23,8 @@ class CupertinoStyle extends DesignStyle
         CupertinoCardRenderer,
         IconRenderer,
         CupertinoDividerRenderer,
-        CupertinoImageRenderer {
+        CupertinoImageRenderer,
+        CupertinoProgressIndicatorRenderer {
   const CupertinoStyle();
 
   @override

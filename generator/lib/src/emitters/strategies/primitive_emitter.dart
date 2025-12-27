@@ -111,7 +111,7 @@ class PrimitiveEmitStrategy implements NodeEmitStrategy {
 
   Expression _emitCircularProgressIndicator(
       CircularProgressIndicatorNode node, EmitContext context) {
-    return refer('CircularProgressIndicator').newInstance([], {
+    return refer('AppProgressIndicator').property('circular').newInstance([], {
       if (node.value != null) 'value': literalNum(node.value!),
       if (node.strokeWidth != null)
         'strokeWidth': literalNum(node.strokeWidth!),
